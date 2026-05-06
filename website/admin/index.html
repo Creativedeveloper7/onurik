@@ -58,12 +58,12 @@
   .admin-nav-overlay.open { opacity: 1; pointer-events: auto; }
   #admin-toast.is-visible { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
 </style>
-<link rel="stylesheet" href="../styles/animations.css"/>
+<link rel="stylesheet" href="/styles/animations.css"/>
 </head>
 <body class="font-body-md min-h-screen selection:bg-primary/20 selection:text-primary touch-manipulation">
 <!-- Mobile top bar -->
 <header class="lg:hidden fixed top-0 left-0 right-0 z-[60] flex h-16 items-center justify-between border-b border-stone-100/10 bg-stone-950/95 px-4 backdrop-blur-xl">
-<a href="../index.html" class="text-xs font-semibold uppercase tracking-[0.2em] text-stone-400 transition-colors hover:text-stone-100">Site</a>
+<a href="/index.html" class="text-xs font-semibold uppercase tracking-[0.2em] text-stone-400 transition-colors hover:text-stone-100">Site</a>
 <span class="font-montserrat text-sm font-semibold text-stone-100">Admin</span>
 <button type="button" id="admin-menu-btn" class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md text-stone-100 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40" aria-expanded="false" aria-controls="admin-nav-drawer" aria-label="Open menu">
 <span class="material-symbols-outlined text-2xl" aria-hidden="true">menu</span>
@@ -79,23 +79,23 @@
 </button>
 </div>
 <div class="flex flex-1 flex-col gap-1 overflow-y-auto py-6">
-<a class="mx-4 mb-3 text-[10px] uppercase tracking-[0.2em] text-stone-500 transition-colors hover:text-stone-100" href="../index.html">← Public site</a>
-<a class="flex min-h-[44px] items-center gap-4 border-l-2 border-stone-100 bg-stone-800 px-6 py-3 font-display-lg text-sm font-normal text-stone-100 transition-all" href="index.html">
+<a class="mx-4 mb-3 text-[10px] uppercase tracking-[0.2em] text-stone-500 transition-colors hover:text-stone-100" href="/index.html">← Public site</a>
+<a class="flex min-h-[44px] items-center gap-4 border-l-2 border-stone-100 bg-stone-800 px-6 py-3 font-display-lg text-sm font-normal text-stone-100 transition-all" href="/admin/index.html">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span><span class="tracking-wide">Overview</span>
 </a>
-<a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all hover:bg-stone-800/50" href="enquiries.html">
+<a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all hover:bg-stone-800/50" href="/admin/enquiries.html">
 <span class="material-symbols-outlined">mail</span><span class="tracking-wide">Enquiries</span>
 </a>
-<a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all hover:bg-stone-800/50" href="works.html">
+<a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all hover:bg-stone-800/50" href="/admin/works.html">
 <span class="material-symbols-outlined">work</span><span class="tracking-wide">Works Manager</span>
 </a>
-<a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all hover:bg-stone-800/50" href="carousel.html">
+<a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all hover:bg-stone-800/50" href="/admin/carousel.html">
 <span class="material-symbols-outlined">view_carousel</span><span class="tracking-wide">Brands</span>
 </a>
-<a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all hover:bg-stone-800/50" href="bookings.html">
+<a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all hover:bg-stone-800/50" href="/admin/bookings.html">
 <span class="material-symbols-outlined">calendar_today</span><span class="tracking-wide">Bookings</span>
 </a>
-<a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all hover:bg-stone-800/50" href="settings.html">
+<a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all hover:bg-stone-800/50" href="/admin/settings.html">
 <span class="material-symbols-outlined">settings</span><span class="tracking-wide">Settings</span>
 </a>
 </div>
@@ -108,23 +108,23 @@
 <p class="mt-1 font-display-lg text-sm font-normal text-stone-500">Onurik Systems</p>
 </div>
 <div class="flex flex-1 flex-col gap-2 py-8">
-<a class="mx-8 mb-4 text-[10px] uppercase tracking-[0.2em] text-stone-500 transition-colors hover:text-stone-100" href="../index.html">← Public site</a>
-<a class="flex items-center gap-4 rounded-none border-l-2 border-stone-100 bg-stone-800 px-8 py-3 font-display-lg text-sm font-normal text-stone-100 transition-all duration-300" href="index.html">
+<a class="mx-8 mb-4 text-[10px] uppercase tracking-[0.2em] text-stone-500 transition-colors hover:text-stone-100" href="/index.html">← Public site</a>
+<a class="flex items-center gap-4 rounded-none border-l-2 border-stone-100 bg-stone-800 px-8 py-3 font-display-lg text-sm font-normal text-stone-100 transition-all duration-300" href="/admin/index.html">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span><span class="text-sm tracking-wide">Overview</span>
 </a>
-<a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all duration-300 hover:bg-stone-800/50" href="enquiries.html">
+<a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all duration-300 hover:bg-stone-800/50" href="/admin/enquiries.html">
 <span class="material-symbols-outlined">mail</span><span class="text-sm tracking-wide">Enquiries</span>
 </a>
-<a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all duration-300 hover:bg-stone-800/50" href="works.html">
+<a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all duration-300 hover:bg-stone-800/50" href="/admin/works.html">
 <span class="material-symbols-outlined">work</span><span class="text-sm tracking-wide">Works Manager</span>
 </a>
-<a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all duration-300 hover:bg-stone-800/50" href="carousel.html">
+<a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all duration-300 hover:bg-stone-800/50" href="/admin/carousel.html">
 <span class="material-symbols-outlined">view_carousel</span><span class="text-sm tracking-wide">Brands</span>
 </a>
-<a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all duration-300 hover:bg-stone-800/50" href="bookings.html">
+<a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all duration-300 hover:bg-stone-800/50" href="/admin/bookings.html">
 <span class="material-symbols-outlined">calendar_today</span><span class="text-sm tracking-wide">Bookings</span>
 </a>
-<a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all duration-300 hover:bg-stone-800/50" href="settings.html">
+<a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all duration-300 hover:bg-stone-800/50" href="/admin/settings.html">
 <span class="material-symbols-outlined">settings</span><span class="text-sm tracking-wide">Settings</span>
 </a>
 </div>
@@ -208,7 +208,7 @@ Monthly Traffic
 <tr>
 <td class="p-8 text-center font-body-md text-body-md text-on-surface-variant sm:p-12" colspan="6">
 <p class="mx-auto max-w-md">No activity yet. When you connect a contact form or CMS, new submissions will show here.</p>
-<p class="mt-4"><a class="font-label-caps text-label-caps uppercase tracking-widest text-primary underline-offset-4 transition-colors hover:text-on-background hover:underline" href="enquiries.html">Open Enquiries</a></p>
+<p class="mt-4"><a class="font-label-caps text-label-caps uppercase tracking-widest text-primary underline-offset-4 transition-colors hover:text-on-background hover:underline" href="/admin/enquiries.html">Open Enquiries</a></p>
 </td>
 </tr>
 </tbody>
@@ -283,6 +283,6 @@ Monthly Traffic
   }
 })();
 </script>
-<script type="module" src="../scripts/animations.js"></script>
+<script type="module" src="/scripts/animations.js"></script>
 </body>
 </html>
