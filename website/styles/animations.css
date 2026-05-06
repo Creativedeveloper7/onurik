@@ -21,31 +21,6 @@
   }
 }
 
-/* --- Page curtain --- */
-#anim-page-curtain {
-  position: fixed;
-  inset: 0;
-  z-index: 10050;
-  pointer-events: none;
-  display: flex;
-}
-
-.anim-curtain__panel {
-  flex: 1;
-  background: #0a0a0a;
-  transform: translateX(0);
-  transition: transform var(--anim-dur-slow) var(--anim-ease-out);
-  will-change: transform;
-}
-
-.anim-curtain--open .anim-curtain__panel--left {
-  transform: translateX(-101%);
-}
-
-.anim-curtain--open .anim-curtain__panel--right {
-  transform: translateX(101%);
-}
-
 /* --- Scroll progress --- */
 #anim-scroll-progress {
   position: fixed;
@@ -64,23 +39,6 @@
   z-index: 10040;
   pointer-events: none;
   opacity: 0.85;
-}
-
-/* --- Nav entrance (paired with html.anim-ready from JS) --- */
-html.anim-ready body > nav.fixed:first-of-type {
-  opacity: 1;
-  transform: translateY(0);
-  filter: blur(0);
-}
-
-html:not(.anim-ready) body > nav.fixed:first-of-type {
-  opacity: 0;
-  transform: translateY(-14px);
-  filter: blur(10px);
-  transition:
-    opacity var(--anim-dur-med) var(--anim-ease-out),
-    transform var(--anim-dur-med) var(--anim-ease-out),
-    filter var(--anim-dur-med) var(--anim-ease-out);
 }
 
 /* --- Section scroll reveal --- */
@@ -356,18 +314,8 @@ select.anim-glow:focus-visible {
 
 /* --- Reduced motion --- */
 @media (prefers-reduced-motion: reduce) {
-  #anim-page-curtain {
-    display: none !important;
-  }
-
   #anim-scroll-progress {
     opacity: 0 !important;
-  }
-
-  html:not(.anim-ready) body > nav.fixed:first-of-type {
-    opacity: 1 !important;
-    transform: none !important;
-    filter: none !important;
   }
 
   .anim-section-reveal,

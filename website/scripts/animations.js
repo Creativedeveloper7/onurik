@@ -1,5 +1,5 @@
 /**
- * Onurik global animations — IntersectionObserver + curtain + parallax + split text.
+ * Onurik global animations — IntersectionObserver, parallax, split text.
  * Safe to load on every page; no-op sections if selectors missing.
  */
 
@@ -10,29 +10,6 @@ function prefersReducedMotion() {
     typeof window.matchMedia === "function" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches
   );
-}
-
-function initCurtain() {
-  if (prefersReducedMotion()) {
-    document.documentElement.classList.add("anim-ready");
-    return;
-  }
-  const curtain = document.createElement("div");
-  curtain.id = "anim-page-curtain";
-  curtain.setAttribute("aria-hidden", "true");
-  curtain.innerHTML =
-    '<div class="anim-curtain__panel anim-curtain__panel--left"></div>' +
-    '<div class="anim-curtain__panel anim-curtain__panel--right"></div>';
-  document.body.prepend(curtain);
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      curtain.classList.add("anim-curtain--open");
-      window.setTimeout(() => {
-        curtain.remove();
-        document.documentElement.classList.add("anim-ready");
-      }, 920);
-    });
-  });
 }
 
 function initScrollProgress() {
@@ -276,7 +253,7 @@ function onurikAnimRefresh() {
 }
 
 function boot() {
-  initCurtain();
+  document.documentElement.classList.add("anim-ready");
   initScrollProgress();
   initMarkSections();
   initSplitHeadlines();
