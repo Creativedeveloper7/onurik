@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Contact - Onurik</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Noto+Serif:wght@400;700;900&amp;family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config from Design System -->
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "primary-container": "#e5e2dd",
+                "primary": "#ffffff",
+                "on-surface": "#e5e2e1",
+                "surface-dim": "#131313",
+                "background": "#131313",
+                "on-primary-container": "#656461",
+                "on-tertiary-container": "#656464",
+                "surface-container-lowest": "#0e0e0e",
+                "tertiary-fixed-dim": "#c8c6c5",
+                "inverse-surface": "#e5e2e1",
+                "primary-fixed-dim": "#c9c6c1",
+                "tertiary-container": "#e5e2e1",
+                "outline-variant": "#474741",
+                "surface-container-high": "#2a2a2a",
+                "secondary-fixed-dim": "#ccc6ba",
+                "on-tertiary-fixed-variant": "#474746",
+                "error-container": "#93000a",
+                "primary-fixed": "#e5e2dd",
+                "inverse-on-surface": "#313030",
+                "outline": "#929189",
+                "on-error": "#690005",
+                "surface-variant": "#353534",
+                "on-secondary-fixed-variant": "#4a473e",
+                "on-background": "#e5e2e1",
+                "on-tertiary": "#313030",
+                "on-error-container": "#ffdad6",
+                "error": "#ffb4ab",
+                "on-secondary-fixed": "#1e1b14",
+                "secondary-fixed": "#e8e2d6",
+                "secondary": "#ccc6ba",
+                "on-secondary": "#333028",
+                "on-primary": "#31302d",
+                "inverse-primary": "#5f5e5b",
+                "surface-container": "#201f1f",
+                "surface-tint": "#c9c6c1",
+                "secondary-container": "#4a473e",
+                "on-primary-fixed": "#1c1c19",
+                "surface": "#131313",
+                "on-secondary-container": "#bab5a9",
+                "on-primary-fixed-variant": "#474743",
+                "surface-bright": "#3a3939",
+                "on-surface-variant": "#c8c7be",
+                "tertiary": "#ffffff",
+                "on-tertiary-fixed": "#1c1b1b",
+                "tertiary-fixed": "#e5e2e1",
+                "surface-container-low": "#1c1b1b",
+                "surface-container-highest": "#353534"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+        },
+        "spacing": {
+                "gutter": "32px",
+                "element-gap": "24px",
+                "margin": "64px",
+                "container-max": "1440px",
+                "section-gap": "160px"
+        },
+        "fontFamily": {
+                "headline-md": ["Noto Serif", "serif"],
+                "display-xl": ["Noto Serif", "serif"],
+                "label-caps": ["Inter", "sans-serif"],
+                "body-md": ["Inter", "sans-serif"],
+                "display-lg": ["Noto Serif", "serif"],
+                "body-lg": ["Inter", "sans-serif"],
+                "montserrat": ["Montserrat", "sans-serif"]
+        },
+        "fontSize": {
+                "headline-md": ["32px", { "lineHeight": "1.2", "fontWeight": "400" }],
+                "display-xl": ["84px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+                "label-caps": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                "display-lg": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+                "body-lg": ["20px", { "lineHeight": "1.6", "fontWeight": "400" }]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  .material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  }
+  #site-nav-drawer {
+    transform: translateX(100%);
+    transition: transform 0.3s ease-out;
+  }
+  #site-nav-drawer.open {
+    transform: translateX(0);
+  }
+  .site-nav-overlay.open {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+  /* Contact form feedback — slide-up + fade (Onurik motion) */
+  .contact-form-feedback {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition: grid-template-rows 0.48s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+  }
+  .contact-form-feedback.is-visible {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+  .contact-form-feedback__measure {
+    min-height: 0;
+    overflow: hidden;
+  }
+  .contact-form-feedback__inner {
+    transform: translateY(10px);
+    opacity: 0;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.45s ease;
+  }
+  .contact-form-feedback.is-visible .contact-form-feedback__inner {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  .contact-form-feedback.is-error .contact-form-feedback__shell {
+    border-color: rgb(179 173 173 / 0.45);
+    background: rgb(229 226 221 / 0.07);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .contact-form-feedback,
+    .contact-form-feedback__inner {
+      transition: none !important;
+    }
+    .contact-form-feedback.is-visible .contact-form-feedback__inner {
+      transform: none;
+    }
+    .contact-form-feedback {
+      grid-template-rows: 1fr;
+    }
+    .contact-form-feedback:not(.is-visible) {
+      opacity: 0 !important;
+    }
+  }
+</style>
+<link rel="stylesheet" href="styles/animations.css"/>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md antialiased selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar (Shared Component) -->
+<nav class="fixed top-0 z-50 flex h-[4.25rem] w-full items-center justify-between gap-4 border-b border-white/10 bg-stone-950/75 px-8 font-montserrat backdrop-blur-xl md:px-16">
+<a class="shrink-0 text-2xl font-bold tracking-tight text-stone-100" href="index.html">Onurik</a>
+<div class="hidden md:flex items-center gap-10 text-xs uppercase tracking-[0.2em]">
+<a class="text-white/35 hover:text-white/70 transition-colors" href="works.html">Works</a>
+<a class="text-white/35 hover:text-white/70 transition-colors" href="about.html">Info</a>
+<a class="border-b border-stone-100 pb-0.5 text-xs font-semibold uppercase tracking-[0.28em] text-stone-100 hover:border-white hover:text-white transition-colors" href="contact.html">Contact</a>
+</div>
+<div class="flex shrink-0 items-center gap-2">
+<a class="hidden md:inline-flex items-center justify-center border border-outline px-6 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-on-surface transition-colors duration-300 hover:border-transparent hover:bg-primary hover:text-on-primary" href="contact.html">Enquire</a>
+<button type="button" id="site-mobile-menu-btn" class="inline-flex items-center justify-center rounded-md p-2 text-stone-100 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40 md:hidden" aria-expanded="false" aria-controls="site-nav-drawer">
+<span class="material-symbols-outlined text-2xl" aria-hidden="true">menu</span>
+<span class="sr-only">Open menu</span>
+</button>
+</div>
+</nav>
+<div class="site-nav-overlay fixed inset-0 z-40 opacity-0 pointer-events-none bg-black/70 backdrop-blur-sm transition-opacity duration-300 md:hidden" aria-hidden="true"></div>
+<nav id="site-nav-drawer" class="fixed top-0 right-0 z-50 flex h-full w-[min(100vw,18rem)] flex-col gap-6 border-l border-white/10 bg-neutral-950 px-8 pb-8 pt-24 font-montserrat text-sm uppercase tracking-widest shadow-2xl md:hidden" aria-hidden="true" aria-label="Mobile">
+<a href="works.html" class="text-white/80 transition-colors hover:text-white">Works</a>
+<a href="about.html" class="text-white/80 transition-colors hover:text-white">Info</a>
+<a href="contact.html" class="border-b border-stone-100 pb-0.5 text-xs font-semibold uppercase tracking-[0.28em] text-white self-start">Contact</a>
+<a href="contact.html" class="mt-auto border-t border-white/10 pt-6 text-xs font-semibold uppercase tracking-[0.28em] text-white/90 hover:text-white transition-colors">Enquire</a>
+</nav>
+<script>
+(function () {
+  var btn = document.getElementById("site-mobile-menu-btn");
+  var drawer = document.getElementById("site-nav-drawer");
+  var overlay = document.querySelector(".site-nav-overlay");
+  if (!btn || !drawer || !overlay) return;
+  function setOpen(open) {
+    drawer.classList.toggle("open", open);
+    drawer.setAttribute("aria-hidden", open ? "false" : "true");
+    overlay.classList.toggle("open", open);
+    overlay.setAttribute("aria-hidden", open ? "false" : "true");
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    document.documentElement.style.overflow = open ? "hidden" : "";
+  }
+  btn.addEventListener("click", function () {
+    setOpen(!drawer.classList.contains("open"));
+  });
+  overlay.addEventListener("click", function () {
+    setOpen(false);
+  });
+  drawer.querySelectorAll("a").forEach(function (link) {
+    link.addEventListener("click", function () {
+      setOpen(false);
+    });
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") setOpen(false);
+  });
+})();
+</script>
+<!-- Main Content Canvas -->
+<main class="flex-grow pt-[140px] pb-section-gap px-gutter w-full max-w-container-max mx-auto">
+<!-- Split Layout Form Section -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-margin lg:gap-gutter">
+<!-- Left Side: Editorial & Intent -->
+<div class="lg:col-span-5 flex flex-col pt-4" data-anim-stagger>
+<h1 class="font-montserrat font-medium text-display-lg text-on-surface mb-8" data-anim-split="words">Let's work together</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-md">
+                    We partner with visionary organizations to architect digital experiences that prioritize clarity, intentionality, and quiet confidence. Tell us about your objective.
+                </p>
+<div class="mt-margin pt-margin border-t border-outline-variant/30 flex flex-col gap-6">
+<div>
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-2">Direct Inquiry</h3>
+<p class="font-body-md text-body-md"><a class="hover:text-primary transition-colors" href="mailto:jason@maduka.org">jason@maduka.org</a></p>
+</div>
+<div>
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-2">Operating Base</h3>
+<p class="font-body-md text-body-md">Nairobi, KE</p>
+</div>
+<div class="mt-8 pt-6 border-t border-outline-variant/30" data-onurik-social-contact-wrap hidden>
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-3">Connect</h3>
+<div data-onurik-social-contact class="flex flex-wrap gap-x-6 gap-y-3"></div>
+</div>
+</div>
+</div>
+<!-- Right Side: Minimalist Technical Form -->
+<div class="lg:col-span-6 lg:col-start-7 bg-surface-container-lowest p-8 md:p-12 rounded-lg border border-outline-variant/20">
+<form id="contact-form" class="flex flex-col gap-8" novalidate>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Name Field -->
+<div class="flex flex-col">
+<label class="sr-only" for="name">Name</label>
+<input class="bg-transparent border-0 border-b border-outline-variant text-on-surface focus:border-primary focus:ring-0 px-0 py-3 font-body-md text-body-md placeholder:text-on-surface-variant transition-colors duration-300" id="name" name="name" placeholder="Name" type="text"/>
+</div>
+<!-- Email Field -->
+<div class="flex flex-col">
+<label class="sr-only" for="email">Email</label>
+<input class="bg-transparent border-0 border-b border-outline-variant text-on-surface focus:border-primary focus:ring-0 px-0 py-3 font-body-md text-body-md placeholder:text-on-surface-variant transition-colors duration-300" id="email" name="email" placeholder="Email Address" type="email"/>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Project Type Dropdown -->
+<div class="flex flex-col relative">
+<label class="sr-only" for="project_type">Project Type</label>
+<select class="appearance-none bg-transparent border-0 border-b border-outline-variant text-on-surface focus:border-primary focus:ring-0 px-0 py-3 font-body-md text-body-md transition-colors duration-300 w-full cursor-pointer" id="project_type" name="project_type">
+<option class="bg-surface-container-lowest text-on-surface-variant" disabled="" selected="" value="">Select Project Type</option>
+<option class="bg-surface-container-lowest text-on-surface" value="design_system">Develop System</option>
+<option class="bg-surface-container-lowest text-on-surface" value="product_design">Product Design</option>
+<option class="bg-surface-container-lowest text-on-surface" value="brand_identity">Brand Identity</option>
+<option class="bg-surface-container-lowest text-on-surface" value="consulting">Consulting</option>
+</select>
+<span class="material-symbols-outlined absolute right-0 top-4 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+<!-- Start Date Picker -->
+<div class="flex flex-col relative">
+<label class="sr-only" for="start_date">Start Date</label>
+<input class="bg-transparent border-0 border-b border-outline-variant text-on-surface focus:border-primary focus:ring-0 px-0 py-3 font-body-md text-body-md placeholder:text-on-surface-variant transition-colors duration-300 w-full [color-scheme:dark]" id="start_date" name="start_date" type="date"/>
+</div>
+</div>
+<!-- Message Field -->
+<div class="flex flex-col mt-4">
+<label class="sr-only" for="message">Message</label>
+<textarea class="bg-transparent border-0 border-b border-outline-variant text-on-surface focus:border-primary focus:ring-0 px-0 py-3 font-body-md text-body-md placeholder:text-on-surface-variant resize-none transition-colors duration-300" id="message" name="message" placeholder="Tell us about the scope and objective of your initiative..." rows="4"></textarea>
+</div>
+<!-- CTA Actions -->
+<div class="flex flex-col sm:flex-row gap-6 mt-8 pt-4 items-center justify-between">
+<button class="w-full sm:w-auto px-8 py-4 border border-outline text-on-surface hover:bg-primary hover:text-on-primary transition-all duration-500 font-label-caps text-label-caps text-center flex justify-center items-center gap-3 group" type="submit">
+                            Submit Inquiry
+                            <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<div class="flex items-center gap-4 text-on-surface-variant">
+<span class="h-px w-8 bg-outline-variant"></span>
+<span class="font-label-caps text-label-caps">OR</span>
+<span class="h-px w-8 bg-outline-variant"></span>
+</div>
+<button id="contact-book-session" type="button" class="w-full sm:w-auto px-8 py-4 bg-surface-container-high text-on-surface hover:bg-surface-bright transition-all duration-300 font-label-caps text-label-caps text-center flex justify-center items-center gap-3">
+<span class="material-symbols-outlined text-sm">calendar_month</span>
+                            Book a Session
+                        </button>
+</div>
+<div id="contact-form-feedback" class="contact-form-feedback w-full mt-6" hidden role="status" aria-live="polite" aria-atomic="true">
+<div class="contact-form-feedback__measure">
+<div class="contact-form-feedback__shell border border-secondary-fixed-dim/30 bg-primary-fixed/10 rounded-lg px-4 py-3.5 md:px-5 md:py-4">
+<div class="contact-form-feedback__inner flex items-start gap-3">
+<span id="contact-form-feedback-icon" class="material-symbols-outlined shrink-0 text-xl text-secondary-fixed mt-0.5" aria-hidden="true">check_circle</span>
+<p id="contact-form-feedback-text" class="font-body-md text-[15px] md:text-[16px] leading-snug text-primary-fixed pt-px"></p>
+</div>
+</div>
+</div>
+</div>
+</form>
+</div>
+</div>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="bg-stone-950 w-full flex flex-col md:flex-row justify-between items-center px-8 md:px-16 full-width py-20 border-t border-stone-100/5 mt-auto">
+<div class="text-stone-100 font-bold mb-8 md:mb-0">Onurik</div>
+<nav data-onurik-social-footer class="flex flex-wrap gap-8 justify-center mb-8 md:mb-0 font-montserrat text-[10px] tracking-[0.2em] uppercase" aria-label="Social links" hidden></nav>
+<div class="font-montserrat text-[10px] tracking-[0.2em] uppercase text-stone-100/40">
+            © 2026 ONURIK. ALL RIGHTS RESERVED.
+        </div>
+</footer>
+<script type="module" src="./scripts/animations.js"></script>
+<script type="module" src="./scripts/contact-form-submit.js"></script>
+<script type="module" src="./scripts/site-social-links.js"></script>
+</body></html>

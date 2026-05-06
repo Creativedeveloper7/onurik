@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Onurik | Engineering Human-Centered Systems</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Montserrat:wght@400;500;600;700&amp;family=Noto+Serif:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "background": "#131313",
+                      "surface-container-lowest": "#0e0e0e",
+                      "inverse-surface": "#e5e2e1",
+                      "on-secondary-fixed": "#1e1b14",
+                      "surface-variant": "#353534",
+                      "surface-container-high": "#2a2a2a",
+                      "inverse-primary": "#5f5e5b",
+                      "on-primary": "#31302d",
+                      "on-error-container": "#ffdad6",
+                      "outline": "#929189",
+                      "inverse-on-surface": "#313030",
+                      "on-tertiary-container": "#656464",
+                      "on-tertiary-fixed-variant": "#474746",
+                      "error": "#ffb4ab",
+                      "surface-bright": "#3a3939",
+                      "surface-container-low": "#1c1b1b",
+                      "on-secondary-container": "#bab5a9",
+                      "surface-container-highest": "#353534",
+                      "primary": "#ffffff",
+                      "on-secondary-fixed-variant": "#4a473e",
+                      "on-surface": "#e5e2e1",
+                      "on-tertiary-fixed": "#1c1b1b",
+                      "tertiary-container": "#e5e2e1",
+                      "outline-variant": "#474741",
+                      "surface-tint": "#c9c6c1",
+                      "primary-fixed": "#e5e2dd",
+                      "on-primary-container": "#656461",
+                      "error-container": "#93000a",
+                      "tertiary-fixed": "#e5e2e1",
+                      "on-background": "#e5e2e1",
+                      "primary-fixed-dim": "#c9c6c1",
+                      "secondary-fixed": "#e8e2d6",
+                      "tertiary": "#ffffff",
+                      "tertiary-fixed-dim": "#c8c6c5",
+                      "surface-dim": "#131313",
+                      "surface-container": "#201f1f",
+                      "on-primary-fixed": "#1c1c19",
+                      "on-secondary": "#333028",
+                      "on-tertiary": "#313030",
+                      "surface": "#131313",
+                      "on-surface-variant": "#c8c7be",
+                      "secondary-container": "#4a473e",
+                      "primary-container": "#e5e2dd",
+                      "on-primary-fixed-variant": "#474743",
+                      "secondary-fixed-dim": "#ccc6ba",
+                      "on-error": "#690005",
+                      "secondary": "#ccc6ba"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "margin": "64px",
+                      "element-gap": "24px",
+                      "section-gap": "160px",
+                      "gutter": "32px",
+                      "container-max": "1440px"
+              },
+              "fontFamily": {
+                      "body-lg": [
+                              "inter"
+                      ],
+                      "label-caps": [
+                              "inter"
+                      ],
+                      "body-md": [
+                              "inter"
+                      ],
+                      "montserrat": [
+                              "Montserrat",
+                              "sans-serif"
+                      ],
+                      "display-xl": [
+                              "notoSerif"
+                      ],
+                      "display-lg": [
+                              "notoSerif"
+                      ],
+                      "headline-md": [
+                              "notoSerif"
+                      ]
+              },
+              "fontSize": {
+                      "body-lg": [
+                              "20px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "1.0",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-xl": [
+                              "84px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg": [
+                              "64px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "400"
+                              }
+                      ]
+                }
+            },
+          }
+        };
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md overflow-x-hidden selection:bg-surface-variant selection:text-primary">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-8 md:px-16 bg-stone-950/70 backdrop-blur-xl docked full-width h-20 border-b border-stone-100/10 flat no shadows">
+<div class="text-2xl font-black text-stone-100 tracking-tighter">Onurik</div>
+<ul class="hidden md:flex items-center gap-8 font-noto-serif uppercase tracking-widest text-xs">
+<li><a class="text-stone-100 border-b border-stone-100 pb-1 hover:text-stone-100 transition-colors duration-500" href="#">Works</a></li>
+<li><a class="text-stone-100/60 hover:text-stone-100 transition-colors duration-500" href="#">Info</a></li>
+<li><a class="text-stone-100/60 hover:text-stone-100 transition-colors duration-500" href="#">Contact</a></li>
+</ul>
+<button class="font-noto-serif uppercase tracking-widest text-xs text-stone-100 border border-stone-100/20 px-6 py-2 rounded-full hover:bg-stone-100 hover:text-stone-950 transition-colors duration-500">
+            Enquire
+        </button>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-grow">
+<!-- Hero Section -->
+<section class="relative h-screen w-full flex flex-col justify-end pb-24 px-8 md:px-16">
+<!-- Simulated Background Video / Motion Graphic -->
+<div class="absolute inset-0 z-[-1] overflow-hidden">
+<img alt="Hero Background" class="w-full h-full object-cover opacity-40 grayscale mix-blend-luminosity" data-alt="Abstract cinematic motion graphics featuring flowing liquid metal or deep dark shifting geometric landscapes. The lighting is low-key, moody, and dramatic, heavily emphasizing shadows with subtle, sharp specular highlights. The overall tone is highly sophisticated, technical, and atmospheric, perfectly matching a premium dark-mode cinematic minimalism aesthetic with heavy negative space." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMFw810lQynGGJUk1FEdYLYlSi2uH2lOOCfkL5-Vy7VQnM4BUDAtCqnsYr2rA4EvkOzG6Wa-pWk_ubx_Wz6HPWxdU2E9hAJRCmiVtrEvsFU6UiCaFgaH0tVu1t4FB8zJ3OvB1nacf2QeP2sXIlMBj_ZTlJX32zxHCOHdo965NG_9Z1FkMDRk5BXsCXBqF8pGYxHwwz8wL6zVGBWtXI-Ub34j0n6wxYE5UrE4Jqig3D79T3SvE5sMEBNZ-PcWQ2ZUA-gBBYv19IEV_e"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent"></div>
+</div>
+<div class="max-w-container-max mx-auto w-full">
+<h1 class="font-display-xl text-display-xl max-w-4xl text-primary">
+                    Engineering Human-Centered Systems
+                </h1>
+</div>
+<!-- Scroll Cue -->
+<div class="absolute bottom-8 left-8 md:left-16 flex items-center gap-4 opacity-50">
+<span class="font-label-caps text-label-caps tracking-widest uppercase">Scroll</span>
+<span class="material-symbols-outlined text-sm">arrow_downward</span>
+</div>
+</section>
+<!-- Bio Section -->
+<section class="py-section-gap px-8 md:px-16 max-w-container-max mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-center">
+<!-- Left: Editorial Bio -->
+<div class="col-span-1 md:col-span-6 pr-0 md:pr-12">
+<h2 class="font-display-lg text-display-lg text-primary mb-8 font-medium">
+        I design. I build. I question everything..
+                    </h2>
+<div class="font-body-lg text-body-lg text-on-surface-variant space-y-6">
+<p>
+        Marking a decade of experience, a clear perspective has emerged: the true craft lies not in choosing between systems and design, but in aligning them- quietly, intentionally, and with purpose.
+                        </p>
+<p class="font-body-md text-body-md">
+        Focused on creating products that are simple, thoughtful, and actually useful. Somewhere along the way, ideas turn into things people rely on; that’s the part I enjoy the most
+                        </p>
+</div>
+</div>
+<!-- Right: Parallax Portrait (photo blend isolated so caption stacks above mix-blend) -->
+<div class="relative isolate mt-16 h-[600px] overflow-hidden rounded-lg md:mt-0 col-span-1 md:col-span-6">
+<div class="absolute inset-0 z-0 overflow-hidden rounded-lg">
+<img alt="Studio Portrait" class="absolute inset-0 h-full w-full object-cover grayscale opacity-80" data-alt="A highly stylized, moody editorial portrait of a professional figure in a stark, minimalist environment. The lighting is dramatic, characterized by deep shadows and sharp contrast, resembling high-fashion photography. The color palette is strictly monochrome or deep greyscale, reinforcing a sense of quiet confidence, sophisticated technical authority, and cinematic depth. The subject is partially obscured or lit dramatically from the side." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDzTmrylJ6OUYdrv9jlukxJr8Ymz5S8xWvBcfNPQA9XvIQ3IKGL_C08VJVkCtrJwAVzN7LHIqgnOWF7mMnHRLpJsUUR08pYM8FpdfU8qUTFPdnccaGxXgftoF5k1v3zDx6vB3gxMR_I6iY_V1-bDowTm67vURORc-ry4G3lywYVEZ3gdWvkwwiFdird09xZXiiuvXsoOCMWScQKlTPkW8UsZE32Eca8b51NaHBzGFlSD56puJ3lDD5llCl7OokRGHtumX6q6J6RmMo"/>
+<div class="pointer-events-none absolute inset-0 bg-surface-container-highest mix-blend-overlay"></div>
+</div>
+<div class="pointer-events-none absolute bottom-5 left-5 z-10 max-w-[min(18rem,calc(100%-2.5rem))] rounded-sm border border-black/10 bg-white/95 px-4 py-3 shadow-[0_8px_30px_rgba(0,0,0,0.12)] backdrop-blur-sm">
+<p class="font-montserrat text-[17px] font-semibold leading-snug tracking-[-0.02em] text-neutral-950">Jason Maina</p>
+<p class="font-montserrat mt-1.5 text-[10px] font-semibold uppercase leading-none tracking-[0.16em] text-neutral-900">Lead Engineer<span class="mx-1.5 text-neutral-400" aria-hidden="true">—</span>Systems/Design</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Trusted By (Logo Carousel) -->
+<section class="py-margin border-y border-surface-container-high bg-surface-dim overflow-hidden relative">
+<div class="px-8 md:px-16 mb-8 max-w-container-max mx-auto">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Trusted Brands</span>
+</div>
+<!-- Fade Masks -->
+<div class="absolute top-0 bottom-0 left-0 w-32 bg-gradient-to-r from-surface-dim to-transparent z-10"></div>
+<div class="absolute top-0 bottom-0 right-0 w-32 bg-gradient-to-l from-surface-dim to-transparent z-10"></div>
+<!-- Carousel Track -->
+<div class="flex gap-24 items-center px-16 w-[200%] opacity-40">
+<!-- Repeated generic logos for visual effect -->
+<span class="font-display-md text-headline-md tracking-widest uppercase font-bold text-inverse-surface">Acme Corp</span>
+<span class="font-display-md text-headline-md tracking-widest uppercase font-bold text-inverse-surface">Nexus</span>
+<span class="font-display-md text-headline-md tracking-widest uppercase font-bold text-inverse-surface">Omni Systems</span>
+<span class="font-display-md text-headline-md tracking-widest uppercase font-bold text-inverse-surface">Apex</span>
+<span class="font-display-md text-headline-md tracking-widest uppercase font-bold text-inverse-surface">Vanguard</span>
+<!-- Duplicate for seamless feel -->
+<span class="font-display-md text-headline-md tracking-widest uppercase font-bold text-inverse-surface">Acme Corp</span>
+<span class="font-display-md text-headline-md tracking-widest uppercase font-bold text-inverse-surface">Nexus</span>
+<span class="font-display-md text-headline-md tracking-widest uppercase font-bold text-inverse-surface">Omni Systems</span>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full flex flex-col md:flex-row justify-between items-center px-8 md:px-16 bg-stone-950 text-stone-100 full-width py-20 border-t border-stone-100/5 flat no shadows">
+<div class="text-stone-100 font-bold mb-8 md:mb-0">
+            ONURIK
+        </div>
+<ul class="flex gap-8 font-noto-serif text-[10px] tracking-[0.2em] uppercase text-stone-100/40">
+<li><a class="hover:text-stone-100 hover:tracking-[0.3em] transition-all duration-700" href="#">Instagram</a></li>
+<li><a class="hover:text-stone-100 hover:tracking-[0.3em] transition-all duration-700" href="#">LinkedIn</a></li>
+<li><a class="hover:text-stone-100 hover:tracking-[0.3em] transition-all duration-700" href="#">Behance</a></li>
+<li><a class="hover:text-stone-100 hover:tracking-[0.3em] transition-all duration-700" href="#">Email</a></li>
+</ul>
+<div class="font-noto-serif text-[10px] tracking-[0.2em] uppercase text-stone-100/40 mt-8 md:mt-0">
+            © 2026 ONURIK. ALL RIGHTS RESERVED.
+        </div>
+</footer>
+</body></html>

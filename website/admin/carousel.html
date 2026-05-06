@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script>
+window.__ONURIK_PUBLIC_CONFIG__ = {
+  supabaseUrl: "",
+  supabaseAnonKey: "",
+  dashboardSecret: "",
+};
+</script>
+<title>Admin · Brands · Onurik</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "primary": "#ffffff", "on-surface": "#e5e2e1", "background": "#131313",
+          "outline-variant": "#474741", "on-background": "#e5e2e1",
+          "surface-container-low": "#1c1b1b", "on-surface-variant": "#c8c7be"
+        },
+        fontFamily: {
+          "display-lg": ["Montserrat", "sans-serif"],
+          "body-md": ["Manrope", "sans-serif"],
+          "label-caps": ["Manrope", "sans-serif"]
+        },
+        fontSize: {
+          "display-lg": ["64px", { lineHeight: "72px", letterSpacing: "-0.02em", fontWeight: "500" }],
+          "body-md": ["16px", { lineHeight: "24px", letterSpacing: "0.01em", fontWeight: "400" }],
+          "label-caps": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "600" }]
+        }
+      }
+    }
+  };
+</script>
+<style>
+  body { background-color: theme('colors.background'); color: theme('colors.on-background'); }
+  #admin-nav-drawer { transform: translateX(100%); transition: transform 0.3s ease-out; }
+  #admin-nav-drawer.open { transform: translateX(0); }
+  .admin-nav-overlay { opacity: 0; pointer-events: none; transition: opacity 0.3s ease-out; }
+  .admin-nav-overlay.open { opacity: 1; pointer-events: auto; }
+  .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; }
+</style>
+<link rel="stylesheet" href="../styles/animations.css"/>
+</head>
+<body class="font-body-md min-h-screen touch-manipulation">
+<header class="lg:hidden fixed top-0 left-0 right-0 z-[60] flex h-16 items-center justify-between border-b border-stone-100/10 bg-stone-950/95 px-4 backdrop-blur-xl">
+<a href="../index.html" class="text-xs font-semibold uppercase tracking-[0.2em] text-stone-400 hover:text-stone-100 transition-colors">Site</a>
+<span class="font-montserrat text-sm font-semibold text-stone-100">Admin</span>
+<button type="button" id="admin-menu-btn" class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md text-stone-100 hover:bg-white/10" aria-controls="admin-nav-drawer"><span class="material-symbols-outlined text-2xl">menu</span></button>
+</header>
+
+<div class="admin-nav-overlay fixed inset-0 z-[55] bg-black/70 backdrop-blur-sm lg:hidden" id="admin-nav-overlay"></div>
+<nav id="admin-nav-drawer" class="fixed top-0 right-0 z-[70] flex h-full w-[min(100vw,20rem)] flex-col border-l border-stone-100/10 bg-stone-950 shadow-2xl lg:hidden" aria-label="Mobile admin nav">
+<div class="flex h-16 items-center justify-between border-b border-stone-100/10 px-4">
+<span class="font-montserrat text-sm text-stone-100">Menu</span>
+<button type="button" id="admin-menu-close" class="text-stone-100 hover:bg-white/10 rounded-md p-2"><span class="material-symbols-outlined">close</span></button>
+</div>
+<div class="flex flex-1 flex-col gap-1 overflow-y-auto py-6">
+<a class="mx-4 mb-3 text-[10px] uppercase tracking-[0.2em] text-stone-500 hover:text-stone-100" href="../index.html">← Public site</a>
+<a class="flex min-h-[44px] items-center gap-4 px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="index.html"><span class="material-symbols-outlined">dashboard</span><span>Overview</span></a>
+<a class="flex min-h-[44px] items-center gap-4 px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="enquiries.html"><span class="material-symbols-outlined">mail</span><span>Enquiries</span></a>
+<a class="flex min-h-[44px] items-center gap-4 px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="works.html"><span class="material-symbols-outlined">work</span><span>Works Manager</span></a>
+<a class="flex min-h-[44px] items-center gap-4 border-l-2 border-stone-100 bg-stone-800 px-6 py-3 text-sm text-stone-100" href="carousel.html"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">view_carousel</span><span>Brands</span></a>
+<a class="flex min-h-[44px] items-center gap-4 px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="bookings.html"><span class="material-symbols-outlined">calendar_today</span><span>Bookings</span></a>
+<a class="flex min-h-[44px] items-center gap-4 px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="settings.html"><span class="material-symbols-outlined">settings</span><span>Settings</span></a>
+</div>
+</nav>
+
+<nav class="fixed left-0 top-0 z-50 hidden h-full w-64 flex-col border-r border-stone-100/10 bg-stone-900 lg:flex">
+<div class="border-b border-stone-100/10 px-8 py-10">
+<h2 class="font-display-lg text-lg font-bold text-stone-100">Admin Panel</h2>
+<p class="mt-1 text-sm text-stone-500">Onurik Systems</p>
+</div>
+<div class="flex flex-1 flex-col gap-2 py-8">
+<a class="mx-8 mb-4 text-[10px] uppercase tracking-[0.2em] text-stone-500 hover:text-stone-100" href="../index.html">← Public site</a>
+<a class="flex items-center gap-4 px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="index.html"><span class="material-symbols-outlined">dashboard</span><span>Overview</span></a>
+<a class="flex items-center gap-4 px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="enquiries.html"><span class="material-symbols-outlined">mail</span><span>Enquiries</span></a>
+<a class="flex items-center gap-4 px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="works.html"><span class="material-symbols-outlined">work</span><span>Works Manager</span></a>
+<a class="flex items-center gap-4 rounded-none border-l-2 border-stone-100 bg-stone-800 px-8 py-3 text-sm text-stone-100" href="carousel.html"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">view_carousel</span><span>Brands</span></a>
+<a class="flex items-center gap-4 px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="bookings.html"><span class="material-symbols-outlined">calendar_today</span><span>Bookings</span></a>
+<a class="flex items-center gap-4 px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="settings.html"><span class="material-symbols-outlined">settings</span><span>Settings</span></a>
+</div>
+</nav>
+
+<main class="relative ml-0 flex min-h-screen flex-1 flex-col bg-background pt-16 lg:ml-64 lg:pt-0">
+<header class="border-b border-outline-variant/30 px-8 py-10 md:px-16">
+<p class="mb-4 flex items-center gap-2 font-label-caps text-label-caps uppercase tracking-[0.2em] text-primary">
+<span class="material-symbols-outlined text-sm" aria-hidden="true">view_carousel</span> Brands
+</p>
+<h1 class="font-display-lg text-3xl text-on-background md:text-display-lg">Homepage logo marquee</h1>
+<p class="mt-4 max-w-2xl text-body-md text-on-surface-variant">Add a display name and image file. When <span class="text-stone-200">On homepage</span> is checked, the logo appears in the public site’s <span class="text-stone-200">Selected Clients</span> section (in sort order). Requires Supabase migration <code class="rounded bg-stone-900 px-1.5 py-0.5 font-mono text-xs text-stone-300">20260208120000_brands_carousel</code> and bucket <code class="rounded bg-stone-900 px-1.5 py-0.5 font-mono text-xs text-stone-300">onurik-brand-logos</code>.</p>
+<p id="brands-admin-status" class="mt-3 min-h-[1.25rem] text-sm text-on-surface-variant" aria-live="polite"></p>
+</header>
+<div class="flex flex-1 flex-col px-8 py-10 md:px-16 md:py-12">
+<div id="brands-admin-root"></div>
+</div>
+</main>
+
+<script>
+(function () {
+  var btn = document.getElementById("admin-menu-btn");
+  var closeBtn = document.getElementById("admin-menu-close");
+  var drawer = document.getElementById("admin-nav-drawer");
+  var overlay = document.getElementById("admin-nav-overlay");
+  function setOpen(open) {
+    if (!drawer || !overlay) return;
+    drawer.classList.toggle("open", open);
+    overlay.classList.toggle("open", open);
+    document.documentElement.style.overflow = open ? "hidden" : "";
+  }
+  if (btn && drawer && overlay) {
+    btn.addEventListener("click", function () { setOpen(!drawer.classList.contains("open")); });
+    overlay.addEventListener("click", function () { setOpen(false); });
+    if (closeBtn) closeBtn.addEventListener("click", function () { setOpen(false); });
+    drawer.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () { setOpen(false); });
+    });
+  }
+})();
+</script>
+<script type="module" src="../scripts/animations.js"></script>
+<script type="module" src="../scripts/brands-carousel-admin.js"></script>
+</body>
+</html>

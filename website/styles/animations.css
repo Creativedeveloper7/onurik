@@ -1,0 +1,402 @@
+/**
+ * Onurik global motion system — GPU-safe (transform + opacity).
+ * Spring easing: cubic-bezier(0.34, 1.56, 0.64, 1)
+ * Trigger classes: .anim-section-reveal, [data-anim-split], [data-anim-stagger], [data-anim-parallax]
+ */
+
+:root {
+  --anim-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --anim-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --anim-dur-fast: 0.38s;
+  --anim-dur-med: 0.65s;
+  --anim-dur-slow: 1.05s;
+}
+
+/* --- View Transitions (MPA, Chromium) --- */
+@supports (view-transition-name: none) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.45s;
+    animation-timing-function: var(--anim-ease-out);
+  }
+}
+
+/* --- Page curtain --- */
+#anim-page-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 10050;
+  pointer-events: none;
+  display: flex;
+}
+
+.anim-curtain__panel {
+  flex: 1;
+  background: #0a0a0a;
+  transform: translateX(0);
+  transition: transform var(--anim-dur-slow) var(--anim-ease-out);
+  will-change: transform;
+}
+
+.anim-curtain--open .anim-curtain__panel--left {
+  transform: translateX(-101%);
+}
+
+.anim-curtain--open .anim-curtain__panel--right {
+  transform: translateX(101%);
+}
+
+/* --- Scroll progress --- */
+#anim-scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  transform-origin: left center;
+  transform: scaleX(0);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.25),
+    rgba(255, 255, 255, 0.85),
+    rgba(255, 255, 255, 0.35)
+  );
+  z-index: 10040;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+/* --- Nav entrance (paired with html.anim-ready from JS) --- */
+html.anim-ready body > nav.fixed:first-of-type {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+html:not(.anim-ready) body > nav.fixed:first-of-type {
+  opacity: 0;
+  transform: translateY(-14px);
+  filter: blur(10px);
+  transition:
+    opacity var(--anim-dur-med) var(--anim-ease-out),
+    transform var(--anim-dur-med) var(--anim-ease-out),
+    filter var(--anim-dur-med) var(--anim-ease-out);
+}
+
+/* --- Section scroll reveal --- */
+.anim-section-reveal {
+  opacity: 0;
+  transform: translateY(2rem) scale(0.985);
+  transition:
+    opacity var(--anim-dur-med) var(--anim-ease-out),
+    transform var(--anim-dur-slow) var(--anim-ease-spring);
+  will-change: transform, opacity;
+}
+
+.anim-section-reveal.is-inview {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Child stagger */
+[data-anim-stagger] > * {
+  opacity: 0;
+  transform: translateY(1.25rem);
+  transition:
+    opacity var(--anim-dur-med) var(--anim-ease-out),
+    transform var(--anim-dur-slow) var(--anim-ease-spring);
+}
+
+[data-anim-stagger].is-inview > *:nth-child(1) {
+  transition-delay: 0.05s;
+}
+[data-anim-stagger].is-inview > *:nth-child(2) {
+  transition-delay: 0.12s;
+}
+[data-anim-stagger].is-inview > *:nth-child(3) {
+  transition-delay: 0.19s;
+}
+[data-anim-stagger].is-inview > *:nth-child(4) {
+  transition-delay: 0.26s;
+}
+[data-anim-stagger].is-inview > *:nth-child(5) {
+  transition-delay: 0.33s;
+}
+[data-anim-stagger].is-inview > *:nth-child(6) {
+  transition-delay: 0.4s;
+}
+[data-anim-stagger].is-inview > *:nth-child(7) {
+  transition-delay: 0.47s;
+}
+[data-anim-stagger].is-inview > *:nth-child(8) {
+  transition-delay: 0.54s;
+}
+
+[data-anim-stagger].is-inview > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Split headline words --- */
+[data-anim-split="words"] .anim-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.85em);
+  transition:
+    opacity var(--anim-dur-med) var(--anim-ease-out),
+    transform var(--anim-dur-slow) var(--anim-ease-spring);
+}
+
+[data-anim-split="words"].anim-split-done .anim-word {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Label after headline: siblings or .anim-label-cap */
+.anim-label-cap {
+  opacity: 0;
+  transform: translateX(-1rem);
+  transition:
+    opacity var(--anim-dur-fast) var(--anim-ease-out),
+    transform var(--anim-dur-med) var(--anim-ease-spring);
+  transition-delay: 0.35s;
+}
+
+.anim-label-cap.is-inview,
+.anim-section-reveal.is-inview .anim-label-cap {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* --- Nav link draw underline --- */
+a.anim-drawline {
+  position: relative;
+  text-decoration: none;
+}
+
+a.anim-drawline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.35s var(--anim-ease-spring);
+  opacity: 0.85;
+}
+
+a.anim-drawline:hover::after,
+a.anim-drawline:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* --- Buttons --- */
+button.anim-press:not(:disabled):active,
+a.anim-press:active {
+  transform: scale(0.97);
+  transition: transform 0.12s var(--anim-ease-out);
+}
+
+a.anim-cta-glow {
+  position: relative;
+  overflow: hidden;
+  transition:
+    box-shadow var(--anim-dur-fast) var(--anim-ease-out),
+    transform 0.12s var(--anim-ease-out);
+}
+
+a.anim-cta-glow:hover {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12), 0 0 28px rgba(255, 255, 255, 0.08);
+}
+
+/* Loading dots on submitting buttons */
+button.anim-loading-dots {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+button.anim-loading-dots::after {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  margin-left: 0.5rem;
+  border-radius: 50%;
+  background: currentColor;
+  animation: anim-dot-pulse 0.9s ease-in-out infinite;
+  vertical-align: middle;
+}
+
+@keyframes anim-dot-pulse {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+/* --- Project cards (Works) --- */
+.anim-project-card .anim-project-card__media {
+  transition:
+    transform 0.55s var(--anim-ease-spring),
+    opacity 0.45s ease;
+  will-change: transform;
+}
+
+.anim-project-card:hover .anim-project-card__media {
+  transform: scale(1.06);
+  opacity: 1;
+}
+
+.anim-project-card .anim-project-card__scrim {
+  opacity: 0;
+  transform: translateY(22%);
+  transition:
+    opacity 0.45s var(--anim-ease-out),
+    transform 0.5s var(--anim-ease-spring);
+  pointer-events: none;
+}
+
+.anim-project-card:hover .anim-project-card__scrim {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.anim-project-card .anim-project-card__title {
+  transform: translateY(10px);
+  transition: transform 0.45s var(--anim-ease-spring);
+}
+
+.anim-project-card:hover .anim-project-card__title {
+  transform: translateY(0);
+}
+
+/* --- Accordion row polish --- */
+.accordion-btn {
+  transition:
+    transform 0.35s var(--anim-ease-spring),
+    background-color 0.25s ease;
+}
+
+.accordion-btn:hover {
+  transform: translateY(-2px);
+}
+
+.accordion-btn .tabular-nums {
+  transition: color 0.28s ease, transform 0.35s var(--anim-ease-spring);
+}
+
+.accordion-btn:hover .tabular-nums {
+  color: rgba(229, 226, 225, 0.95);
+  transform: translateX(2px);
+}
+
+/* --- Forms (focus glow, dark UI) --- */
+input.anim-glow:focus-visible,
+textarea.anim-glow:focus-visible,
+select.anim-glow:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18), 0 0 22px rgba(255, 255, 255, 0.06);
+  transition: box-shadow 0.25s ease;
+}
+
+/* --- Contact feedback spring --- */
+.contact-form-feedback.is-visible .contact-form-feedback__shell {
+  animation: anim-toast-up 0.55s var(--anim-ease-spring) both;
+}
+
+@keyframes anim-toast-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* --- Brands marquee --- */
+#trusted-brands-marquee-root .trusted-marquee-track:hover {
+  animation-play-state: paused !important;
+}
+
+#trusted-brands-marquee-root .trusted-marquee-track img {
+  transition: transform 0.4s var(--anim-ease-spring);
+  will-change: transform;
+}
+
+#trusted-brands-marquee-root .trusted-marquee-track img:hover {
+  transform: scale(1.1);
+}
+
+/* Edge fades slightly stronger on hover for “blend” */
+#trusted-brands-marquee-root {
+  --tw-mask: linear-gradient(
+    90deg,
+    transparent,
+    black 12%,
+    black 88%,
+    transparent
+  );
+}
+
+/* --- Parallax layers --- */
+[data-anim-parallax] {
+  will-change: transform;
+}
+
+/* --- Reduced motion --- */
+@media (prefers-reduced-motion: reduce) {
+  #anim-page-curtain {
+    display: none !important;
+  }
+
+  #anim-scroll-progress {
+    opacity: 0 !important;
+  }
+
+  html:not(.anim-ready) body > nav.fixed:first-of-type {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+
+  .anim-section-reveal,
+  [data-anim-stagger] > *,
+  [data-anim-split="words"] .anim-word {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: opacity 0.35s ease !important;
+  }
+
+  .anim-project-card:hover .anim-project-card__media {
+    transform: none !important;
+  }
+
+  .accordion-btn:hover {
+    transform: none !important;
+  }
+
+  .contact-form-feedback.is-visible .contact-form-feedback__shell {
+    animation: none !important;
+  }
+
+  #trusted-brands-marquee-root .trusted-marquee-track:hover {
+    animation-play-state: running !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
+}

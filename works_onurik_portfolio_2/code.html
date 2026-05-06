@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Works - Onurik</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Serif:wght@400;700;900&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "primary-container": "#e5e2dd",
+          "primary": "#ffffff",
+          "on-surface": "#e5e2e1",
+          "surface-dim": "#131313",
+          "background": "#131313",
+          "on-primary-container": "#656461",
+          "on-tertiary-container": "#656464",
+          "surface-container-lowest": "#0e0e0e",
+          "tertiary-fixed-dim": "#c8c6c5",
+          "inverse-surface": "#e5e2e1",
+          "primary-fixed-dim": "#c9c6c1",
+          "tertiary-container": "#e5e2e1",
+          "outline-variant": "#474741",
+          "surface-container-high": "#2a2a2a",
+          "secondary-fixed-dim": "#ccc6ba",
+          "on-tertiary-fixed-variant": "#474746",
+          "error-container": "#93000a",
+          "primary-fixed": "#e5e2dd",
+          "inverse-on-surface": "#313030",
+          "outline": "#929189",
+          "on-error": "#690005",
+          "surface-variant": "#353534",
+          "on-secondary-fixed-variant": "#4a473e",
+          "on-background": "#e5e2e1",
+          "on-tertiary": "#313030",
+          "on-error-container": "#ffdad6",
+          "error": "#ffb4ab",
+          "on-secondary-fixed": "#1e1b14",
+          "secondary-fixed": "#e8e2d6",
+          "secondary": "#ccc6ba",
+          "on-secondary": "#333028",
+          "on-primary": "#31302d",
+          "inverse-primary": "#5f5e5b",
+          "surface-container": "#201f1f",
+          "surface-tint": "#c9c6c1",
+          "secondary-container": "#4a473e",
+          "on-primary-fixed": "#1c1c19",
+          "surface": "#131313",
+          "on-secondary-container": "#bab5a9",
+          "on-primary-fixed-variant": "#474743",
+          "surface-bright": "#3a3939",
+          "on-surface-variant": "#c8c7be",
+          "tertiary": "#ffffff",
+          "on-tertiary-fixed": "#1c1b1b",
+          "tertiary-fixed": "#e5e2e1",
+          "surface-container-low": "#1c1b1b",
+          "surface-container-highest": "#353534"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.125rem",
+          "lg": "0.25rem",
+          "xl": "0.5rem",
+          "full": "0.75rem"
+        },
+        "spacing": {
+          "gutter": "32px",
+          "element-gap": "24px",
+          "margin": "64px",
+          "container-max": "1440px",
+          "section-gap": "160px"
+        },
+        "fontFamily": {
+          "montserrat": ["Montserrat", "sans-serif"],
+          "headline-md": ["notoSerif"],
+          "display-xl": ["notoSerif"],
+          "label-caps": ["inter"],
+          "body-md": ["inter"],
+          "display-lg": ["notoSerif"],
+          "body-lg": ["inter"]
+        },
+        "fontSize": {
+          "headline-md": ["32px", { "lineHeight": "1.2", "fontWeight": "400" }],
+          "display-xl": ["84px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+          "label-caps": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "600" }],
+          "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+          "display-lg": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+          "body-lg": ["20px", { "lineHeight": "1.6", "fontWeight": "400" }]
+        }
+      },
+    },
+  }
+</script>
+<style>
+  body { background-color: #131313; color: #e5e2e1; }
+
+  /* ── Wobbly accordion animation ── */
+  @keyframes wobble-open {
+    0%   { transform: scaleY(0.92); opacity: 0; }
+    40%  { transform: scaleY(1.03); opacity: 1; }
+    65%  { transform: scaleY(0.98); }
+    82%  { transform: scaleY(1.01); }
+    100% { transform: scaleY(1);    opacity: 1; }
+  }
+
+  @keyframes wobble-item {
+    0%   { transform: translateY(10px); opacity: 0; }
+    50%  { transform: translateY(-4px); opacity: 1; }
+    75%  { transform: translateY(2px);  }
+    100% { transform: translateY(0);    opacity: 1; }
+  }
+
+  .accordion-content {
+    display: none;
+    transform-origin: top center;
+  }
+  .accordion-content.open {
+    display: block;
+    animation: wobble-open 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+  .accordion-content.open > * {
+    animation: wobble-item 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.08s;
+    opacity: 0;
+  }
+
+  /* Arrow rotation */
+  .accordion-arrow {
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .accordion-btn.active .accordion-arrow {
+    transform: rotate(45deg);
+  }
+
+  /* Highlight bar on active button */
+  .accordion-btn {
+    position: relative;
+    overflow: hidden;
+  }
+  .accordion-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 1px;
+    background: #e5e2e1;
+    transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .accordion-btn.active::after {
+    width: 100%;
+  }
+
+  /* Sticky category nav dot indicator */
+  .nav-dot {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: #929189;
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+  .nav-dot.active {
+    background: #e5e2e1;
+    transform: scale(1.6);
+  }
+</style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased overflow-x-hidden">
+
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-8 md:px-16 bg-stone-950/70 backdrop-blur-xl h-20 border-b border-stone-100/10 transition-colors duration-500">
+  <div class="text-2xl font-black text-stone-100 tracking-tighter">Onurik</div>
+  <div class="hidden md:flex gap-8 font-noto-serif uppercase tracking-widest text-xs">
+    <a class="text-stone-100 border-b border-stone-100 pb-1 opacity-70 transition-opacity" href="#">Works</a>
+    <a class="text-stone-100/60 hover:text-stone-100 transition-colors duration-500" href="#">Info</a>
+    <a class="text-stone-100/60 hover:text-stone-100 transition-colors duration-500" href="#">Contact</a>
+  </div>
+  <button class="font-noto-serif uppercase tracking-widest text-xs text-stone-100/60 hover:text-stone-100 transition-colors duration-500 border border-stone-100/20 px-4 py-2 rounded-none">Enquire</button>
+</nav>
+
+<!-- Page Header -->
+<header class="pt-48 pb-16 px-8 md:px-16 max-w-[1440px] mx-auto text-center">
+  <h1 class="font-display-xl text-display-xl text-primary mb-6">Works</h1>
+  <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">A curated selection of our finest technical and aesthetic achievements.</p>
+</header>
+
+<!-- ══════════════════════════════════════════════
+     WOBBLY ACCORDION CATEGORY MENU
+     ══════════════════════════════════════════════ -->
+<div class="max-w-[1440px] mx-auto px-8 md:px-16 pb-24">
+
+  <!-- Section label -->
+  <p class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest mb-6">Browse by category</p>
+
+  <div class="accordion-group border-t border-surface-container-high">
+
+    <!-- ── 1. Standard Projects ── -->
+    <div class="accordion-item border-b border-surface-container-high">
+      <button class="accordion-btn w-full flex items-center justify-between py-6 text-left group" data-target="section-standard">
+        <div class="flex items-center gap-5">
+          <span class="font-label-caps text-label-caps text-on-surface-variant tabular-nums">01</span>
+          <span class="font-montserrat font-medium text-xl md:text-2xl text-primary group-hover:text-on-surface transition-colors duration-300">Standard Projects</span>
+          <span class="hidden md:inline font-body-md text-body-md text-on-surface-variant opacity-60 ml-2">— Lab experiments & core products</span>
+        </div>
+        <span class="accordion-arrow material-symbols-outlined text-on-surface-variant text-2xl select-none">add</span>
+      </button>
+      <div class="accordion-content" id="acc-standard">
+        <div class="pb-16 grid grid-cols-1 md:grid-cols-2 gap-gutter">
+          <div class="group relative aspect-[4/3] overflow-hidden bg-surface-container-highest cursor-pointer rounded-xl">
+            <img alt="Abstract digital landscape" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbo9dFM9fv9T85fEKhNCeLJh2-fD9FEwowi4BWrloPgTOa9lUtefGZODPJ9wROAKrhyk8ZXzWfDovqKIu8bKEitnc6w3V8LdK-C3zCKsygXJ5tKAOLLsgj7MgH761ovChbZnKkocqWbDcLtlWkfDYkGCicqNo93n5D6o8xLhZy6UcDVlu7nmjPfI89OXjKH9_6M02k41kJ0ilkGfsPnibBnwCbzmo1_EoLp3dLjsbLPxRmK1hnMhs-8stb57sIlJPkGCVhXc502cbU"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
+              <span class="font-label-caps text-label-caps text-secondary uppercase tracking-widest mb-2">Web Application</span>
+              <h3 class="font-headline-md text-headline-md text-primary">Quantum Dash</h3>
+            </div>
+          </div>
+          <div class="group relative aspect-[4/3] overflow-hidden bg-surface-container-highest cursor-pointer rounded-xl">
+            <img alt="Retro computer setup" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3tu3bdQLc--41WGjytPriZYE8NcpXiFEsuuh4QjwWX6ci7BbkUlIuk8XoK-As7Jmg3w8TuzP3Mwj1BsX_uIYcZT4xo6GTRLoX9GD4XK06jaQJO1pKx1O26bNPDXNhbWXNfUCAI03VES561jpQgC8aDllUV0l3IAeRjYoIhCaFtufYf87PV9l5oU1WjhSkpg6PvXodryG6mwiaZqrexnaLB_snvYWsQtxxFk52viQ3waKd5du0GyHFaSu-rhgtO5MAg949lbgB3OZW"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
+              <span class="font-label-caps text-label-caps text-secondary uppercase tracking-widest mb-2">Onurik Lab</span>
+              <h3 class="font-headline-md text-headline-md text-primary">Project Synthesis</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 2. Branding & Identity ── -->
+    <div class="accordion-item border-b border-surface-container-high">
+      <button class="accordion-btn w-full flex items-center justify-between py-6 text-left group" data-target="section-branding">
+        <div class="flex items-center gap-5">
+          <span class="font-label-caps text-label-caps text-on-surface-variant tabular-nums">02</span>
+          <span class="font-montserrat font-medium text-xl md:text-2xl text-primary group-hover:text-on-surface transition-colors duration-300">Branding &amp; Identity</span>
+          <span class="hidden md:inline font-body-md text-body-md text-on-surface-variant opacity-60 ml-2">— Onurik Designs & brand ecosystems</span>
+        </div>
+        <span class="accordion-arrow material-symbols-outlined text-on-surface-variant text-2xl select-none">add</span>
+      </button>
+      <div class="accordion-content" id="acc-branding">
+        <div class="pb-16 grid grid-cols-1 md:grid-cols-3 gap-gutter">
+          <div class="group relative aspect-square overflow-hidden bg-surface-container-highest cursor-pointer rounded-xl">
+            <img alt="Minimalist packaging" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAK_DF7zbgWXwiChljgOZpEhEDdFQ4qcCmhF6g7PVuvGCjcVd4gOMrNXYO2ip83J_nWq_Xu2RUyFgj4lLeqAbL5XHvYjVDCuTuOE69ky7CHtAuDl6Xw6ucI2kyYtuoCoOt8dZW6gG8txvCXpyaqfBUuOvrN5mbpSnHUl_KT1-P8Bpo3rgsdHfRhaR3-1a2z18Xjw7dNgliDi8-FvShvouGhV3cIy35Pa_qPmwmuJtj4CGG9rqiw2OxG3VqqLxXRuN-BVd1xEyRt911-"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
+              <span class="font-label-caps text-label-caps text-secondary uppercase tracking-widest mb-2">Identity</span>
+              <h3 class="font-headline-md text-headline-md text-primary">Aura Cosmetics</h3>
+            </div>
+          </div>
+          <div class="group relative aspect-square overflow-hidden bg-surface-container-highest cursor-pointer md:col-span-2 rounded-xl">
+            <img alt="Brand stationery mockup" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdG3_szHsXKMX8tBL_Ztso1IBid0p4gMzS3hoM3odJaWBvEd6wDoNReSIEkq3ybaA3dXSZH7J0JOMUXOBtxT5XvdcwZWIOaRvRztcTKsVvB2Rbq6Sw0BJDkiTVCNPpUa-mm6shXpLS__KCGrEbvlK9IgzWmuY7K9V2oF4NmptcsR6DMiH_oBvlSS6LOIf-8CY8_eSou6tgFhAtxE5IckAb4llacdhLGHb3QjE6CG-b2kXA-mRXJGGxznTXFoA9RI0vTWNb6XG_-rl3"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
+              <span class="font-label-caps text-label-caps text-secondary uppercase tracking-widest mb-2">Onurik Designs</span>
+              <h3 class="font-headline-md text-headline-md text-primary">Monolith Architecture</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 3. Design & Art Direction ── -->
+    <div class="accordion-item border-b border-surface-container-high">
+      <button class="accordion-btn w-full flex items-center justify-between py-6 text-left group" data-target="section-design">
+        <div class="flex items-center gap-5">
+          <span class="font-label-caps text-label-caps text-on-surface-variant tabular-nums">03</span>
+          <span class="font-montserrat font-medium text-xl md:text-2xl text-primary group-hover:text-on-surface transition-colors duration-300">Design &amp; Art Direction</span>
+          <span class="hidden md:inline font-body-md text-body-md text-on-surface-variant opacity-60 ml-2">— Editorial, photography & spatial</span>
+        </div>
+        <span class="accordion-arrow material-symbols-outlined text-on-surface-variant text-2xl select-none">add</span>
+      </button>
+      <div class="accordion-content" id="acc-design">
+        <div class="pb-16 grid grid-cols-1 md:grid-cols-2 gap-gutter">
+          <div class="group relative aspect-[3/4] overflow-hidden bg-surface-container-highest cursor-pointer rounded-xl">
+            <img alt="Abstract art installation" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmnkQrX8Pnqzv6i8K_OEwiIIlPDo4l6cXLnlTh6YSg6wIqzAp_sxkefY7wTSbDLk_cF8-tZ_CsOVDOQ3cwMEQv9XnhdTOuhjGr8rXvQ98jn81GWCxfv7RKcdSiYboHr6MGdGdbhYh2IfPZ4TPA3yrdkJUUbuyNzTNCamxwRElX-WsUXiOsg1ccglMXqzCT8VImBtV4cBKnZxtHP0IQ6H1VsUj5viNw8jJRCURuNI50VUuDMDU0doDLVc1AQNWTugZGoiZmGiIcV3Xk"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
+              <span class="font-label-caps text-label-caps text-secondary uppercase tracking-widest mb-2">Art Direction</span>
+              <h3 class="font-headline-md text-headline-md text-primary">Void Space</h3>
+            </div>
+          </div>
+          <div class="group relative aspect-[3/4] overflow-hidden bg-surface-container-highest cursor-pointer rounded-xl">
+            <img alt="Editorial magazine layout" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1Xi7lkMvxTjS03meIsn7Z63tUII6SkDQo0kWPdh2JdBFTax2ZdOPcC9VgU25YW09-_objpUquq3qRToX3Hhv6kPuQ7MVDky3wsQ-4zkpf_pqBDW7UOkH9aTc5HgtrYL68Ey5fcNVEK4rr7Vq9xqTdpWsJC29vgW1rLrf5qQJkXSSkABg8u2fEq6kt8ShEfz0WMK8zyI_51emEnSzIiUd-N2VDabY1X7aOQijS75m8NuKpsN6AqVr-QKn-nMWip5ub4njb159XYDNO"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
+              <span class="font-label-caps text-label-caps text-secondary uppercase tracking-widest mb-2">Editorial</span>
+              <h3 class="font-headline-md text-headline-md text-primary">Chronicle Vol. IV</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 4. Development ── -->
+    <div class="accordion-item border-b border-surface-container-high">
+      <button class="accordion-btn w-full flex items-center justify-between py-6 text-left group" data-target="section-dev">
+        <div class="flex items-center gap-5">
+          <span class="font-label-caps text-label-caps text-on-surface-variant tabular-nums">04</span>
+          <span class="font-montserrat font-medium text-xl md:text-2xl text-primary group-hover:text-on-surface transition-colors duration-300">Development</span>
+          <span class="hidden md:inline font-body-md text-body-md text-on-surface-variant opacity-60 ml-2">— Open source contributions</span>
+        </div>
+        <span class="accordion-arrow material-symbols-outlined text-on-surface-variant text-2xl select-none">add</span>
+      </button>
+      <div class="accordion-content" id="acc-dev">
+        <div class="pb-16">
+          <div class="flex justify-end mb-4">
+            <a class="font-label-caps text-label-caps text-secondary hover:text-primary transition-colors flex items-center gap-2" href="#">
+              View GitHub <span class="material-symbols-outlined text-sm">arrow_outward</span>
+            </a>
+          </div>
+          <div class="flex flex-col border-t border-surface-container-high">
+            <div class="group py-8 border-b border-surface-container-high flex flex-col md:flex-row justify-between md:items-center gap-4 hover:bg-surface-container-lowest transition-colors px-4 -mx-4 cursor-pointer rounded-xl">
+              <div class="flex-1">
+                <h3 class="font-headline-md text-body-lg text-primary mb-2 flex items-center gap-3">
+                  <span class="material-symbols-outlined text-on-surface-variant">folder_data</span>
+                  onurik/nexus-core
+                </h3>
+                <p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">A high-performance state management library for distributed systems, built with concurrency in mind.</p>
+              </div>
+              <div class="flex items-center gap-8 font-label-caps text-label-caps text-on-surface-variant">
+                <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-primary-fixed"></span> Rust</div>
+                <div class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">star</span> 1.2k</div>
+              </div>
+            </div>
+            <div class="group py-8 border-b border-surface-container-high flex flex-col md:flex-row justify-between md:items-center gap-4 hover:bg-surface-container-lowest transition-colors px-4 -mx-4 cursor-pointer rounded-xl">
+              <div class="flex-1">
+                <h3 class="font-headline-md text-body-lg text-primary mb-2 flex items-center gap-3">
+                  <span class="material-symbols-outlined text-on-surface-variant">terminal</span>
+                  onurik/cli-tools
+                </h3>
+                <p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">Command line utilities for rapid bootstrapping of headless architectures and API schemas.</p>
+              </div>
+              <div class="flex items-center gap-8 font-label-caps text-label-caps text-on-surface-variant">
+                <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-secondary-fixed"></span> Go</div>
+                <div class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">star</span> 850</div>
+              </div>
+            </div>
+            <div class="group py-8 border-b border-surface-container-high flex flex-col md:flex-row justify-between md:items-center gap-4 hover:bg-surface-container-lowest transition-colors px-4 -mx-4 cursor-pointer rounded-xl">
+              <div class="flex-1">
+                <h3 class="font-headline-md text-body-lg text-primary mb-2 flex items-center gap-3">
+                  <span class="material-symbols-outlined text-on-surface-variant">code_blocks</span>
+                  onurik/ui-primitives
+                </h3>
+                <p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">Unstyled, accessible UI components for React, designed for complete visual customization.</p>
+              </div>
+              <div class="flex items-center gap-8 font-label-caps text-label-caps text-on-surface-variant">
+                <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-outline"></span> TypeScript</div>
+                <div class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">star</span> 3.4k</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /accordion-group -->
+</div>
+<!-- ── END ACCORDION ── -->
+
+<!-- Footer -->
+<footer class="w-full flex flex-col md:flex-row justify-between items-center px-8 md:px-16 bg-stone-950 full-width py-20 border-t border-stone-100/5">
+  <div class="text-stone-100 font-bold font-noto-serif text-[10px] tracking-[0.2em] uppercase mb-8 md:mb-0">
+    © 2026 ONURIK. ALL RIGHTS RESERVED.
+  </div>
+  <div class="flex gap-8 font-noto-serif text-[10px] tracking-[0.2em] uppercase">
+    <a class="text-stone-100/40 hover:text-stone-100 hover:tracking-[0.3em] transition-all duration-700" href="#">Instagram</a>
+    <a class="text-stone-100/40 hover:text-stone-100 hover:tracking-[0.3em] transition-all duration-700" href="#">LinkedIn</a>
+    <a class="text-stone-100/40 hover:text-stone-100 hover:tracking-[0.3em] transition-all duration-700" href="#">Behance</a>
+    <a class="text-stone-100/40 hover:text-stone-100 hover:tracking-[0.3em] transition-all duration-700" href="#">Email</a>
+  </div>
+</footer>
+
+<script>
+  const buttons = document.querySelectorAll('.accordion-btn');
+  const contentMap = {
+    'section-standard': 'acc-standard',
+    'section-branding': 'acc-branding',
+    'section-design':   'acc-design',
+    'section-dev':      'acc-dev',
+  };
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.target;
+      const contentId = contentMap[target];
+      const content = document.getElementById(contentId);
+      const isOpen = btn.classList.contains('active');
+
+      // Close all
+      buttons.forEach(b => {
+        b.classList.remove('active');
+        const cId = contentMap[b.dataset.target];
+        const c = document.getElementById(cId);
+        c.classList.remove('open');
+        c.style.display = '';
+      });
+
+      // Open clicked (if it was closed)
+      if (!isOpen) {
+        btn.classList.add('active');
+        content.classList.add('open');
+
+        // Smooth scroll so the opening section is visible
+        setTimeout(() => {
+          btn.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 80);
+      }
+    });
+  });
+</script>
+</body>
+</html>

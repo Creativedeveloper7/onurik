@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script>
+window.__ONURIK_PUBLIC_CONFIG__ = {
+  supabaseUrl: "",
+  supabaseAnonKey: "",
+  dashboardSecret: "",
+};
+</script>
+<title>Admin · Settings · Onurik</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "primary": "#ffffff", "on-surface": "#e5e2e1", "background": "#131313",
+          "outline-variant": "#474741", "surface-variant": "#353534", "on-background": "#e5e2e1",
+          "surface-container": "#201f1f", "surface-container-low": "#1c1b1b",
+          "on-surface-variant": "#c8c7be", "surface-container-lowest": "#0e0e0e"
+        },
+        borderRadius: { DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem" },
+        spacing: { "element-gap": "24px" },
+        fontFamily: {
+          "label-caps": ["Manrope", "sans-serif"], "body-md": ["Manrope", "sans-serif"],
+          "display-lg": ["Montserrat", "sans-serif"], "body-lg": ["Manrope", "sans-serif"],
+          montserrat: ["Montserrat", "sans-serif"]
+        },
+        fontSize: {
+          "label-caps": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "600" }],
+          "body-md": ["16px", { lineHeight: "24px", letterSpacing: "0.01em", fontWeight: "400" }],
+          "display-lg": ["64px", { lineHeight: "72px", letterSpacing: "-0.02em", fontWeight: "500" }],
+          "body-lg": ["18px", { lineHeight: "28px", letterSpacing: "0.01em", fontWeight: "400" }]
+        }
+      }
+    }
+  };
+</script>
+<style>
+  body { background-color: theme('colors.background'); color: theme('colors.on-background'); }
+  #admin-nav-drawer { transform: translateX(100%); transition: transform 0.3s ease-out; }
+  #admin-nav-drawer.open { transform: translateX(0); }
+  .admin-nav-overlay { opacity: 0; pointer-events: none; transition: opacity 0.3s ease-out; }
+  .admin-nav-overlay.open { opacity: 1; pointer-events: auto; }
+  .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; }
+</style>
+<link rel="stylesheet" href="../styles/animations.css"/>
+</head>
+<body class="font-body-md min-h-screen selection:bg-primary/20 selection:text-primary touch-manipulation">
+<header class="lg:hidden fixed top-0 left-0 right-0 z-[60] flex h-16 items-center justify-between border-b border-stone-100/10 bg-stone-950/95 px-4 backdrop-blur-xl">
+<a href="../index.html" class="text-xs font-semibold uppercase tracking-[0.2em] text-stone-400 transition-colors hover:text-stone-100">Site</a>
+<span class="font-montserrat text-sm font-semibold text-stone-100">Admin</span>
+<button type="button" id="admin-menu-btn" class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md text-stone-100 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40" aria-expanded="false" aria-controls="admin-nav-drawer" aria-label="Open menu">
+<span class="material-symbols-outlined text-2xl" aria-hidden="true">menu</span>
+</button>
+</header>
+
+<div class="admin-nav-overlay fixed inset-0 z-[55] bg-black/70 backdrop-blur-sm lg:hidden" id="admin-nav-overlay" aria-hidden="true"></div>
+<nav id="admin-nav-drawer" class="fixed top-0 right-0 z-[70] flex h-full w-[min(100vw,20rem)] flex-col border-l border-stone-100/10 bg-stone-950 shadow-2xl lg:hidden" aria-hidden="true" aria-label="Admin navigation">
+<div class="flex h-16 shrink-0 items-center justify-between border-b border-stone-100/10 px-4">
+<span class="font-montserrat text-sm font-semibold text-stone-100">Menu</span>
+<button type="button" id="admin-menu-close" class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md text-stone-100 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40" aria-label="Close menu">
+<span class="material-symbols-outlined text-2xl" aria-hidden="true">close</span>
+</button>
+</div>
+<div class="flex flex-1 flex-col gap-1 overflow-y-auto py-6">
+<a class="mx-4 mb-3 text-[10px] uppercase tracking-[0.2em] text-stone-500 transition-colors hover:text-stone-100" href="../index.html">← Public site</a>
+<a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all hover:bg-stone-800/50" href="index.html"><span class="material-symbols-outlined">dashboard</span><span class="tracking-wide">Overview</span></a>
+<a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all hover:bg-stone-800/50" href="enquiries.html"><span class="material-symbols-outlined">mail</span><span class="tracking-wide">Enquiries</span></a>
+<a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all hover:bg-stone-800/50" href="works.html"><span class="material-symbols-outlined">work</span><span class="tracking-wide">Works Manager</span></a>
+<a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all hover:bg-stone-800/50" href="carousel.html"><span class="material-symbols-outlined">view_carousel</span><span class="tracking-wide">Brands</span></a>
+<a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all hover:bg-stone-800/50" href="bookings.html"><span class="material-symbols-outlined">calendar_today</span><span class="tracking-wide">Bookings</span></a>
+<a class="flex min-h-[44px] items-center gap-4 border-l-2 border-stone-100 bg-stone-800 px-6 py-3 font-display-lg text-sm font-normal text-stone-100 transition-all" href="settings.html">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span><span class="tracking-wide">Settings</span>
+</a>
+</div>
+</nav>
+
+<nav class="fixed left-0 top-0 z-50 hidden h-full w-64 flex-col border-r border-stone-100/10 bg-stone-900 lg:flex" aria-label="Admin navigation">
+<div class="border-b border-stone-100/10 px-8 py-10">
+<h2 class="font-display-lg text-lg font-bold text-stone-100">Admin Panel</h2>
+<p class="mt-1 font-display-lg text-sm font-normal text-stone-500">Onurik Systems</p>
+</div>
+<div class="flex flex-1 flex-col gap-2 py-8">
+<a class="mx-8 mb-4 text-[10px] uppercase tracking-[0.2em] text-stone-500 transition-colors hover:text-stone-100" href="../index.html">← Public site</a>
+<a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all duration-300 hover:bg-stone-800/50" href="index.html"><span class="material-symbols-outlined">dashboard</span><span class="text-sm tracking-wide">Overview</span></a>
+<a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all duration-300 hover:bg-stone-800/50" href="enquiries.html"><span class="material-symbols-outlined">mail</span><span class="text-sm tracking-wide">Enquiries</span></a>
+<a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all duration-300 hover:bg-stone-800/50" href="works.html"><span class="material-symbols-outlined">work</span><span class="text-sm tracking-wide">Works Manager</span></a>
+<a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all duration-300 hover:bg-stone-800/50" href="carousel.html"><span class="material-symbols-outlined">view_carousel</span><span class="text-sm tracking-wide">Brands</span></a>
+<a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all duration-300 hover:bg-stone-800/50" href="bookings.html"><span class="material-symbols-outlined">calendar_today</span><span class="text-sm tracking-wide">Bookings</span></a>
+<a class="flex items-center gap-4 rounded-none border-l-2 border-stone-100 bg-stone-800 px-8 py-3 font-display-lg text-sm font-normal text-stone-100 transition-all duration-300" href="settings.html">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span><span class="text-sm tracking-wide">Settings</span>
+</a>
+</div>
+<div class="border-t border-stone-100/10 p-8">
+<div class="flex items-center gap-3 text-stone-500">
+<div class="h-2 w-2 animate-pulse rounded-full bg-emerald-500"></div>
+<span class="font-display-lg text-xs font-normal uppercase tracking-widest">Static dashboard</span>
+</div>
+</div>
+</nav>
+
+<main class="relative flex min-h-screen w-full flex-1 flex-col bg-background pt-16 lg:ml-64 lg:pt-0">
+<header class="border-b border-outline-variant/30 px-8 py-10 md:px-16">
+<p class="mb-4 flex items-center gap-2 font-label-caps text-label-caps uppercase tracking-[0.2em] text-primary">
+<span class="material-symbols-outlined text-[14px]" aria-hidden="true">settings</span>
+Settings
+</p>
+<h1 class="font-display-lg text-display-lg text-on-background">Site configuration</h1>
+<p class="mt-4 max-w-2xl font-body-lg text-body-lg text-on-surface-variant">Social URLs are stored in Supabase and appear in the site footer and on the Contact page (below Operating Base). Use the same dashboard secret as Enquiries/Bookings/Brands (<code class="rounded bg-stone-900 px-1 font-mono text-xs text-stone-300">VITE_ADMIN_DASHBOARD_SECRET</code>).</p>
+</header>
+
+<div class="flex flex-1 flex-col gap-10 px-8 py-10 md:max-w-2xl md:px-16 md:py-12">
+<section class="rounded-DEFAULT border border-outline-variant/30 bg-surface-container-low p-6 md:p-8">
+<h2 class="font-montserrat text-lg font-semibold text-on-background">Social links</h2>
+<p class="mt-2 text-sm text-on-surface-variant">Paste full profile URLs. Leave a field empty to hide that network on the public site. Email accepts a plain address or a <span class="font-mono text-stone-300">mailto:</span> link.</p>
+<div class="mt-8 grid grid-cols-1 gap-6">
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant" for="social-instagram">Instagram</label>
+<input id="social-instagram" type="url" inputmode="url" placeholder="https://instagram.com/…" class="min-h-[44px] w-full rounded-DEFAULT border border-outline-variant/50 bg-stone-950/40 px-4 py-3 font-body-md text-on-background outline-none ring-primary/30 focus-visible:ring-2"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant" for="social-linkedin">LinkedIn</label>
+<input id="social-linkedin" type="url" inputmode="url" placeholder="https://linkedin.com/in/…" class="min-h-[44px] w-full rounded-DEFAULT border border-outline-variant/50 bg-stone-950/40 px-4 py-3 font-body-md text-on-background outline-none ring-primary/30 focus-visible:ring-2"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant" for="social-behance">Behance</label>
+<input id="social-behance" type="url" inputmode="url" placeholder="https://behance.net/…" class="min-h-[44px] w-full rounded-DEFAULT border border-outline-variant/50 bg-stone-950/40 px-4 py-3 font-body-md text-on-background outline-none ring-primary/30 focus-visible:ring-2"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant" for="social-twitter">X / Twitter</label>
+<input id="social-twitter" type="url" inputmode="url" placeholder="https://x.com/…" class="min-h-[44px] w-full rounded-DEFAULT border border-outline-variant/50 bg-stone-950/40 px-4 py-3 font-body-md text-on-background outline-none ring-primary/30 focus-visible:ring-2"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant" for="social-github">GitHub</label>
+<input id="social-github" type="url" inputmode="url" placeholder="https://github.com/…" class="min-h-[44px] w-full rounded-DEFAULT border border-outline-variant/50 bg-stone-950/40 px-4 py-3 font-body-md text-on-background outline-none ring-primary/30 focus-visible:ring-2"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant" for="social-email">Email</label>
+<input id="social-email" type="text" placeholder="you@domain.com or mailto:you@domain.com" class="min-h-[44px] w-full rounded-DEFAULT border border-outline-variant/50 bg-stone-950/40 px-4 py-3 font-body-md text-on-background outline-none ring-primary/30 focus-visible:ring-2"/>
+</div>
+</div>
+<p id="social-settings-status" class="mt-6 min-h-[1.25rem] text-sm text-on-surface-variant" aria-live="polite"></p>
+<div class="mt-6 flex flex-wrap gap-3">
+<button type="button" id="social-save-btn" class="min-h-[44px] border border-outline-variant px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest text-on-background transition-colors hover:bg-stone-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40">Save social links</button>
+<a class="inline-flex min-h-[44px] items-center justify-center border border-outline-variant/50 px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant transition-colors hover:border-outline-variant hover:text-on-background" href="index.html">Back to overview</a>
+</div>
+</section>
+<p class="font-body-md text-sm text-on-surface-variant">Requires migration <code class="rounded bg-stone-900 px-1 font-mono text-xs text-stone-300">20260208150000_public_social_links.sql</code> and existing <code class="rounded bg-stone-900 px-1 font-mono text-xs text-stone-300">dashboard_read_secret</code> in <span class="font-mono text-stone-300">onurik_site_settings</span>.</p>
+</div>
+</main>
+
+<script>
+(function () {
+  var btn = document.getElementById("admin-menu-btn");
+  var closeBtn = document.getElementById("admin-menu-close");
+  var drawer = document.getElementById("admin-nav-drawer");
+  var overlay = document.getElementById("admin-nav-overlay");
+  function setOpen(open) {
+    if (!drawer || !overlay) return;
+    drawer.classList.toggle("open", open);
+    drawer.setAttribute("aria-hidden", open ? "false" : "true");
+    overlay.classList.toggle("open", open);
+    overlay.setAttribute("aria-hidden", open ? "false" : "true");
+    if (btn) btn.setAttribute("aria-expanded", open ? "true" : "false");
+    document.documentElement.style.overflow = open ? "hidden" : "";
+  }
+  if (btn && drawer && overlay) {
+    btn.addEventListener("click", function () { setOpen(!drawer.classList.contains("open")); });
+    overlay.addEventListener("click", function () { setOpen(false); });
+    if (closeBtn) closeBtn.addEventListener("click", function () { setOpen(false); });
+    drawer.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () { setOpen(false); });
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") setOpen(false);
+    });
+  }
+
+})();
+</script>
+<script type="module" src="../scripts/animations.js"></script>
+<script type="module" src="../scripts/admin-settings-page.js"></script>
+</body>
+</html>

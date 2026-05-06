@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Works - Onurik</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Noto+Serif:wght@400;700;900&amp;family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "primary-container": "#e5e2dd",
+          "primary": "#ffffff",
+          "on-surface": "#e5e2e1",
+          "surface-dim": "#131313",
+          "background": "#131313",
+          "on-primary-container": "#656461",
+          "on-tertiary-container": "#656464",
+          "surface-container-lowest": "#0e0e0e",
+          "tertiary-fixed-dim": "#c8c6c5",
+          "inverse-surface": "#e5e2e1",
+          "primary-fixed-dim": "#c9c6c1",
+          "tertiary-container": "#e5e2e1",
+          "outline-variant": "#474741",
+          "surface-container-high": "#2a2a2a",
+          "secondary-fixed-dim": "#ccc6ba",
+          "on-tertiary-fixed-variant": "#474746",
+          "error-container": "#93000a",
+          "primary-fixed": "#e5e2dd",
+          "inverse-on-surface": "#313030",
+          "outline": "#929189",
+          "on-error": "#690005",
+          "surface-variant": "#353534",
+          "on-secondary-fixed-variant": "#4a473e",
+          "on-background": "#e5e2e1",
+          "on-tertiary": "#313030",
+          "on-error-container": "#ffdad6",
+          "error": "#ffb4ab",
+          "on-secondary-fixed": "#1e1b14",
+          "secondary-fixed": "#e8e2d6",
+          "secondary": "#ccc6ba",
+          "on-secondary": "#333028",
+          "on-primary": "#31302d",
+          "inverse-primary": "#5f5e5b",
+          "surface-container": "#201f1f",
+          "surface-tint": "#c9c6c1",
+          "secondary-container": "#4a473e",
+          "on-primary-fixed": "#1c1c19",
+          "surface": "#131313",
+          "on-secondary-container": "#bab5a9",
+          "on-primary-fixed-variant": "#474743",
+          "surface-bright": "#3a3939",
+          "on-surface-variant": "#c8c7be",
+          "tertiary": "#ffffff",
+          "on-tertiary-fixed": "#1c1b1b",
+          "tertiary-fixed": "#e5e2e1",
+          "surface-container-low": "#1c1b1b",
+          "surface-container-highest": "#353534"
+        },
+        borderRadius: {
+          DEFAULT: "0.125rem",
+          lg: "0.25rem",
+          xl: "0.5rem",
+          full: "0.75rem"
+        },
+        spacing: {
+          gutter: "32px",
+          "element-gap": "24px",
+          margin: "64px",
+          "container-max": "1440px",
+          "section-gap": "160px"
+        },
+        fontFamily: {
+          montserrat: ["Montserrat", "sans-serif"],
+          "noto-serif": ["Noto Serif", "serif"],
+          "headline-md": ["Noto Serif", "serif"],
+          "display-xl": ["Noto Serif", "serif"],
+          "label-caps": ["Inter", "sans-serif"],
+          "body-md": ["Inter", "sans-serif"],
+          "display-lg": ["Noto Serif", "serif"],
+          "body-lg": ["Inter", "sans-serif"]
+        },
+        fontSize: {
+          "headline-md": ["32px", { lineHeight: "1.2", fontWeight: "400" }],
+          "display-xl": ["84px", { lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "400" }],
+          "label-caps": ["12px", { lineHeight: "1.0", letterSpacing: "0.1em", fontWeight: "600" }],
+          "body-md": ["16px", { lineHeight: "1.6", fontWeight: "400" }],
+          "display-lg": ["64px", { lineHeight: "1.1", letterSpacing: "-0.01em", fontWeight: "400" }],
+          "body-lg": ["20px", { lineHeight: "1.6", fontWeight: "400" }]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body { background-color: #131313; color: #e5e2e1; }
+
+  @keyframes wobble-open {
+    0%   { transform: scaleY(0.92); opacity: 0; }
+    40%  { transform: scaleY(1.03); opacity: 1; }
+    65%  { transform: scaleY(0.98); }
+    82%  { transform: scaleY(1.01); }
+    100% { transform: scaleY(1);    opacity: 1; }
+  }
+
+  @keyframes wobble-item {
+    0%   { transform: translateY(10px); opacity: 0; }
+    50%  { transform: translateY(-4px); opacity: 1; }
+    75%  { transform: translateY(2px);  }
+    100% { transform: translateY(0);    opacity: 1; }
+  }
+
+  .accordion-content {
+    display: none;
+    transform-origin: top center;
+  }
+  .accordion-content.open {
+    display: block;
+    animation: wobble-open 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+  .accordion-content.open > * {
+    animation: wobble-item 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: 0.08s;
+    opacity: 0;
+  }
+
+  .accordion-arrow {
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .accordion-btn.active .accordion-arrow {
+    transform: rotate(45deg);
+  }
+
+  .accordion-btn {
+    position: relative;
+    overflow: hidden;
+  }
+  .accordion-btn::after {
+    content: "";
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 1px;
+    background: #e5e2e1;
+    transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .accordion-btn.active::after {
+    width: 100%;
+  }
+
+  .material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  }
+  #site-nav-drawer {
+    transform: translateX(100%);
+    transition: transform 0.3s ease-out;
+  }
+  #site-nav-drawer.open {
+    transform: translateX(0);
+  }
+  .site-nav-overlay.open {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  /* Conversion bridge (same as homepage) */
+  #conversion-bridge {
+    opacity: 0;
+    transform: translateY(1.25rem);
+    will-change: opacity, transform;
+  }
+  #conversion-bridge.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.85s ease-out, transform 0.85s ease-out;
+  }
+  .conversion-bridge-slide {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    opacity: 0;
+    transform: translateY(0.65rem);
+    transition: opacity 0.65s ease-in-out, transform 0.65s ease-in-out;
+    pointer-events: none;
+  }
+  .conversion-bridge-slide.is-active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .bridge-intro { font-family: Montserrat, sans-serif; }
+  .bridge-headline {
+    font-family: Montserrat, sans-serif;
+    font-style: italic;
+    font-weight: 700;
+  }
+  .bridge-subtext { font-family: Inter, sans-serif; }
+  @media (prefers-reduced-motion: reduce) {
+    #conversion-bridge {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    .conversion-bridge-slide {
+      transition: none;
+    }
+    .conversion-bridge-slide:not(.is-active) {
+      opacity: 0;
+      visibility: hidden;
+    }
+    .conversion-bridge-slide.is-active {
+      transform: none;
+    }
+  }
+</style>
+<link rel="stylesheet" href="styles/animations.css"/>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased overflow-x-hidden">
+
+<!-- TopNavBar -->
+<nav class="fixed top-0 z-50 flex h-[4.25rem] w-full items-center justify-between gap-4 border-b border-white/10 bg-stone-950/75 px-8 backdrop-blur-xl transition-colors duration-500 font-montserrat md:px-16">
+  <a href="index.html" class="text-2xl font-bold text-stone-100 tracking-tight shrink-0">Onurik</a>
+  <div class="hidden md:flex items-center gap-10 text-xs uppercase tracking-[0.2em]">
+    <a class="border-b border-stone-100 pb-0.5 text-xs font-medium uppercase tracking-[0.28em] text-stone-100 hover:border-white hover:text-white transition-colors" href="works.html">Works</a>
+    <a class="text-white/35 hover:text-white/70 transition-colors" href="about.html">Info</a>
+    <a class="text-white/35 hover:text-white/70 transition-colors" href="contact.html">Contact</a>
+  </div>
+  <div class="flex shrink-0 items-center gap-2">
+    <a href="contact.html" class="hidden md:inline-flex items-center justify-center border border-stone-100/20 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-stone-100/85 hover:text-stone-100 hover:border-stone-100/40 transition-colors duration-500">Enquire</a>
+    <button type="button" id="site-mobile-menu-btn" class="md:hidden inline-flex items-center justify-center rounded-md p-2 text-stone-100 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40" aria-expanded="false" aria-controls="site-nav-drawer">
+      <span class="material-symbols-outlined text-2xl" aria-hidden="true">menu</span>
+      <span class="sr-only">Open menu</span>
+    </button>
+  </div>
+</nav>
+<div class="site-nav-overlay fixed inset-0 z-40 md:hidden opacity-0 pointer-events-none bg-black/70 backdrop-blur-sm transition-opacity duration-300" aria-hidden="true"></div>
+<nav id="site-nav-drawer" class="fixed top-0 right-0 z-50 flex h-full w-[min(100vw,18rem)] flex-col gap-6 border-l border-white/10 bg-neutral-950 px-8 pb-8 pt-24 font-montserrat text-sm uppercase tracking-widest shadow-2xl md:hidden" aria-hidden="true" aria-label="Mobile">
+  <a href="works.html" class="border-b border-stone-100 pb-0.5 text-xs font-medium uppercase tracking-[0.28em] text-white self-start">Works</a>
+  <a href="about.html" class="text-white/80 transition-colors hover:text-white">Info</a>
+  <a href="contact.html" class="text-white/80 transition-colors hover:text-white">Contact</a>
+  <a href="contact.html" class="mt-auto border-t border-white/10 pt-6 text-xs font-semibold uppercase tracking-[0.28em] text-white/90 hover:text-white transition-colors">Enquire</a>
+</nav>
+<script>
+(function () {
+  var btn = document.getElementById("site-mobile-menu-btn");
+  var drawer = document.getElementById("site-nav-drawer");
+  var overlay = document.querySelector(".site-nav-overlay");
+  if (!btn || !drawer || !overlay) return;
+  function setOpen(open) {
+    drawer.classList.toggle("open", open);
+    drawer.setAttribute("aria-hidden", open ? "false" : "true");
+    overlay.classList.toggle("open", open);
+    overlay.setAttribute("aria-hidden", open ? "false" : "true");
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    document.documentElement.style.overflow = open ? "hidden" : "";
+  }
+  btn.addEventListener("click", function () {
+    setOpen(!drawer.classList.contains("open"));
+  });
+  overlay.addEventListener("click", function () {
+    setOpen(false);
+  });
+  drawer.querySelectorAll("a").forEach(function (link) {
+    link.addEventListener("click", function () {
+      setOpen(false);
+    });
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") setOpen(false);
+  });
+})();
+</script>
+
+<!-- Banner: video at public/videos/work.mp4 → /videos/work.mp4 -->
+<header class="relative isolate mb-16 flex w-full min-h-[min(52vh,520px)] items-end justify-center pt-48 pb-10 md:mb-24 md:pb-14 lg:mb-28 lg:pb-16">
+  <div class="pointer-events-none absolute inset-0 z-0 overflow-hidden bg-[#252525]" aria-hidden="true" data-anim-parallax="0.08">
+    <video class="absolute inset-0 h-full w-full object-cover object-center" autoplay="" loop="" muted="" playsinline="" preload="metadata">
+      <source src="/videos/work.mp4" type="video/mp4"/>
+    </video>
+    <div class="absolute inset-0 bg-[#131313]/35"></div>
+  </div>
+  <div class="relative z-10 mx-auto w-full max-w-[1440px] px-8 pb-2 pt-0 text-center md:px-16 md:pb-3" data-anim-stagger>
+    <h1 class="sr-only">Works</h1>
+    <p class="font-body-lg text-body-lg max-w-2xl mx-auto text-on-background/90 [text-shadow:0_1px_24px_rgba(0,0,0,0.5)]">A curated selection of our finest technical and aesthetic achievements.</p>
+  </div>
+</header>
+
+<main class="max-w-[1440px] mx-auto px-8 pt-14 pb-24 md:px-16 md:pt-20 lg:pt-24">
+  <p class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest mb-10 md:mb-14">Browse by category</p>
+
+  <div class="accordion-group border-t border-surface-container-high">
+
+    <!-- 1. Standard Projects -->
+    <div class="accordion-item border-b border-surface-container-high">
+      <button type="button" class="accordion-btn w-full flex items-center justify-between py-6 text-left group" data-target="section-standard" aria-expanded="false" aria-controls="acc-standard" id="acc-btn-standard">
+        <div class="flex items-center gap-5 flex-wrap">
+          <span class="font-label-caps text-label-caps text-on-surface-variant tabular-nums">01</span>
+          <span class="font-montserrat font-medium text-xl md:text-2xl text-primary group-hover:text-on-surface transition-colors duration-300">Standard Projects</span>
+          <span class="hidden md:inline font-body-md text-body-md text-on-surface-variant opacity-60 ml-2">— Lab experiments &amp; core products</span>
+        </div>
+        <span class="accordion-arrow material-symbols-outlined text-on-surface-variant text-2xl select-none shrink-0" aria-hidden="true">add</span>
+      </button>
+      <div class="accordion-content" id="acc-standard" role="region" aria-labelledby="acc-btn-standard">
+        <div class="pb-16 grid grid-cols-1 md:grid-cols-2 gap-gutter" data-project-category="Standard Projects"></div>
+      </div>
+    </div>
+
+    <!-- 2. Branding & Identity -->
+    <div class="accordion-item border-b border-surface-container-high">
+      <button type="button" class="accordion-btn w-full flex items-center justify-between py-6 text-left group" data-target="section-branding" aria-expanded="false" aria-controls="acc-branding" id="acc-btn-branding">
+        <div class="flex items-center gap-5 flex-wrap">
+          <span class="font-label-caps text-label-caps text-on-surface-variant tabular-nums">02</span>
+          <span class="font-montserrat font-medium text-xl md:text-2xl text-primary group-hover:text-on-surface transition-colors duration-300">Branding &amp; Identity</span>
+          <span class="hidden md:inline font-body-md text-body-md text-on-surface-variant opacity-60 ml-2">— Onurik Designs &amp; brand ecosystems</span>
+        </div>
+        <span class="accordion-arrow material-symbols-outlined text-on-surface-variant text-2xl select-none shrink-0" aria-hidden="true">add</span>
+      </button>
+      <div class="accordion-content" id="acc-branding" role="region" aria-labelledby="acc-btn-branding">
+        <div class="pb-16 grid grid-cols-1 md:grid-cols-2 gap-gutter" data-project-category="Branding &amp; Identity"></div>
+      </div>
+    </div>
+
+    <!-- 3. Design & Art Direction -->
+    <div class="accordion-item border-b border-surface-container-high">
+      <button type="button" class="accordion-btn w-full flex items-center justify-between py-6 text-left group" data-target="section-design" aria-expanded="false" aria-controls="acc-design" id="acc-btn-design">
+        <div class="flex items-center gap-5 flex-wrap">
+          <span class="font-label-caps text-label-caps text-on-surface-variant tabular-nums">03</span>
+          <span class="font-montserrat font-medium text-xl md:text-2xl text-primary group-hover:text-on-surface transition-colors duration-300">Design &amp; Art Direction</span>
+          <span class="hidden md:inline font-body-md text-body-md text-on-surface-variant opacity-60 ml-2">— Editorial, photography &amp; spatial</span>
+        </div>
+        <span class="accordion-arrow material-symbols-outlined text-on-surface-variant text-2xl select-none shrink-0" aria-hidden="true">add</span>
+      </button>
+      <div class="accordion-content" id="acc-design" role="region" aria-labelledby="acc-btn-design">
+        <div class="pb-16 grid grid-cols-1 md:grid-cols-2 gap-gutter" data-project-category="Design &amp; Art Direction"></div>
+      </div>
+    </div>
+
+    <!-- 4. Development -->
+    <div class="accordion-item border-b border-surface-container-high">
+      <button type="button" class="accordion-btn w-full flex items-center justify-between py-6 text-left group" data-target="section-dev" aria-expanded="false" aria-controls="acc-dev" id="acc-btn-dev">
+        <div class="flex items-center gap-5 flex-wrap">
+          <span class="font-label-caps text-label-caps text-on-surface-variant tabular-nums">04</span>
+          <span class="font-montserrat font-medium text-xl md:text-2xl text-primary group-hover:text-on-surface transition-colors duration-300">Development</span>
+          <span class="hidden md:inline font-body-md text-body-md text-on-surface-variant opacity-60 ml-2">— Open source contributions</span>
+        </div>
+        <span class="accordion-arrow material-symbols-outlined text-on-surface-variant text-2xl select-none shrink-0" aria-hidden="true">add</span>
+      </button>
+      <div class="accordion-content" id="acc-dev" role="region" aria-labelledby="acc-btn-dev">
+        <div class="pb-16 grid grid-cols-1 md:grid-cols-2 gap-gutter" data-project-category="Development"></div>
+      </div>
+    </div>
+
+  </div>
+
+<!-- Conversion bridge (same section as homepage) -->
+<section id="conversion-bridge" class="w-full border-t border-white/[0.06] bg-[#131313]" aria-labelledby="conversion-bridge-heading">
+<div class="mx-auto max-w-[1440px] px-8 py-16 md:px-16 md:py-24 lg:py-28">
+<h2 id="conversion-bridge-heading" class="sr-only">Partner with Onurik</h2>
+<div class="flex flex-col gap-12 lg:flex-row lg:items-center lg:justify-between lg:gap-12 xl:gap-16">
+<div class="w-full lg:w-[70%] lg:max-w-[70%] lg:flex-[7]">
+<div class="relative min-h-[13.5rem] sm:min-h-[12rem] md:min-h-[11rem] lg:min-h-[13rem]" aria-live="polite">
+<div id="conversion-bridge-slides" class="absolute inset-0">
+<div class="conversion-bridge-slide is-active" data-slide="0">
+<p class="bridge-intro mb-3 text-base leading-snug text-white/50 md:text-lg">Let’s talk about what you’re building —</p>
+<p class="bridge-headline text-2xl leading-[1.15] text-white md:text-3xl lg:text-[2.125rem] lg:leading-[1.2]">and make it something people actually remember.</p>
+</div>
+<div class="conversion-bridge-slide" data-slide="1">
+<p class="bridge-intro mb-3 text-base leading-snug text-white/50 md:text-lg">Every great idea deserves a moment.</p>
+<p class="bridge-headline text-2xl leading-[1.15] text-white md:text-3xl lg:text-[2.125rem] lg:leading-[1.2]">Let’s make yours impossible to miss.</p>
+</div>
+<div class="conversion-bridge-slide" data-slide="2">
+<p class="bridge-intro mb-3 text-base leading-snug text-white/50 md:text-lg">This could be something big —</p>
+<p class="bridge-headline text-2xl leading-[1.15] text-white md:text-3xl lg:text-[2.125rem] lg:leading-[1.2]">Let’s make sure it feels like it.</p>
+</div>
+<div class="conversion-bridge-slide" data-slide="3">
+<p class="bridge-intro mb-3 text-base leading-snug text-white/50 md:text-lg">Most products get ignored.</p>
+<p class="bridge-headline text-2xl leading-[1.15] text-white md:text-3xl lg:text-[2.125rem] lg:leading-[1.2]">Let’s make sure yours isn’t one of them.</p>
+</div>
+</div>
+</div>
+<p class="bridge-intro mt-6 text-sm text-white/45 md:text-[15px]">— this is what I do at Onurik.</p>
+<p class="bridge-subtext mt-6 max-w-2xl text-[15px] leading-relaxed text-white/[0.58] md:text-base md:leading-relaxed">I work with founders and teams who care about how their product looks and feels. Design, development, and identity — done with intention, not templates.</p>
+</div>
+<div class="flex w-full shrink-0 justify-center lg:w-[30%] lg:max-w-[30%] lg:flex-[3] lg:justify-end lg:self-center">
+<a href="contact.html" class="bridge-cta group inline-flex items-center justify-center gap-2.5 rounded-full border border-[#c9c6c1]/35 bg-[#201f1f] px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-[#e8e2d6] shadow-sm transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-[#e5e2dd]/55 hover:bg-[#2a2a2a] hover:shadow-[0_8px_32px_rgba(229,226,221,0.1)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e5e2dd]/40">
+<span>Let’s work together</span>
+<span class="material-symbols-outlined text-[1.125rem] transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<script>
+(function () {
+  var section = document.getElementById("conversion-bridge");
+  var slides = section ? section.querySelectorAll(".conversion-bridge-slide") : [];
+  if (!slides.length) return;
+  var i = 0;
+  var period = 3600;
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function go(n) {
+    slides.forEach(function (el, j) {
+      el.classList.toggle("is-active", j === n);
+    });
+    i = n;
+  }
+  function next() {
+    go((i + 1) % slides.length);
+  }
+  if (section) {
+    requestAnimationFrame(function () {
+      section.classList.add("is-visible");
+    });
+  }
+  if (!reduceMotion) {
+    setInterval(next, period);
+  }
+})();
+</script>
+</main>
+
+<!-- Footer -->
+<footer class="w-full flex flex-col md:flex-row justify-between items-center px-8 md:px-16 bg-stone-950 full-width py-20 border-t border-stone-100/5">
+  <div class="text-stone-100 font-bold font-montserrat text-[10px] tracking-[0.2em] uppercase mb-8 md:mb-0">
+    © 2026 ONURIK. ALL RIGHTS RESERVED.
+  </div>
+  <nav data-onurik-social-footer class="flex flex-wrap gap-8 font-montserrat text-[10px] tracking-[0.2em] uppercase justify-center" aria-label="Social links" hidden></nav>
+</footer>
+
+<script>
+(function () {
+  var buttons = document.querySelectorAll(".accordion-btn");
+  var contentMap = {
+    "section-standard": "acc-standard",
+    "section-branding": "acc-branding",
+    "section-design": "acc-design",
+    "section-dev": "acc-dev"
+  };
+
+  buttons.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var target = btn.getAttribute("data-target");
+      var contentId = contentMap[target];
+      var content = document.getElementById(contentId);
+      var isOpen = btn.classList.contains("active");
+
+      buttons.forEach(function (b) {
+        b.classList.remove("active");
+        b.setAttribute("aria-expanded", "false");
+        var cId = contentMap[b.getAttribute("data-target")];
+        var c = document.getElementById(cId);
+        c.classList.remove("open");
+        c.style.display = "";
+      });
+
+      if (!isOpen && content) {
+        btn.classList.add("active");
+        btn.setAttribute("aria-expanded", "true");
+        content.classList.add("open");
+        setTimeout(function () {
+          btn.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 80);
+      }
+    });
+  });
+})();
+</script>
+<script type="module" src="scripts/animations.js"></script>
+<script type="module" src="scripts/works-page.js"></script>
+<script type="module" src="scripts/site-social-links.js"></script>
+</body>
+</html>

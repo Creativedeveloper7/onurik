@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Work Detail - Onurik</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Serif:wght@400;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: { background: "#131313", "on-background": "#e5e2e1" },
+          fontFamily: {
+            montserrat: ["Montserrat", "sans-serif"],
+            inter: ["Inter", "sans-serif"],
+            "noto-serif": ["Noto Serif", "serif"]
+          }
+        }
+      }
+    };
+  </script>
+<link rel="stylesheet" href="styles/animations.css"/>
+</head>
+<body class="bg-background text-on-background font-inter min-h-screen">
+  <nav class="fixed top-0 z-50 flex h-[4.25rem] w-full items-center justify-between border-b border-white/10 bg-stone-950/75 px-8 backdrop-blur-xl md:px-16">
+    <a href="index.html" class="font-montserrat text-2xl font-bold tracking-tight text-white">Onurik</a>
+    <a href="works.html" class="font-montserrat text-xs uppercase tracking-[0.24em] text-white/70 hover:text-white">Works</a>
+  </nav>
+  <main id="work-detail-root"></main>
+  <script type="module" src="scripts/animations.js"></script>
+  <script type="module" src="scripts/work-detail-page.js"></script>
+</body>
+</html>

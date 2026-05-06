@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Onurik | Engineering Human-Centered Systems</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "background": "#131313",
+                      "surface-container-lowest": "#0e0e0e",
+                      "inverse-surface": "#e5e2e1",
+                      "on-secondary-fixed": "#1e1b14",
+                      "surface-variant": "#353534",
+                      "surface-container-high": "#2a2a2a",
+                      "inverse-primary": "#5f5e5b",
+                      "on-primary": "#31302d",
+                      "on-error-container": "#ffdad6",
+                      "outline": "#929189",
+                      "inverse-on-surface": "#313030",
+                      "on-tertiary-container": "#656464",
+                      "on-tertiary-fixed-variant": "#474746",
+                      "error": "#ffb4ab",
+                      "surface-bright": "#3a3939",
+                      "surface-container-low": "#1c1b1b",
+                      "on-secondary-container": "#bab5a9",
+                      "surface-container-highest": "#353534",
+                      "primary": "#ffffff",
+                      "on-secondary-fixed-variant": "#4a473e",
+                      "on-surface": "#e5e2e1",
+                      "on-tertiary-fixed": "#1c1b1b",
+                      "tertiary-container": "#e5e2e1",
+                      "outline-variant": "#474741",
+                      "surface-tint": "#c9c6c1",
+                      "primary-fixed": "#e5e2dd",
+                      "on-primary-container": "#656461",
+                      "error-container": "#93000a",
+                      "tertiary-fixed": "#e5e2e1",
+                      "on-background": "#e5e2e1",
+                      "primary-fixed-dim": "#c9c6c1",
+                      "secondary-fixed": "#e8e2d6",
+                      "tertiary": "#ffffff",
+                      "tertiary-fixed-dim": "#c8c6c5",
+                      "surface-dim": "#131313",
+                      "surface-container": "#201f1f",
+                      "on-primary-fixed": "#1c1c19",
+                      "on-secondary": "#333028",
+                      "on-tertiary": "#313030",
+                      "surface": "#131313",
+                      "on-surface-variant": "#c8c7be",
+                      "secondary-container": "#4a473e",
+                      "primary-container": "#e5e2dd",
+                      "on-primary-fixed-variant": "#474743",
+                      "secondary-fixed-dim": "#ccc6ba",
+                      "on-error": "#690005",
+                      "secondary": "#ccc6ba"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "margin": "64px",
+                      "element-gap": "24px",
+                      "section-gap": "160px",
+                      "gutter": "32px",
+                      "container-max": "1440px"
+              },
+              "fontFamily": {
+                      "body-lg": [
+                              "Manrope", "sans-serif"
+                      ],
+                      "label-caps": [
+                              "Manrope", "sans-serif"
+                      ],
+                      "body-md": [
+                              "Manrope", "sans-serif"
+                      ],
+                      "display-xl": [
+                              "Montserrat", "sans-serif"
+                      ],
+                      "display-lg": [
+                              "Montserrat", "sans-serif"
+                      ],
+                      "headline-md": [
+                              "Montserrat", "sans-serif"
+                      ],
+                      "montserrat": [
+                              "Montserrat", "sans-serif"
+                      ],
+                      "manrope": [
+                              "Manrope", "sans-serif"
+                      ]
+              },
+              "fontSize": {
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-xl": [
+                              "80px",
+                              {
+                                      "lineHeight": "96px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "display-lg": [
+                              "64px",
+                              {
+                                      "lineHeight": "72px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-md": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "0em",
+                                      "fontWeight": "500"
+                              }
+                      ]
+              }
+            },
+          }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        @keyframes hero-wave-drift {
+            0%, 100% { transform: translateX(0) scale(1); }
+            50% { transform: translateX(-2.5%) scale(1.02); }
+        }
+        @keyframes hero-shimmer {
+            0%, 100% { opacity: 0.45; }
+            50% { opacity: 0.75; }
+        }
+        .hero-waves-motion {
+            animation: hero-wave-drift 28s ease-in-out infinite;
+        }
+        .hero-waves-motion-slow {
+            animation: hero-wave-drift 38s ease-in-out infinite reverse;
+        }
+        .hero-shimmer {
+            animation: hero-shimmer 12s ease-in-out infinite;
+        }
+        #site-nav-drawer { transform: translateX(100%); transition: transform 0.3s ease-out; }
+        #site-nav-drawer.open { transform: translateX(0); }
+        .site-nav-overlay.open { opacity: 1 !important; pointer-events: auto !important; }
+
+        /* Conversion bridge (trust → hook → CTA) */
+        #conversion-bridge {
+            opacity: 0;
+            transform: translateY(1.25rem);
+            will-change: opacity, transform;
+        }
+        #conversion-bridge.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.85s ease-out, transform 0.85s ease-out;
+        }
+        .conversion-bridge-slide {
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            opacity: 0;
+            transform: translateY(0.65rem);
+            transition: opacity 0.65s ease-in-out, transform 0.65s ease-in-out;
+            pointer-events: none;
+        }
+        .conversion-bridge-slide.is-active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .bridge-intro { font-family: Montserrat, sans-serif; }
+        .bridge-headline {
+            font-family: Montserrat, sans-serif;
+            font-style: italic;
+            font-weight: 700;
+        }
+        .bridge-subtext { font-family: Inter, sans-serif; }
+        @media (prefers-reduced-motion: reduce) {
+            #conversion-bridge {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+            .conversion-bridge-slide {
+                transition: none;
+            }
+            .conversion-bridge-slide:not(.is-active) {
+                opacity: 0;
+                visibility: hidden;
+            }
+            .conversion-bridge-slide.is-active {
+                transform: none;
+            }
+            .trusted-marquee-track {
+                animation: none !important;
+            }
+        }
+        @keyframes trusted-marquee-scroll {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                /* Paired duplicate strips: shift one half-width for seamless loop */
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+<link rel="stylesheet" href="styles/animations.css"/>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md overflow-x-hidden selection:bg-surface-variant selection:text-primary">
+<!-- TopNavBar (minimal: stitch-style emphasis on CONTACT) -->
+<nav class="fixed top-0 w-full z-50 flex items-center px-8 md:px-16 bg-stone-950/75 backdrop-blur-xl h-[4.25rem] border-b border-white/10">
+<a href="index.html" class="text-2xl font-bold text-stone-100 tracking-tight font-montserrat">Onurik</a>
+<button type="button" class="md:hidden ml-auto inline-flex items-center justify-center rounded-md p-2 text-stone-100 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40" aria-expanded="false" aria-controls="site-nav-drawer" id="site-mobile-menu-btn">
+<span class="material-symbols-outlined text-2xl" aria-hidden="true">menu</span>
+<span class="sr-only">Open menu</span>
+</button>
+<div class="ml-auto hidden md:flex items-center gap-10 font-montserrat">
+<span class="text-xs uppercase tracking-[0.2em]"><a href="works.html" class="text-white/35 hover:text-white/70 transition-colors">Works</a><span class="text-white/20 mx-3">/</span><a href="about.html" class="text-white/35 hover:text-white/70 transition-colors">Info</a></span>
+<a href="contact.html" class="text-xs font-semibold uppercase tracking-[0.28em] text-stone-100 border-b border-stone-100 pb-0.5 hover:text-white hover:border-white transition-colors">Contact</a>
+</div>
+</nav>
+<div class="site-nav-overlay fixed inset-0 z-40 md:hidden opacity-0 pointer-events-none bg-black/70 backdrop-blur-sm transition-opacity duration-300" aria-hidden="true"></div>
+<nav id="site-nav-drawer" class="fixed top-0 right-0 z-50 h-full w-[min(100vw,18rem)] md:hidden pt-24 px-8 bg-neutral-950 border-l border-white/10 font-montserrat text-sm uppercase tracking-widest flex flex-col gap-6 shadow-2xl" aria-hidden="true" aria-label="Mobile">
+<a href="works.html" class="text-white/80 hover:text-white transition-colors">Works</a>
+<a href="about.html" class="text-white/80 hover:text-white transition-colors">Info</a>
+<a href="contact.html" class="text-white font-semibold border-b border-stone-100 pb-0.5 self-start">Contact</a>
+<a href="contact.html" class="mt-4 pt-4 border-t border-white/10 text-xs font-semibold uppercase tracking-[0.28em] text-white/90 hover:text-white transition-colors">Enquire</a>
+</nav>
+<script>
+(function () {
+  var btn = document.getElementById("site-mobile-menu-btn");
+  var drawer = document.getElementById("site-nav-drawer");
+  var overlay = document.querySelector(".site-nav-overlay");
+  if (!btn || !drawer || !overlay) return;
+  function setOpen(open) {
+    drawer.classList.toggle("open", open);
+    drawer.setAttribute("aria-hidden", open ? "false" : "true");
+    overlay.classList.toggle("open", open);
+    overlay.setAttribute("aria-hidden", open ? "false" : "true");
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    document.documentElement.style.overflow = open ? "hidden" : "";
+  }
+  btn.addEventListener("click", function () {
+    setOpen(!drawer.classList.contains("open"));
+  });
+  overlay.addEventListener("click", function () {
+    setOpen(false);
+  });
+  drawer.querySelectorAll("a").forEach(function (link) {
+    link.addEventListener("click", function () {
+      setOpen(false);
+    });
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") setOpen(false);
+  });
+})();
+</script>
+<!-- Main Content Canvas -->
+<main class="flex-grow">
+<!-- Hero (fluid metallic waves + stitched headline cue) -->
+<section class="relative h-screen w-full flex flex-col justify-end pb-[clamp(6rem,12vh,10rem)] px-8 md:px-16">
+<div class="absolute inset-0 z-[-1] overflow-hidden bg-[#252525]" data-anim-parallax="0.1">
+<video class="absolute inset-0 h-full w-full object-cover object-center" autoplay="" loop="" muted="" playsinline="" preload="metadata" aria-hidden="true">
+<source src="/videos/hero.mp4" type="video/mp4"/>
+</video>
+<div class="absolute inset-0 bg-gradient-to-t from-[#151515] via-[#171717]/92 to-transparent"></div>
+<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_60%_-10%,rgba(255,255,255,0.07),transparent_55%)]"></div>
+</div>
+<div class="max-w-container-max mx-auto w-full relative z-[1]">
+<h1 class="font-display-xl text-display-xl md:text-[80px] md:leading-[0.96] max-w-[20ch] lg:max-w-4xl text-white font-medium tracking-[-0.03em]" style="font-size: clamp(2.75rem, 7vw + 1rem, 5rem); line-height: 1.05;" data-anim-split="words">
+                    Engineering Human-Centered Systems
+                </h1>
+</div>
+<div class="absolute bottom-10 left-8 md:left-16 flex items-center gap-3 font-montserrat text-[11px] font-medium uppercase tracking-[0.35em] text-white/50">
+<span>SCROLL</span>
+<span aria-hidden="true">↓</span>
+</div>
+</section>
+<!-- Bio (light editorial band — Stitch home reference) -->
+<section class="relative bg-[#f3f3f1] text-[#121212]">
+<div class="max-w-container-max mx-auto px-8 md:px-16 py-[clamp(4.5rem,12vw,7.5rem)]">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-x-gutter gap-y-12 md:gap-y-0 items-center">
+<div class="md:col-span-6 lg:col-span-5 md:pr-8 lg:pr-16" data-anim-stagger>
+<h2 class="font-montserrat text-[clamp(2.125rem,4.5vw,3.5rem)] leading-[1.12] tracking-[-0.02em] font-medium text-neutral-950 mb-8 md:mb-10" style="font-family: 'Montserrat', sans-serif; font-weight: 500;">
+I design. I build. I question everything..
+                    </h2>
+<div class="font-body-lg text-body-lg text-neutral-700 space-y-6 max-w-xl">
+<p>
+                            Marking a decade of experience, a clear perspective has emerged: the true craft lies not in choosing between systems and design, but in aligning them- quietly, intentionally, and with purpose.
+                        </p>
+<p class="text-[15px] leading-relaxed md:text-[16px] md:leading-[1.65] text-neutral-600">
+                            Focused on creating products that are simple, thoughtful, and actually useful. Somewhere along the way, ideas turn into things people rely on; that’s the part I enjoy the most
+                        </p>
+</div>
+<div class="mt-10 flex flex-wrap items-center gap-4">
+<a href="works.html" class="inline-flex items-center justify-center border border-outline px-6 py-2 text-xs font-semibold uppercase tracking-[0.28em] font-montserrat text-neutral-950 transition-colors duration-300 hover:border-transparent hover:bg-primary hover:text-on-primary">Explore works</a>
+<a href="contact.html" class="inline-flex items-center justify-center border border-outline px-6 py-2 text-xs font-semibold uppercase tracking-[0.28em] font-montserrat text-neutral-950 transition-colors duration-300 hover:border-transparent hover:bg-primary hover:text-on-primary">Enquire</a>
+</div>
+</div>
+<div class="relative isolate mt-4 h-[min(72vw,520px)] overflow-hidden rounded-xl border border-neutral-300/70 bg-neutral-300/60 shadow-inner md:col-span-6 md:mt-0 md:h-[clamp(440px,58vh,620px)] lg:col-span-7">
+<div class="absolute inset-0 z-0 overflow-hidden rounded-xl">
+<img alt="Editorial studio portrait" class="absolute inset-0 h-full w-full object-cover object-[center_18%] md:object-[center_12%] grayscale contrast-[0.92]" src="/images/jason.png" width="900" height="1100"/>
+<div class="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-tr from-neutral-400/35 via-transparent to-transparent" aria-hidden="true"></div>
+<div class="pointer-events-none absolute inset-0 z-[1] opacity-[0.35] grayscale mix-blend-multiply bg-[linear-gradient(120deg,#888_0%,transparent_52%,#ccc_100%)]" aria-hidden="true"></div>
+</div>
+<div class="pointer-events-none absolute bottom-5 left-5 z-10 max-w-[min(18rem,calc(100%-2.5rem))] rounded-sm border border-neutral-950/10 bg-[#fafaf8]/96 px-4 py-3 shadow-[0_8px_30px_rgba(0,0,0,0.08)] backdrop-blur-sm">
+<p class="font-montserrat text-[17px] font-semibold leading-snug tracking-[-0.02em] text-neutral-950" style="font-family: Montserrat, sans-serif;">Jason Maina</p>
+<p class="font-montserrat mt-1.5 text-[10px] font-semibold uppercase leading-none tracking-[0.16em] text-neutral-900" style="font-family: Montserrat, sans-serif;">Lead Engineer<span class="mx-1.5 text-neutral-400" aria-hidden="true">—</span>Systems/Design</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Selected Clients — logos from Supabase onurik_brands (Admin → Brands); see scripts/brands-carousel-home.js -->
+<section class="relative overflow-hidden border-y border-neutral-200 bg-white py-8 md:py-12 lg:py-14" aria-labelledby="selected-clients-heading">
+<div class="relative z-20 mx-auto mb-6 max-w-container-max px-8 text-center md:mb-8 md:px-16 lg:mb-10">
+<h2 id="selected-clients-heading" class="font-montserrat text-base font-medium uppercase tracking-[0.14em] text-neutral-900 md:text-[17px]">Selected Clients</h2>
+</div>
+<div class="pointer-events-none absolute bottom-0 left-0 top-0 z-[5] w-24 bg-gradient-to-r from-white to-transparent md:w-32"></div>
+<div class="pointer-events-none absolute bottom-0 right-0 top-0 z-[5] w-24 bg-gradient-to-l from-white to-transparent md:w-32"></div>
+<div id="trusted-brands-marquee-root" class="relative z-[1]"></div>
+</section>
+<!-- Conversion bridge: credibility → emotional hook → action -->
+<section id="conversion-bridge" class="w-full bg-[#131313]" aria-labelledby="conversion-bridge-heading">
+<div class="mx-auto max-w-[1440px] px-8 py-16 md:px-16 md:py-24 lg:py-28">
+<h2 id="conversion-bridge-heading" class="sr-only">Partner with Onurik</h2>
+<div class="flex flex-col gap-12 lg:flex-row lg:items-center lg:justify-between lg:gap-12 xl:gap-16">
+<div class="w-full lg:w-[70%] lg:max-w-[70%] lg:flex-[7]">
+<div class="relative min-h-[13.5rem] sm:min-h-[12rem] md:min-h-[11rem] lg:min-h-[13rem]" aria-live="polite">
+<div id="conversion-bridge-slides" class="absolute inset-0">
+<div class="conversion-bridge-slide is-active" data-slide="0">
+<p class="bridge-intro mb-3 text-base leading-snug text-white/50 md:text-lg">Let’s talk about what you’re building —</p>
+<p class="bridge-headline text-2xl leading-[1.15] text-white md:text-3xl lg:text-[2.125rem] lg:leading-[1.2]">and make it something people actually remember.</p>
+</div>
+<div class="conversion-bridge-slide" data-slide="1">
+<p class="bridge-intro mb-3 text-base leading-snug text-white/50 md:text-lg">Every great idea deserves a moment.</p>
+<p class="bridge-headline text-2xl leading-[1.15] text-white md:text-3xl lg:text-[2.125rem] lg:leading-[1.2]">Let’s make yours impossible to miss.</p>
+</div>
+<div class="conversion-bridge-slide" data-slide="2">
+<p class="bridge-intro mb-3 text-base leading-snug text-white/50 md:text-lg">This could be something big —</p>
+<p class="bridge-headline text-2xl leading-[1.15] text-white md:text-3xl lg:text-[2.125rem] lg:leading-[1.2]">Let’s make sure it feels like it.</p>
+</div>
+<div class="conversion-bridge-slide" data-slide="3">
+<p class="bridge-intro mb-3 text-base leading-snug text-white/50 md:text-lg">Most products get ignored.</p>
+<p class="bridge-headline text-2xl leading-[1.15] text-white md:text-3xl lg:text-[2.125rem] lg:leading-[1.2]">Let’s make sure yours isn’t one of them.</p>
+</div>
+</div>
+</div>
+<p class="bridge-intro mt-6 text-sm text-white/45 md:text-[15px]">— this is what I do at Onurik.</p>
+<p class="bridge-subtext mt-6 max-w-2xl text-[15px] leading-relaxed text-white/[0.58] md:text-base md:leading-relaxed">I work with founders and teams who care about how their product looks and feels. Design, development, and identity — done with intention, not templates.</p>
+</div>
+<div class="flex w-full shrink-0 justify-center lg:w-[30%] lg:max-w-[30%] lg:flex-[3] lg:justify-end lg:self-center">
+<a href="contact.html" class="bridge-cta group inline-flex items-center justify-center gap-2.5 rounded-full border border-[#c9c6c1]/35 bg-[#201f1f] px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-[#e8e2d6] shadow-sm transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-[#e5e2dd]/55 hover:bg-[#2a2a2a] hover:shadow-[0_8px_32px_rgba(229,226,221,0.1)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e5e2dd]/40">
+<span>Let’s work together</span>
+<span class="material-symbols-outlined text-[1.125rem] transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<script>
+(function () {
+  var section = document.getElementById("conversion-bridge");
+  var slides = section ? section.querySelectorAll(".conversion-bridge-slide") : [];
+  if (!slides.length) return;
+  var i = 0;
+  var period = 3600;
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function go(n) {
+    slides.forEach(function (el, j) {
+      el.classList.toggle("is-active", j === n);
+    });
+    i = n;
+  }
+  function next() {
+    go((i + 1) % slides.length);
+  }
+  if (section) {
+    requestAnimationFrame(function () {
+      section.classList.add("is-visible");
+    });
+  }
+  if (!reduceMotion) {
+    setInterval(next, period);
+  }
+})();
+</script>
+<script type="module" src="./scripts/brands-carousel-home.js"></script>
+</main>
+<!-- Footer -->
+<footer class="w-full flex flex-col md:flex-row justify-between items-center px-8 md:px-16 bg-stone-950 text-stone-100 full-width py-20 border-t border-stone-100/5 flat no shadows">
+<div class="text-stone-100 font-bold mb-8 md:mb-0">
+            ONURIK
+        </div>
+<ul data-onurik-social-footer class="flex flex-wrap gap-8 font-montserrat text-[10px] tracking-[0.2em] uppercase justify-center" aria-label="Social links" hidden></ul>
+<div class="font-montserrat text-[10px] tracking-[0.2em] uppercase text-stone-100/40 mt-8 md:mt-0">
+            © 2026 ONURIK. ALL RIGHTS RESERVED.
+        </div>
+</footer>
+<script type="module" src="./scripts/animations.js"></script>
+<script type="module" src="./scripts/site-social-links.js"></script>
+</body></html>

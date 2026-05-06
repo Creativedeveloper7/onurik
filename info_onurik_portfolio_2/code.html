@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Onurik - Info</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-container": "#e5e2dd",
+                    "primary": "#ffffff",
+                    "on-surface": "#e5e2e1",
+                    "surface-dim": "#131313",
+                    "background": "#131313",
+                    "on-primary-container": "#656461",
+                    "on-tertiary-container": "#656464",
+                    "surface-container-lowest": "#0e0e0e",
+                    "tertiary-fixed-dim": "#c8c6c5",
+                    "inverse-surface": "#e5e2e1",
+                    "primary-fixed-dim": "#c9c6c1",
+                    "tertiary-container": "#e5e2e1",
+                    "outline-variant": "#474741",
+                    "surface-container-high": "#2a2a2a",
+                    "secondary-fixed-dim": "#ccc6ba",
+                    "on-tertiary-fixed-variant": "#474746",
+                    "error-container": "#93000a",
+                    "primary-fixed": "#e5e2dd",
+                    "inverse-on-surface": "#313030",
+                    "outline": "#929189",
+                    "on-error": "#690005",
+                    "surface-variant": "#353534",
+                    "on-secondary-fixed-variant": "#4a473e",
+                    "on-background": "#e5e2e1",
+                    "on-tertiary": "#313030",
+                    "on-error-container": "#ffdad6",
+                    "error": "#ffb4ab",
+                    "on-secondary-fixed": "#1e1b14",
+                    "secondary-fixed": "#e8e2d6",
+                    "secondary": "#ccc6ba",
+                    "on-secondary": "#333028",
+                    "on-primary": "#31302d",
+                    "inverse-primary": "#5f5e5b",
+                    "surface-container": "#201f1f",
+                    "surface-tint": "#c9c6c1",
+                    "secondary-container": "#4a473e",
+                    "on-primary-fixed": "#1c1c19",
+                    "surface": "#131313",
+                    "on-secondary-container": "#bab5a9",
+                    "on-primary-fixed-variant": "#474743",
+                    "surface-bright": "#3a3939",
+                    "on-surface-variant": "#c8c7be",
+                    "tertiary": "#ffffff",
+                    "on-tertiary-fixed": "#1c1b1b",
+                    "tertiary-fixed": "#e5e2e1",
+                    "surface-container-low": "#1c1b1b",
+                    "surface-container-highest": "#353534"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "32px",
+                    "element-gap": "24px",
+                    "margin": "64px",
+                    "container-max": "1440px",
+                    "section-gap": "160px"
+            },
+            "fontFamily": {
+                    "headline-md": [
+                            "Montserrat", "sans-serif"
+                    ],
+                    "display-xl": [
+                            "Montserrat", "sans-serif"
+                    ],
+                    "label-caps": [
+                            "Montserrat", "sans-serif"
+                    ],
+                    "body-md": [
+                            "Montserrat", "sans-serif"
+                    ],
+                    "display-lg": [
+                            "Montserrat", "sans-serif"
+                    ],
+                    "body-lg": [
+                            "Montserrat", "sans-serif"
+                    ]
+            },
+            "fontSize": {
+                    "headline-md": [
+                            "32px",
+                            {
+                                    "lineHeight": "1.2",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "display-xl": [
+                            "84px",
+                            {
+                                    "lineHeight": "1.1",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "label-caps": [
+                            "12px",
+                            {
+                                    "lineHeight": "1.0",
+                                    "letterSpacing": "0.1em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "1.6",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "display-lg": [
+                            "64px",
+                            {
+                                    "lineHeight": "1.1",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "body-lg": [
+                            "20px",
+                            {
+                                    "lineHeight": "1.6",
+                                    "fontWeight": "400"
+                            }
+                    ]
+            }
+        },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #131313;
+            color: #e5e2e1;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-8 md:px-16 bg-stone-950/70 backdrop-blur-xl docked full-width h-20 border-b border-stone-100/10 text-stone-100 font-label-caps uppercase tracking-widest text-xs">
+<div class="text-2xl font-black text-stone-100 tracking-tighter">Onurik</div>
+<nav class="hidden md:flex gap-8">
+<a class="text-stone-100/60 hover:text-stone-100 transition-colors duration-500" href="#">Works</a>
+<a class="text-stone-100 border-b border-stone-100 pb-1 hover:text-stone-100 transition-colors duration-500" href="#">Info</a>
+<a class="text-stone-100/60 hover:text-stone-100 transition-colors duration-500" href="#">Contact</a>
+</nav>
+<button class="hidden md:block uppercase tracking-widest text-xs border border-stone-100/30 px-6 py-2 rounded-full hover:bg-stone-100 hover:text-stone-950 transition-colors duration-300">Enquire</button>
+<button class="md:hidden material-symbols-outlined text-2xl">menu</button>
+</header>
+<!-- Main Content -->
+<main class="flex-grow flex flex-col items-center justify-center pt-[160px] pb-section-gap px-gutter">
+<div class="max-w-[640px] w-full text-center flex flex-col gap-element-gap">
+<div class="mb-8">
+<h1 class="font-display-xl text-display-xl text-on-surface mb-4 font-medium">Onurik Systems</h1>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-[0.2em] font-medium">Principal Architect &amp; Design Director</p>
+</div>
+<div class="w-full h-px bg-outline-variant/30 my-8"></div>
+<div class="text-left font-body-lg text-body-lg text-on-surface space-y-6">
+<p>
+                    Onurik is a digital design studio operating at the intersection of systematic engineering and evocative visual storytelling. Founded with a commitment to creating digital experiences that feel as substantial and refined as physical objects, the studio specializes in platforms for the arts, architecture, and high-end commerce.
+                </p>
+<p>
+                    The approach is rooted in Cinematic Minimalism—stripping away the superfluous to reveal the essential, then elevating that essence through meticulous typographic scale, atmospheric depth, and purposeful motion. Every project is an exercise in balancing technical rigor with human warmth, resulting in interfaces that are both highly functional and deeply engaging.
+                </p>
+<p>
+                    With a background bridging traditional graphic design and modern software architecture, Onurik delivers end-to-end solutions that are built to scale without losing their artisanal quality. The studio's work is defined by quiet confidence, precision, and a relentless pursuit of the perfect digital form.
+                </p>
+</div>
+<div class="w-full h-px bg-outline-variant/30 my-8"></div>
+<div class="flex flex-col md:flex-row justify-center items-center gap-8 font-label-caps text-label-caps text-on-surface">
+<a class="hover:text-primary transition-colors duration-300 tracking-[0.15em]" href="mailto:contact@onurik.com">CONTACT@ONURIK.COM</a>
+<span class="hidden md:inline text-outline-variant">•</span>
+<div class="flex gap-6">
+<a class="hover:text-primary transition-colors duration-300 tracking-[0.15em]" href="#">INSTAGRAM</a>
+<a class="hover:text-primary transition-colors duration-300 tracking-[0.15em]" href="#">LINKEDIN</a>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full flex flex-col md:flex-row justify-between items-center px-8 md:px-16 bg-stone-950 text-stone-100 font-label-caps text-[10px] tracking-[0.2em] uppercase py-20 border-t border-stone-100/5">
+<div class="text-stone-100 font-bold mb-8 md:mb-0">
+            © 2024 ONURIK. ALL RIGHTS RESERVED.
+        </div>
+<nav class="flex gap-6 flex-wrap justify-center">
+<a class="text-stone-100/40 hover:text-stone-100 hover:tracking-[0.3em] transition-all duration-700" href="#">Instagram</a>
+<a class="text-stone-100/40 hover:text-stone-100 hover:tracking-[0.3em] transition-all duration-700" href="#">LinkedIn</a>
+<a class="text-stone-100/40 hover:text-stone-100 hover:tracking-[0.3em] transition-all duration-700" href="#">Behance</a>
+<a class="text-stone-100/40 hover:text-stone-100 hover:tracking-[0.3em] transition-all duration-700" href="#">Email</a>
+</nav>
+</footer>
+</body></html>

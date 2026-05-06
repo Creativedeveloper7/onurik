@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Admin · Works Manager · Onurik</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Montserrat:wght@400;500;600;700&amp;family=Noto+Serif:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        primary: "#ffffff",
+        background: "#131313",
+        "on-background": "#e5e2e1",
+        "surface-container": "#201f1f",
+        "surface-container-low": "#1c1b1b",
+        "surface-container-lowest": "#0e0e0e",
+        "surface-variant": "#353534",
+        "outline-variant": "#474741",
+        "on-surface-variant": "#c8c7be"
+      },
+      fontFamily: {
+        montserrat: ["Montserrat", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
+        "noto-serif": ["Noto Serif", "serif"]
+      }
+    }
+  }
+};
+</script>
+<style>
+  body { background-color: #131313; color: #e5e2e1; }
+  .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; }
+  #admin-nav-drawer { transform: translateX(100%); transition: transform 0.3s ease-out; }
+  #admin-nav-drawer.open { transform: translateX(0); }
+  .admin-nav-overlay { opacity: 0; pointer-events: none; transition: opacity 0.3s ease-out; }
+  .admin-nav-overlay.open { opacity: 1; pointer-events: auto; }
+  #admin-toast.is-visible { opacity: 1; transform: translate(-50%,0); pointer-events: auto; }
+</style>
+<link rel="stylesheet" href="../styles/animations.css"/>
+</head>
+<body class="font-inter min-h-screen selection:bg-white/20 selection:text-white">
+<header class="lg:hidden fixed top-0 left-0 right-0 z-[60] flex h-16 items-center justify-between border-b border-stone-100/10 bg-stone-950/95 px-4 backdrop-blur-xl">
+  <a href="../index.html" class="text-xs font-semibold uppercase tracking-[0.2em] text-stone-400 hover:text-stone-100">Site</a>
+  <span class="font-montserrat text-sm font-semibold text-stone-100">Admin</span>
+  <button type="button" id="admin-menu-btn" class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md text-stone-100 hover:bg-white/10" aria-expanded="false" aria-controls="admin-nav-drawer" aria-label="Open menu">
+    <span class="material-symbols-outlined text-2xl" aria-hidden="true">menu</span>
+  </button>
+</header>
+
+<div class="admin-nav-overlay fixed inset-0 z-[55] bg-black/70 backdrop-blur-sm lg:hidden" id="admin-nav-overlay" aria-hidden="true"></div>
+<nav id="admin-nav-drawer" class="fixed top-0 right-0 z-[70] flex h-full w-[min(100vw,20rem)] flex-col border-l border-stone-100/10 bg-stone-950 shadow-2xl lg:hidden" aria-hidden="true">
+  <div class="flex h-16 items-center justify-between border-b border-stone-100/10 px-4">
+    <span class="font-montserrat text-sm font-semibold text-stone-100">Menu</span>
+    <button type="button" id="admin-menu-close" class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md text-stone-100 hover:bg-white/10" aria-label="Close menu">
+      <span class="material-symbols-outlined text-2xl" aria-hidden="true">close</span>
+    </button>
+  </div>
+  <div class="flex flex-1 flex-col gap-1 py-6">
+    <a class="mx-4 mb-3 text-[10px] uppercase tracking-[0.2em] text-stone-500 hover:text-stone-100" href="../index.html">← Public site</a>
+    <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="index.html"><span class="material-symbols-outlined">dashboard</span><span class="tracking-wide">Dashboard</span></a>
+    <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-stone-100 bg-stone-800 px-6 py-3 text-sm text-stone-100" href="works.html"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">work</span><span class="tracking-wide">Works Manager</span></a>
+    <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="carousel.html"><span class="material-symbols-outlined">view_carousel</span><span class="tracking-wide">Brands</span></a>
+    <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="enquiries.html"><span class="material-symbols-outlined">mail</span><span class="tracking-wide">Enquiries</span></a>
+    <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="bookings.html"><span class="material-symbols-outlined">calendar_today</span><span class="tracking-wide">Bookings</span></a>
+    <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="settings.html"><span class="material-symbols-outlined">settings</span><span class="tracking-wide">Settings</span></a>
+  </div>
+</nav>
+
+<nav class="fixed left-0 top-0 z-50 hidden h-full w-64 flex-col border-r border-stone-100/10 bg-stone-900 lg:flex">
+  <div class="border-b border-stone-100/10 px-8 py-10">
+    <h2 class="font-montserrat text-lg font-bold text-stone-100">Admin Panel</h2>
+    <p class="mt-1 text-sm text-stone-500">Onurik Systems</p>
+  </div>
+  <div class="flex flex-1 flex-col gap-2 py-8">
+    <a class="mx-8 mb-4 text-[10px] uppercase tracking-[0.2em] text-stone-500 hover:text-stone-100" href="../index.html">← Public site</a>
+    <a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="index.html"><span class="material-symbols-outlined">dashboard</span><span>Dashboard</span></a>
+    <a class="flex items-center gap-4 border-l-2 border-stone-100 bg-stone-800 px-8 py-3 text-sm text-stone-100" href="works.html"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">work</span><span>Works Manager</span></a>
+    <a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="carousel.html"><span class="material-symbols-outlined">view_carousel</span><span>Brands</span></a>
+    <a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="enquiries.html"><span class="material-symbols-outlined">mail</span><span>Enquiries</span></a>
+    <a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="bookings.html"><span class="material-symbols-outlined">calendar_today</span><span>Bookings</span></a>
+    <a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="settings.html"><span class="material-symbols-outlined">settings</span><span>Settings</span></a>
+  </div>
+</nav>
+
+<main class="relative flex min-h-screen w-full flex-1 flex-col bg-background pt-16 lg:ml-64 lg:pt-0">
+  <header class="border-b border-outline-variant/30 px-8 py-10 md:px-16">
+    <p class="mb-4 flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-primary">
+      <span class="material-symbols-outlined text-[14px]" aria-hidden="true">work</span>
+      Works Manager
+    </p>
+    <h1 class="font-montserrat text-5xl text-on-background">Manage Projects</h1>
+  </header>
+  <section class="px-8 py-8 md:px-16">
+    <div class="grid grid-cols-1 gap-6 xl:grid-cols-5">
+      <form id="project-form" class="xl:col-span-2 space-y-4 rounded border border-outline-variant/30 bg-surface-container-low p-5">
+        <p class="text-[11px] uppercase tracking-[0.2em] text-on-surface-variant">Paste a URL or upload a file</p>
+        <div class="grid gap-3">
+          <input id="project-image" class="w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2" type="url" placeholder="https://thumbnail.jpg"/>
+          <label id="dropzone" class="flex min-h-[110px] cursor-pointer flex-col items-center justify-center rounded border border-dashed border-outline-variant/50 bg-surface-container px-3 py-3 text-center text-sm text-on-surface-variant hover:border-white/40">
+            <input id="project-image-file" type="file" accept=".png,.jpg,.jpeg" class="hidden"/>
+            <span class="material-symbols-outlined mb-2">upload</span>
+            Drag and drop PNG/JPG here, or click to browse
+          </label>
+          <img id="project-image-preview" alt="" class="hidden h-36 w-full rounded object-cover"/>
+        </div>
+        <input id="project-title" class="w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2" type="text" placeholder="Project title" required/>
+        <select id="project-category" class="w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2"></select>
+        <input id="project-tags" class="w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2" type="text" placeholder="React, Figma, Rust"/>
+        <div id="tag-preview" class="flex min-h-8 flex-wrap gap-2"></div>
+        <textarea id="project-description" rows="4" class="w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2" placeholder="Short project description..." required></textarea>
+        <input id="project-url" class="w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2" type="url" placeholder="https://project-link.com"/>
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div>
+            <p class="mb-2 text-xs uppercase tracking-[0.2em] text-on-surface-variant">Private link</p>
+            <label class="inline-flex cursor-pointer items-center gap-3">
+              <input id="project-privacy" type="checkbox" class="peer sr-only"/>
+              <span class="relative h-6 w-11 rounded-full bg-surface-variant transition peer-checked:bg-white/70">
+                <span class="absolute left-1 top-1 h-4 w-4 rounded-full bg-white transition peer-checked:translate-x-5"></span>
+              </span>
+              <span id="privacy-label" class="text-sm text-on-surface-variant">Public</span>
+            </label>
+          </div>
+          <div>
+            <p class="mb-2 text-xs uppercase tracking-[0.2em] text-on-surface-variant">Status</p>
+            <div class="inline-flex rounded-full border border-outline-variant/40 p-1">
+              <button type="button" data-status-pill="published" class="status-pill rounded-full px-3 py-1 text-xs uppercase tracking-[0.14em]">Published</button>
+              <button type="button" data-status-pill="draft" class="status-pill rounded-full px-3 py-1 text-xs uppercase tracking-[0.14em]">Draft</button>
+            </div>
+            <input id="project-status" type="hidden" value="published"/>
+          </div>
+        </div>
+        <button id="project-submit-btn" class="min-h-[44px] w-full rounded border border-outline-variant px-4 py-2 text-xs uppercase tracking-[0.2em] transition-colors hover:bg-surface-container" type="submit">Publish Project</button>
+      </form>
+
+      <div class="xl:col-span-3 overflow-x-auto rounded border border-outline-variant/30 bg-surface-container-low">
+        <table class="w-full min-w-[860px] border-collapse text-left">
+          <thead class="border-b border-outline-variant/40 bg-surface-container/50">
+            <tr>
+              <th class="p-3 text-xs uppercase tracking-[0.2em] text-on-surface-variant">Thumb</th>
+              <th class="p-3 text-xs uppercase tracking-[0.2em] text-on-surface-variant">Title</th>
+              <th class="p-3 text-xs uppercase tracking-[0.2em] text-on-surface-variant">Category</th>
+              <th class="p-3 text-xs uppercase tracking-[0.2em] text-on-surface-variant">Status</th>
+              <th class="p-3 text-xs uppercase tracking-[0.2em] text-on-surface-variant">Privacy</th>
+              <th class="p-3 text-xs uppercase tracking-[0.2em] text-on-surface-variant">Tags</th>
+              <th class="p-3 text-right text-xs uppercase tracking-[0.2em] text-on-surface-variant">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="projects-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="admin-auth-gate" class="fixed inset-0 z-[90] flex items-center justify-center bg-black/80 px-4">
+  <form id="admin-auth-form" class="w-full max-w-md rounded border border-outline-variant/40 bg-surface-container p-6">
+    <p class="mb-3 text-xs uppercase tracking-[0.2em] text-primary">Protected Access</p>
+    <h3 class="mb-4 font-montserrat text-2xl">Admin Password</h3>
+    <input id="admin-password" type="password" class="mb-3 w-full rounded border border-outline-variant/40 bg-surface-container-low px-3 py-2" placeholder="Enter password"/>
+    <p id="admin-auth-error" class="min-h-5 text-sm text-red-300"></p>
+    <button type="submit" class="min-h-[44px] w-full rounded border border-outline-variant px-4 py-2 text-xs uppercase tracking-[0.2em] hover:bg-surface-variant">Unlock Dashboard</button>
+  </form>
+</div>
+
+<div id="admin-toast" class="pointer-events-none fixed bottom-6 left-1/2 z-[80] max-w-[calc(100vw-2rem)] -translate-x-1/2 translate-y-2 rounded border border-outline-variant/40 bg-surface-container px-5 py-3 text-sm opacity-0 shadow-lg transition-all duration-300" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  var btn = document.getElementById("admin-menu-btn");
+  var closeBtn = document.getElementById("admin-menu-close");
+  var drawer = document.getElementById("admin-nav-drawer");
+  var overlay = document.getElementById("admin-nav-overlay");
+  function setOpen(open) {
+    if (!drawer || !overlay) return;
+    drawer.classList.toggle("open", open);
+    drawer.setAttribute("aria-hidden", open ? "false" : "true");
+    overlay.classList.toggle("open", open);
+    overlay.setAttribute("aria-hidden", open ? "false" : "true");
+    if (btn) btn.setAttribute("aria-expanded", open ? "true" : "false");
+    document.documentElement.style.overflow = open ? "hidden" : "";
+  }
+  if (btn && drawer && overlay) {
+    btn.addEventListener("click", function () { setOpen(!drawer.classList.contains("open")); });
+    overlay.addEventListener("click", function () { setOpen(false); });
+    if (closeBtn) closeBtn.addEventListener("click", function () { setOpen(false); });
+    drawer.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () { setOpen(false); });
+    });
+  }
+})();
+</script>
+<script type="module" src="../scripts/animations.js"></script>
+<script type="module" src="../scripts/admin-works-manager.js"></script>
+</body>
+</html>
