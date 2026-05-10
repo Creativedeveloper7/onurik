@@ -1,5 +1,9 @@
 const ONURIK_PROJECTS_KEY = "onurik.projects.v1";
 
+const DB_NAME = "onurik-db";
+const DB_VERSION = 1;
+const STORE_NAME = "kv";
+
 const ONURIK_PROJECT_CATEGORIES = [
   "Standard Projects",
   "Branding & Identity",
@@ -40,6 +44,75 @@ const ONURIK_DEFAULT_PROJECTS = [
   },
 ];
 
+function openDb() {
+  return new Promise(function (resolve, reject) {
+    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    req.onerror = function () {
+      reject(req.error);
+    };
+    req.onsuccess = function () {
+      resolve(req.result);
+    };
+    req.onupgradeneeded = function () {
+      const db = req.result;
+      if (!db.objectStoreNames.contains(STORE_NAME)) {
+        db.createObjectStore(STORE_NAME);
+      }
+    };
+  });
+}
+
+function idbGet(key) {
+  return openDb().then(function (db) {
+    return new Promise(function (resolve, reject) {
+      const tx = db.transaction(STORE_NAME, "readonly");
+      const store = tx.objectStore(STORE_NAME);
+      const getReq = store.get(key);
+      getReq.onsuccess = function () {
+        resolve(getReq.result);
+      };
+      getReq.onerror = function () {
+        reject(getReq.error);
+      };
+    });
+  });
+}
+
+function idbPut(key, value) {
+  return openDb().then(function (db) {
+    return new Promise(function (resolve, reject) {
+      const tx = db.transaction(STORE_NAME, "readwrite");
+      const store = tx.objectStore(STORE_NAME);
+      const putReq = store.put(value, key);
+      putReq.onsuccess = function () {
+        resolve();
+      };
+      putReq.onerror = function () {
+        reject(putReq.error);
+      };
+    });
+  });
+}
+
+async function migrateFromLocalStorageOnce() {
+  try {
+    const rawLs = window.localStorage.getItem(ONURIK_PROJECTS_KEY);
+    if (!rawLs) return;
+    const existing = await idbGet(ONURIK_PROJECTS_KEY);
+    if (existing != null) {
+      window.localStorage.removeItem(ONURIK_PROJECTS_KEY);
+      return;
+    }
+    const parsed = JSON.parse(rawLs);
+    if (Array.isArray(parsed)) {
+      await idbPut(ONURIK_PROJECTS_KEY, parsed);
+    }
+    window.localStorage.removeItem(ONURIK_PROJECTS_KEY);
+  } catch (_err) {
+    /* leave localStorage intact if migration fails */
+  }
+}
+
 function cloneProjects(items) {
   return items.map(function (item) {
     return {
@@ -71,28 +144,29 @@ export function getCategories() {
   return ONURIK_PROJECT_CATEGORIES.slice();
 }
 
-export function loadProjects() {
+export async function loadProjects() {
   try {
-    const raw = window.localStorage.getItem(ONURIK_PROJECTS_KEY);
-    if (!raw) {
+    await migrateFromLocalStorageOnce();
+    let raw = await idbGet(ONURIK_PROJECTS_KEY);
+    if (raw == null) {
       const seeded = cloneProjects(ONURIK_DEFAULT_PROJECTS);
-      saveProjects(seeded);
+      await saveProjects(seeded);
       return seeded;
     }
-    return normalizeProjects(JSON.parse(raw));
+    return normalizeProjects(raw);
   } catch (_err) {
     return cloneProjects(ONURIK_DEFAULT_PROJECTS);
   }
 }
 
-export function saveProjects(projects) {
+export async function saveProjects(projects) {
   const normalized = normalizeProjects(projects);
-  window.localStorage.setItem(ONURIK_PROJECTS_KEY, JSON.stringify(normalized));
+  await idbPut(ONURIK_PROJECTS_KEY, normalized);
   return normalized;
 }
 
-export function createProject(project) {
-  const current = loadProjects();
+export async function createProject(project) {
+  const current = await loadProjects();
   const now = Date.now();
   current.unshift({
     ...project,
@@ -103,8 +177,8 @@ export function createProject(project) {
   return saveProjects(current);
 }
 
-export function updateProject(id, patch) {
-  const current = loadProjects();
+export async function updateProject(id, patch) {
+  const current = await loadProjects();
   const next = current.map(function (item) {
     if (item.id !== id) return item;
     return {
@@ -116,8 +190,8 @@ export function updateProject(id, patch) {
   return saveProjects(next);
 }
 
-export function deleteProject(id) {
-  const current = loadProjects();
+export async function deleteProject(id) {
+  const current = await loadProjects();
   return saveProjects(
     current.filter(function (item) {
       return item.id !== id;
@@ -125,8 +199,8 @@ export function deleteProject(id) {
   );
 }
 
-export function findProject(id) {
-  return loadProjects().find(function (item) {
+export async function findProject(id) {
+  return (await loadProjects()).find(function (item) {
     return item.id === id;
   });
 }

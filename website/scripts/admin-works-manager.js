@@ -52,6 +52,52 @@ function ensureAuthGate() {
   return false;
 }
 
+function compressImageFile(file, maxWidth, quality) {
+  return new Promise(function (resolve, reject) {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = function () {
+      URL.revokeObjectURL(url);
+      let w = img.naturalWidth;
+      let h = img.naturalHeight;
+      if (w > maxWidth) {
+        h = Math.round((h * maxWidth) / w);
+        w = maxWidth;
+      }
+      const canvas = document.createElement("canvas");
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) {
+        reject(new Error("no canvas context"));
+        return;
+      }
+      ctx.drawImage(img, 0, 0, w, h);
+      canvas.toBlob(
+        function (blob) {
+          if (!blob) {
+            reject(new Error("blob"));
+            return;
+          }
+          const reader = new FileReader();
+          reader.onload = function () {
+            resolve(String(reader.result || ""));
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+        },
+        "image/jpeg",
+        quality
+      );
+    };
+    img.onerror = function () {
+      URL.revokeObjectURL(url);
+      reject(new Error("image"));
+    };
+    img.src = url;
+  });
+}
+
 function parseTags(raw) {
   return raw
     .split(",")
@@ -148,7 +194,7 @@ function renderRows(projects) {
     .join("");
 }
 
-function initForm() {
+async function initForm() {
   const categorySelect = document.getElementById("project-category");
   const form = document.getElementById("project-form");
   const tagsInput = document.getElementById("project-tags");
@@ -167,7 +213,7 @@ function initForm() {
 
   let editingId = null;
   let uploadedDataUrl = "";
-  let projects = loadProjects();
+  let projects = await loadProjects();
   renderRows(projects);
   setStatusUi(saveMode.value || "published");
   updatePrivacyLabel();
@@ -196,12 +242,14 @@ function initForm() {
         showToast("Only PNG and JPG are allowed.");
         return;
       }
-      const reader = new FileReader();
-      reader.onload = function () {
-        uploadedDataUrl = String(reader.result || "");
-        updateImagePreview(uploadedDataUrl);
-      };
-      reader.readAsDataURL(file);
+      compressImageFile(file, 1920, 0.82)
+        .then(function (dataUrl) {
+          uploadedDataUrl = dataUrl;
+          updateImagePreview(uploadedDataUrl);
+        })
+        .catch(function () {
+          showToast("Could not process image—try a smaller file.");
+        });
     });
   }
 
@@ -223,7 +271,7 @@ function initForm() {
     });
   }
 
-  form.addEventListener("submit", function (event) {
+  form.addEventListener("submit", async function (event) {
     event.preventDefault();
     const image = uploadedDataUrl || document.getElementById("project-image").value.trim();
     const title = document.getElementById("project-title").value.trim();
@@ -240,12 +288,17 @@ function initForm() {
     }
 
     const payload = { image, title, category, tags, description, projectUrl, privacy, status };
-    if (editingId) {
-      projects = updateProject(editingId, payload);
-      showToast("Project updated.");
-    } else {
-      projects = createProject(payload);
-      showToast(status === "published" ? "Project published." : "Draft saved.");
+    try {
+      if (editingId) {
+        projects = await updateProject(editingId, payload);
+        showToast("Project updated.");
+      } else {
+        projects = await createProject(payload);
+        showToast(status === "published" ? "Project published." : "Draft saved.");
+      }
+    } catch (_err) {
+      showToast("Could not save—storage may be full. Try a smaller image.");
+      return;
     }
     editingId = null;
     form.reset();
@@ -257,26 +310,34 @@ function initForm() {
     renderRows(projects);
   });
 
-  table.addEventListener("click", function (event) {
+  table.addEventListener("click", async function (event) {
     const button = event.target.closest("button[data-action]");
     if (!button) return;
     const id = button.getAttribute("data-id");
     const action = button.getAttribute("data-action");
-    const project = loadProjects().find(function (item) {
+    const project = (await loadProjects()).find(function (item) {
       return item.id === id;
     });
     if (!project) return;
 
     if (action === "privacy") {
-      projects = updateProject(id, { privacy: project.privacy === "public" ? "private" : "public" });
-      renderRows(projects);
+      try {
+        projects = await updateProject(id, { privacy: project.privacy === "public" ? "private" : "public" });
+        renderRows(projects);
+      } catch (_err) {
+        showToast("Could not update project.");
+      }
       return;
     }
 
     if (action === "delete") {
-      projects = deleteProject(id);
-      renderRows(projects);
-      showToast("Project deleted.");
+      try {
+        projects = await deleteProject(id);
+        renderRows(projects);
+        showToast("Project deleted.");
+      } catch (_err) {
+        showToast("Could not delete project.");
+      }
       return;
     }
 
@@ -300,5 +361,7 @@ function initForm() {
 }
 
 if (ensureAuthGate()) {
-  initForm();
+  initForm().catch(function () {
+    showToast("Could not load projects.");
+  });
 }

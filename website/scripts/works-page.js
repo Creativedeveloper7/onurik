@@ -31,8 +31,8 @@ function projectCard(project) {
   );
 }
 
-function renderWorks() {
-  const projects = loadProjects().filter(function (project) {
+async function renderWorks() {
+  const projects = (await loadProjects()).filter(function (project) {
     return project.status === "published";
   });
   const byCategory = new Map();
@@ -55,4 +55,9 @@ function renderWorks() {
   });
 }
 
-renderWorks();
+renderWorks().catch(function () {
+  document.querySelectorAll("[data-project-category]").forEach(function (container) {
+    container.innerHTML =
+      '<p class="col-span-full text-on-surface-variant">Could not load projects. Try refreshing the page.</p>';
+  });
+});

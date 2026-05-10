@@ -10,20 +10,21 @@ function escapeHtml(value) {
 
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
-const projects = loadProjects().filter(function (project) {
-  return project.status === "published";
-});
-const current = projects.find(function (project) {
-  return project.id === id;
-});
 
-function runWorkDetail() {
-if (!current) {
-  document.getElementById("work-detail-root").innerHTML =
-    '<div class="mx-auto max-w-[1440px] px-8 py-24 md:px-16"><h1 class="font-montserrat text-3xl text-white">Project not found</h1><a href="works.html" class="mt-6 inline-flex border border-white/20 px-4 py-2 text-xs uppercase tracking-[0.2em] text-white/80 hover:text-white">Back to Works</a></div>';
-  window.__onurikAnimRefresh?.();
-  return;
-}
+async function runWorkDetail() {
+  const projects = (await loadProjects()).filter(function (project) {
+    return project.status === "published";
+  });
+  const current = projects.find(function (project) {
+    return project.id === id;
+  });
+
+  if (!current) {
+    document.getElementById("work-detail-root").innerHTML =
+      '<div class="mx-auto max-w-[1440px] px-8 py-24 md:px-16"><h1 class="font-montserrat text-3xl text-white">Project not found</h1><a href="works.html" class="mt-6 inline-flex border border-white/20 px-4 py-2 text-xs uppercase tracking-[0.2em] text-white/80 hover:text-white">Back to Works</a></div>';
+    window.__onurikAnimRefresh?.();
+    return;
+  }
 
   const related = projects
     .filter(function (item) {
@@ -161,7 +162,21 @@ if (!current) {
 }
 
 if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", runWorkDetail);
+  document.addEventListener("DOMContentLoaded", function () {
+    runWorkDetail().catch(function () {
+      const root = document.getElementById("work-detail-root");
+      if (root) {
+        root.innerHTML =
+          '<div class="mx-auto max-w-[1440px] px-8 py-24 md:px-16"><h1 class="font-montserrat text-3xl text-white">Could not load project</h1><p class="mt-4 text-white/60">Try refreshing the page.</p></div>';
+      }
+    });
+  });
 } else {
-  runWorkDetail();
+  runWorkDetail().catch(function () {
+    const root = document.getElementById("work-detail-root");
+    if (root) {
+      root.innerHTML =
+        '<div class="mx-auto max-w-[1440px] px-8 py-24 md:px-16"><h1 class="font-montserrat text-3xl text-white">Could not load project</h1><p class="mt-4 text-white/60">Try refreshing the page.</p></div>';
+    }
+  });
 }
