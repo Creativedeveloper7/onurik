@@ -1,8 +1,10 @@
 import {
+  compareProjectsByDisplayOrder,
   createProject,
   deleteProject,
   getCategories,
   loadProjects,
+  reorderProject,
   updateProject,
 } from "./projects-store.js";
 
@@ -151,16 +153,39 @@ function updateImagePreview(src) {
   preview.classList.remove("hidden");
 }
 
+function sortProjectsForAdminTable(projects) {
+  const catOrder = getCategories();
+  const rank = {};
+  catOrder.forEach(function (c, i) {
+    rank[c] = i;
+  });
+  return projects.slice().sort(function (a, b) {
+    const ra = rank[a.category] != null ? rank[a.category] : 999;
+    const rb = rank[b.category] != null ? rank[b.category] : 999;
+    if (ra !== rb) return ra - rb;
+    return compareProjectsByDisplayOrder(a, b);
+  });
+}
+
 function renderRows(projects) {
   const body = document.getElementById("projects-body");
   if (!body) return;
   if (!projects.length) {
     body.innerHTML =
-      '<tr><td colspan="7" class="p-10 text-center text-on-surface-variant"><span class="material-symbols-outlined mb-3 block text-4xl text-white/25">deployed_code</span><p>No projects yet. Add your first one.</p></td></tr>';
+      '<tr><td colspan="8" class="p-10 text-center text-on-surface-variant"><span class="material-symbols-outlined mb-3 block text-4xl text-white/25">deployed_code</span><p>No projects yet. Add your first one.</p></td></tr>';
     return;
   }
-  body.innerHTML = projects
+  const sorted = sortProjectsForAdminTable(projects);
+  body.innerHTML = sorted
     .map(function (project) {
+      const peers = sorted.filter(function (p) {
+        return p.category === project.category;
+      });
+      const idx = peers.findIndex(function (p) {
+        return p.id === project.id;
+      });
+      const disableUp = idx <= 0;
+      const disableDown = idx >= peers.length - 1;
       return (
         '<tr class="border-b border-outline-variant/20">' +
         '<td class="p-3"><img src="' +
@@ -171,6 +196,18 @@ function renderRows(projects) {
         "</td>" +
         '<td class="p-3 text-on-surface-variant">' +
         escapeHtml(project.category) +
+        "</td>" +
+        '<td class="p-3 whitespace-nowrap">' +
+        '<button type="button" aria-label="Move up in category" title="Earlier on works page" data-action="order-up" data-id="' +
+        project.id +
+        '"' +
+        (disableUp ? " disabled" : "") +
+        ' class="mr-1 inline-flex rounded border border-white/20 p-1 text-xs hover:bg-white/10 disabled:opacity-30 disabled:pointer-events-none"><span class="material-symbols-outlined text-base leading-none">arrow_upward</span></button>' +
+        '<button type="button" aria-label="Move down in category" title="Later on works page" data-action="order-down" data-id="' +
+        project.id +
+        '"' +
+        (disableDown ? " disabled" : "") +
+        ' class="inline-flex rounded border border-white/20 p-1 text-xs hover:bg-white/10 disabled:opacity-30 disabled:pointer-events-none"><span class="material-symbols-outlined text-base leading-none">arrow_downward</span></button>' +
         "</td>" +
         '<td class="p-3"><span class="rounded-full border border-white/20 px-2 py-1 text-[10px] uppercase">' +
         escapeHtml(project.status) +
@@ -337,6 +374,40 @@ async function initForm() {
         showToast("Project deleted.");
       } catch (_err) {
         showToast("Could not delete project.");
+      }
+      return;
+    }
+
+    if (action === "order-up") {
+      try {
+        const before = project.sortOrder;
+        projects = await reorderProject(id, -1);
+        const after = projects.find(function (item) {
+          return item.id === id;
+        });
+        renderRows(projects);
+        if (after && before !== after.sortOrder) {
+          showToast("Order updated.");
+        }
+      } catch (_err) {
+        showToast("Could not reorder.");
+      }
+      return;
+    }
+
+    if (action === "order-down") {
+      try {
+        const before = project.sortOrder;
+        projects = await reorderProject(id, 1);
+        const after = projects.find(function (item) {
+          return item.id === id;
+        });
+        renderRows(projects);
+        if (after && before !== after.sortOrder) {
+          showToast("Order updated.");
+        }
+      } catch (_err) {
+        showToast("Could not reorder.");
       }
       return;
     }

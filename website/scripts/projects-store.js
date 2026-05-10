@@ -16,6 +16,7 @@ const ONURIK_DEFAULT_PROJECTS = [
     id: "proj-quantum-dash",
     title: "Quantum Dash",
     category: "Standard Projects",
+    sortOrder: 0,
     tags: ["React", "TypeScript", "Node"],
     description:
       "A high-speed operations dashboard for real-time fleet visibility. It helps teams reduce response time and spot bottlenecks before they become outages.",
@@ -31,6 +32,7 @@ const ONURIK_DEFAULT_PROJECTS = [
     id: "proj-aura-identity",
     title: "Aura Cosmetics",
     category: "Branding & Identity",
+    sortOrder: 0,
     tags: ["Figma", "Brand Strategy", "Art Direction"],
     description:
       "A full visual identity and packaging direction for a skincare brand. The system balances premium minimalism with clear product storytelling.",
@@ -115,6 +117,8 @@ async function migrateFromLocalStorageOnce() {
 
 function cloneProjects(items) {
   return items.map(function (item) {
+    const sortOrder =
+      typeof item.sortOrder === "number" && !Number.isNaN(item.sortOrder) ? item.sortOrder : undefined;
     return {
       id: item.id,
       title: item.title,
@@ -125,9 +129,36 @@ function cloneProjects(items) {
       image: item.image,
       privacy: item.privacy === "private" ? "private" : "public",
       status: item.status === "draft" ? "draft" : "published",
+      sortOrder,
       createdAt: item.createdAt || Date.now(),
       updatedAt: item.updatedAt || Date.now(),
     };
+  });
+}
+
+function normalizeSortOrdersWithinCategories(items) {
+  const groups = new Map();
+  items.forEach(function (p) {
+    if (!groups.has(p.category)) groups.set(p.category, []);
+    groups.get(p.category).push(p);
+  });
+  groups.forEach(function (list) {
+    const allHaveOrder = list.every(function (p) {
+      return typeof p.sortOrder === "number" && !Number.isNaN(p.sortOrder);
+    });
+    if (allHaveOrder) {
+      list.sort(function (a, b) {
+        const d = a.sortOrder - b.sortOrder;
+        return d !== 0 ? d : String(a.id).localeCompare(String(b.id));
+      });
+      return;
+    }
+    list.sort(function (a, b) {
+      return (a.createdAt || 0) - (b.createdAt || 0);
+    });
+    list.forEach(function (p, i) {
+      p.sortOrder = i;
+    });
   });
 }
 
@@ -137,7 +168,23 @@ function normalizeProjects(raw) {
     return item && item.id && item.title && item.category;
   });
   if (!valid.length) return cloneProjects(ONURIK_DEFAULT_PROJECTS);
-  return cloneProjects(valid);
+  const cloned = cloneProjects(valid);
+  normalizeSortOrdersWithinCategories(cloned);
+  return cloned;
+}
+
+/** Lower sortOrder appears first within the same category on the public works page. */
+export function compareProjectsByDisplayOrder(a, b) {
+  const ao =
+    typeof a.sortOrder === "number" && !Number.isNaN(a.sortOrder)
+      ? a.sortOrder
+      : Number.MAX_SAFE_INTEGER;
+  const bo =
+    typeof b.sortOrder === "number" && !Number.isNaN(b.sortOrder)
+      ? b.sortOrder
+      : Number.MAX_SAFE_INTEGER;
+  if (ao !== bo) return ao - bo;
+  return String(a.id).localeCompare(String(b.id));
 }
 
 export function getCategories() {
@@ -168,8 +215,19 @@ export async function saveProjects(projects) {
 export async function createProject(project) {
   const current = await loadProjects();
   const now = Date.now();
+  const peers = current.filter(function (p) {
+    return p.category === project.category;
+  });
+  let sortOrder = 0;
+  if (peers.length) {
+    const orders = peers.map(function (p) {
+      return typeof p.sortOrder === "number" ? p.sortOrder : 0;
+    });
+    sortOrder = Math.min.apply(null, orders) - 1;
+  }
   current.unshift({
     ...project,
+    sortOrder,
     id: "proj-" + Math.random().toString(36).slice(2, 10),
     createdAt: now,
     updatedAt: now,
@@ -181,11 +239,54 @@ export async function updateProject(id, patch) {
   const current = await loadProjects();
   const next = current.map(function (item) {
     if (item.id !== id) return item;
-    return {
+    const merged = {
       ...item,
       ...patch,
       updatedAt: Date.now(),
     };
+    if (patch.category != null && patch.category !== item.category) {
+      const newPeers = current.filter(function (p) {
+        return p.category === patch.category && p.id !== id;
+      });
+      const maxO = newPeers.reduce(function (m, p) {
+        const o = typeof p.sortOrder === "number" ? p.sortOrder : 0;
+        return Math.max(m, o);
+      }, -1);
+      merged.sortOrder = maxO + 1;
+    }
+    return merged;
+  });
+  return saveProjects(next);
+}
+
+/** Move a project up (−1) or down (+1) within its category; swaps sortOrder with the adjacent row. */
+export async function reorderProject(projectId, delta) {
+  const current = await loadProjects();
+  const subject = current.find(function (p) {
+    return p.id === projectId;
+  });
+  if (!subject) return current;
+  const cat = subject.category;
+  const inCat = current
+    .filter(function (p) {
+      return p.category === cat;
+    })
+    .sort(function (a, b) {
+      return compareProjectsByDisplayOrder(a, b);
+    });
+  const idx = inCat.findIndex(function (p) {
+    return p.id === projectId;
+  });
+  const swapIdx = idx + delta;
+  if (idx < 0 || swapIdx < 0 || swapIdx >= inCat.length) return current;
+  const a = inCat[idx];
+  const b = inCat[swapIdx];
+  const orderA = typeof a.sortOrder === "number" ? a.sortOrder : idx;
+  const orderB = typeof b.sortOrder === "number" ? b.sortOrder : swapIdx;
+  const next = current.map(function (p) {
+    if (p.id === a.id) return { ...p, sortOrder: orderB, updatedAt: Date.now() };
+    if (p.id === b.id) return { ...p, sortOrder: orderA, updatedAt: Date.now() };
+    return p;
   });
   return saveProjects(next);
 }

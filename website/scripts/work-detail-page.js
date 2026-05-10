@@ -1,4 +1,4 @@
-import { loadProjects } from "./projects-store.js";
+import { compareProjectsByDisplayOrder, loadProjects } from "./projects-store.js";
 
 function escapeHtml(value) {
   return String(value)
@@ -30,6 +30,7 @@ async function runWorkDetail() {
     .filter(function (item) {
       return item.id !== current.id && item.category === current.category;
     })
+    .sort(compareProjectsByDisplayOrder)
     .slice(0, 3);
 
   document.getElementById("work-detail-root").innerHTML =

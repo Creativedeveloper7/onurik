@@ -1,4 +1,4 @@
-import { getCategories, loadProjects } from "./projects-store.js";
+import { compareProjectsByDisplayOrder, getCategories, loadProjects } from "./projects-store.js";
 
 function escapeHtml(value) {
   return String(value)
@@ -51,6 +51,7 @@ async function renderWorks() {
       container.innerHTML = '<p class="col-span-full text-on-surface-variant">No published projects yet in this category.</p>';
       return;
     }
+    items.sort(compareProjectsByDisplayOrder);
     container.innerHTML = items.map(projectCard).join("");
   });
 }
