@@ -1,26 +1,47 @@
 -- App uses string ids (e.g. proj-abc123). If projects.id is uuid, upserts fail with 42804.
--- RLS policies and FKs block ALTER TYPE — drop, fix, recreate.
+-- RLS + FKs block ALTER TYPE — drop, fix, recreate.
 --
--- Uses a real table (not TEMP): Supabase poolers often run statements on different
--- backends, so session temp tables disappear between batches.
+-- Entire script is ONE plpgsql DO block so Supabase SQL Editor / poolers run it as a
+-- single round-trip (no missing staging table between statements).
 
 begin;
 
-drop table if exists public._onurik_fk_fix_staging;
-
-create table public._onurik_fk_fix_staging (
-  conname text primary key,
-  child_tbl regclass not null,
-  child_col text not null,
-  child_typ text not null,
-  confdeltype "char" not null
-);
-
--- 1) Drop all RLS policies on tables involved (recreate known ones below)
 do $$
 declare
   r record;
+  fk_col text;
+  id_is_uuid boolean;
+  del_clause text;
 begin
+  drop table if exists public._onurik_fk_fix_staging;
+
+  create temporary table _onurik_fk_fix_staging (
+    conname text primary key,
+    child_tbl regclass not null,
+    child_col text not null,
+    child_typ text not null,
+    confdeltype "char" not null
+  ) on commit drop;
+
+  insert into _onurik_fk_fix_staging (conname, child_tbl, child_col, child_typ, confdeltype)
+  select
+    c.conname,
+    c.conrelid::regclass,
+    src.attname,
+    format_type(src.atttypid, src.atttypmod),
+    c.confdeltype
+  from pg_constraint c
+  join pg_attribute src
+    on src.attrelid = c.conrelid
+   and src.attnum = c.conkey[1]
+   and src.attnum > 0
+   and not src.attisdropped
+  join pg_namespace n on n.oid = (select relnamespace from pg_class where oid = c.conrelid)
+  where c.contype = 'f'
+    and c.confrelid = 'public.onurik_projects'::regclass
+    and n.nspname = 'public';
+
+  -- 1) Policies
   for r in
     select policyname, tablename
     from pg_policies
@@ -29,72 +50,37 @@ begin
   loop
     execute format('drop policy if exists %I on public.%I', r.policyname, r.tablename);
   end loop;
-end $$;
 
--- 2) Snapshot FKs → child column types, then drop FK constraints
-insert into public._onurik_fk_fix_staging (conname, child_tbl, child_col, child_typ, confdeltype)
-select
-  c.conname,
-  c.conrelid::regclass,
-  src.attname,
-  format_type(src.atttypid, src.atttypmod),
-  c.confdeltype
-from pg_constraint c
-join pg_attribute src
-  on src.attrelid = c.conrelid
- and src.attnum = c.conkey[1]
- and src.attnum > 0
- and not src.attisdropped
-join pg_namespace n on n.oid = (select relnamespace from pg_class where oid = c.conrelid)
-where c.contype = 'f'
-  and c.confrelid = 'public.onurik_projects'::regclass
-  and n.nspname = 'public';
-
-do $$
-declare
-  r record;
-begin
-  for r in select conname, child_tbl from public._onurik_fk_fix_staging
+  -- 2) Drop FKs
+  for r in select conname, child_tbl from _onurik_fk_fix_staging
   loop
     execute format('alter table %s drop constraint %I', r.child_tbl, r.conname);
   end loop;
-end $$;
 
--- 3) Parent: uuid → text
-do $$
-declare
-  id_is_uuid boolean;
-begin
-  if to_regclass('public.onurik_projects') is null then
-    return;
+  -- 3) Parent id → text
+  if to_regclass('public.onurik_projects') is not null then
+    select coalesce(
+      bool_or(format_type(a.atttypid, a.atttypmod) = 'uuid'),
+      false
+    )
+      into id_is_uuid
+    from pg_attribute a
+    join pg_class c on a.attrelid = c.oid
+    join pg_namespace n on c.relnamespace = n.oid
+    where n.nspname = 'public'
+      and c.relname = 'onurik_projects'
+      and a.attname = 'id'
+      and a.attnum > 0
+      and not a.attisdropped;
+
+    if id_is_uuid then
+      alter table public.onurik_projects
+        alter column id type text using id::text;
+    end if;
   end if;
 
-  select coalesce(
-    bool_or(format_type(a.atttypid, a.atttypmod) = 'uuid'),
-    false
-  )
-    into id_is_uuid
-  from pg_attribute a
-  join pg_class c on a.attrelid = c.oid
-  join pg_namespace n on c.relnamespace = n.oid
-  where n.nspname = 'public'
-    and c.relname = 'onurik_projects'
-    and a.attname = 'id'
-    and a.attnum > 0
-    and not a.attisdropped;
-
-  if id_is_uuid then
-    alter table public.onurik_projects
-      alter column id type text using id::text;
-  end if;
-end $$;
-
--- 4) Child FK columns: uuid → text to match new PK
-do $$
-declare
-  r record;
-begin
-  for r in select * from public._onurik_fk_fix_staging
+  -- 4) Child FK columns → text
+  for r in select * from _onurik_fk_fix_staging
   loop
     if r.child_typ = 'uuid' then
       execute format(
@@ -105,15 +91,9 @@ begin
       );
     end if;
   end loop;
-end $$;
 
--- 5) Recreate foreign keys (text → text)
-do $$
-declare
-  r record;
-  del_clause text;
-begin
-  for r in select * from public._onurik_fk_fix_staging
+  -- 5) Recreate FKs
+  for r in select * from _onurik_fk_fix_staging
   loop
     del_clause := case r.confdeltype
       when 'c' then ' on delete cascade'
@@ -129,41 +109,35 @@ begin
       del_clause
     );
   end loop;
-end $$;
 
--- 6) RLS: projects (published only for anon)
-drop policy if exists onurik_projects_public_select_published on public.onurik_projects;
-create policy onurik_projects_public_select_published on public.onurik_projects
-  for select to anon, authenticated
-  using (status = 'published');
-
--- 7) RLS: tags — rows visible when parent project is published
-do $$
-declare
-  fk_col text;
-begin
-  if to_regclass('public.onurik_project_tags') is null then
-    return;
-  end if;
-  select f.child_col into fk_col
-  from public._onurik_fk_fix_staging f
-  where f.child_tbl = 'public.onurik_project_tags'::regclass
-  limit 1;
-  if fk_col is null then
-    return;
-  end if;
-  execute format(
-    $q$
-    create policy onurik_project_tags_public_read on public.onurik_project_tags
+  -- 6) RLS projects
+  execute 'drop policy if exists onurik_projects_public_select_published on public.onurik_projects';
+  execute $p$
+    create policy onurik_projects_public_select_published on public.onurik_projects
       for select to anon, authenticated
-      using (
-        %I in (select id from public.onurik_projects where status = 'published')
-      )
-    $q$,
-    fk_col
-  );
-end $$;
+      using (status = 'published')
+  $p$;
 
-drop table if exists public._onurik_fk_fix_staging;
+  -- 7) RLS tags
+  if to_regclass('public.onurik_project_tags') is not null then
+    select s.child_col into fk_col
+    from _onurik_fk_fix_staging s
+    where s.child_tbl = 'public.onurik_project_tags'::regclass
+    limit 1;
+
+    if fk_col is not null then
+      execute format(
+        $q$
+        create policy onurik_project_tags_public_read on public.onurik_project_tags
+          for select to anon, authenticated
+          using (
+            %I in (select id from public.onurik_projects where status = 'published')
+          )
+        $q$,
+        fk_col
+      );
+    end if;
+  end if;
+end $$;
 
 commit;
