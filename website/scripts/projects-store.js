@@ -224,7 +224,7 @@ function dbRowToProject(row) {
   return {
     id: row.id,
     title: row.title,
-    category: row.category,
+    category: row.category || row.category_of || "Standard Projects",
     tags,
     description: row.description || "",
     projectUrl: row.project_url || "",
@@ -238,10 +238,12 @@ function dbRowToProject(row) {
 }
 
 function projectToPayload(project) {
+  const category = project.category || "Standard Projects";
   return {
     id: project.id,
     title: project.title,
-    category: project.category,
+    category,
+    category_of: category,
     tags: Array.isArray(project.tags) ? project.tags : [],
     description: project.description || "",
     projectUrl: project.projectUrl || "",

@@ -1,4 +1,8 @@
 import { compareProjectsByDisplayOrder, loadProjects } from "./projects-store.js";
+import {
+  applyWorkSocialPreview,
+  applyWorkSocialPreviewFallback,
+} from "./social-meta.js";
 
 function escapeHtml(value) {
   return String(value)
@@ -12,6 +16,20 @@ const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
 async function runWorkDetail() {
+  const canonicalUrl = window.location.href.split("#")[0];
+
+  if (!id || !String(id).trim()) {
+    applyWorkSocialPreviewFallback({
+      canonicalUrl,
+      title: "Work | Onurik",
+      description: "Browse published engineering and design projects on Onurik.",
+    });
+    document.getElementById("work-detail-root").innerHTML =
+      '<div class="mx-auto max-w-[1440px] px-8 py-24 md:px-16"><h1 class="font-montserrat text-3xl text-white">Missing project link</h1><p class="mt-4 text-white/60">Open a project from the Works page.</p><a href="works.html" class="mt-6 inline-flex border border-white/20 px-4 py-2 text-xs uppercase tracking-[0.2em] text-white/80 hover:text-white">Back to Works</a></div>';
+    window.__onurikAnimRefresh?.();
+    return;
+  }
+
   const projects = (await loadProjects()).filter(function (project) {
     return project.status === "published";
   });
@@ -20,11 +38,25 @@ async function runWorkDetail() {
   });
 
   if (!current) {
+    applyWorkSocialPreviewFallback({
+      canonicalUrl,
+      title: "Project not found",
+      description:
+        "This project is unavailable or not published. Browse more work on Onurik.",
+    });
     document.getElementById("work-detail-root").innerHTML =
       '<div class="mx-auto max-w-[1440px] px-8 py-24 md:px-16"><h1 class="font-montserrat text-3xl text-white">Project not found</h1><a href="works.html" class="mt-6 inline-flex border border-white/20 px-4 py-2 text-xs uppercase tracking-[0.2em] text-white/80 hover:text-white">Back to Works</a></div>';
     window.__onurikAnimRefresh?.();
     return;
   }
+
+  applyWorkSocialPreview({
+    title: current.title,
+    description: current.description,
+    imageUrl: current.image,
+    canonicalUrl,
+    siteName: "Onurik",
+  });
 
   const related = projects
     .filter(function (item) {
@@ -44,7 +76,7 @@ async function runWorkDetail() {
     '<p class="mb-3 font-montserrat text-[11px] uppercase tracking-[0.22em] text-white/60">' +
     escapeHtml(current.category) +
     "</p>" +
-    '<h1 class="font-noto-serif mb-6 text-4xl text-white md:text-6xl" data-anim-split="words">' +
+    '<h1 class="mb-6 font-montserrat text-4xl font-medium text-white md:text-6xl" data-anim-split="words">' +
     escapeHtml(current.title) +
     "</h1>" +
     '<div class="mb-6 flex flex-wrap gap-2">' +
@@ -165,6 +197,11 @@ async function runWorkDetail() {
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", function () {
     runWorkDetail().catch(function () {
+      applyWorkSocialPreviewFallback({
+        canonicalUrl: window.location.href.split("#")[0],
+        title: "Could not load project",
+        description: "The project list could not be loaded. Try again shortly.",
+      });
       const root = document.getElementById("work-detail-root");
       if (root) {
         root.innerHTML =
@@ -174,6 +211,11 @@ if (document.readyState === "loading") {
   });
 } else {
   runWorkDetail().catch(function () {
+    applyWorkSocialPreviewFallback({
+      canonicalUrl: window.location.href.split("#")[0],
+      title: "Could not load project",
+      description: "The project list could not be loaded. Try again shortly.",
+    });
     const root = document.getElementById("work-detail-root");
     if (root) {
       root.innerHTML =
