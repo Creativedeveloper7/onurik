@@ -1,7 +1,20 @@
 -- App uses string ids (e.g. proj-abc123). If projects.id is uuid, upserts fail with 42804.
--- RLS policies and FKs (e.g. onurik_project_tags → onurik_projects) block ALTER TYPE — drop, fix, recreate.
+-- RLS policies and FKs block ALTER TYPE — drop, fix, recreate.
+--
+-- Uses a real table (not TEMP): Supabase poolers often run statements on different
+-- backends, so session temp tables disappear between batches.
 
 begin;
+
+drop table if exists public._onurik_fk_fix_staging;
+
+create table public._onurik_fk_fix_staging (
+  conname text primary key,
+  child_tbl regclass not null,
+  child_col text not null,
+  child_typ text not null,
+  confdeltype "char" not null
+);
 
 -- 1) Drop all RLS policies on tables involved (recreate known ones below)
 do $$
@@ -19,15 +32,7 @@ begin
 end $$;
 
 -- 2) Snapshot FKs → child column types, then drop FK constraints
-create temporary table _onurik_fk_fix (
-  conname text primary key,
-  child_tbl regclass not null,
-  child_col text not null,
-  child_typ text not null,
-  confdeltype "char" not null
-) on commit drop;
-
-insert into _onurik_fk_fix (conname, child_tbl, child_col, child_typ, confdeltype)
+insert into public._onurik_fk_fix_staging (conname, child_tbl, child_col, child_typ, confdeltype)
 select
   c.conname,
   c.conrelid::regclass,
@@ -49,7 +54,7 @@ do $$
 declare
   r record;
 begin
-  for r in select conname, child_tbl from _onurik_fk_fix
+  for r in select conname, child_tbl from public._onurik_fk_fix_staging
   loop
     execute format('alter table %s drop constraint %I', r.child_tbl, r.conname);
   end loop;
@@ -89,7 +94,7 @@ do $$
 declare
   r record;
 begin
-  for r in select * from _onurik_fk_fix
+  for r in select * from public._onurik_fk_fix_staging
   loop
     if r.child_typ = 'uuid' then
       execute format(
@@ -108,7 +113,7 @@ declare
   r record;
   del_clause text;
 begin
-  for r in select * from _onurik_fk_fix
+  for r in select * from public._onurik_fk_fix_staging
   loop
     del_clause := case r.confdeltype
       when 'c' then ' on delete cascade'
@@ -132,7 +137,7 @@ create policy onurik_projects_public_select_published on public.onurik_projects
   for select to anon, authenticated
   using (status = 'published');
 
--- 7) RLS: tags — rows visible when parent project is published (same idea as typical tag tables)
+-- 7) RLS: tags — rows visible when parent project is published
 do $$
 declare
   fk_col text;
@@ -141,7 +146,7 @@ begin
     return;
   end if;
   select f.child_col into fk_col
-  from _onurik_fk_fix f
+  from public._onurik_fk_fix_staging f
   where f.child_tbl = 'public.onurik_project_tags'::regclass
   limit 1;
   if fk_col is null then
@@ -158,5 +163,7 @@ begin
     fk_col
   );
 end $$;
+
+drop table if exists public._onurik_fk_fix_staging;
 
 commit;
