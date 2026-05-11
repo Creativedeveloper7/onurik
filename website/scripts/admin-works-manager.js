@@ -7,6 +7,7 @@ import {
   reorderProject,
   updateProject,
 } from "./projects-store.js";
+import { getDashboardReadSecret, supabaseConfigured } from "./supabase-browser.js";
 
 const AUTH_KEY = "onurik.admin.auth";
 const ADMIN_PASSWORD = "onurik-admin";
@@ -28,6 +29,19 @@ function showToast(message) {
   showToast.timer = window.setTimeout(function () {
     toast.classList.remove("is-visible");
   }, 2800);
+}
+
+function toastSupabaseProjectError(err, fallbackMessage) {
+  const msg = err && (err.message || err.details) ? String(err.message || err.details) : "";
+  if (msg.includes("dashboard_secret_missing") || msg.includes("invalid_dashboard_secret")) {
+    showToast("Dashboard secret missing or wrong — set VITE_ADMIN_DASHBOARD_SECRET to match Supabase.");
+    return;
+  }
+  if (msg.includes("Could not find the function") || (err && err.code === "PGRST202")) {
+    showToast("Run Supabase migration 20260209120000_onurik_projects.sql, then refresh.");
+    return;
+  }
+  showToast(msg || fallbackMessage || "Could not complete action.");
 }
 
 function ensureAuthGate() {
@@ -250,7 +264,10 @@ async function initForm() {
 
   let editingId = null;
   let uploadedDataUrl = "";
-  let projects = await loadProjects();
+  let projects = await loadProjects({ admin: true });
+  if (supabaseConfigured() && !getDashboardReadSecret()) {
+    showToast("Set VITE_ADMIN_DASHBOARD_SECRET and rebuild so projects sync to Supabase.");
+  }
   renderRows(projects);
   setStatusUi(saveMode.value || "published");
   updatePrivacyLabel();
@@ -333,8 +350,8 @@ async function initForm() {
         projects = await createProject(payload);
         showToast(status === "published" ? "Project published." : "Draft saved.");
       }
-    } catch (_err) {
-      showToast("Could not save—storage may be full. Try a smaller image.");
+    } catch (err) {
+      toastSupabaseProjectError(err, "Could not save — check Supabase or try a smaller image.");
       return;
     }
     editingId = null;
@@ -352,7 +369,7 @@ async function initForm() {
     if (!button) return;
     const id = button.getAttribute("data-id");
     const action = button.getAttribute("data-action");
-    const project = (await loadProjects()).find(function (item) {
+    const project = (await loadProjects({ admin: true })).find(function (item) {
       return item.id === id;
     });
     if (!project) return;
@@ -361,8 +378,8 @@ async function initForm() {
       try {
         projects = await updateProject(id, { privacy: project.privacy === "public" ? "private" : "public" });
         renderRows(projects);
-      } catch (_err) {
-        showToast("Could not update project.");
+      } catch (err) {
+        toastSupabaseProjectError(err, "Could not update project.");
       }
       return;
     }
@@ -372,8 +389,8 @@ async function initForm() {
         projects = await deleteProject(id);
         renderRows(projects);
         showToast("Project deleted.");
-      } catch (_err) {
-        showToast("Could not delete project.");
+      } catch (err) {
+        toastSupabaseProjectError(err, "Could not delete project.");
       }
       return;
     }
@@ -389,8 +406,8 @@ async function initForm() {
         if (after && before !== after.sortOrder) {
           showToast("Order updated.");
         }
-      } catch (_err) {
-        showToast("Could not reorder.");
+      } catch (err) {
+        toastSupabaseProjectError(err, "Could not reorder.");
       }
       return;
     }
@@ -406,8 +423,8 @@ async function initForm() {
         if (after && before !== after.sortOrder) {
           showToast("Order updated.");
         }
-      } catch (_err) {
-        showToast("Could not reorder.");
+      } catch (err) {
+        toastSupabaseProjectError(err, "Could not reorder.");
       }
       return;
     }
