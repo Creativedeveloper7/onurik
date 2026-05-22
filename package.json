@@ -1,7 +1,9 @@
 {
   "name": "onurik",
   "private": true,
-  "workspaces": ["website"],
+  "workspaces": [
+    "website"
+  ],
   "scripts": {
     "dev": "npm run dev -w onurik-website",
     "build": "npm run build -w onurik-website",
