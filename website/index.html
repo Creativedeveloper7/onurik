@@ -214,20 +214,49 @@
             font-weight: 700;
         }
         .bridge-subtext { font-family: Inter, sans-serif; }
+
+        /* Services heading — same switch pattern as conversion bridge */
+        .services-heading-slide {
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            opacity: 0;
+            transform: translateY(0.65rem);
+            transition: opacity 0.65s ease-in-out, transform 0.65s ease-in-out;
+            pointer-events: none;
+        }
+        .services-heading-slide.is-active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .services-heading-intro {
+            font-family: Montserrat, sans-serif;
+        }
+        .services-heading-title {
+            font-family: Montserrat, sans-serif;
+            font-style: italic;
+            font-weight: 700;
+        }
+
         @media (prefers-reduced-motion: reduce) {
             #conversion-bridge {
                 opacity: 1;
                 transform: none;
                 transition: none;
             }
-            .conversion-bridge-slide {
+            .conversion-bridge-slide,
+            .services-heading-slide {
                 transition: none;
             }
-            .conversion-bridge-slide:not(.is-active) {
+            .conversion-bridge-slide:not(.is-active),
+            .services-heading-slide:not(.is-active) {
                 opacity: 0;
                 visibility: hidden;
             }
-            .conversion-bridge-slide.is-active {
+            .conversion-bridge-slide.is-active,
+            .services-heading-slide.is-active {
                 transform: none;
             }
             .trusted-marquee-track {
@@ -245,6 +274,7 @@
         }
     </style>
 <link rel="stylesheet" href="styles/animations.css"/>
+<link rel="stylesheet" href="styles/services-orbit.css"/>
 </head>
 <body class="bg-background text-on-background min-h-screen flex flex-col font-body-md overflow-x-hidden selection:bg-surface-variant selection:text-primary">
 <!-- TopNavBar (minimal: stitch-style emphasis on CONTACT) -->
@@ -317,6 +347,50 @@
 <span aria-hidden="true">↓</span>
 </div>
 </section>
+<!-- What We Do / services orbit -->
+<section id="services-positioning" class="anim-no-reveal relative z-10 w-full border-t border-white/[0.06] bg-[#131313] text-on-background" aria-labelledby="services-positioning-heading">
+<div class="relative z-20 mx-auto max-w-[1440px] px-8 py-16 md:px-16 md:py-24 lg:py-28">
+<p class="mb-5 font-montserrat text-[11px] font-semibold uppercase tracking-[0.28em] text-white/45">Services</p>
+<h2 id="services-positioning-heading" class="sr-only">We Build Beyond the Product.</h2>
+<div class="relative min-h-[7.5rem] max-w-4xl sm:min-h-[7rem] md:min-h-[8rem] lg:min-h-[9rem]" aria-live="polite">
+<div id="services-heading-slides" class="absolute inset-0">
+<div class="services-heading-slide is-active" data-slide="0">
+<p class="services-heading-intro mb-3 text-base leading-snug text-white/50 md:text-lg">Because brands need ecosystems, not isolated solutions.</p>
+<p class="services-heading-title text-2xl leading-[1.15] text-white md:text-3xl lg:text-[2.125rem] lg:leading-[1.2]">We Build Beyond the Product.</p>
+</div>
+<div class="services-heading-slide" data-slide="1">
+<p class="services-heading-intro mb-3 text-base leading-snug text-white/50 md:text-lg">Brand, product, and systems — built to work as one.</p>
+<p class="services-heading-title text-2xl leading-[1.15] text-white md:text-3xl lg:text-[2.125rem] lg:leading-[1.2]">Not a deliverable. A living system.</p>
+</div>
+<div class="services-heading-slide" data-slide="2">
+<p class="services-heading-intro mb-3 text-base leading-snug text-white/50 md:text-lg">From identity to experience to the stack underneath.</p>
+<p class="services-heading-title text-2xl leading-[1.15] text-white md:text-3xl lg:text-[2.125rem] lg:leading-[1.2]">Everything connected. Nothing leftover.</p>
+</div>
+<div class="services-heading-slide" data-slide="3">
+<p class="services-heading-intro mb-3 text-base leading-snug text-white/50 md:text-lg">Strategy that shapes what people feel.</p>
+<p class="services-heading-title text-2xl leading-[1.15] text-white md:text-3xl lg:text-[2.125rem] lg:leading-[1.2]">Then craft that makes it stick.</p>
+</div>
+</div>
+</div>
+
+<!-- Mobile: stacked cards -->
+<div id="services-orbit-mobile" class="mt-10 space-y-5 md:hidden"></div>
+
+<!-- Desktop / tablet: radial orbit -->
+<div id="services-orbit-desktop" class="relative z-0 mt-10 hidden overflow-visible pb-10 md:mt-12 md:block md:pb-14 lg:mt-14 lg:pb-16" aria-label="Onurik services orbit"></div>
+
+<div class="mt-12 flex flex-wrap items-center gap-3 md:mt-16 md:gap-4">
+<a href="works.html" class="group inline-flex items-center justify-center gap-2.5 rounded-full border border-[#c9c6c1]/35 bg-transparent px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-[#e8e2d6] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-[#e5e2dd]/55 hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e5e2dd]/40">
+<span>Here are some of the works</span>
+<span class="material-symbols-outlined text-[1.125rem] transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true">arrow_forward</span>
+</a>
+<a href="contact.html" class="group inline-flex items-center justify-center gap-2.5 rounded-full border border-[#c9c6c1]/35 bg-[#201f1f] px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-[#e8e2d6] shadow-sm transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-[#e5e2dd]/55 hover:bg-[#2a2a2a] hover:shadow-[0_8px_32px_rgba(229,226,221,0.1)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e5e2dd]/40">
+<span>Let’s work together</span>
+<span class="material-symbols-outlined text-[1.125rem] transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true">arrow_forward</span>
+</a>
+</div>
+</div>
+</section>
 <!-- Bio (light editorial band — Stitch home reference) -->
 <section class="relative bg-[#f3f3f1] text-[#121212]">
 <div class="max-w-container-max mx-auto px-8 md:px-16 py-[clamp(4.5rem,12vw,7.5rem)]">
@@ -353,12 +427,12 @@ I design. I build. I question everything..
 </div>
 </section>
 <!-- Selected Clients — logos from Supabase onurik_brands (Admin → Brands); see scripts/brands-carousel-home.js -->
-<section class="relative overflow-hidden border-y border-neutral-200 bg-white py-8 md:py-12 lg:py-14" aria-labelledby="selected-clients-heading">
-<div class="relative z-20 mx-auto mb-6 max-w-container-max px-8 text-center md:mb-8 md:px-16 lg:mb-10">
-<h2 id="selected-clients-heading" class="font-montserrat text-base font-medium uppercase tracking-[0.14em] text-neutral-900 md:text-[17px]">Selected Clients</h2>
+<section class="relative overflow-hidden border-y border-neutral-200 bg-white py-2.5 md:py-3.5 lg:py-4" aria-labelledby="selected-clients-heading">
+<div class="relative z-20 mx-auto mb-2 max-w-container-max px-8 text-center md:mb-2.5 md:px-16 lg:mb-3">
+<h2 id="selected-clients-heading" class="font-montserrat text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-900 md:text-xs">Selected Clients</h2>
 </div>
-<div class="pointer-events-none absolute bottom-0 left-0 top-0 z-[5] w-24 bg-gradient-to-r from-white to-transparent md:w-32"></div>
-<div class="pointer-events-none absolute bottom-0 right-0 top-0 z-[5] w-24 bg-gradient-to-l from-white to-transparent md:w-32"></div>
+<div class="pointer-events-none absolute bottom-0 left-0 top-0 z-[5] w-8 bg-gradient-to-r from-white to-transparent md:w-10"></div>
+<div class="pointer-events-none absolute bottom-0 right-0 top-0 z-[5] w-8 bg-gradient-to-l from-white to-transparent md:w-10"></div>
 <div id="trusted-brands-marquee-root" class="relative z-[1]"></div>
 </section>
 <!-- Conversion bridge: credibility → emotional hook → action -->
@@ -401,29 +475,34 @@ I design. I build. I question everything..
 </section>
 <script>
 (function () {
-  var section = document.getElementById("conversion-bridge");
-  var slides = section ? section.querySelectorAll(".conversion-bridge-slide") : [];
-  if (!slides.length) return;
-  var i = 0;
-  var period = 3600;
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  function go(n) {
-    slides.forEach(function (el, j) {
-      el.classList.toggle("is-active", j === n);
-    });
-    i = n;
+  var period = 3600;
+
+  function initRotatingSlides(sectionId, slideSelector) {
+    var section = document.getElementById(sectionId);
+    var slides = section ? section.querySelectorAll(slideSelector) : [];
+    if (!slides.length) return;
+    var i = 0;
+    function go(n) {
+      slides.forEach(function (el, j) {
+        el.classList.toggle("is-active", j === n);
+      });
+      i = n;
+    }
+    if (sectionId === "conversion-bridge" && section) {
+      requestAnimationFrame(function () {
+        section.classList.add("is-visible");
+      });
+    }
+    if (!reduceMotion) {
+      setInterval(function () {
+        go((i + 1) % slides.length);
+      }, period);
+    }
   }
-  function next() {
-    go((i + 1) % slides.length);
-  }
-  if (section) {
-    requestAnimationFrame(function () {
-      section.classList.add("is-visible");
-    });
-  }
-  if (!reduceMotion) {
-    setInterval(next, period);
-  }
+
+  initRotatingSlides("conversion-bridge", ".conversion-bridge-slide");
+  initRotatingSlides("services-positioning", ".services-heading-slide");
 })();
 </script>
 <script type="module" src="./scripts/brands-carousel-home.js"></script>
@@ -439,6 +518,9 @@ I design. I build. I question everything..
         </div>
 </footer>
 <script type="module" src="./scripts/animations.js"></script>
+<script type="module" src="./scripts/services-orbit.js"></script>
+<script type="module" src="./scripts/nav-close.js"></script>
+<script type="module" src="./scripts/whatsapp-float.js"></script>
 <script type="module" src="./scripts/site-social-links.js"></script>
 <script type="module" src="./scripts/vercel-analytics.js"></script>
 </body></html>

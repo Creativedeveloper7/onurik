@@ -100,21 +100,49 @@ tailwind.config = {
   <section class="px-8 py-8 md:px-16">
     <div class="grid grid-cols-1 gap-6 xl:grid-cols-5">
       <form id="project-form" class="xl:col-span-2 space-y-4 rounded border border-outline-variant/30 bg-surface-container-low p-5">
-        <p class="text-[11px] uppercase tracking-[0.2em] text-on-surface-variant">Paste a URL or upload a file</p>
+        <p class="text-[11px] uppercase tracking-[0.2em] text-on-surface-variant">Project images (slider)</p>
         <div class="grid gap-3">
-          <input id="project-image" class="w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2" type="url" placeholder="https://thumbnail.jpg"/>
+          <div class="flex gap-2">
+            <input id="project-image" class="min-w-0 flex-1 rounded border border-outline-variant/40 bg-surface-container px-3 py-2" type="url" placeholder="https://image-url.jpg"/>
+            <button id="project-image-add-url" type="button" class="shrink-0 rounded border border-outline-variant/40 px-3 py-2 text-xs uppercase tracking-[0.14em] hover:bg-white/10">Add URL</button>
+          </div>
           <label id="dropzone" class="flex min-h-[110px] cursor-pointer flex-col items-center justify-center rounded border border-dashed border-outline-variant/50 bg-surface-container px-3 py-3 text-center text-sm text-on-surface-variant hover:border-white/40">
-            <input id="project-image-file" type="file" accept=".png,.jpg,.jpeg" class="hidden"/>
+            <input id="project-image-file" type="file" accept=".png,.jpg,.jpeg" multiple class="hidden"/>
             <span class="material-symbols-outlined mb-2">upload</span>
-            Drag and drop PNG/JPG here, or click to browse
+            Drag &amp; drop PNG/JPG files, or click to browse (multiple)
           </label>
-          <img id="project-image-preview" alt="" class="hidden h-36 w-full rounded object-cover"/>
+          <p id="project-images-hint" class="text-xs text-on-surface-variant">First image is the cover on Works. Up to 8 images.</p>
+          <div id="project-images-list" class="grid grid-cols-2 gap-2 sm:grid-cols-3"></div>
+          <label class="block text-xs uppercase tracking-[0.2em] text-on-surface-variant" for="project-image-position">Cover crop focus</label>
+          <select id="project-image-position" class="w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm">
+            <option value="center center">Center</option>
+            <option value="center top">Top</option>
+            <option value="center 25%">Upper third</option>
+            <option value="center 35%">Upper-mid</option>
+            <option value="center bottom">Bottom</option>
+            <option value="left center">Left</option>
+            <option value="right center">Right</option>
+          </select>
         </div>
         <input id="project-title" class="w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2" type="text" placeholder="Project title" required/>
+        <input id="project-client" class="w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2" type="text" placeholder="Client name (optional)"/>
         <select id="project-category" class="w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2"></select>
-        <input id="project-tags" class="w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2" type="text" placeholder="React, Figma, Rust"/>
+        <div>
+          <p class="mb-2 text-xs uppercase tracking-[0.2em] text-on-surface-variant">Scope tags <span class="normal-case tracking-normal text-white/40">(required to publish)</span></p>
+          <div id="project-scope-tags" class="flex flex-wrap gap-2"></div>
+        </div>
+        <input id="project-tags" class="w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2" type="text" placeholder="Tech/tools tags: React, Figma, Rust"/>
         <div id="tag-preview" class="flex min-h-8 flex-wrap gap-2"></div>
-        <textarea id="project-description" rows="4" class="w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2" placeholder="Short project description..." required></textarea>
+        <textarea id="project-description" rows="3" class="w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2" placeholder="Short project description..." required></textarea>
+        <textarea id="project-challenge" rows="3" class="w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2" placeholder="The Challenge — 1–3 sentences on the client’s problem/goal"></textarea>
+        <div>
+          <div class="mb-2 flex items-center justify-between gap-2">
+            <p class="text-xs uppercase tracking-[0.2em] text-on-surface-variant">What I Did (approach)</p>
+            <button id="project-approach-add" type="button" class="rounded border border-outline-variant/40 px-2 py-1 text-[10px] uppercase tracking-[0.14em] hover:bg-white/10">Add point</button>
+          </div>
+          <div id="project-approach-list" class="space-y-2"></div>
+        </div>
+        <textarea id="project-result" rows="3" class="w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2" placeholder="The Result — outcome of the project"></textarea>
         <input id="project-url" class="w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2" type="url" placeholder="https://project-link.com"/>
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div>

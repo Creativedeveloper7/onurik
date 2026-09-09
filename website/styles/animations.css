@@ -203,38 +203,30 @@ button.anim-loading-dots::after {
 
 /* --- Project cards (Works) --- */
 .anim-project-card .anim-project-card__media {
-  transition:
-    transform 0.55s var(--anim-ease-spring),
-    opacity 0.45s ease;
   will-change: transform;
 }
 
-.anim-project-card:hover .anim-project-card__media {
-  transform: scale(1.06);
-  opacity: 1;
-}
-
-.anim-project-card .anim-project-card__scrim {
-  opacity: 0;
-  transform: translateY(22%);
-  transition:
-    opacity 0.45s var(--anim-ease-out),
-    transform 0.5s var(--anim-ease-spring);
-  pointer-events: none;
-}
-
-.anim-project-card:hover .anim-project-card__scrim {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 .anim-project-card .anim-project-card__title {
-  transform: translateY(10px);
-  transition: transform 0.45s var(--anim-ease-spring);
+  transition: color 0.2s ease;
 }
 
 .anim-project-card:hover .anim-project-card__title {
-  transform: translateY(0);
+  color: rgba(255, 255, 255, 0.95);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-project-card,
+  .anim-project-card .anim-project-card__media {
+    transition: none !important;
+  }
+
+  .anim-project-card:hover {
+    transform: none !important;
+  }
+
+  .anim-project-card:hover .anim-project-card__media {
+    transform: none !important;
+  }
 }
 
 /* --- Accordion row polish --- */
@@ -326,6 +318,7 @@ select.anim-glow:focus-visible {
     transition: opacity 0.35s ease !important;
   }
 
+  .anim-project-card:hover,
   .anim-project-card:hover .anim-project-card__media {
     transform: none !important;
   }

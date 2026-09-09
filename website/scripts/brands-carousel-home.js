@@ -61,8 +61,8 @@ function renderMarquee(brands) {
     .map((b) => {
       const alt = escapeHtml(b.name || "Partner");
       const src = escapeHtml(b.logo_url);
-      return `<div class="flex shrink-0 items-center justify-center px-3 py-1.5 md:px-5">
-        <img src="${src}" alt="${alt}" class="max-h-[120px] w-auto max-w-[min(420px,84vw)] object-contain md:max-h-36" loading="lazy" decoding="async"/>
+      return `<div class="flex shrink-0 items-center justify-center px-1.5 py-0.5 md:px-2">
+        <img src="${src}" alt="${alt}" class="max-h-9 w-auto max-w-[min(126px,40vw)] object-contain md:max-h-11" loading="lazy" decoding="async"/>
       </div>`;
     })
     .join("");
@@ -76,7 +76,7 @@ function renderMarquee(brands) {
   if (prefersReducedMotion()) {
     root.innerHTML = `
 <div class="overflow-hidden">
-  <div class="flex flex-wrap items-center justify-center gap-x-[2.25rem] gap-y-6 px-4 md:px-8">${items}</div>
+  <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 px-4 md:px-8">${items}</div>
 </div>`;
     return;
   }
@@ -84,8 +84,8 @@ function renderMarquee(brands) {
   root.innerHTML = `
 <div class="overflow-hidden">
   <div class="trusted-marquee-track flex w-max will-change-transform">
-    <div class="flex items-center gap-[2.25rem] md:gap-[3.75rem] lg:gap-[4.5rem]">${items}</div>
-    <div class="flex items-center gap-[2.25rem] md:gap-[3.75rem] lg:gap-[4.5rem]" aria-hidden="true">${items}</div>
+    <div class="flex items-center gap-3 md:gap-4 lg:gap-5">${items}</div>
+    <div class="flex items-center gap-3 md:gap-4 lg:gap-5" aria-hidden="true">${items}</div>
   </div>
 </div>`;
 

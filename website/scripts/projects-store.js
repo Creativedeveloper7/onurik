@@ -17,18 +17,61 @@ const ONURIK_PROJECT_CATEGORIES = [
   "Development",
 ];
 
+/** Predefined scope tags for case studies — extend this list as needed. */
+export const ONURIK_SCOPE_TAG_OPTIONS = [
+  "Brand Identity",
+  "Web Design",
+  "Web Development",
+  "Campaign Strategy",
+  "Ideation",
+  "Product Design",
+  "Art Direction",
+];
+
+function parseStringArray(value) {
+  if (Array.isArray(value)) {
+    return value
+      .map(function (item) {
+        return typeof item === "string" ? item.trim() : String(item || "").trim();
+      })
+      .filter(Boolean);
+  }
+  if (value && typeof value === "object") {
+    try {
+      return parseStringArray(Array.from(value));
+    } catch (_e) {
+      return [];
+    }
+  }
+  return [];
+}
+
+export function getScopeTagOptions() {
+  return ONURIK_SCOPE_TAG_OPTIONS.slice();
+}
+
+/** Offline/local seed only — unused when Supabase has projects. */
 const ONURIK_DEFAULT_PROJECTS = [
   {
     id: "proj-quantum-dash",
     title: "Quantum Dash",
+    client: "Quantum Labs",
     category: "Standard Projects",
     sortOrder: 0,
     tags: ["React", "TypeScript", "Node"],
+    scopeTags: ["Web Development", "Product Design"],
     description:
       "A high-speed operations dashboard for real-time fleet visibility. It helps teams reduce response time and spot bottlenecks before they become outages.",
+    challenge: "",
+    approach: [],
+    result: "",
     projectUrl: "https://example.com/quantum-dash",
     image:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuCbo9dFM9fv9T85fEKhNCeLJh2-fD9FEwowi4BWrloPgTOa9lUtefGZODPJ9wROAKrhyk8ZXzWfDovqKIu8bKEitnc6w3V8LdK-C3zCKsygXJ5tKAOLLsgj7MgH761ovChbZnKkocqWbDcLtlWkfDYkGCicqNo93n5D6o8xLhZy6UcDVlu7nmjPfI89OXjKH9_6M02k41kJ0ilkGfsPnibBnwCbzmo1_EoLp3dLjsbLPxRmK1hnMhs-8stb57sIlJPkGCVhXc502cbU",
+    images: [
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuCbo9dFM9fv9T85fEKhNCeLJh2-fD9FEwowi4BWrloPgTOa9lUtefGZODPJ9wROAKrhyk8ZXzWfDovqKIu8bKEitnc6w3V8LdK-C3zCKsygXJ5tKAOLLsgj7MgH761ovChbZnKkocqWbDcLtlWkfDYkGCicqNo93n5D6o8xLhZy6UcDVlu7nmjPfI89OXjKH9_6M02k41kJ0ilkGfsPnibBnwCbzmo1_EoLp3dLjsbLPxRmK1hnMhs-8stb57sIlJPkGCVhXc502cbU",
+    ],
+    imagePosition: "center center",
     privacy: "public",
     status: "published",
     createdAt: Date.now(),
@@ -37,14 +80,23 @@ const ONURIK_DEFAULT_PROJECTS = [
   {
     id: "proj-aura-identity",
     title: "Aura Cosmetics",
+    client: "Aura Cosmetics",
     category: "Branding & Identity",
     sortOrder: 0,
     tags: ["Figma", "Brand Strategy", "Art Direction"],
+    scopeTags: ["Brand Identity", "Art Direction"],
     description:
       "A full visual identity and packaging direction for a skincare brand. The system balances premium minimalism with clear product storytelling.",
+    challenge: "",
+    approach: [],
+    result: "",
     projectUrl: "https://example.com/aura",
     image:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuAK_DF7zbgWXwiChljgOZpEhEDdFQ4qcCmhF6g7PVuvGCjcVd4gOMrNXYO2ip83J_nWq_Xu2RUyFgj4lLeqAbL5XHvYjVDCuTuOE69ky7CHtAuDl6Xw6ucI2kyYtuoCoOt8dZW6gG8txvCXpyaqfBUuOvrN5mbpSnHUl_KT1-P8Bpo3rgsdHfRhaR3-1a2z18Xjw7dNgliDi8-FvShvouGhV3cIy35Pa_qPmwmuJtj4CGG9rqiw2OxG3VqqLxXRuN-BVd1xEyRt911-",
+    images: [
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuAK_DF7zbgWXwiChljgOZpEhEDdFQ4qcCmhF6g7PVuvGCjcVd4gOMrNXYO2ip83J_nWq_Xu2RUyFgj4lLeqAbL5XHvYjVDCuTuOE69ky7CHtAuDl6Xw6ucI2kyYtuoCoOt8dZW6gG8txvCXpyaqfBUuOvrN5mbpSnHUl_KT1-P8Bpo3rgsdHfRhaR3-1a2z18Xjw7dNgliDi8-FvShvouGhV3cIy35Pa_qPmwmuJtj4CGG9rqiw2OxG3VqqLxXRuN-BVd1xEyRt911-",
+    ],
+    imagePosition: "center center",
     privacy: "private",
     status: "published",
     createdAt: Date.now(),
@@ -125,18 +177,48 @@ async function migrateFromLocalStorageOnce() {
   }
 }
 
+/** Normalize gallery URLs; `image` is always the cover (first). */
+export function normalizeProjectImages(project) {
+  const fromArray = Array.isArray(project && project.images) ? project.images : [];
+  const list = [];
+  fromArray.forEach(function (src) {
+    const value = typeof src === "string" ? src.trim() : "";
+    if (value && list.indexOf(value) === -1) list.push(value);
+  });
+  if (list.length) return list;
+  const cover =
+    project && typeof project.image === "string" ? project.image.trim() : "";
+  return cover ? [cover] : [];
+}
+
+export function getProjectCoverImage(project) {
+  const images = normalizeProjectImages(project);
+  return images[0] || "";
+}
+
 function cloneProjects(items) {
   return items.map(function (item) {
     const sortOrder =
       typeof item.sortOrder === "number" && !Number.isNaN(item.sortOrder) ? item.sortOrder : undefined;
+    const images = normalizeProjectImages(item);
     return {
       id: item.id,
       title: item.title,
+      client: typeof item.client === "string" ? item.client : "",
       category: item.category,
-      tags: Array.isArray(item.tags) ? item.tags.slice() : [],
-      description: item.description,
+      tags: parseStringArray(item.tags),
+      scopeTags: parseStringArray(item.scopeTags),
+      description: item.description || "",
+      challenge: typeof item.challenge === "string" ? item.challenge : "",
+      approach: parseStringArray(item.approach),
+      result: typeof item.result === "string" ? item.result : "",
       projectUrl: item.projectUrl,
-      image: item.image,
+      image: images[0] || item.image || "",
+      images: images,
+      imagePosition:
+        typeof item.imagePosition === "string" && item.imagePosition.trim()
+          ? item.imagePosition.trim()
+          : "center center",
       privacy: item.privacy === "private" ? "private" : "public",
       status: item.status === "draft" ? "draft" : "published",
       sortOrder,
@@ -211,43 +293,63 @@ export function getCategories() {
 }
 
 function dbRowToProject(row) {
-  let tags = [];
-  if (Array.isArray(row.tags)) {
-    tags = row.tags;
-  } else if (row.tags && typeof row.tags === "object") {
+  const imagesRaw = row.images;
+  let images = [];
+  if (Array.isArray(imagesRaw)) {
+    images = imagesRaw;
+  } else if (imagesRaw && typeof imagesRaw === "object") {
     try {
-      tags = Array.from(row.tags);
+      images = Array.from(imagesRaw);
     } catch (_e) {
-      tags = [];
+      images = [];
     }
   }
-  return {
+  const project = {
     id: row.id,
     title: row.title,
+    client: row.client || "",
     category: row.category || row.category_of || "Standard Projects",
-    tags,
+    tags: parseStringArray(row.tags),
+    scopeTags: parseStringArray(row.scope_tags != null ? row.scope_tags : row.scopeTags),
     description: row.description || "",
+    challenge: row.challenge || "",
+    approach: parseStringArray(row.approach),
+    result: row.result || "",
     projectUrl: row.project_url || "",
     image: row.image || "",
+    images,
+    imagePosition: row.image_position || row.imagePosition || "center center",
     privacy: row.privacy === "private" ? "private" : "public",
     status: row.status === "draft" ? "draft" : "published",
     sortOrder: typeof row.sort_order === "number" ? row.sort_order : 0,
     createdAt: row.created_at ? new Date(row.created_at).getTime() : Date.now(),
     updatedAt: row.updated_at ? new Date(row.updated_at).getTime() : Date.now(),
   };
+  const normalizedImages = normalizeProjectImages(project);
+  project.images = normalizedImages;
+  project.image = normalizedImages[0] || project.image || "";
+  return project;
 }
 
 function projectToPayload(project) {
   const category = project.category || "Standard Projects";
+  const images = normalizeProjectImages(project);
   return {
     id: project.id,
     title: project.title,
+    client: project.client || "",
     category,
     category_of: category,
-    tags: Array.isArray(project.tags) ? project.tags : [],
+    tags: parseStringArray(project.tags),
+    scopeTags: parseStringArray(project.scopeTags),
     description: project.description || "",
+    challenge: project.challenge || "",
+    approach: parseStringArray(project.approach),
+    result: project.result || "",
     projectUrl: project.projectUrl || "",
-    image: project.image || "",
+    image: images[0] || project.image || "",
+    images,
+    imagePosition: project.imagePosition || "center center",
     privacy: project.privacy === "private" ? "private" : "public",
     status: project.status === "draft" ? "draft" : "published",
     sortOrder:

@@ -3,6 +3,7 @@ import {
   createProject,
   deleteProject,
   getCategories,
+  getScopeTagOptions,
   loadProjects,
   reorderProject,
   updateProject,
@@ -38,7 +39,7 @@ function toastSupabaseProjectError(err, fallbackMessage) {
     return;
   }
   if (msg.includes("Could not find the function") || (err && err.code === "PGRST202")) {
-    showToast("Run Supabase migration 20260209120000_onurik_projects.sql, then refresh.");
+    showToast("Run Supabase migrations for onurik_projects (incl. images), then refresh.");
     return;
   }
   showToast(msg || fallbackMessage || "Could not complete action.");
@@ -155,16 +156,183 @@ function updatePrivacyLabel() {
   label.textContent = checkbox.checked ? "Private" : "Public";
 }
 
-function updateImagePreview(src) {
-  const preview = document.getElementById("project-image-preview");
-  if (!preview) return;
-  if (!src) {
-    preview.src = "";
-    preview.classList.add("hidden");
+const MAX_PROJECT_IMAGES = 8;
+let galleryImages = [];
+let approachItems = [""];
+let selectedScopeTags = [];
+
+function renderScopeTagPicker() {
+  const wrap = document.getElementById("project-scope-tags");
+  if (!wrap) return;
+  const options = getScopeTagOptions();
+  wrap.innerHTML = options
+    .map(function (tag) {
+      const active = selectedScopeTags.indexOf(tag) !== -1;
+      return (
+        '<button type="button" data-scope-tag="' +
+        escapeHtml(tag) +
+        '" class="rounded-full border px-3 py-1.5 text-[11px] tracking-wide transition ' +
+        (active
+          ? "border-white bg-white text-black"
+          : "border-white/25 text-white/75 hover:border-white/50 hover:text-white") +
+        '">' +
+        escapeHtml(tag) +
+        "</button>"
+      );
+    })
+    .join("");
+}
+
+function setSelectedScopeTags(tags) {
+  selectedScopeTags = (Array.isArray(tags) ? tags : [])
+    .map(function (tag) {
+      return String(tag || "").trim();
+    })
+    .filter(Boolean);
+  renderScopeTagPicker();
+}
+
+function renderApproachList() {
+  const list = document.getElementById("project-approach-list");
+  if (!list) return;
+  if (!approachItems.length) approachItems = [""];
+  list.innerHTML = approachItems
+    .map(function (item, index) {
+      return (
+        '<div class="flex gap-2">' +
+        '<input data-approach-index="' +
+        index +
+        '" class="min-w-0 flex-1 rounded border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm" type="text" placeholder="Approach point ' +
+        (index + 1) +
+        '" value="' +
+        escapeHtml(item) +
+        '"/>' +
+        '<button type="button" data-approach-remove="' +
+        index +
+        '" class="inline-flex min-h-10 min-w-10 items-center justify-center rounded border border-outline-variant/40 text-red-300 hover:bg-red-500/10" aria-label="Remove approach point"><span class="material-symbols-outlined text-base">close</span></button>' +
+        "</div>"
+      );
+    })
+    .join("");
+}
+
+function setApproachItems(items) {
+  const next = (Array.isArray(items) ? items : [])
+    .map(function (item) {
+      return String(item || "").trim();
+    })
+    .filter(Boolean);
+  approachItems = next.length ? next : [""];
+  renderApproachList();
+}
+
+function readApproachItems() {
+  const list = document.getElementById("project-approach-list");
+  if (!list) return approachItems.map(function (item) { return String(item || "").trim(); }).filter(Boolean);
+  const inputs = Array.from(list.querySelectorAll("input[data-approach-index]"));
+  approachItems = inputs.map(function (input) {
+    return input.value;
+  });
+  return approachItems
+    .map(function (item) {
+      return String(item || "").trim();
+    })
+    .filter(Boolean);
+}
+
+function renderGalleryList() {
+  const list = document.getElementById("project-images-list");
+  const hint = document.getElementById("project-images-hint");
+  if (!list) return;
+  if (!galleryImages.length) {
+    list.innerHTML =
+      '<p class="col-span-full rounded border border-dashed border-outline-variant/40 px-3 py-6 text-center text-xs text-on-surface-variant">No images yet — add a URL or upload files.</p>';
+    if (hint) hint.textContent = "First image is the cover on Works. Up to " + MAX_PROJECT_IMAGES + " images.";
     return;
   }
-  preview.src = src;
-  preview.classList.remove("hidden");
+  list.innerHTML = galleryImages
+    .map(function (src, index) {
+      return (
+        '<div class="relative overflow-hidden rounded border border-outline-variant/40 bg-surface-container">' +
+        '<img src="' +
+        escapeHtml(src) +
+        '" alt="" class="h-28 w-full object-cover"/>' +
+        (index === 0
+          ? '<span class="absolute left-2 top-2 rounded bg-black/70 px-2 py-0.5 text-[10px] uppercase tracking-wide text-white">Cover</span>'
+          : "") +
+        '<div class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-1 bg-black/70 p-1">' +
+        '<button type="button" data-gallery-action="up" data-gallery-index="' +
+        index +
+        '" class="inline-flex min-h-8 min-w-8 items-center justify-center rounded text-white/80 hover:bg-white/15 disabled:opacity-30" aria-label="Move image earlier"' +
+        (index === 0 ? " disabled" : "") +
+        '><span class="material-symbols-outlined text-base">arrow_upward</span></button>' +
+        '<button type="button" data-gallery-action="down" data-gallery-index="' +
+        index +
+        '" class="inline-flex min-h-8 min-w-8 items-center justify-center rounded text-white/80 hover:bg-white/15 disabled:opacity-30" aria-label="Move image later"' +
+        (index >= galleryImages.length - 1 ? " disabled" : "") +
+        '><span class="material-symbols-outlined text-base">arrow_downward</span></button>' +
+        '<button type="button" data-gallery-action="remove" data-gallery-index="' +
+        index +
+        '" class="inline-flex min-h-8 min-w-8 items-center justify-center rounded text-red-300 hover:bg-red-500/20" aria-label="Remove image"><span class="material-symbols-outlined text-base">close</span></button>' +
+        "</div></div>"
+      );
+    })
+    .join("");
+  if (hint) {
+    hint.textContent =
+      galleryImages.length +
+      " / " +
+      MAX_PROJECT_IMAGES +
+      " images · first is cover";
+  }
+}
+
+function setGalleryImages(images) {
+  galleryImages = (Array.isArray(images) ? images : [])
+    .map(function (src) {
+      return typeof src === "string" ? src.trim() : "";
+    })
+    .filter(Boolean)
+    .slice(0, MAX_PROJECT_IMAGES);
+  renderGalleryList();
+}
+
+function addGalleryImage(src) {
+  const value = typeof src === "string" ? src.trim() : "";
+  if (!value) return false;
+  if (galleryImages.indexOf(value) !== -1) {
+    showToast("That image is already in the gallery.");
+    return false;
+  }
+  if (galleryImages.length >= MAX_PROJECT_IMAGES) {
+    showToast("Maximum of " + MAX_PROJECT_IMAGES + " images per project.");
+    return false;
+  }
+  galleryImages.push(value);
+  renderGalleryList();
+  return true;
+}
+
+async function addGalleryFiles(fileList) {
+  const files = Array.from(fileList || []).filter(Boolean);
+  if (!files.length) return;
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    if (!/image\/(png|jpeg)/.test(file.type)) {
+      showToast("Only PNG and JPG are allowed.");
+      continue;
+    }
+    if (galleryImages.length >= MAX_PROJECT_IMAGES) {
+      showToast("Maximum of " + MAX_PROJECT_IMAGES + " images per project.");
+      break;
+    }
+    try {
+      const dataUrl = await compressImageFile(file, 1600, 0.8);
+      addGalleryImage(dataUrl);
+    } catch (_err) {
+      showToast("Could not process image—try a smaller file.");
+    }
+  }
 }
 
 function sortProjectsForAdminTable(projects) {
@@ -252,6 +420,9 @@ async function initForm() {
   const saveMode = document.getElementById("project-status");
   const fileInput = document.getElementById("project-image-file");
   const dropzone = document.getElementById("dropzone");
+  const imageUrlInput = document.getElementById("project-image");
+  const addUrlBtn = document.getElementById("project-image-add-url");
+  const imagesList = document.getElementById("project-images-list");
   const table = document.getElementById("projects-body");
   if (!categorySelect || !form || !tagsInput || !saveMode || !table) return;
 
@@ -263,7 +434,6 @@ async function initForm() {
   });
 
   let editingId = null;
-  let uploadedDataUrl = "";
   let projects = await loadProjects({ admin: true });
   if (supabaseConfigured() && !getDashboardReadSecret()) {
     showToast("Set VITE_ADMIN_DASHBOARD_SECRET and rebuild so projects sync to Supabase.");
@@ -271,10 +441,56 @@ async function initForm() {
   renderRows(projects);
   setStatusUi(saveMode.value || "published");
   updatePrivacyLabel();
+  setGalleryImages([]);
+  setSelectedScopeTags([]);
+  setApproachItems([""]);
 
   tagsInput.addEventListener("input", function () {
     renderTagPreview(parseTags(tagsInput.value));
   });
+
+  const scopeWrap = document.getElementById("project-scope-tags");
+  if (scopeWrap) {
+    scopeWrap.addEventListener("click", function (event) {
+      const button = event.target.closest("button[data-scope-tag]");
+      if (!button) return;
+      const tag = button.getAttribute("data-scope-tag");
+      if (!tag) return;
+      const idx = selectedScopeTags.indexOf(tag);
+      if (idx === -1) selectedScopeTags.push(tag);
+      else selectedScopeTags.splice(idx, 1);
+      renderScopeTagPicker();
+    });
+  }
+
+  const approachList = document.getElementById("project-approach-list");
+  const approachAdd = document.getElementById("project-approach-add");
+  if (approachAdd) {
+    approachAdd.addEventListener("click", function () {
+      readApproachItems();
+      approachItems.push("");
+      renderApproachList();
+    });
+  }
+  if (approachList) {
+    approachList.addEventListener("click", function (event) {
+      const button = event.target.closest("button[data-approach-remove]");
+      if (!button) return;
+      readApproachItems();
+      const index = Number(button.getAttribute("data-approach-remove"));
+      if (Number.isNaN(index)) return;
+      approachItems.splice(index, 1);
+      if (!approachItems.length) approachItems = [""];
+      renderApproachList();
+    });
+    approachList.addEventListener("input", function (event) {
+      const input = event.target.closest("input[data-approach-index]");
+      if (!input) return;
+      const index = Number(input.getAttribute("data-approach-index"));
+      if (Number.isNaN(index)) return;
+      approachItems[index] = input.value;
+    });
+  }
 
   document.querySelectorAll(".status-pill").forEach(function (pill) {
     pill.addEventListener("click", function () {
@@ -287,23 +503,58 @@ async function initForm() {
     privacy.addEventListener("change", updatePrivacyLabel);
   }
 
-  if (fileInput) {
-    fileInput.addEventListener("change", function () {
-      const file = fileInput.files && fileInput.files[0];
-      if (!file) return;
-      const valid = /image\/(png|jpeg)/.test(file.type);
-      if (!valid) {
-        showToast("Only PNG and JPG are allowed.");
+  function commitImageUrl() {
+    if (!imageUrlInput) return;
+    const value = imageUrlInput.value.trim();
+    if (!value) return;
+    if (addGalleryImage(value)) imageUrlInput.value = "";
+  }
+
+  if (addUrlBtn) {
+    addUrlBtn.addEventListener("click", commitImageUrl);
+  }
+  if (imageUrlInput) {
+    imageUrlInput.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        commitImageUrl();
+      }
+    });
+  }
+
+  if (imagesList) {
+    imagesList.addEventListener("click", function (event) {
+      const button = event.target.closest("button[data-gallery-action]");
+      if (!button) return;
+      const index = Number(button.getAttribute("data-gallery-index"));
+      const action = button.getAttribute("data-gallery-action");
+      if (Number.isNaN(index) || index < 0 || index >= galleryImages.length) return;
+      if (action === "remove") {
+        galleryImages.splice(index, 1);
+        renderGalleryList();
         return;
       }
-      compressImageFile(file, 1920, 0.82)
-        .then(function (dataUrl) {
-          uploadedDataUrl = dataUrl;
-          updateImagePreview(uploadedDataUrl);
-        })
-        .catch(function () {
-          showToast("Could not process image—try a smaller file.");
-        });
+      if (action === "up" && index > 0) {
+        const tmp = galleryImages[index - 1];
+        galleryImages[index - 1] = galleryImages[index];
+        galleryImages[index] = tmp;
+        renderGalleryList();
+        return;
+      }
+      if (action === "down" && index < galleryImages.length - 1) {
+        const tmp = galleryImages[index + 1];
+        galleryImages[index + 1] = galleryImages[index];
+        galleryImages[index] = tmp;
+        renderGalleryList();
+      }
+    });
+  }
+
+  if (fileInput) {
+    fileInput.addEventListener("change", function () {
+      addGalleryFiles(fileInput.files).finally(function () {
+        fileInput.value = "";
+      });
     });
   }
 
@@ -318,30 +569,69 @@ async function initForm() {
     dropzone.addEventListener("drop", function (event) {
       event.preventDefault();
       dropzone.classList.remove("border-white/60");
-      const file = event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0];
-      if (!file) return;
-      fileInput.files = event.dataTransfer.files;
-      fileInput.dispatchEvent(new Event("change"));
+      const files = event.dataTransfer && event.dataTransfer.files;
+      if (!files || !files.length) return;
+      addGalleryFiles(files);
     });
   }
 
   form.addEventListener("submit", async function (event) {
     event.preventDefault();
-    const image = uploadedDataUrl || document.getElementById("project-image").value.trim();
+    if (imageUrlInput && imageUrlInput.value.trim()) commitImageUrl();
+    const images = galleryImages.slice();
+    const image = images[0] || "";
+    const imagePositionEl = document.getElementById("project-image-position");
+    const imagePosition =
+      imagePositionEl && imagePositionEl.value ? imagePositionEl.value.trim() : "center center";
     const title = document.getElementById("project-title").value.trim();
+    const client = (document.getElementById("project-client") || {}).value
+      ? document.getElementById("project-client").value.trim()
+      : "";
     const category = categorySelect.value;
     const tags = parseTags(tagsInput.value);
+    const scopeTags = selectedScopeTags.slice();
     const description = document.getElementById("project-description").value.trim();
+    const challenge = (document.getElementById("project-challenge") || {}).value
+      ? document.getElementById("project-challenge").value.trim()
+      : "";
+    const approach = readApproachItems();
+    const result = (document.getElementById("project-result") || {}).value
+      ? document.getElementById("project-result").value.trim()
+      : "";
     const projectUrl = document.getElementById("project-url").value.trim();
-    const privacy = document.getElementById("project-privacy").checked ? "private" : "public";
+    const privacyValue = document.getElementById("project-privacy").checked ? "private" : "public";
     const status = saveMode.value;
 
     if (!title || !description) {
       showToast("Title and description are required.");
       return;
     }
+    if (!images.length) {
+      showToast("Add at least one project image.");
+      return;
+    }
+    if (status === "published" && !scopeTags.length) {
+      showToast("Select at least one scope tag before publishing.");
+      return;
+    }
 
-    const payload = { image, title, category, tags, description, projectUrl, privacy, status };
+    const payload = {
+      image,
+      images,
+      imagePosition: imagePosition || "center center",
+      title,
+      client,
+      category,
+      tags,
+      scopeTags,
+      description,
+      challenge,
+      approach,
+      result,
+      projectUrl,
+      privacy: privacyValue,
+      status,
+    };
     try {
       if (editingId) {
         projects = await updateProject(editingId, payload);
@@ -351,13 +641,16 @@ async function initForm() {
         showToast(status === "published" ? "Project published." : "Draft saved.");
       }
     } catch (err) {
-      toastSupabaseProjectError(err, "Could not save — check Supabase or try a smaller image.");
+      toastSupabaseProjectError(err, "Could not save — check Supabase or try fewer/smaller images.");
       return;
     }
     editingId = null;
     form.reset();
-    uploadedDataUrl = "";
-    updateImagePreview("");
+    setGalleryImages([]);
+    setSelectedScopeTags([]);
+    setApproachItems([""]);
+    const positionSelect = document.getElementById("project-image-position");
+    if (positionSelect) positionSelect.value = "center center";
     setStatusUi("published");
     updatePrivacyLabel();
     renderTagPreview([]);
@@ -431,13 +724,40 @@ async function initForm() {
 
     if (action === "edit") {
       editingId = id;
-      document.getElementById("project-image").value = project.image || "";
-      uploadedDataUrl = "";
-      updateImagePreview(project.image || "");
+      const images =
+        Array.isArray(project.images) && project.images.length
+          ? project.images
+          : project.image
+            ? [project.image]
+            : [];
+      setGalleryImages(images);
+      setSelectedScopeTags(project.scopeTags || []);
+      setApproachItems(project.approach || []);
+      if (imageUrlInput) imageUrlInput.value = "";
+      const positionSelect = document.getElementById("project-image-position");
+      if (positionSelect) {
+        const pos = project.imagePosition || "center center";
+        const hasOption = Array.from(positionSelect.options).some(function (opt) {
+          return opt.value === pos;
+        });
+        if (!hasOption) {
+          const custom = document.createElement("option");
+          custom.value = pos;
+          custom.textContent = "Custom: " + pos;
+          positionSelect.appendChild(custom);
+        }
+        positionSelect.value = pos;
+      }
       document.getElementById("project-title").value = project.title || "";
+      const clientInput = document.getElementById("project-client");
+      if (clientInput) clientInput.value = project.client || "";
       categorySelect.value = project.category || getCategories()[0];
       tagsInput.value = (project.tags || []).join(", ");
       document.getElementById("project-description").value = project.description || "";
+      const challengeInput = document.getElementById("project-challenge");
+      if (challengeInput) challengeInput.value = project.challenge || "";
+      const resultInput = document.getElementById("project-result");
+      if (resultInput) resultInput.value = project.result || "";
       document.getElementById("project-url").value = project.projectUrl || "";
       document.getElementById("project-privacy").checked = project.privacy === "private";
       setStatusUi(project.status || "draft");
@@ -453,3 +773,4 @@ if (ensureAuthGate()) {
     showToast("Could not load projects.");
   });
 }
+
