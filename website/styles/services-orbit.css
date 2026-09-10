@@ -405,6 +405,34 @@
   transform: translateX(0) translateY(0);
 }
 
+/* Mobile: keep the same orbit cycle, slightly tighter so labels fit */
+@media (max-width: 767px) {
+  .services-orbit {
+    --orbit-size: min(100%, 22.5rem);
+  }
+
+  .services-orbit__stage {
+    transform: rotateX(4deg);
+  }
+
+  .services-orbit__center {
+    width: clamp(4.75rem, 28%, 6.25rem);
+    height: clamp(4.75rem, 28%, 6.25rem);
+    font-size: clamp(0.8rem, 3.6vw, 0.95rem);
+  }
+
+  .services-orbit__label {
+    max-width: 7.25rem;
+    padding: 0.28rem 0.45rem;
+    font-size: 0.625rem;
+    letter-spacing: 0.1em;
+  }
+
+  .services-orbit__panel {
+    width: min(14.5rem, 78vw);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .services-orbit__spin,
   .services-orbit__counter,

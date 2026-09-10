@@ -263,10 +263,28 @@ function bindOrbitInteractions(root) {
 export function initServicesOrbit() {
   const mobileRoot = document.getElementById("services-orbit-mobile");
   const desktopRoot = document.getElementById("services-orbit-desktop");
-  if (mobileRoot) renderMobileCards(mobileRoot);
+  const reduceMotion =
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // On mobile, show the same spinning orbit “cycle” as desktop (unless motion is reduced).
+  if (mobileRoot) {
+    if (reduceMotion) {
+      mobileRoot.classList.remove("hidden");
+      renderMobileCards(mobileRoot);
+    } else {
+      mobileRoot.classList.add("hidden");
+    }
+  }
+
   if (desktopRoot) {
-    renderOrbit(desktopRoot);
-    bindOrbitInteractions(desktopRoot);
+    if (reduceMotion) {
+      desktopRoot.classList.add("hidden");
+    } else {
+      desktopRoot.classList.remove("hidden");
+      renderOrbit(desktopRoot);
+      bindOrbitInteractions(desktopRoot);
+    }
   }
 }
 
