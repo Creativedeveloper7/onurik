@@ -56,7 +56,10 @@ window.__ONURIK_PUBLIC_CONFIG__ = {
 </head>
 <body class="font-body-md min-h-screen selection:bg-primary/20 selection:text-primary touch-manipulation">
 <header class="lg:hidden fixed top-0 left-0 right-0 z-[60] flex h-16 items-center justify-between border-b border-stone-100/10 bg-stone-950/95 px-4 backdrop-blur-xl">
-<a href="/index.html" class="text-xs font-semibold uppercase tracking-[0.2em] text-stone-400 transition-colors hover:text-stone-100">Site</a>
+<a href="/admin/index.html" class="inline-flex min-h-[44px] items-center gap-1 text-xs font-semibold uppercase tracking-[0.2em] text-stone-400 transition-colors hover:text-stone-100">
+<span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_back</span>
+Menu
+</a>
 <span class="font-montserrat text-sm font-semibold text-stone-100">Admin</span>
 <button type="button" id="admin-menu-btn" class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md text-stone-100 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40" aria-expanded="false" aria-controls="admin-nav-drawer" aria-label="Open menu">
 <span class="material-symbols-outlined text-2xl" aria-hidden="true">menu</span>
@@ -76,6 +79,8 @@ window.__ONURIK_PUBLIC_CONFIG__ = {
 <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all hover:bg-stone-800/50" href="/admin/index.html"><span class="material-symbols-outlined">dashboard</span><span class="tracking-wide">Overview</span></a>
 <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all hover:bg-stone-800/50" href="/admin/enquiries.html"><span class="material-symbols-outlined">mail</span><span class="tracking-wide">Enquiries</span></a>
 <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all hover:bg-stone-800/50" href="/admin/works.html"><span class="material-symbols-outlined">work</span><span class="tracking-wide">Works Manager</span></a>
+<a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all hover:bg-stone-800/50" href="/admin/shop.html"><span class="material-symbols-outlined">storefront</span><span class="tracking-wide">Shop</span></a>
+<a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all hover:bg-stone-800/50" href="/admin/revenue.html"><span class="material-symbols-outlined">account_balance_wallet</span><span class="tracking-wide">Revenue</span></a>
 <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all hover:bg-stone-800/50" href="/admin/carousel.html"><span class="material-symbols-outlined">view_carousel</span><span class="tracking-wide">Brands</span></a>
 <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all hover:bg-stone-800/50" href="/admin/bookings.html"><span class="material-symbols-outlined">calendar_today</span><span class="tracking-wide">Bookings</span></a>
 <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-stone-100 bg-stone-800 px-6 py-3 font-display-lg text-sm font-normal text-stone-100 transition-all" href="/admin/settings.html">
@@ -94,6 +99,8 @@ window.__ONURIK_PUBLIC_CONFIG__ = {
 <a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all duration-300 hover:bg-stone-800/50" href="/admin/index.html"><span class="material-symbols-outlined">dashboard</span><span class="text-sm tracking-wide">Overview</span></a>
 <a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all duration-300 hover:bg-stone-800/50" href="/admin/enquiries.html"><span class="material-symbols-outlined">mail</span><span class="text-sm tracking-wide">Enquiries</span></a>
 <a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all duration-300 hover:bg-stone-800/50" href="/admin/works.html"><span class="material-symbols-outlined">work</span><span class="text-sm tracking-wide">Works Manager</span></a>
+<a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all duration-300 hover:bg-stone-800/50" href="/admin/shop.html"><span class="material-symbols-outlined">storefront</span><span class="text-sm tracking-wide">Shop</span></a>
+<a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all duration-300 hover:bg-stone-800/50" href="/admin/revenue.html"><span class="material-symbols-outlined">account_balance_wallet</span><span class="text-sm tracking-wide">Revenue</span></a>
 <a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all duration-300 hover:bg-stone-800/50" href="/admin/carousel.html"><span class="material-symbols-outlined">view_carousel</span><span class="text-sm tracking-wide">Brands</span></a>
 <a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all duration-300 hover:bg-stone-800/50" href="/admin/bookings.html"><span class="material-symbols-outlined">calendar_today</span><span class="text-sm tracking-wide">Bookings</span></a>
 <a class="flex items-center gap-4 rounded-none border-l-2 border-stone-100 bg-stone-800 px-8 py-3 font-display-lg text-sm font-normal text-stone-100 transition-all duration-300" href="/admin/settings.html">
@@ -110,6 +117,10 @@ window.__ONURIK_PUBLIC_CONFIG__ = {
 
 <main class="relative flex min-h-screen w-full flex-1 flex-col bg-background pt-16 lg:ml-64 lg:pt-0">
 <header class="border-b border-outline-variant/30 px-8 py-10 md:px-16">
+<a href="/admin/index.html" class="mb-6 inline-flex min-h-[44px] items-center gap-2 border border-outline-variant/50 px-4 py-2 font-label-caps text-[11px] font-semibold uppercase tracking-[0.2em] text-white/70 transition-colors hover:border-white/40 hover:bg-white/5 hover:text-white">
+<span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_back</span>
+Back to menu
+</a>
 <p class="mb-4 flex items-center gap-2 font-label-caps text-label-caps uppercase tracking-[0.2em] text-primary">
 <span class="material-symbols-outlined text-[14px]" aria-hidden="true">settings</span>
 Settings

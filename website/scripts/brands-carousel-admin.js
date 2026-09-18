@@ -98,7 +98,7 @@ function setStatus(el, msg, isErr) {
 <div class="max-w-5xl space-y-10">
   <div class="rounded-DEFAULT border border-outline-variant/30 bg-surface-container-low p-6 md:p-8">
     <h2 class="font-montserrat text-lg font-semibold text-on-background">Add logo</h2>
-    <p class="mt-2 text-sm text-on-surface-variant">Creates a row, uploads to Storage, then shows on the homepage when visible.</p>
+    <p class="mt-2 text-sm text-on-surface-variant">Creates a row, uploads to Storage, then shows as a rounded tile on the homepage when visible. Square images match the layout.</p>
     <form id="brand-add-form" class="mt-6 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-end">
       <div class="flex-1 min-w-[200px]">
         <label class="mb-2 block font-label-caps text-label-caps uppercase tracking-wider text-on-surface-variant">Display name</label>

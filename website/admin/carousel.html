@@ -52,7 +52,10 @@ window.__ONURIK_PUBLIC_CONFIG__ = {
 </head>
 <body class="font-body-md min-h-screen touch-manipulation">
 <header class="lg:hidden fixed top-0 left-0 right-0 z-[60] flex h-16 items-center justify-between border-b border-stone-100/10 bg-stone-950/95 px-4 backdrop-blur-xl">
-<a href="/index.html" class="text-xs font-semibold uppercase tracking-[0.2em] text-stone-400 hover:text-stone-100 transition-colors">Site</a>
+<a href="/admin/index.html" class="inline-flex min-h-[44px] items-center gap-1 text-xs font-semibold uppercase tracking-[0.2em] text-stone-400 hover:text-stone-100 transition-colors">
+<span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_back</span>
+Menu
+</a>
 <span class="font-montserrat text-sm font-semibold text-stone-100">Admin</span>
 <button type="button" id="admin-menu-btn" class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md text-stone-100 hover:bg-white/10" aria-controls="admin-nav-drawer"><span class="material-symbols-outlined text-2xl">menu</span></button>
 </header>
@@ -68,6 +71,8 @@ window.__ONURIK_PUBLIC_CONFIG__ = {
 <a class="flex min-h-[44px] items-center gap-4 px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/index.html"><span class="material-symbols-outlined">dashboard</span><span>Overview</span></a>
 <a class="flex min-h-[44px] items-center gap-4 px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/enquiries.html"><span class="material-symbols-outlined">mail</span><span>Enquiries</span></a>
 <a class="flex min-h-[44px] items-center gap-4 px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/works.html"><span class="material-symbols-outlined">work</span><span>Works Manager</span></a>
+<a class="flex min-h-[44px] items-center gap-4 px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/shop.html"><span class="material-symbols-outlined">storefront</span><span>Shop</span></a>
+<a class="flex min-h-[44px] items-center gap-4 px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/revenue.html"><span class="material-symbols-outlined">account_balance_wallet</span><span>Revenue</span></a>
 <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-stone-100 bg-stone-800 px-6 py-3 text-sm text-stone-100" href="/admin/carousel.html"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">view_carousel</span><span>Brands</span></a>
 <a class="flex min-h-[44px] items-center gap-4 px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/bookings.html"><span class="material-symbols-outlined">calendar_today</span><span>Bookings</span></a>
 <a class="flex min-h-[44px] items-center gap-4 px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/settings.html"><span class="material-symbols-outlined">settings</span><span>Settings</span></a>
@@ -84,6 +89,8 @@ window.__ONURIK_PUBLIC_CONFIG__ = {
 <a class="flex items-center gap-4 px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/index.html"><span class="material-symbols-outlined">dashboard</span><span>Overview</span></a>
 <a class="flex items-center gap-4 px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/enquiries.html"><span class="material-symbols-outlined">mail</span><span>Enquiries</span></a>
 <a class="flex items-center gap-4 px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/works.html"><span class="material-symbols-outlined">work</span><span>Works Manager</span></a>
+<a class="flex items-center gap-4 px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/shop.html"><span class="material-symbols-outlined">storefront</span><span>Shop</span></a>
+<a class="flex items-center gap-4 px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/revenue.html"><span class="material-symbols-outlined">account_balance_wallet</span><span>Revenue</span></a>
 <a class="flex items-center gap-4 rounded-none border-l-2 border-stone-100 bg-stone-800 px-8 py-3 text-sm text-stone-100" href="/admin/carousel.html"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">view_carousel</span><span>Brands</span></a>
 <a class="flex items-center gap-4 px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/bookings.html"><span class="material-symbols-outlined">calendar_today</span><span>Bookings</span></a>
 <a class="flex items-center gap-4 px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/settings.html"><span class="material-symbols-outlined">settings</span><span>Settings</span></a>
@@ -92,11 +99,15 @@ window.__ONURIK_PUBLIC_CONFIG__ = {
 
 <main class="relative ml-0 flex min-h-screen flex-1 flex-col bg-background pt-16 lg:ml-64 lg:pt-0">
 <header class="border-b border-outline-variant/30 px-8 py-10 md:px-16">
+<a href="/admin/index.html" class="mb-6 inline-flex min-h-[44px] items-center gap-2 border border-outline-variant/50 px-4 py-2 font-label-caps text-[11px] font-semibold uppercase tracking-[0.2em] text-white/70 transition-colors hover:border-white/40 hover:bg-white/5 hover:text-white">
+<span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_back</span>
+Back to menu
+</a>
 <p class="mb-4 flex items-center gap-2 font-label-caps text-label-caps uppercase tracking-[0.2em] text-primary">
 <span class="material-symbols-outlined text-sm" aria-hidden="true">view_carousel</span> Brands
 </p>
-<h1 class="font-display-lg text-3xl text-on-background md:text-display-lg">Homepage logo marquee</h1>
-<p class="mt-4 max-w-2xl text-body-md text-on-surface-variant">Add a display name and image file. When <span class="text-stone-200">On homepage</span> is checked, the logo appears in the public site’s <span class="text-stone-200">Selected Clients</span> section (in sort order). Requires Supabase migration <code class="rounded bg-stone-900 px-1.5 py-0.5 font-mono text-xs text-stone-300">20260208120000_brands_carousel</code> and bucket <code class="rounded bg-stone-900 px-1.5 py-0.5 font-mono text-xs text-stone-300">onurik-brand-logos</code>.</p>
+<h1 class="font-display-lg text-3xl text-on-background md:text-display-lg">Homepage logo grid</h1>
+<p class="mt-4 max-w-2xl text-body-md text-on-surface-variant">Add a display name and image file. When <span class="text-stone-200">On homepage</span> is checked, the logo appears as a rounded tile under <span class="text-stone-200">Forward-looking brands that trust us</span> (in sort order). Square artwork reads best. Requires Supabase migration <code class="rounded bg-stone-900 px-1.5 py-0.5 font-mono text-xs text-stone-300">20260208120000_brands_carousel</code> and bucket <code class="rounded bg-stone-900 px-1.5 py-0.5 font-mono text-xs text-stone-300">onurik-brand-logos</code>.</p>
 <p id="brands-admin-status" class="mt-3 min-h-[1.25rem] text-sm text-on-surface-variant" aria-live="polite"></p>
 </header>
 <div class="flex flex-1 flex-col px-8 py-10 md:px-16 md:py-12">

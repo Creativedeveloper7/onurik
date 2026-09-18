@@ -50,59 +50,13 @@ export function getScopeTagOptions() {
   return ONURIK_SCOPE_TAG_OPTIONS.slice();
 }
 
-/** Offline/local seed only — unused when Supabase has projects. */
-const ONURIK_DEFAULT_PROJECTS = [
-  {
-    id: "proj-quantum-dash",
-    title: "Quantum Dash",
-    client: "Quantum Labs",
-    category: "Standard Projects",
-    sortOrder: 0,
-    tags: ["React", "TypeScript", "Node"],
-    scopeTags: ["Web Development", "Product Design"],
-    description:
-      "A high-speed operations dashboard for real-time fleet visibility. It helps teams reduce response time and spot bottlenecks before they become outages.",
-    challenge: "",
-    approach: [],
-    result: "",
-    projectUrl: "https://example.com/quantum-dash",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuCbo9dFM9fv9T85fEKhNCeLJh2-fD9FEwowi4BWrloPgTOa9lUtefGZODPJ9wROAKrhyk8ZXzWfDovqKIu8bKEitnc6w3V8LdK-C3zCKsygXJ5tKAOLLsgj7MgH761ovChbZnKkocqWbDcLtlWkfDYkGCicqNo93n5D6o8xLhZy6UcDVlu7nmjPfI89OXjKH9_6M02k41kJ0ilkGfsPnibBnwCbzmo1_EoLp3dLjsbLPxRmK1hnMhs-8stb57sIlJPkGCVhXc502cbU",
-    images: [
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuCbo9dFM9fv9T85fEKhNCeLJh2-fD9FEwowi4BWrloPgTOa9lUtefGZODPJ9wROAKrhyk8ZXzWfDovqKIu8bKEitnc6w3V8LdK-C3zCKsygXJ5tKAOLLsgj7MgH761ovChbZnKkocqWbDcLtlWkfDYkGCicqNo93n5D6o8xLhZy6UcDVlu7nmjPfI89OXjKH9_6M02k41kJ0ilkGfsPnibBnwCbzmo1_EoLp3dLjsbLPxRmK1hnMhs-8stb57sIlJPkGCVhXc502cbU",
-    ],
-    imagePosition: "center center",
-    privacy: "public",
-    status: "published",
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
-  },
-  {
-    id: "proj-aura-identity",
-    title: "Aura Cosmetics",
-    client: "Aura Cosmetics",
-    category: "Branding & Identity",
-    sortOrder: 0,
-    tags: ["Figma", "Brand Strategy", "Art Direction"],
-    scopeTags: ["Brand Identity", "Art Direction"],
-    description:
-      "A full visual identity and packaging direction for a skincare brand. The system balances premium minimalism with clear product storytelling.",
-    challenge: "",
-    approach: [],
-    result: "",
-    projectUrl: "https://example.com/aura",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAK_DF7zbgWXwiChljgOZpEhEDdFQ4qcCmhF6g7PVuvGCjcVd4gOMrNXYO2ip83J_nWq_Xu2RUyFgj4lLeqAbL5XHvYjVDCuTuOE69ky7CHtAuDl6Xw6ucI2kyYtuoCoOt8dZW6gG8txvCXpyaqfBUuOvrN5mbpSnHUl_KT1-P8Bpo3rgsdHfRhaR3-1a2z18Xjw7dNgliDi8-FvShvouGhV3cIy35Pa_qPmwmuJtj4CGG9rqiw2OxG3VqqLxXRuN-BVd1xEyRt911-",
-    images: [
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAK_DF7zbgWXwiChljgOZpEhEDdFQ4qcCmhF6g7PVuvGCjcVd4gOMrNXYO2ip83J_nWq_Xu2RUyFgj4lLeqAbL5XHvYjVDCuTuOE69ky7CHtAuDl6Xw6ucI2kyYtuoCoOt8dZW6gG8txvCXpyaqfBUuOvrN5mbpSnHUl_KT1-P8Bpo3rgsdHfRhaR3-1a2z18Xjw7dNgliDi8-FvShvouGhV3cIy35Pa_qPmwmuJtj4CGG9rqiw2OxG3VqqLxXRuN-BVd1xEyRt911-",
-    ],
-    imagePosition: "center center",
-    privacy: "private",
-    status: "published",
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
-  },
-];
+const ONURIK_DEMO_PROJECT_IDS = ["proj-quantum-dash", "proj-aura-identity"];
+
+function stripDemoProjects(list) {
+  return (Array.isArray(list) ? list : []).filter(function (item) {
+    return item && ONURIK_DEMO_PROJECT_IDS.indexOf(item.id) === -1;
+  });
+}
 
 function useSupabaseProjects() {
   return supabaseConfigured();
@@ -256,19 +210,15 @@ function normalizeSortOrdersWithinCategories(items) {
 
 /**
  * @param {unknown} raw
- * @param {{ allowDefaultSeed?: boolean }} [options] If false (remote loads), empty data stays empty instead of demo placeholders.
  */
-function normalizeProjects(raw, options) {
-  const allowDefaultSeed = !options || options.allowDefaultSeed !== false;
-  if (!Array.isArray(raw)) {
-    return allowDefaultSeed ? cloneProjects(ONURIK_DEFAULT_PROJECTS) : [];
-  }
-  const valid = raw.filter(function (item) {
-    return item && item.id && item.title && item.category;
-  });
-  if (!valid.length) {
-    return allowDefaultSeed ? cloneProjects(ONURIK_DEFAULT_PROJECTS) : [];
-  }
+function normalizeProjects(raw) {
+  if (!Array.isArray(raw)) return [];
+  const valid = stripDemoProjects(
+    raw.filter(function (item) {
+      return item && item.id && item.title && item.category;
+    })
+  );
+  if (!valid.length) return [];
   const cloned = cloneProjects(valid);
   normalizeSortOrdersWithinCategories(cloned);
   return cloned;
@@ -401,14 +351,8 @@ async function deleteProjectRemote(id) {
 
 async function tryBulkImportFromIdb(sb, secret) {
   await migrateFromLocalStorageOnce();
-  const raw = await idbGet(ONURIK_PROJECTS_KEY);
-  if (!raw || !Array.isArray(raw) || raw.length === 0) return 0;
-  const valid = raw.filter(function (item) {
-    return item && item.id && item.title && item.category;
-  });
-  if (!valid.length) return 0;
-  const cloned = cloneProjects(valid);
-  normalizeSortOrdersWithinCategories(cloned);
+  const cloned = normalizeProjects(await idbGet(ONURIK_PROJECTS_KEY));
+  if (!cloned.length) return 0;
   const payloads = cloned.map(projectToPayload);
   const { data, error } = await sb.rpc("onurik_dashboard_projects_import_bulk", {
     p_secret: secret,
@@ -426,13 +370,16 @@ async function loadProjectsFromIdb() {
     await migrateFromLocalStorageOnce();
     let raw = await idbGet(ONURIK_PROJECTS_KEY);
     if (raw == null) {
-      const seeded = cloneProjects(ONURIK_DEFAULT_PROJECTS);
-      await idbPut(ONURIK_PROJECTS_KEY, seeded);
-      return seeded;
+      await idbPut(ONURIK_PROJECTS_KEY, []);
+      return [];
     }
-    return normalizeProjects(raw);
+    const list = normalizeProjects(raw);
+    if (Array.isArray(raw) && list.length !== raw.length) {
+      await idbPut(ONURIK_PROJECTS_KEY, list);
+    }
+    return list;
   } catch (_err) {
-    return cloneProjects(ONURIK_DEFAULT_PROJECTS);
+    return [];
   }
 }
 
@@ -459,19 +406,17 @@ export async function loadProjects(opts) {
         return [];
       }
       let list = await fetchProjectsAdmin(sb, secret);
-      list = normalizeProjects(list, { allowDefaultSeed: false });
+      list = normalizeProjects(list);
       if (list.length === 0) {
         const n = await tryBulkImportFromIdb(sb, secret);
         if (n > 0) {
-          list = normalizeProjects(await fetchProjectsAdmin(sb, secret), {
-            allowDefaultSeed: false,
-          });
+          list = normalizeProjects(await fetchProjectsAdmin(sb, secret));
         }
       }
       return list;
     }
     const list = await fetchProjectsPublic(sb);
-    return normalizeProjects(list, { allowDefaultSeed: false });
+    return normalizeProjects(list);
   } catch (err) {
     console.error("[onurik] loadProjects (Supabase)", err);
     return [];
@@ -484,7 +429,7 @@ export async function saveProjects(projects) {
     if (!secret) {
       throw new Error("dashboard_secret_missing");
     }
-    const normalized = normalizeProjects(projects, { allowDefaultSeed: false });
+    const normalized = normalizeProjects(projects);
     for (let i = 0; i < normalized.length; i++) {
       await upsertProjectRemote(normalized[i]);
     }

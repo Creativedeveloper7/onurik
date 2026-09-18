@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>My Cart · Onurik Shop</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="./tailwind-config.js"></script>
+<style>
+  .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; }
+  #site-nav-drawer { transform: translateX(100%); transition: transform 0.3s ease-out; }
+  #site-nav-drawer.open { transform: translateX(0); }
+  .site-nav-overlay.open { opacity: 1 !important; pointer-events: auto !important; }
+</style>
+<link rel="stylesheet" href="../styles/animations.css"/>
+<link rel="stylesheet" href="./shop.css"/>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md antialiased selection:bg-surface-variant selection:text-primary">
+<nav class="fixed top-0 z-50 flex h-[4.25rem] w-full items-center gap-3 border-b border-white/10 bg-stone-950/75 px-8 backdrop-blur-xl md:px-16">
+<a href="../index.html" class="shrink-0 text-2xl font-bold tracking-tight text-stone-100 font-montserrat">Onurik</a>
+<div class="ml-auto hidden md:flex items-center gap-10 font-montserrat">
+<span class="text-xs uppercase tracking-[0.2em]">
+<a href="../works.html" class="text-white/35 hover:text-white/70 transition-colors">Works</a>
+<span class="text-white/20 mx-3">/</span>
+<a href="../about.html" class="text-white/35 hover:text-white/70 transition-colors">Info</a>
+<span class="text-white/20 mx-3">/</span>
+<a href="../contact.html" class="text-white/35 hover:text-white/70 transition-colors">Contact</a>
+<span class="text-white/20 mx-3">/</span>
+<a href="index.html" class="text-stone-100 border-b border-stone-100 pb-0.5">Shop</a>
+</span>
+</div>
+<div class="ml-2 flex shrink-0 items-center gap-1 md:ml-8">
+<button type="button" id="shop-search-btn" class="inline-flex items-center justify-center p-2 text-stone-100 hover:opacity-70 transition-opacity focus:outline-none focus-visible:ring-1 focus-visible:ring-white/40" aria-label="Search shop">
+<span class="material-symbols-outlined text-[22px]" aria-hidden="true">search</span>
+</button>
+<a href="cart.html" class="relative inline-flex items-center justify-center p-2 text-stone-100 hover:opacity-70 transition-opacity focus:outline-none focus-visible:ring-1 focus-visible:ring-white/40" aria-label="Cart">
+<span class="material-symbols-outlined text-[22px]" aria-hidden="true">shopping_bag</span>
+<span id="shop-cart-count" class="absolute right-0.5 top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-white px-1 font-montserrat text-[9px] font-semibold text-[#131313]" hidden>0</span>
+</a>
+<button type="button" class="md:hidden inline-flex items-center justify-center rounded-md p-2 text-stone-100 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40" aria-expanded="false" aria-controls="site-nav-drawer" id="site-mobile-menu-btn">
+<span class="material-symbols-outlined text-2xl" aria-hidden="true">menu</span>
+<span class="sr-only">Open menu</span>
+</button>
+</div>
+</nav>
+<div class="site-nav-overlay fixed inset-0 z-40 md:hidden opacity-0 pointer-events-none bg-black/70 backdrop-blur-sm transition-opacity duration-300" aria-hidden="true"></div>
+<nav id="site-nav-drawer" class="fixed top-0 right-0 z-50 h-full w-[min(100vw,18rem)] md:hidden pt-24 px-8 bg-neutral-950 border-l border-white/10 font-montserrat text-sm uppercase tracking-widest flex flex-col gap-6 shadow-2xl" aria-hidden="true" aria-label="Mobile">
+<a href="../works.html" class="text-white/80 hover:text-white transition-colors">Works</a>
+<a href="../about.html" class="text-white/80 hover:text-white transition-colors">Info</a>
+<a href="../contact.html" class="text-white/80 hover:text-white transition-colors">Contact</a>
+<a href="index.html" class="text-white/80 hover:text-white transition-colors">Shop</a>
+<a href="cart.html" class="mt-4 pt-4 border-t border-white/10 text-xs font-semibold uppercase tracking-[0.28em] text-white border-b border-stone-100 pb-0.5 self-start">Cart</a>
+</nav>
+<main class="flex-grow pt-28 pb-24 px-8 md:px-16 w-full max-w-container-max mx-auto">
+<div id="shop-app"></div>
+</main>
+<footer class="w-full flex flex-col md:flex-row justify-between items-center px-8 md:px-16 bg-stone-950 text-stone-100 py-20 border-t border-stone-100/5 mt-auto">
+<div class="text-stone-100 font-bold mb-8 md:mb-0">ONURIK</div>
+<ul data-onurik-social-footer class="flex flex-wrap gap-8 font-montserrat text-[10px] tracking-[0.2em] uppercase justify-center" aria-label="Social links" hidden></ul>
+<div class="font-montserrat text-[10px] tracking-[0.2em] uppercase text-stone-100/40 mt-8 md:mt-0">© 2026 ONURIK. ALL RIGHTS RESERVED.</div>
+</footer>
+<script type="module">
+  import { initShopShell } from "./shop-shell.js";
+  import { mountCartPage } from "./CartPage.js";
+  initShopShell();
+  mountCartPage(document.getElementById("shop-app"));
+</script>
+<script type="module" src="../scripts/animations.js"></script>
+<script type="module" src="../scripts/nav-close.js"></script>
+<script type="module" src="../scripts/whatsapp-float.js"></script>
+<script type="module" src="../scripts/site-social-links.js"></script>
+<script type="module" src="../scripts/vercel-analytics.js"></script>
+</body>
+</html>

@@ -89,6 +89,12 @@
 <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all hover:bg-stone-800/50" href="/admin/works.html">
 <span class="material-symbols-outlined">work</span><span class="tracking-wide">Works Manager</span>
 </a>
+<a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all hover:bg-stone-800/50" href="/admin/shop.html">
+<span class="material-symbols-outlined">storefront</span><span class="tracking-wide">Shop</span>
+</a>
+<a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all hover:bg-stone-800/50" href="/admin/revenue.html">
+<span class="material-symbols-outlined">account_balance_wallet</span><span class="tracking-wide">Revenue</span>
+</a>
 <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all hover:bg-stone-800/50" href="/admin/carousel.html">
 <span class="material-symbols-outlined">view_carousel</span><span class="tracking-wide">Brands</span>
 </a>
@@ -117,6 +123,12 @@
 </a>
 <a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all duration-300 hover:bg-stone-800/50" href="/admin/works.html">
 <span class="material-symbols-outlined">work</span><span class="text-sm tracking-wide">Works Manager</span>
+</a>
+<a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all duration-300 hover:bg-stone-800/50" href="/admin/shop.html">
+<span class="material-symbols-outlined">storefront</span><span class="text-sm tracking-wide">Shop</span>
+</a>
+<a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all duration-300 hover:bg-stone-800/50" href="/admin/revenue.html">
+<span class="material-symbols-outlined">account_balance_wallet</span><span class="text-sm tracking-wide">Revenue</span>
 </a>
 <a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 font-display-lg text-sm font-normal text-stone-500 transition-all duration-300 hover:bg-stone-800/50" href="/admin/carousel.html">
 <span class="material-symbols-outlined">view_carousel</span><span class="text-sm tracking-wide">Brands</span>
@@ -182,6 +194,48 @@ Monthly Traffic
 <p class="font-display-xl text-display-xl text-on-background">—</p>
 <p class="mt-2 font-body-md text-sm text-on-surface-variant">Connect analytics to display visits.</p>
 </div>
+</section>
+
+<section class="grid grid-cols-1 gap-element-gap md:grid-cols-3" aria-label="Shop statistics">
+<div class="group relative overflow-hidden rounded-DEFAULT border border-outline-variant/20 bg-surface-container-low p-8">
+<div class="absolute left-0 top-0 h-1 w-full bg-surface-variant transition-colors group-hover:bg-primary/20"></div>
+<p class="mb-6 flex items-center justify-between font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">
+Live products
+<span class="material-symbols-outlined text-[18px] text-surface-variant" aria-hidden="true">checkroom</span>
+</p>
+<p id="admin-shop-products" class="font-display-xl text-display-xl text-on-background">0</p>
+<p id="admin-shop-products-note" class="mt-2 font-body-md text-sm text-on-surface-variant">Catalog not loaded yet.</p>
+</div>
+<div class="group relative overflow-hidden rounded-DEFAULT border border-outline-variant/20 bg-surface-container-low p-8">
+<div class="absolute left-0 top-0 h-1 w-full bg-surface-variant transition-colors group-hover:bg-primary/20"></div>
+<p class="mb-6 flex items-center justify-between font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">
+Open shop orders
+<span class="material-symbols-outlined text-[18px] text-surface-variant" aria-hidden="true">local_mall</span>
+</p>
+<p id="admin-shop-orders" class="font-display-xl text-display-xl text-on-background">0</p>
+<p id="admin-shop-orders-note" class="mt-2 font-body-md text-sm text-on-surface-variant">No orders yet.</p>
+</div>
+<div class="group relative overflow-hidden rounded-DEFAULT border border-outline-variant/20 bg-surface-container-low p-8">
+<div class="absolute left-0 top-0 h-1 w-full bg-surface-variant transition-colors group-hover:bg-primary/20"></div>
+<p class="mb-6 flex items-center justify-between font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">
+Shop revenue
+<span class="material-symbols-outlined text-[18px] text-surface-variant" aria-hidden="true">payments</span>
+</p>
+<p id="admin-shop-revenue" class="font-display-xl text-display-xl text-on-background">—</p>
+<p id="admin-shop-revenue-note" class="mt-2 font-body-md text-sm text-on-surface-variant">From confirmed checkouts.</p>
+<p class="mt-4"><a class="font-label-caps text-label-caps uppercase tracking-widest text-primary underline-offset-4 hover:underline" href="/admin/shop.html">Open Shop Manager</a></p>
+</div>
+</section>
+
+<section class="flex flex-col gap-6" aria-labelledby="revenue-heading">
+<div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+<div>
+<h2 id="revenue-heading" class="font-headline-md text-headline-md text-on-background">Revenue architecture</h2>
+<p class="mt-2 max-w-2xl font-body-md text-sm text-on-surface-variant">Checkout through to withdrawal. Available balance can be sent to M-Pesa or a bank account from here or the Revenue page.</p>
+</div>
+<a class="min-h-[44px] border border-outline-variant px-4 py-2 font-label-caps text-label-caps uppercase tracking-widest text-on-surface transition-colors hover:bg-surface-container" href="/admin/revenue.html">Open Revenue</a>
+</div>
+<div id="admin-revenue-root"></div>
 </section>
 
 <section class="flex flex-col gap-6" aria-labelledby="recent-heading">
@@ -284,5 +338,10 @@ Monthly Traffic
 })();
 </script>
 <script type="module" src="/scripts/animations.js"></script>
+<script type="module" src="/scripts/admin-overview-shop.js"></script>
+<script type="module">
+  import { mountRevenueSection } from "/scripts/admin-revenue.js";
+  mountRevenueSection(document.getElementById("admin-revenue-root"));
+</script>
 </body>
 </html>

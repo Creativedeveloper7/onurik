@@ -274,29 +274,9 @@ select.anim-glow:focus-visible {
   }
 }
 
-/* --- Brands marquee --- */
-#trusted-brands-marquee-root .trusted-marquee-track:hover {
-  animation-play-state: paused !important;
-}
-
-#trusted-brands-marquee-root .trusted-marquee-track img {
-  transition: transform 0.4s var(--anim-ease-spring);
+/* --- Brands grid --- */
+.brand-tile img {
   will-change: transform;
-}
-
-#trusted-brands-marquee-root .trusted-marquee-track img:hover {
-  transform: scale(1.1);
-}
-
-/* Edge fades slightly stronger on hover for “blend” */
-#trusted-brands-marquee-root {
-  --tw-mask: linear-gradient(
-    90deg,
-    transparent,
-    black 12%,
-    black 88%,
-    transparent
-  );
 }
 
 /* --- Parallax layers --- */
@@ -331,8 +311,8 @@ select.anim-glow:focus-visible {
     animation: none !important;
   }
 
-  #trusted-brands-marquee-root .trusted-marquee-track:hover {
-    animation-play-state: running !important;
+  .brand-tile:hover img {
+    transform: none !important;
   }
 
   *,

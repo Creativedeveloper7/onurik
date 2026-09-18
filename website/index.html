@@ -9,6 +9,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
         tailwind.config = {
@@ -259,18 +260,101 @@
             .services-heading-slide.is-active {
                 transform: none;
             }
-            .trusted-marquee-track {
-                animation: none !important;
+            .brands-trust__bg video {
+                display: none;
             }
         }
-        @keyframes trusted-marquee-scroll {
-            from {
-                transform: translateX(0);
+
+        .brands-trust {
+            background: #12160f;
+        }
+        .brands-trust__bg,
+        .brands-trust__bg video,
+        .brands-trust__shade {
+            position: absolute;
+            inset: 0;
+        }
+        .brands-trust__bg {
+            z-index: 0;
+            overflow: hidden;
+            background: #12160f;
+        }
+        .brands-trust__bg video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            filter: grayscale(0.35) brightness(0.42) contrast(1.05);
+        }
+        .brands-trust__shade {
+            background:
+                linear-gradient(to bottom, rgba(8, 10, 8, 0.55) 0%, rgba(8, 10, 8, 0.42) 40%, rgba(8, 10, 8, 0.62) 100%),
+                radial-gradient(ellipse at 50% 40%, transparent 20%, rgba(0, 0, 0, 0.45) 100%);
+            pointer-events: none;
+        }
+        .brands-trust__title {
+            font-family: Oswald, Montserrat, sans-serif;
+            font-weight: 700;
+            font-size: clamp(1.35rem, 4.1vw + 0.4rem, 3.5rem);
+            line-height: 1.05;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            text-align: center;
+            color: #ffffff;
+            text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
+            width: 100%;
+            max-width: 100%;
+        }
+        @media (min-width: 768px) {
+            .brands-trust__title {
+                letter-spacing: 0.05em;
             }
-            to {
-                /* Paired duplicate strips: shift one half-width for seamless loop */
-                transform: translateX(-50%);
+        }
+        .brand-tile-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.65rem;
+            width: 100%;
+            max-width: 64rem;
+            margin: 0 auto;
+            list-style: none;
+            padding: 0;
+        }
+        @media (min-width: 640px) {
+            .brand-tile-grid {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+                gap: 0.85rem;
             }
+        }
+        @media (min-width: 900px) {
+            .brand-tile-grid {
+                grid-template-columns: repeat(7, minmax(0, 1fr));
+                gap: 0.9rem;
+            }
+        }
+        .brand-tile {
+            position: relative;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            border-radius: 1.15rem;
+            background: #1c1c1c;
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+        }
+        .brand-tile img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            transition: transform 0.45s ease;
+        }
+        .brand-tile:hover img {
+            transform: scale(1.05);
+        }
+        .brands-trust__empty {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 0.9rem;
         }
     </style>
 <link rel="stylesheet" href="styles/animations.css"/>
@@ -285,7 +369,7 @@
 <span class="sr-only">Open menu</span>
 </button>
 <div class="ml-auto hidden md:flex items-center gap-10 font-montserrat">
-<span class="text-xs uppercase tracking-[0.2em]"><a href="works.html" class="text-white/35 hover:text-white/70 transition-colors">Works</a><span class="text-white/20 mx-3">/</span><a href="about.html" class="text-white/35 hover:text-white/70 transition-colors">Info</a></span>
+<span class="text-xs uppercase tracking-[0.2em]"><a href="works.html" class="text-white/35 hover:text-white/70 transition-colors">Works</a><span class="text-white/20 mx-3">/</span><a href="about.html" class="text-white/35 hover:text-white/70 transition-colors">Info</a><span class="text-white/20 mx-3">/</span><a href="shop/index.html" class="text-white/35 hover:text-white/70 transition-colors">Shop</a></span>
 <a href="contact.html" class="text-xs font-semibold uppercase tracking-[0.28em] text-stone-100 border-b border-stone-100 pb-0.5 hover:text-white hover:border-white transition-colors">Contact</a>
 </div>
 </nav>
@@ -293,6 +377,7 @@
 <nav id="site-nav-drawer" class="fixed top-0 right-0 z-50 h-full w-[min(100vw,18rem)] md:hidden pt-24 px-8 bg-neutral-950 border-l border-white/10 font-montserrat text-sm uppercase tracking-widest flex flex-col gap-6 shadow-2xl" aria-hidden="true" aria-label="Mobile">
 <a href="works.html" class="text-white/80 hover:text-white transition-colors">Works</a>
 <a href="about.html" class="text-white/80 hover:text-white transition-colors">Info</a>
+<a href="shop/index.html" class="text-white/80 hover:text-white transition-colors">Shop</a>
 <a href="contact.html" class="text-white font-semibold border-b border-stone-100 pb-0.5 self-start">Contact</a>
 <a href="contact.html" class="mt-4 pt-4 border-t border-white/10 text-xs font-semibold uppercase tracking-[0.28em] text-white/90 hover:text-white transition-colors">Enquire</a>
 </nav>
@@ -427,13 +512,17 @@ I design. I build. I question everything..
 </div>
 </section>
 <!-- Selected Clients — logos from Supabase onurik_brands (Admin → Brands); see scripts/brands-carousel-home.js -->
-<section class="relative overflow-hidden border-y border-neutral-200 bg-white py-2.5 md:py-3.5 lg:py-4" aria-labelledby="selected-clients-heading">
-<div class="relative z-20 mx-auto mb-2 max-w-container-max px-8 text-center md:mb-2.5 md:px-16 lg:mb-3">
-<h2 id="selected-clients-heading" class="font-montserrat text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-900 md:text-xs">Selected Clients</h2>
+<section class="brands-trust relative isolate overflow-hidden" aria-labelledby="selected-clients-heading">
+<div class="brands-trust__bg" aria-hidden="true">
+<video autoplay="" loop="" muted="" playsinline="" preload="metadata">
+<source src="/videos/work.mp4" type="video/mp4"/>
+</video>
+<div class="brands-trust__shade"></div>
 </div>
-<div class="pointer-events-none absolute bottom-0 left-0 top-0 z-[5] w-8 bg-gradient-to-r from-white to-transparent md:w-10"></div>
-<div class="pointer-events-none absolute bottom-0 right-0 top-0 z-[5] w-8 bg-gradient-to-l from-white to-transparent md:w-10"></div>
-<div id="trusted-brands-marquee-root" class="relative z-[1]"></div>
+<div class="relative z-10 mx-auto w-full max-w-[1180px] px-5 py-16 sm:px-8 md:px-12 md:py-24 lg:py-28">
+<h2 id="selected-clients-heading" class="brands-trust__title">Forward-looking brands<br/>that trust us</h2>
+<div id="trusted-brands-grid-root" class="mt-10 md:mt-14"></div>
+</div>
 </section>
 <!-- Conversion bridge: credibility → emotional hook → action -->
 <section id="conversion-bridge" class="w-full bg-[#131313]" aria-labelledby="conversion-bridge-heading">

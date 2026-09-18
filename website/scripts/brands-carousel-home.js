@@ -8,98 +8,46 @@ function escapeHtml(s) {
     .replaceAll('"', "&quot;");
 }
 
-/** Scroll distance per second; duration is derived from strip width so speed stays consistent. */
-const MARQUEE_PX_PER_SEC = 48;
-
-function prefersReducedMotion() {
-  return (
-    typeof window.matchMedia === "function" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  );
-}
-
-function applyMarqueeLoopTiming(track) {
-  if (!track || prefersReducedMotion()) return;
-  const firstStrip = track.firstElementChild;
-  if (!(firstStrip instanceof HTMLElement)) return;
-
-  const halfWidth = firstStrip.scrollWidth;
-  if (halfWidth <= 0) return;
-
-  let sec = halfWidth / MARQUEE_PX_PER_SEC;
-  sec = Math.max(22, Math.min(95, sec));
-
-  track.style.animation = `trusted-marquee-scroll ${sec}s linear infinite`;
-}
-
-function bindMarqueeTiming(track) {
-  const run = () => applyMarqueeLoopTiming(track);
-
-  run();
-  requestAnimationFrame(() => requestAnimationFrame(run));
-
-  const ro = new ResizeObserver(run);
-  ro.observe(track);
-  const first = track.firstElementChild;
-  if (first instanceof HTMLElement) ro.observe(first);
-
-  window.addEventListener("resize", run, { passive: true });
-}
-
-function renderMarquee(brands) {
-  const root = document.getElementById("trusted-brands-marquee-root");
+function renderGrid(brands) {
+  const root = document.getElementById("trusted-brands-grid-root");
   if (!root) return;
 
-  if (!brands.length) {
-    root.innerHTML =
-      '<p class="px-8 text-center text-sm text-neutral-500 md:px-16">Collaborator logos appear here once you add them in Admin → Brands.</p>';
-    return;
-  }
-
-  const items = brands
-    .filter((b) => b.logo_url)
-    .map((b) => {
+  const items = (Array.isArray(brands) ? brands : [])
+    .filter(function (b) {
+      return b && b.logo_url;
+    })
+    .map(function (b) {
       const alt = escapeHtml(b.name || "Partner");
       const src = escapeHtml(b.logo_url);
-      return `<div class="flex shrink-0 items-center justify-center px-1.5 py-0.5 md:px-2">
-        <img src="${src}" alt="${alt}" class="max-h-9 w-auto max-w-[min(126px,40vw)] object-contain md:max-h-11" loading="lazy" decoding="async"/>
-      </div>`;
+      return (
+        "<li>" +
+        '<figure class="brand-tile">' +
+        '<img src="' +
+        src +
+        '" alt="' +
+        alt +
+        '" loading="lazy" decoding="async"/>' +
+        "</figure></li>"
+      );
     })
     .join("");
 
-  if (!items.trim()) {
+  if (!items) {
     root.innerHTML =
-      '<p class="px-8 text-center text-sm text-neutral-500 md:px-16">Upload logo images in Admin → Brands.</p>';
+      '<p class="brands-trust__empty">Collaborator logos appear here once you add them in Admin → Brands.</p>';
     return;
   }
 
-  if (prefersReducedMotion()) {
-    root.innerHTML = `
-<div class="overflow-hidden">
-  <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 px-4 md:px-8">${items}</div>
-</div>`;
-    return;
-  }
-
-  root.innerHTML = `
-<div class="overflow-hidden">
-  <div class="trusted-marquee-track flex w-max will-change-transform">
-    <div class="flex items-center gap-3 md:gap-4 lg:gap-5">${items}</div>
-    <div class="flex items-center gap-3 md:gap-4 lg:gap-5" aria-hidden="true">${items}</div>
-  </div>
-</div>`;
-
-  const track = root.querySelector(".trusted-marquee-track");
-  if (track instanceof HTMLElement) bindMarqueeTiming(track);
+  root.innerHTML = '<ul class="brand-tile-grid">' + items + "</ul>";
 }
 
 (async function init() {
-  const root = document.getElementById("trusted-brands-marquee-root");
+  const root = document.getElementById("trusted-brands-grid-root");
   if (!root) return;
 
   if (!supabaseConfigured()) {
     root.innerHTML =
-      '<p class="px-8 text-center text-sm text-neutral-500 md:px-16">Configure Supabase URL and anon key to show collaborator logos.</p>';
+      '<p class="brands-trust__empty">Configure Supabase URL and anon key to show collaborator logos.</p>';
     return;
   }
 
@@ -113,10 +61,13 @@ function renderMarquee(brands) {
     .order("sort_order", { ascending: true });
 
   if (error) {
-    console.error("[onurik] brands marquee", error);
-    root.innerHTML = `<p class="px-8 text-center text-sm text-neutral-600 md:px-16">Could not load brands (${escapeHtml(error.message)}).</p>`;
+    console.error("[onurik] brands grid", error);
+    root.innerHTML =
+      '<p class="brands-trust__empty">Could not load brands (' +
+      escapeHtml(error.message) +
+      ").</p>";
     return;
   }
 
-  renderMarquee(Array.isArray(data) ? data : []);
+  renderGrid(data);
 })();
