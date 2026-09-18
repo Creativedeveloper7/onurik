@@ -15,8 +15,10 @@ import {
   updateOrderStatus,
 } from "../shop/orders-store.js";
 import {
+  catalogError,
   deleteProduct,
   getCatalog,
+  loadCatalog,
   resetCatalog,
   saveProduct,
   slugifyProductId,
@@ -279,6 +281,14 @@ function renderProducts() {
   const catalog = getCatalog();
   const count = document.getElementById("products-count");
   if (count) count.textContent = catalog.length + (catalog.length === 1 ? " piece" : " pieces");
+  const err = catalogError();
+  if (err && !catalog.length) {
+    body.innerHTML =
+      '<tr><td colspan="7" class="p-10 text-center text-on-surface-variant">' +
+      escapeHtml(err) +
+      "</td></tr>";
+    return;
+  }
   if (!catalog.length) {
     body.innerHTML =
       '<tr><td colspan="7" class="p-10 text-center text-on-surface-variant">No products yet. Add the first piece on the left.</td></tr>';
@@ -527,6 +537,11 @@ function initShopAdmin() {
   renderProducts();
   renderOrders();
   renderAds();
+  loadCatalog({ includeHidden: true, force: true }).then(function () {
+    renderProducts();
+    const err = catalogError();
+    if (err) showToast(err);
+  });
 
   document.querySelectorAll("[data-shop-tab]").forEach(function (btn) {
     btn.addEventListener("click", function () {
@@ -535,17 +550,32 @@ function initShopAdmin() {
   });
 
   const form = document.getElementById("product-form");
-  form.addEventListener("submit", function (event) {
+  form.addEventListener("submit", async function (event) {
     event.preventDefault();
     const product = collectProduct();
     if (!product.name) {
       showToast("Name is required.");
       return;
     }
-    saveProduct(product);
-    showToast(editingId ? "Product updated." : "Product saved.");
-    resetForm();
-    renderProducts();
+    const submit = document.getElementById("product-submit-btn");
+    const previous = submit ? submit.textContent : "";
+    if (submit) {
+      submit.disabled = true;
+      submit.textContent = "Saving…";
+    }
+    try {
+      await saveProduct(product);
+      showToast(editingId ? "Product updated." : "Product saved.");
+      resetForm();
+      renderProducts();
+    } catch (err) {
+      showToast((err && err.message) || "Could not save product.");
+    } finally {
+      if (submit) {
+        submit.disabled = false;
+        if (editingId) submit.textContent = previous || "Update product";
+      }
+    }
   });
 
   document.getElementById("product-cancel-btn").addEventListener("click", function () {
@@ -633,10 +663,15 @@ function initShopAdmin() {
     if (del) {
       const id = del.getAttribute("data-product-delete");
       if (!window.confirm("Delete this product from the shop?")) return;
-      deleteProduct(id);
-      if (editingId === id) resetForm();
-      renderProducts();
-      showToast("Product deleted.");
+      deleteProduct(id)
+        .then(function () {
+          if (editingId === id) resetForm();
+          renderProducts();
+          showToast("Product deleted.");
+        })
+        .catch(function (err) {
+          showToast((err && err.message) || "Could not delete product.");
+        });
     }
   });
 
@@ -658,10 +693,15 @@ function initShopAdmin() {
 
   document.getElementById("catalog-reset-btn").addEventListener("click", function () {
     if (!window.confirm("Remove every product from this catalog? This cannot be undone.")) return;
-    resetCatalog();
-    resetForm();
-    renderProducts();
-    showToast("Catalog cleared.");
+    resetCatalog()
+      .then(function () {
+        resetForm();
+        renderProducts();
+        showToast("Catalog cleared.");
+      })
+      .catch(function (err) {
+        showToast((err && err.message) || "Could not clear catalog.");
+      });
   });
 
   const adForm = document.getElementById("ad-form");

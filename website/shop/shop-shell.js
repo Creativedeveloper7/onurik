@@ -1,5 +1,5 @@
 import { cartCount, subscribeCart } from "./cart-store.js";
-import { filterProducts } from "./products.js";
+import { filterProducts, loadCatalog } from "./products.js";
 import { escapeHtml, formatKes } from "./format.js";
 
 function updateBadge() {
@@ -161,7 +161,8 @@ export function showShopToast(message) {
   }, 2200);
 }
 
-export function initShopShell() {
+export async function initShopShell() {
+  await loadCatalog();
   bindMobileNav();
   bindSearch();
   updateBadge();

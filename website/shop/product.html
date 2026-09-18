@@ -114,8 +114,8 @@ window.tailwind.config = {
 <script type="module">
   import { initShopShell } from "./shop-shell.js";
   import { mountProductDetail } from "./ProductDetail.js";
-  initShopShell();
-  mountProductDetail(document.getElementById("shop-app"));
+  await initShopShell();
+  await mountProductDetail(document.getElementById("shop-app"));
 </script>
 <script type="module" src="../scripts/animations.js"></script>
 <script type="module" src="../scripts/nav-close.js"></script>

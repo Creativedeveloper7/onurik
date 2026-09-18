@@ -1,5 +1,12 @@
 import { CATEGORIES, GENDERS, categoryLabel, escapeHtml, genderLabel } from "./format.js";
-import { filterProducts, getCatalog } from "./products.js";
+import {
+  catalogError,
+  catalogReady,
+  filterProducts,
+  getCatalog,
+  loadCatalog,
+  subscribeCatalog,
+} from "./products.js";
 import { renderProductCard } from "./ProductCard.js";
 import { toggleWishlist } from "./wishlist-store.js";
 
@@ -53,11 +60,26 @@ function heading(state) {
   return "Merch";
 }
 
-export function mountShopGrid(root) {
+export async function mountShopGrid(root) {
   if (!root) return;
   let state = paramsFromLocation();
 
   function render() {
+    if (!catalogReady()) {
+      root.innerHTML =
+        '<p class="py-24 text-center font-montserrat text-[11px] uppercase tracking-[0.22em] text-white/40">Loading merch…</p>';
+      return;
+    }
+    const loadError = catalogError();
+    if (loadError && !getCatalog().length) {
+      root.innerHTML =
+        '<div class="col-span-full py-24 text-center border-t border-white/[0.08]">' +
+        '<p class="font-montserrat text-2xl md:text-3xl tracking-[-0.02em] text-white font-medium">Catalog unavailable.</p>' +
+        '<p class="mt-4 text-sm text-white/40 max-w-md mx-auto">' +
+        escapeHtml(loadError) +
+        "</p></div>";
+      return;
+    }
     const products = filterProducts(state);
     const genderBtns = GENDERS.map(function (g) {
       return (
@@ -194,6 +216,11 @@ export function mountShopGrid(root) {
     }
   });
 
-  render();
   document.title = heading(state) + " · Onurik Shop";
+  render();
+  await loadCatalog();
+  render();
+  subscribeCatalog(function () {
+    render();
+  });
 }

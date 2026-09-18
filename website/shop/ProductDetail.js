@@ -1,6 +1,6 @@
 import { addToCart } from "./cart-store.js";
 import { categoryLabel, escapeAttr, escapeHtml, formatKes, genderLabel } from "./format.js";
-import { getProductById, relatedProducts } from "./products.js";
+import { getProductById, loadCatalog, relatedProducts } from "./products.js";
 import { renderProductCard } from "./ProductCard.js";
 import { showShopToast } from "./shop-shell.js";
 import { isWishlisted, toggleWishlist } from "./wishlist-store.js";
@@ -18,8 +18,11 @@ function priceBlock(product) {
   );
 }
 
-export function mountProductDetail(root) {
+export async function mountProductDetail(root) {
   if (!root) return;
+  root.innerHTML =
+    '<p class="py-24 font-montserrat text-[11px] uppercase tracking-[0.22em] text-white/40">Loading piece…</p>';
+  await loadCatalog();
   const id = new URLSearchParams(location.search).get("id") || "";
   const product = getProductById(id);
 
