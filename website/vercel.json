@@ -3,7 +3,7 @@
   "version": 2,
   "cleanUrls": false,
   "trailingSlash": false,
-  "rewrites": [
-    { "source": "/shop", "destination": "/shop/index.html" }
+  "redirects": [
+    { "source": "/shop", "destination": "/shop/index.html", "permanent": false }
   ]
 }

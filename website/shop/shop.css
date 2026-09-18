@@ -1,5 +1,11 @@
 /* Onurik Shop — black / white / gray only, matching site tokens */
 
+html,
+body {
+  background-color: #131313;
+  color: #e5e2e1;
+}
+
 #shop-cart-count[hidden] {
   display: none !important;
 }
