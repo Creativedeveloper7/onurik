@@ -150,7 +150,7 @@ function renderGallery() {
         '<div class="relative overflow-hidden rounded border border-outline-variant/40 bg-surface-container">' +
         '<img src="' +
         escapeHtml(src) +
-        '" alt="" class="h-28 w-full object-cover grayscale"/>' +
+        '" alt="" class="h-28 w-full object-cover"/>' +
         (index === 0
           ? '<span class="absolute left-2 top-2 rounded bg-black/70 px-2 py-0.5 text-[10px] uppercase tracking-wide text-white">Cover</span>'
           : "") +
@@ -292,7 +292,7 @@ function renderProducts() {
         "<tr class=\"border-b border-outline-variant/20\">" +
         '<td class="p-3"><div class="h-14 w-11 overflow-hidden bg-[#1c1b1b]">' +
         (cover
-          ? '<img src="' + escapeHtml(cover) + '" alt="" class="h-full w-full object-cover grayscale"/>'
+          ? '<img src="' + escapeHtml(cover) + '" alt="" class="h-full w-full object-cover"/>'
           : "") +
         "</div></td>" +
         '<td class="p-3"><p class="text-sm text-white">' +

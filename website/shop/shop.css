@@ -10,10 +10,6 @@ body {
   display: none !important;
 }
 
-.shop-img {
-  filter: grayscale(1) contrast(0.92);
-}
-
 .shop-thumb.is-active {
   outline: 1px solid rgba(229, 226, 221, 0.9);
   outline-offset: 2px;
