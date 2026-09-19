@@ -116,9 +116,10 @@ window.tailwind.config = {
   import { initShopShell } from "./shop-shell.js";
   import { mountShopGrid } from "./ShopGrid.js";
   import { mountShopAds } from "./ShopAds.js";
-  await initShopShell();
-  mountShopAds(document.getElementById("shop-ads"));
-  await mountShopGrid(document.getElementById("shop-app"));
+  initShopShell().then(function () {
+    mountShopAds(document.getElementById("shop-ads"));
+    return mountShopGrid(document.getElementById("shop-app"));
+  });
 </script>
 <script type="module" src="../scripts/animations.js"></script>
 <script type="module" src="../scripts/nav-close.js"></script>

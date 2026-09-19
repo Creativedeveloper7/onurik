@@ -114,8 +114,9 @@ window.tailwind.config = {
 <script type="module">
   import { initShopShell } from "./shop-shell.js";
   import { mountCheckoutFlow } from "./CheckoutFlow.js";
-  await initShopShell();
-  mountCheckoutFlow(document.getElementById("shop-app"));
+  initShopShell().then(function () {
+    mountCheckoutFlow(document.getElementById("shop-app"));
+  });
 </script>
 <script type="module" src="../scripts/animations.js"></script>
 <script type="module" src="../scripts/nav-close.js"></script>

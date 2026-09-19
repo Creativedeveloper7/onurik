@@ -283,7 +283,15 @@ export async function saveProduct(product) {
 
   await upsertRow(sb, secret, toPayload(Object.assign({}, next, { images: seedImages })));
   if (pendingUploads) {
-    next.images = await persistImages(sb, next.id, next.images);
+    try {
+      next.images = await persistImages(sb, next.id, next.images);
+    } catch (err) {
+      const msg = err && err.message ? String(err.message) : "";
+      if (!/bucket not found|not found|NoSuchBucket/i.test(msg)) throw err;
+      next.images = next.images.filter(function (src) {
+        return /^https?:\/\//i.test(src) || String(src).indexOf("data:") === 0;
+      });
+    }
     await upsertRow(sb, secret, toPayload(next));
   }
 
