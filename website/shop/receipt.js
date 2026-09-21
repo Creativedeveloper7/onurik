@@ -46,8 +46,15 @@ export function normalizeOrder(raw) {
     total: Number(order.total) || 0,
     shipping: {
       id: String(shipping.id || ""),
-      label: String(shipping.label || "Shipping"),
+      label: String(shipping.label || "Delivery"),
       price: Number(shipping.price) || 0,
+      zoneId: String(shipping.zoneId || ""),
+      turnaroundId: String(shipping.turnaroundId || ""),
+      turnaroundLabel: String(shipping.turnaroundLabel || ""),
+      deliveryDate: String(shipping.deliveryDate || ""),
+      earliestDate: String(shipping.earliestDate || ""),
+      zonePrice: Number(shipping.zonePrice) || 0,
+      turnaroundExtra: Number(shipping.turnaroundExtra) || 0,
     },
     paymentLabel: String(order.paymentLabel || "Payment"),
     paymentRef: String(order.paymentRef || ""),
@@ -96,7 +103,17 @@ export function buildReceiptText(raw) {
     "Items",
     lines.join("\n"),
     "",
-    "Delivery: " + order.shipping.label + " (" + (order.shipping.price ? formatKes(order.shipping.price) : "Free") + ")",
+    "Delivery: " +
+      order.shipping.label +
+      " (" +
+      (order.shipping.price ? formatKes(order.shipping.price) : "Free") +
+      ")",
+    order.shipping.turnaroundLabel
+      ? "Turnaround: " + order.shipping.turnaroundLabel
+      : "",
+    order.shipping.deliveryDate
+      ? "Requested delivery: " + order.shipping.deliveryDate
+      : "",
     "Payment: " + order.paymentLabel + (order.paymentRef ? " · " + order.paymentRef : ""),
     "Total paid: " + formatKes(order.total),
     "",
@@ -164,7 +181,17 @@ export function buildReceiptHtml(raw) {
     rows +
     '<tr><td style="padding:12px 0;color:#8d8c86;font-size:13px;">' +
     escapeHtml(order.shipping.label) +
-    '</td><td style="padding:12px 0;color:#e5e2e1;font-size:13px;text-align:right;">' +
+    (order.shipping.turnaroundLabel
+      ? '<div style="margin-top:4px;font-size:12px;">' +
+        escapeHtml(order.shipping.turnaroundLabel) +
+        "</div>"
+      : "") +
+    (order.shipping.deliveryDate
+      ? '<div style="margin-top:4px;font-size:12px;">Requested ' +
+        escapeHtml(order.shipping.deliveryDate) +
+        "</div>"
+      : "") +
+    '</td><td style="padding:12px 0;color:#e5e2e1;font-size:13px;text-align:right;vertical-align:top;">' +
     (order.shipping.price ? escapeHtml(formatKes(order.shipping.price)) : "Free") +
     "</td></tr>" +
     '<tr><td style="padding:16px 0 0;letter-spacing:0.16em;text-transform:uppercase;font-size:11px;color:#8d8c86;">Total paid</td>' +

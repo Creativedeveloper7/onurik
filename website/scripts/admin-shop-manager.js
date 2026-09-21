@@ -402,6 +402,11 @@ function renderOrders() {
         "</p></td>" +
         '<td class="p-3 text-xs text-white/55">' +
         escapeHtml((order.shipping && order.shipping.label) || "—") +
+        (order.shipping && order.shipping.deliveryDate
+          ? '<br/><span class="text-white/35">' +
+            escapeHtml(order.shipping.deliveryDate) +
+            "</span>"
+          : "") +
         "<br/>" +
         escapeHtml(customer.city || "") +
         "</td>" +

@@ -4,33 +4,65 @@ import {
   removeLine,
   setLineQty,
 } from "./cart-store.js";
-import { SHIPPING_METHODS, escapeAttr, escapeHtml, formatKes } from "./format.js";
+import { escapeAttr, escapeHtml, formatKes, quoteDelivery } from "./format.js";
 
+const DELIVERY_KEY = "onurik.shop.delivery.v1";
 const SHIP_KEY = "onurik.shop.shipping.v1";
 
-function readShip() {
-  try {
-    return localStorage.getItem(SHIP_KEY) || "standard";
-  } catch {
-    return "standard";
-  }
+function emptyPrefs() {
+  return {
+    zoneId: "greater-nairobi",
+    turnaroundId: "standard",
+    deliveryDate: "",
+  };
 }
 
-function writeShip(id) {
+export function readDeliveryPrefs() {
   try {
-    localStorage.setItem(SHIP_KEY, id);
+    const raw = localStorage.getItem(DELIVERY_KEY);
+    if (raw) {
+      const data = JSON.parse(raw);
+      if (data && typeof data === "object") {
+        return {
+          zoneId: String(data.zoneId || "greater-nairobi"),
+          turnaroundId: String(data.turnaroundId || "standard"),
+          deliveryDate: String(data.deliveryDate || ""),
+        };
+      }
+    }
+  } catch {
+    /* ignore */
+  }
+  let legacy = "standard";
+  try {
+    legacy = localStorage.getItem(SHIP_KEY) || "standard";
+  } catch {
+    /* ignore */
+  }
+  return {
+    zoneId: "greater-nairobi",
+    turnaroundId: legacy === "express" || legacy === "rush" ? legacy : "standard",
+    deliveryDate: "",
+  };
+}
+
+export function persistDelivery(prefs) {
+  const next = Object.assign(emptyPrefs(), prefs || {});
+  try {
+    localStorage.setItem(DELIVERY_KEY, JSON.stringify(next));
   } catch {
     /* ignore */
   }
 }
 
 export function getSelectedShipping() {
-  const id = readShip();
-  return (
-    SHIPPING_METHODS.find(function (m) {
-      return m.id === id;
-    }) || SHIPPING_METHODS[0]
-  );
+  const prefs = readDeliveryPrefs();
+  return quoteDelivery({
+    zoneId: prefs.zoneId,
+    turnaroundId: prefs.turnaroundId,
+    deliveryDate: prefs.deliveryDate,
+    subtotal: cartSubtotal(),
+  });
 }
 
 export function mountCartPage(root) {
@@ -129,12 +161,12 @@ export function mountCartPage(root) {
       '<div class="flex justify-between text-white/55"><span>Subtotal</span><span class="text-white">' +
       formatKes(subtotal) +
       "</span></div>" +
-      '<div class="flex justify-between text-white/55"><span>Shipping</span><span class="text-white">' +
+      '<div class="flex justify-between text-white/55"><span>Delivery</span><span class="text-white">' +
       (shipping.price ? formatKes(shipping.price) : "Free") +
       "</span></div>" +
       '<p class="text-[11px] uppercase tracking-[0.16em] text-white/30">' +
       escapeHtml(shipping.label) +
-      " — update at checkout</p>" +
+      " — lock zone and turnaround at checkout</p>" +
       '<div class="flex justify-between border-t border-white/[0.08] pt-4 text-white"><span class="uppercase tracking-[0.16em] text-[11px]">Bag Total</span><span class="text-lg">' +
       formatKes(total) +
       "</span></div>" +
@@ -174,4 +206,4 @@ export function mountCartPage(root) {
   render();
 }
 
-export { writeShip };
+export { persistDelivery as writeShip };

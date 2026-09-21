@@ -1,10 +1,17 @@
 import { cartSubtotal, clearCart, getCart } from "./cart-store.js";
-import { getSelectedShipping, writeShip } from "./CartPage.js";
+import { persistDelivery, readDeliveryPrefs } from "./CartPage.js";
 import {
-  SHIPPING_METHODS,
+  DELIVERY_ZONES,
+  FREE_DELIVERY_THRESHOLD,
+  TURNAROUND_OPTIONS,
+  earliestIsoDate,
   escapeAttr,
   escapeHtml,
+  formatDisplayDate,
   formatKes,
+  getDeliveryZone,
+  getTurnaround,
+  quoteDelivery,
 } from "./format.js";
 import { addOrder } from "./orders-store.js";
 import { downloadReceiptFile, sendOrderReceipt } from "./send-receipt.js";
@@ -124,6 +131,7 @@ function field(name, label, type, value, attrs) {
 
 export function mountCheckoutFlow(root) {
   if (!root) return;
+  const savedDelivery = readDeliveryPrefs();
   let step = 1;
   let draft = Object.assign(
     {
@@ -132,7 +140,9 @@ export function mountCheckoutFlow(root) {
       city: "",
       phone: "",
       email: "",
-      shippingId: getSelectedShipping().id,
+      zoneId: savedDelivery.zoneId,
+      turnaroundId: savedDelivery.turnaroundId,
+      deliveryDate: savedDelivery.deliveryDate,
       payMethod: "mpesa",
       cardName: "",
       cardNumber: "",
@@ -142,22 +152,46 @@ export function mountCheckoutFlow(root) {
     },
     readDraft()
   );
+  if (!draft.zoneId) draft.zoneId = savedDelivery.zoneId;
+  if (!draft.turnaroundId) {
+    draft.turnaroundId =
+      draft.shippingId === "express" || draft.shippingId === "rush"
+        ? draft.shippingId
+        : savedDelivery.turnaroundId;
+  }
   let busy = false;
   let error = "";
   let confirmed = Boolean(new URLSearchParams(location.search).get("confirmed"));
 
   function persist() {
+    const quote = quoteDelivery({
+      zoneId: draft.zoneId,
+      turnaroundId: draft.turnaroundId,
+      deliveryDate: draft.deliveryDate,
+      subtotal: cartSubtotal(),
+    });
+    draft.zoneId = quote.zoneId;
+    draft.turnaroundId = quote.turnaroundId;
+    draft.deliveryDate = quote.deliveryDate || draft.deliveryDate || "";
     writeDraft(draft);
-    writeShip(draft.shippingId);
+    persistDelivery({
+      zoneId: draft.zoneId,
+      turnaroundId: draft.turnaroundId,
+      deliveryDate: draft.deliveryDate,
+    });
   }
+
+  persist();
 
   function totals() {
     const items = getCart();
-    const shipping =
-      SHIPPING_METHODS.find(function (m) {
-        return m.id === draft.shippingId;
-      }) || SHIPPING_METHODS[0];
     const subtotal = cartSubtotal();
+    const shipping = quoteDelivery({
+      zoneId: draft.zoneId,
+      turnaroundId: draft.turnaroundId,
+      deliveryDate: draft.deliveryDate,
+      subtotal: subtotal,
+    });
     return {
       items: items,
       shipping: shipping,
@@ -167,17 +201,140 @@ export function mountCheckoutFlow(root) {
   }
 
   function summary(t) {
+    const ship = t.shipping;
+    const deliveryLine =
+      ship.zonePrice > 0
+        ? formatKes(ship.zonePrice)
+        : ship.freeDelivery
+          ? "Free"
+          : formatKes(0);
     return (
       '<dl class="mt-8 space-y-3 border-t border-white/[0.08] pt-6 font-montserrat text-sm">' +
       '<div class="flex justify-between text-white/55"><dt>Subtotal</dt><dd class="text-white">' +
       formatKes(t.subtotal) +
       "</dd></div>" +
-      '<div class="flex justify-between text-white/55"><dt>Shipping</dt><dd class="text-white">' +
-      (t.shipping.price ? formatKes(t.shipping.price) : "Free") +
+      '<div class="flex justify-between gap-6 text-white/55"><dt>Delivery · ' +
+      escapeHtml(getDeliveryZone(ship.zoneId).label) +
+      "</dt><dd class=\"text-white\">" +
+      deliveryLine +
       "</dd></div>" +
+      (ship.turnaroundExtra
+        ? '<div class="flex justify-between gap-6 text-white/55"><dt>' +
+          escapeHtml(ship.turnaroundLabel) +
+          '</dt><dd class="text-white">+' +
+          formatKes(ship.turnaroundExtra) +
+          "</dd></div>"
+        : '<div class="flex justify-between gap-6 text-white/55"><dt>' +
+          escapeHtml(ship.turnaroundLabel) +
+          '</dt><dd class="text-white">No extra</dd></div>') +
+      (ship.deliveryDate
+        ? '<p class="text-[11px] uppercase tracking-[0.16em] text-white/30">Requested ' +
+          escapeHtml(formatDisplayDate(ship.deliveryDate)) +
+          "</p>"
+        : '<p class="text-[11px] uppercase tracking-[0.16em] text-white/30">Earliest after production · ' +
+          escapeHtml(formatDisplayDate(ship.earliestDate)) +
+          "</p>") +
       '<div class="flex justify-between border-t border-white/[0.08] pt-3 text-white"><dt class="uppercase tracking-[0.16em] text-[11px]">Bag Total</dt><dd class="text-lg">' +
       formatKes(t.total) +
       "</dd></div></dl>"
+    );
+  }
+
+  function deliveryStep(t) {
+    const zone = getDeliveryZone(draft.zoneId);
+    const minDate = earliestIsoDate(draft.turnaroundId);
+    const dateValue = draft.deliveryDate && draft.deliveryDate >= minDate ? draft.deliveryDate : "";
+    const zoneRows = DELIVERY_ZONES.map(function (item) {
+      const active = draft.zoneId === item.id;
+      const priceLabel =
+        t.subtotal >= FREE_DELIVERY_THRESHOLD ? "Free" : formatKes(item.price);
+      return (
+        '<label class="shop-zone' +
+        (active ? " is-active" : "") +
+        '">' +
+        '<input class="sr-only" type="radio" name="zoneId" value="' +
+        item.id +
+        '" ' +
+        (active ? "checked" : "") +
+        "/>" +
+        '<span class="shop-zone__mark" aria-hidden="true"></span>' +
+        '<span class="shop-zone__copy"><span class="shop-zone__title">' +
+        escapeHtml(item.label) +
+        '</span><span class="shop-zone__detail">' +
+        escapeHtml(item.detail) +
+        "</span></span>" +
+        '<span class="shop-zone__price">' +
+        priceLabel +
+        "</span></label>"
+      );
+    }).join("");
+    const turnCards = TURNAROUND_OPTIONS.map(function (item) {
+      const blocked = item.nairobiOnly && !zone.nairobi;
+      const active = !blocked && draft.turnaroundId === item.id;
+      const extraLabel = item.extra ? "+" + formatKes(item.extra) : "No extra";
+      return (
+        '<label class="shop-turn' +
+        (active ? " is-active" : "") +
+        (blocked ? " is-disabled" : "") +
+        '">' +
+        '<input class="sr-only" type="radio" name="turnaroundId" value="' +
+        item.id +
+        '" ' +
+        (active ? "checked" : "") +
+        (blocked ? "disabled" : "") +
+        "/>" +
+        '<span class="shop-turn__top"><span class="shop-turn__badge shop-turn__badge--' +
+        item.id +
+        '">' +
+        escapeHtml(item.label) +
+        '</span><span class="shop-turn__check" aria-hidden="true"></span></span>' +
+        '<span class="shop-turn__time">' +
+        escapeHtml(item.timeLabel) +
+        '</span><span class="shop-turn__extra' +
+        (item.extra ? "" : " is-free") +
+        '">' +
+        extraLabel +
+        '</span><span class="shop-turn__regions">' +
+        escapeHtml(item.regions) +
+        "</span></label>"
+      );
+    }).join("");
+    return (
+      '<form id="shop-step-form" class="flex flex-col">' +
+      '<section class="shop-zone-panel" aria-label="Delivery zones and prices">' +
+      '<header class="shop-zone-panel__head">' +
+      '<span class="material-symbols-outlined shop-zone-panel__icon" aria-hidden="true">local_shipping</span>' +
+      "<h2>Delivery Zones &amp; Prices</h2></header>" +
+      zoneRows +
+      '<p class="shop-zone-panel__note">Tap your zone to lock in delivery. FREE on orders over ' +
+      formatKes(FREE_DELIVERY_THRESHOLD) +
+      ". Production extras still apply.</p></section>" +
+      '<div class="mt-10">' +
+      '<div class="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-4">' +
+      '<h2 class="font-montserrat text-sm font-medium tracking-[-0.02em] text-white">Select turnaround time</h2>' +
+      '<p class="text-sm text-white/40">How fast we produce your order — delivery is charged separately.</p>' +
+      "</div>" +
+      '<div class="shop-turn-grid">' +
+      turnCards +
+      "</div></div>" +
+      '<div class="mt-10">' +
+      '<div class="flex items-baseline justify-between gap-4 mb-3">' +
+      '<label class="font-montserrat text-[11px] uppercase tracking-[0.18em] text-white/40" for="deliveryDate">Delivery date</label>' +
+      '<span class="font-montserrat text-[11px] uppercase tracking-[0.16em] text-white/30">Optional</span>' +
+      "</div>" +
+      '<input class="shop-field shop-field--date" id="deliveryDate" name="deliveryDate" type="date" min="' +
+      minDate +
+      '" value="' +
+      escapeAttr(dateValue) +
+      '"/>' +
+      '<p class="mt-3 text-sm text-white/40">Earliest we can promise is ' +
+      escapeHtml(formatDisplayDate(minDate)) +
+      ", after production. Leave blank if you don’t need a specific day.</p>" +
+      "</div>" +
+      '<div class="mt-10 flex justify-between gap-4">' +
+      '<button type="button" data-back class="font-montserrat text-[11px] uppercase tracking-[0.2em] text-white/45 hover:text-white transition-colors">Back</button>' +
+      '<button class="inline-flex bg-primary px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-on-primary hover:opacity-80 transition-opacity" type="submit">Continue</button>' +
+      "</div></form>"
     );
   }
 
@@ -221,6 +378,14 @@ export function mountCheckoutFlow(root) {
             escapeHtml(order.paymentLabel || "") +
             (order.paymentRef ? " · " + escapeHtml(order.paymentRef) : "") +
             "</p>" +
+            (order.shipping
+              ? '<p class="mt-3 text-sm text-white/45">' +
+                escapeHtml(order.shipping.label || "Delivery") +
+                (order.shipping.deliveryDate
+                  ? " · " + escapeHtml(formatDisplayDate(order.shipping.deliveryDate))
+                  : "") +
+                "</p>"
+              : "") +
             '<p class="mt-6 font-montserrat text-lg text-white">Total ' +
             formatKes(order.total) +
             "</p>"
@@ -258,33 +423,7 @@ export function mountCheckoutFlow(root) {
         '<button class="inline-flex bg-primary px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-on-primary hover:opacity-80 transition-opacity" type="submit">Continue</button>' +
         "</div></form>";
     } else if (step === 2) {
-      body =
-        '<form id="shop-step-form" class="flex flex-col">' +
-        SHIPPING_METHODS.map(function (m) {
-          return (
-            '<label class="shop-radio' +
-            (draft.shippingId === m.id ? " is-active" : "") +
-            '">' +
-            '<input class="sr-only" type="radio" name="shippingId" value="' +
-            m.id +
-            '" ' +
-            (draft.shippingId === m.id ? "checked" : "") +
-            "/>" +
-            '<span class="shop-radio__mark" aria-hidden="true"></span>' +
-            '<span class="flex-1"><span class="flex justify-between gap-4 font-montserrat text-sm text-white"><span>' +
-            escapeHtml(m.label) +
-            "</span><span>" +
-            (m.price ? formatKes(m.price) : "Free") +
-            "</span></span>" +
-            '<span class="mt-1 block text-sm text-white/40">' +
-            escapeHtml(m.detail) +
-            "</span></span></label>"
-          );
-        }).join("") +
-        '<div class="mt-10 flex justify-between gap-4">' +
-        '<button type="button" data-back class="font-montserrat text-[11px] uppercase tracking-[0.2em] text-white/45 hover:text-white transition-colors">Back</button>' +
-        '<button class="inline-flex bg-primary px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-on-primary hover:opacity-80 transition-opacity" type="submit">Continue</button>' +
-        "</div></form>";
+      body = deliveryStep(t);
     } else if (step === 3) {
       const cardOpen = draft.payMethod === "card";
       body =
@@ -332,8 +471,23 @@ export function mountCheckoutFlow(root) {
         " · " +
         escapeHtml(draft.email) +
         "</dd></div>" +
-        '<div><dt class="font-montserrat text-[11px] uppercase tracking-[0.18em] text-white/40">Delivery</dt><dd class="mt-1 text-white">' +
-        escapeHtml(t.shipping.label) +
+        '<div><dt class="font-montserrat text-[11px] uppercase tracking-[0.18em] text-white/40">Delivery zone</dt><dd class="mt-1 text-white">' +
+        escapeHtml(getDeliveryZone(t.shipping.zoneId).label) +
+        '<span class="block text-white/45">' +
+        escapeHtml(getDeliveryZone(t.shipping.zoneId).detail) +
+        "</span></dd></div>" +
+        '<div><dt class="font-montserrat text-[11px] uppercase tracking-[0.18em] text-white/40">Turnaround</dt><dd class="mt-1 text-white">' +
+        escapeHtml(t.shipping.turnaroundLabel) +
+        (t.shipping.turnaroundExtra
+          ? " · +" + formatKes(t.shipping.turnaroundExtra)
+          : " · no extra") +
+        "</dd></div>" +
+        '<div><dt class="font-montserrat text-[11px] uppercase tracking-[0.18em] text-white/40">Delivery date</dt><dd class="mt-1 text-white">' +
+        escapeHtml(
+          t.shipping.deliveryDate
+            ? formatDisplayDate(t.shipping.deliveryDate)
+            : "After production · " + formatDisplayDate(t.shipping.earliestDate)
+        ) +
         "</dd></div>" +
         '<div><dt class="font-montserrat text-[11px] uppercase tracking-[0.18em] text-white/40">Payment</dt><dd class="mt-1 text-white">' +
         (draft.payMethod === "mpesa" ? "M-Pesa · " + escapeHtml(draft.mpesaPhone || draft.phone) : "Card") +
@@ -420,8 +574,7 @@ export function mountCheckoutFlow(root) {
       persist();
       render();
     }
-    if (t && t.name === "shippingId") {
-      draft.shippingId = t.value;
+    if (t && (t.name === "zoneId" || t.name === "turnaroundId" || t.name === "deliveryDate")) {
       persist();
       render();
     }
@@ -442,6 +595,30 @@ export function mountCheckoutFlow(root) {
       error = "Enter a valid email so we can send your receipt.";
       render();
       return;
+    }
+    if (step === 2) {
+      persist();
+      const zone = getDeliveryZone(draft.zoneId);
+      const turnaround = getTurnaround(draft.turnaroundId);
+      const minDate = earliestIsoDate(draft.turnaroundId);
+      if (!draft.zoneId) {
+        error = "Tap your delivery zone to lock in the rate.";
+        render();
+        return;
+      }
+      if (turnaround.nairobiOnly && !zone.nairobi) {
+        error = "Rush is only available for Nairobi zones. Choose Express or Standard.";
+        render();
+        return;
+      }
+      if (draft.deliveryDate && draft.deliveryDate < minDate) {
+        error =
+          "That date is earlier than we can produce this order. Pick " +
+          formatDisplayDate(minDate) +
+          " or later.";
+        render();
+        return;
+      }
     }
     step += 1;
     render();
