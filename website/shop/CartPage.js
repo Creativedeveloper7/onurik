@@ -4,28 +4,30 @@ import {
   removeLine,
   setLineQty,
 } from "./cart-store.js";
-import { escapeAttr, escapeHtml, formatKes, quoteDelivery } from "./format.js";
+import { escapeAttr, escapeHtml, formatKes, getDeliveryConfig, loadDeliveryConfig, quoteDelivery } from "./format.js";
 
 const DELIVERY_KEY = "onurik.shop.delivery.v1";
 const SHIP_KEY = "onurik.shop.shipping.v1";
 
 function emptyPrefs() {
+  const cfg = getDeliveryConfig();
   return {
-    zoneId: "greater-nairobi",
-    turnaroundId: "standard",
+    zoneId: cfg.defaultZoneId,
+    turnaroundId: cfg.defaultTurnaroundId,
     deliveryDate: "",
   };
 }
 
 export function readDeliveryPrefs() {
+  const defaults = emptyPrefs();
   try {
     const raw = localStorage.getItem(DELIVERY_KEY);
     if (raw) {
       const data = JSON.parse(raw);
       if (data && typeof data === "object") {
         return {
-          zoneId: String(data.zoneId || "greater-nairobi"),
-          turnaroundId: String(data.turnaroundId || "standard"),
+          zoneId: String(data.zoneId || defaults.zoneId),
+          turnaroundId: String(data.turnaroundId || defaults.turnaroundId),
           deliveryDate: String(data.deliveryDate || ""),
         };
       }
@@ -33,15 +35,15 @@ export function readDeliveryPrefs() {
   } catch {
     /* ignore */
   }
-  let legacy = "standard";
+  let legacy = "";
   try {
-    legacy = localStorage.getItem(SHIP_KEY) || "standard";
+    legacy = localStorage.getItem(SHIP_KEY) || "";
   } catch {
     /* ignore */
   }
   return {
-    zoneId: "greater-nairobi",
-    turnaroundId: legacy === "express" || legacy === "rush" ? legacy : "standard",
+    zoneId: defaults.zoneId,
+    turnaroundId: legacy === "express" || legacy === "rush" ? legacy : defaults.turnaroundId,
     deliveryDate: "",
   };
 }
@@ -68,6 +70,12 @@ export function getSelectedShipping() {
 export function mountCartPage(root) {
   if (!root) return;
 
+  loadDeliveryConfig().then(function () {
+    bindCartPage(root);
+  });
+}
+
+function bindCartPage(root) {
   function render() {
     const items = getCart();
     const shipping = getSelectedShipping();

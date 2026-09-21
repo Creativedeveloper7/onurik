@@ -108,9 +108,10 @@ tailwind.config = {
       Shop Manager
     </p>
     <h1 class="font-montserrat text-5xl text-on-background">Merch &amp; orders</h1>
-    <p class="mt-4 max-w-2xl text-sm text-white/45">Catalog edits save to the shared database and show on the public shop from any browser or device. Video ads loop in the shop header. Confirmed checkouts land in Orders.</p>
+    <p class="mt-4 max-w-2xl text-sm text-white/45">Catalog edits save to the shared database and show on the public shop from any browser or device. Delivery rules, video ads, and confirmed checkouts live in the tabs below.</p>
     <div class="mt-8 flex flex-wrap gap-8">
       <button type="button" data-shop-tab="products" class="shop-admin-tab is-active pb-1 font-montserrat text-[11px] font-semibold uppercase">Products</button>
+      <button type="button" data-shop-tab="delivery" class="shop-admin-tab pb-1 font-montserrat text-[11px] font-semibold uppercase">Delivery</button>
       <button type="button" data-shop-tab="ads" class="shop-admin-tab pb-1 font-montserrat text-[11px] font-semibold uppercase">Video ads</button>
       <button type="button" data-shop-tab="orders" class="shop-admin-tab pb-1 font-montserrat text-[11px] font-semibold uppercase">Orders</button>
     </div>
@@ -189,6 +190,67 @@ tailwind.config = {
         </div>
       </div>
     </div>
+  </section>
+
+  <section id="shop-panel-delivery" hidden class="px-8 py-8 md:px-16">
+    <form id="delivery-form" class="space-y-6">
+      <p id="delivery-status" class="text-sm text-on-surface-variant">Loading delivery rules…</p>
+      <section class="rounded border border-outline-variant/30 bg-surface-container-low p-5 space-y-4">
+        <p class="text-[11px] uppercase tracking-[0.2em] text-on-surface-variant">Booking rules</p>
+        <p class="text-sm text-white/45">These prices and times appear on checkout. Save here so every shop visitor sees the same promise.</p>
+        <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
+          <label class="flex flex-col gap-1">
+            <span class="text-[11px] uppercase tracking-[0.18em] text-on-surface-variant">Free delivery over (KSh)</span>
+            <input id="delivery-threshold" class="w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2" type="number" min="0" step="1"/>
+          </label>
+          <label class="flex flex-col gap-1">
+            <span class="text-[11px] uppercase tracking-[0.18em] text-on-surface-variant">Default zone</span>
+            <select id="delivery-default-zone" class="w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2"></select>
+          </label>
+          <label class="flex flex-col gap-1">
+            <span class="text-[11px] uppercase tracking-[0.18em] text-on-surface-variant">Default turnaround</span>
+            <select id="delivery-default-turn" class="w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2"></select>
+          </label>
+          <label class="inline-flex items-center gap-3 text-sm md:pt-6">
+            <input id="delivery-allow-date" type="checkbox" class="rounded border-outline-variant/40 bg-surface-container"/>
+            Offer optional delivery date
+          </label>
+        </div>
+        <label class="flex flex-col gap-1">
+          <span class="text-[11px] uppercase tracking-[0.18em] text-on-surface-variant">Zone note</span>
+          <textarea id="delivery-zone-note" rows="2" class="w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2" placeholder="Shown under the zone list. Use {threshold} for the free-delivery amount."></textarea>
+        </label>
+        <label class="flex flex-col gap-1">
+          <span class="text-[11px] uppercase tracking-[0.18em] text-on-surface-variant">Turnaround hint</span>
+          <input id="delivery-turn-hint" class="w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2" type="text"/>
+        </label>
+        <label class="flex flex-col gap-1">
+          <span class="text-[11px] uppercase tracking-[0.18em] text-on-surface-variant">Date hint</span>
+          <input id="delivery-date-hint" class="w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2" type="text"/>
+        </label>
+      </section>
+
+      <section class="rounded border border-outline-variant/30 bg-surface-container-low p-5">
+        <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+          <p class="text-[11px] uppercase tracking-[0.2em] text-on-surface-variant">Delivery zones</p>
+          <button id="delivery-zone-add" type="button" class="text-[10px] uppercase tracking-[0.14em] text-white/50 hover:text-white">Add zone</button>
+        </div>
+        <div id="delivery-zones-list" class="space-y-3"></div>
+      </section>
+
+      <section class="rounded border border-outline-variant/30 bg-surface-container-low p-5">
+        <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+          <p class="text-[11px] uppercase tracking-[0.2em] text-on-surface-variant">Turnaround times</p>
+          <button id="delivery-turn-add" type="button" class="text-[10px] uppercase tracking-[0.14em] text-white/50 hover:text-white">Add turnaround</button>
+        </div>
+        <div id="delivery-turns-list" class="space-y-3"></div>
+      </section>
+
+      <div class="flex flex-wrap gap-3">
+        <button id="delivery-save-btn" class="min-h-[44px] rounded border border-outline-variant px-6 py-2 text-xs uppercase tracking-[0.2em] hover:bg-surface-container" type="submit">Save delivery rules</button>
+        <button id="delivery-reset-btn" type="button" class="min-h-[44px] px-4 py-2 text-xs uppercase tracking-[0.2em] text-white/40 hover:text-white">Restore defaults</button>
+      </div>
+    </form>
   </section>
 
   <section id="shop-panel-ads" hidden class="px-8 py-8 md:px-16">

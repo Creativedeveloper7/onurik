@@ -1,18 +1,18 @@
 import { cartSubtotal, clearCart, getCart } from "./cart-store.js";
 import { persistDelivery, readDeliveryPrefs } from "./CartPage.js";
 import {
-  DELIVERY_ZONES,
-  FREE_DELIVERY_THRESHOLD,
-  TURNAROUND_OPTIONS,
   earliestIsoDate,
   escapeAttr,
   escapeHtml,
   formatDisplayDate,
   formatKes,
+  getDeliveryConfig,
   getDeliveryZone,
   getTurnaround,
+  loadDeliveryConfig,
   quoteDelivery,
 } from "./format.js";
+import { formatZoneNote } from "./delivery-config.js";
 import { addOrder } from "./orders-store.js";
 import { downloadReceiptFile, sendOrderReceipt } from "./send-receipt.js";
 import { isValidEmail } from "./receipt.js";
@@ -131,6 +131,13 @@ function field(name, label, type, value, attrs) {
 
 export function mountCheckoutFlow(root) {
   if (!root) return;
+  loadDeliveryConfig().then(function () {
+    startCheckout(root);
+  });
+}
+
+function startCheckout(root) {
+  const cfg = getDeliveryConfig();
   const savedDelivery = readDeliveryPrefs();
   let step = 1;
   let draft = Object.assign(
@@ -140,8 +147,8 @@ export function mountCheckoutFlow(root) {
       city: "",
       phone: "",
       email: "",
-      zoneId: savedDelivery.zoneId,
-      turnaroundId: savedDelivery.turnaroundId,
+      zoneId: savedDelivery.zoneId || cfg.defaultZoneId,
+      turnaroundId: savedDelivery.turnaroundId || cfg.defaultTurnaroundId,
       deliveryDate: savedDelivery.deliveryDate,
       payMethod: "mpesa",
       cardName: "",
@@ -241,64 +248,90 @@ export function mountCheckoutFlow(root) {
   }
 
   function deliveryStep(t) {
+    const cfg = getDeliveryConfig();
     const zone = getDeliveryZone(draft.zoneId);
     const minDate = earliestIsoDate(draft.turnaroundId);
     const dateValue = draft.deliveryDate && draft.deliveryDate >= minDate ? draft.deliveryDate : "";
-    const zoneRows = DELIVERY_ZONES.map(function (item) {
-      const active = draft.zoneId === item.id;
-      const priceLabel =
-        t.subtotal >= FREE_DELIVERY_THRESHOLD ? "Free" : formatKes(item.price);
-      return (
-        '<label class="shop-zone' +
-        (active ? " is-active" : "") +
-        '">' +
-        '<input class="sr-only" type="radio" name="zoneId" value="' +
-        item.id +
-        '" ' +
-        (active ? "checked" : "") +
-        "/>" +
-        '<span class="shop-zone__mark" aria-hidden="true"></span>' +
-        '<span class="shop-zone__copy"><span class="shop-zone__title">' +
-        escapeHtml(item.label) +
-        '</span><span class="shop-zone__detail">' +
-        escapeHtml(item.detail) +
-        "</span></span>" +
-        '<span class="shop-zone__price">' +
-        priceLabel +
-        "</span></label>"
-      );
-    }).join("");
-    const turnCards = TURNAROUND_OPTIONS.map(function (item) {
-      const blocked = item.nairobiOnly && !zone.nairobi;
-      const active = !blocked && draft.turnaroundId === item.id;
-      const extraLabel = item.extra ? "+" + formatKes(item.extra) : "No extra";
-      return (
-        '<label class="shop-turn' +
-        (active ? " is-active" : "") +
-        (blocked ? " is-disabled" : "") +
-        '">' +
-        '<input class="sr-only" type="radio" name="turnaroundId" value="' +
-        item.id +
-        '" ' +
-        (active ? "checked" : "") +
-        (blocked ? "disabled" : "") +
-        "/>" +
-        '<span class="shop-turn__top"><span class="shop-turn__badge shop-turn__badge--' +
-        item.id +
-        '">' +
-        escapeHtml(item.label) +
-        '</span><span class="shop-turn__check" aria-hidden="true"></span></span>' +
-        '<span class="shop-turn__time">' +
-        escapeHtml(item.timeLabel) +
-        '</span><span class="shop-turn__extra' +
-        (item.extra ? "" : " is-free") +
-        '">' +
-        extraLabel +
-        '</span><span class="shop-turn__regions">' +
-        escapeHtml(item.regions) +
-        "</span></label>"
-      );
-    }).join("");
+    const zoneNote = formatZoneNote(cfg);
+    const zoneRows = cfg.zones
+      .map(function (item) {
+        const active = draft.zoneId === item.id;
+        const priceLabel =
+          cfg.freeDeliveryThreshold > 0 && t.subtotal >= cfg.freeDeliveryThreshold
+            ? "Free"
+            : formatKes(item.price);
+        return (
+          '<label class="shop-zone' +
+          (active ? " is-active" : "") +
+          '">' +
+          '<input class="sr-only" type="radio" name="zoneId" value="' +
+          item.id +
+          '" ' +
+          (active ? "checked" : "") +
+          "/>" +
+          '<span class="shop-zone__mark" aria-hidden="true"></span>' +
+          '<span class="shop-zone__copy"><span class="shop-zone__title">' +
+          escapeHtml(item.label) +
+          '</span><span class="shop-zone__detail">' +
+          escapeHtml(item.detail) +
+          "</span></span>" +
+          '<span class="shop-zone__price">' +
+          priceLabel +
+          "</span></label>"
+        );
+      })
+      .join("");
+    const turnCards = cfg.turnaround
+      .map(function (item) {
+        const blocked = item.nairobiOnly && !zone.nairobi;
+        const active = !blocked && draft.turnaroundId === item.id;
+        const extraLabel = item.extra ? "+" + formatKes(item.extra) : "No extra";
+        const badgeKind = /rush|express|standard/.test(item.id) ? item.id : "standard";
+        return (
+          '<label class="shop-turn' +
+          (active ? " is-active" : "") +
+          (blocked ? " is-disabled" : "") +
+          '">' +
+          '<input class="sr-only" type="radio" name="turnaroundId" value="' +
+          item.id +
+          '" ' +
+          (active ? "checked" : "") +
+          (blocked ? "disabled" : "") +
+          "/>" +
+          '<span class="shop-turn__top"><span class="shop-turn__badge shop-turn__badge--' +
+          badgeKind +
+          '">' +
+          escapeHtml(item.label) +
+          '</span><span class="shop-turn__check" aria-hidden="true"></span></span>' +
+          '<span class="shop-turn__time">' +
+          escapeHtml(item.timeLabel) +
+          '</span><span class="shop-turn__extra' +
+          (item.extra ? "" : " is-free") +
+          '">' +
+          extraLabel +
+          '</span><span class="shop-turn__regions">' +
+          escapeHtml(item.regions) +
+          "</span></label>"
+        );
+      })
+      .join("");
+    const dateBlock = cfg.allowDeliveryDate
+      ? '<div class="mt-10">' +
+        '<div class="flex items-baseline justify-between gap-4 mb-3">' +
+        '<label class="font-montserrat text-[11px] uppercase tracking-[0.18em] text-white/40" for="deliveryDate">Delivery date</label>' +
+        '<span class="font-montserrat text-[11px] uppercase tracking-[0.16em] text-white/30">Optional</span>' +
+        "</div>" +
+        '<input class="shop-field shop-field--date" id="deliveryDate" name="deliveryDate" type="date" min="' +
+        minDate +
+        '" value="' +
+        escapeAttr(dateValue) +
+        '"/>' +
+        '<p class="mt-3 text-sm text-white/40">Earliest we can promise is ' +
+        escapeHtml(formatDisplayDate(minDate)) +
+        ", after production. " +
+        escapeHtml(cfg.dateHint || "") +
+        "</p></div>"
+      : "";
     return (
       '<form id="shop-step-form" class="flex flex-col">' +
       '<section class="shop-zone-panel" aria-label="Delivery zones and prices">' +
@@ -306,31 +339,19 @@ export function mountCheckoutFlow(root) {
       '<span class="material-symbols-outlined shop-zone-panel__icon" aria-hidden="true">local_shipping</span>' +
       "<h2>Delivery Zones &amp; Prices</h2></header>" +
       zoneRows +
-      '<p class="shop-zone-panel__note">Tap your zone to lock in delivery. FREE on orders over ' +
-      formatKes(FREE_DELIVERY_THRESHOLD) +
-      ". Production extras still apply.</p></section>" +
+      (zoneNote ? '<p class="shop-zone-panel__note">' + escapeHtml(zoneNote) + "</p>" : "") +
+      "</section>" +
       '<div class="mt-10">' +
       '<div class="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-4">' +
       '<h2 class="font-montserrat text-sm font-medium tracking-[-0.02em] text-white">Select turnaround time</h2>' +
-      '<p class="text-sm text-white/40">How fast we produce your order — delivery is charged separately.</p>' +
+      (cfg.turnaroundHint
+        ? '<p class="text-sm text-white/40">' + escapeHtml(cfg.turnaroundHint) + "</p>"
+        : "") +
       "</div>" +
       '<div class="shop-turn-grid">' +
       turnCards +
       "</div></div>" +
-      '<div class="mt-10">' +
-      '<div class="flex items-baseline justify-between gap-4 mb-3">' +
-      '<label class="font-montserrat text-[11px] uppercase tracking-[0.18em] text-white/40" for="deliveryDate">Delivery date</label>' +
-      '<span class="font-montserrat text-[11px] uppercase tracking-[0.16em] text-white/30">Optional</span>' +
-      "</div>" +
-      '<input class="shop-field shop-field--date" id="deliveryDate" name="deliveryDate" type="date" min="' +
-      minDate +
-      '" value="' +
-      escapeAttr(dateValue) +
-      '"/>' +
-      '<p class="mt-3 text-sm text-white/40">Earliest we can promise is ' +
-      escapeHtml(formatDisplayDate(minDate)) +
-      ", after production. Leave blank if you don’t need a specific day.</p>" +
-      "</div>" +
+      dateBlock +
       '<div class="mt-10 flex justify-between gap-4">' +
       '<button type="button" data-back class="font-montserrat text-[11px] uppercase tracking-[0.2em] text-white/45 hover:text-white transition-colors">Back</button>' +
       '<button class="inline-flex bg-primary px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-on-primary hover:opacity-80 transition-opacity" type="submit">Continue</button>' +

@@ -9,6 +9,13 @@ import {
 } from "../shop/ads-store.js";
 import { CATEGORIES, GENDERS, categoryLabel, formatKes, genderLabel } from "../shop/format.js";
 import {
+  defaultDeliveryConfig,
+  deliveryConfigError,
+  loadDeliveryConfig,
+  normalizeDeliveryConfig,
+  saveDeliveryConfig,
+} from "../shop/delivery-config.js";
+import {
   deleteOrder,
   listOrders,
   ORDER_STATUSES,
@@ -126,14 +133,17 @@ function setTab(name) {
   const products = document.getElementById("shop-panel-products");
   const orders = document.getElementById("shop-panel-orders");
   const ads = document.getElementById("shop-panel-ads");
+  const delivery = document.getElementById("shop-panel-delivery");
   document.querySelectorAll("[data-shop-tab]").forEach(function (btn) {
     btn.classList.toggle("is-active", btn.getAttribute("data-shop-tab") === name);
   });
   if (products) products.hidden = name !== "products";
   if (orders) orders.hidden = name !== "orders";
   if (ads) ads.hidden = name !== "ads";
+  if (delivery) delivery.hidden = name !== "delivery";
   if (name === "orders") renderOrders();
   if (name === "ads") renderAds();
+  if (name === "delivery") renderDelivery();
 }
 
 function renderGallery() {
@@ -524,6 +534,216 @@ function collectProduct() {
   };
 }
 
+let deliveryDraft = defaultDeliveryConfig();
+
+function setDeliveryStatus(msg, isErr) {
+  const el = document.getElementById("delivery-status");
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.toggle("text-red-400", Boolean(isErr));
+  el.classList.toggle("text-on-surface-variant", !isErr);
+}
+
+function fillDeliveryDefaults(cfg) {
+  const zoneSel = document.getElementById("delivery-default-zone");
+  const turnSel = document.getElementById("delivery-default-turn");
+  if (zoneSel) {
+    zoneSel.innerHTML = cfg.zones
+      .map(function (zone) {
+        return (
+          '<option value="' +
+          escapeHtml(zone.id) +
+          '"' +
+          (zone.id === cfg.defaultZoneId ? " selected" : "") +
+          ">" +
+          escapeHtml(zone.label) +
+          "</option>"
+        );
+      })
+      .join("");
+  }
+  if (turnSel) {
+    turnSel.innerHTML = cfg.turnaround
+      .map(function (item) {
+        return (
+          '<option value="' +
+          escapeHtml(item.id) +
+          '"' +
+          (item.id === cfg.defaultTurnaroundId ? " selected" : "") +
+          ">" +
+          escapeHtml(item.label) +
+          "</option>"
+        );
+      })
+      .join("");
+  }
+}
+
+function renderDeliveryZones() {
+  const list = document.getElementById("delivery-zones-list");
+  if (!list) return;
+  if (!deliveryDraft.zones.length) {
+    list.innerHTML =
+      '<p class="rounded border border-dashed border-outline-variant/40 px-3 py-6 text-center text-xs text-on-surface-variant">Add at least one zone.</p>';
+    return;
+  }
+  list.innerHTML = deliveryDraft.zones
+    .map(function (zone, index) {
+      return (
+        '<div class="grid grid-cols-1 gap-2 rounded border border-outline-variant/30 bg-surface-container p-3 md:grid-cols-12" data-delivery-zone>' +
+        '<input type="hidden" data-zone-id value="' +
+        escapeHtml(zone.id) +
+        '"/>' +
+        '<label class="md:col-span-3"><span class="mb-1 block text-[10px] uppercase tracking-[0.14em] text-white/35">Name</span>' +
+        '<input data-zone-label class="w-full rounded border border-outline-variant/40 bg-surface-container-low px-3 py-2" type="text" value="' +
+        escapeHtml(zone.label) +
+        '" required/></label>' +
+        '<label class="md:col-span-5"><span class="mb-1 block text-[10px] uppercase tracking-[0.14em] text-white/35">Areas</span>' +
+        '<input data-zone-detail class="w-full rounded border border-outline-variant/40 bg-surface-container-low px-3 py-2" type="text" value="' +
+        escapeHtml(zone.detail) +
+        '"/></label>' +
+        '<label class="md:col-span-2"><span class="mb-1 block text-[10px] uppercase tracking-[0.14em] text-white/35">Price (KSh)</span>' +
+        '<input data-zone-price class="w-full rounded border border-outline-variant/40 bg-surface-container-low px-3 py-2" type="number" min="0" step="1" value="' +
+        zone.price +
+        '"/></label>' +
+        '<div class="flex flex-wrap items-end justify-between gap-2 md:col-span-2">' +
+        '<label class="inline-flex items-center gap-2 pb-2 text-xs text-white/70">' +
+        '<input data-zone-nairobi type="checkbox"' +
+        (zone.nairobi ? " checked" : "") +
+        ' class="rounded border-outline-variant/40 bg-surface-container-low"/>Nairobi</label>' +
+        '<div class="flex gap-1 pb-1">' +
+        '<button type="button" data-zone-move="up" data-zone-index="' +
+        index +
+        '" class="px-2 text-white/35 hover:text-white" aria-label="Move up">↑</button>' +
+        '<button type="button" data-zone-move="down" data-zone-index="' +
+        index +
+        '" class="px-2 text-white/35 hover:text-white" aria-label="Move down">↓</button>' +
+        '<button type="button" data-zone-remove="' +
+        index +
+        '" class="px-2 text-white/35 hover:text-white" aria-label="Remove">✕</button>' +
+        "</div></div></div>"
+      );
+    })
+    .join("");
+}
+
+function renderDeliveryTurns() {
+  const list = document.getElementById("delivery-turns-list");
+  if (!list) return;
+  if (!deliveryDraft.turnaround.length) {
+    list.innerHTML =
+      '<p class="rounded border border-dashed border-outline-variant/40 px-3 py-6 text-center text-xs text-on-surface-variant">Add at least one turnaround.</p>';
+    return;
+  }
+  list.innerHTML = deliveryDraft.turnaround
+    .map(function (item, index) {
+      return (
+        '<div class="grid grid-cols-1 gap-2 rounded border border-outline-variant/30 bg-surface-container p-3 md:grid-cols-12" data-delivery-turn>' +
+        '<input type="hidden" data-turn-id value="' +
+        escapeHtml(item.id) +
+        '"/>' +
+        '<label class="md:col-span-2"><span class="mb-1 block text-[10px] uppercase tracking-[0.14em] text-white/35">Name</span>' +
+        '<input data-turn-label class="w-full rounded border border-outline-variant/40 bg-surface-container-low px-3 py-2" type="text" value="' +
+        escapeHtml(item.label) +
+        '" required/></label>' +
+        '<label class="md:col-span-2"><span class="mb-1 block text-[10px] uppercase tracking-[0.14em] text-white/35">Time label</span>' +
+        '<input data-turn-time class="w-full rounded border border-outline-variant/40 bg-surface-container-low px-3 py-2" type="text" value="' +
+        escapeHtml(item.timeLabel) +
+        '"/></label>' +
+        '<label class="md:col-span-1"><span class="mb-1 block text-[10px] uppercase tracking-[0.14em] text-white/35">Days</span>' +
+        '<input data-turn-days class="w-full rounded border border-outline-variant/40 bg-surface-container-low px-3 py-2" type="number" min="1" step="1" value="' +
+        item.days +
+        '"/></label>' +
+        '<label class="md:col-span-2"><span class="mb-1 block text-[10px] uppercase tracking-[0.14em] text-white/35">Extra (KSh)</span>' +
+        '<input data-turn-extra class="w-full rounded border border-outline-variant/40 bg-surface-container-low px-3 py-2" type="number" min="0" step="1" value="' +
+        item.extra +
+        '"/></label>' +
+        '<label class="md:col-span-2"><span class="mb-1 block text-[10px] uppercase tracking-[0.14em] text-white/35">Regions</span>' +
+        '<input data-turn-regions class="w-full rounded border border-outline-variant/40 bg-surface-container-low px-3 py-2" type="text" value="' +
+        escapeHtml(item.regions) +
+        '"/></label>' +
+        '<div class="flex flex-wrap items-end justify-between gap-2 md:col-span-3">' +
+        '<label class="inline-flex items-center gap-2 pb-2 text-xs text-white/70">' +
+        '<input data-turn-nairobi type="checkbox"' +
+        (item.nairobiOnly ? " checked" : "") +
+        ' class="rounded border-outline-variant/40 bg-surface-container-low"/>Nairobi only</label>' +
+        '<div class="flex gap-1 pb-1">' +
+        '<button type="button" data-turn-move="up" data-turn-index="' +
+        index +
+        '" class="px-2 text-white/35 hover:text-white" aria-label="Move up">↑</button>' +
+        '<button type="button" data-turn-move="down" data-turn-index="' +
+        index +
+        '" class="px-2 text-white/35 hover:text-white" aria-label="Move down">↓</button>' +
+        '<button type="button" data-turn-remove="' +
+        index +
+        '" class="px-2 text-white/35 hover:text-white" aria-label="Remove">✕</button>' +
+        "</div></div></div>"
+      );
+    })
+    .join("");
+}
+
+function renderDelivery() {
+  const cfg = deliveryDraft;
+  const threshold = document.getElementById("delivery-threshold");
+  const allowDate = document.getElementById("delivery-allow-date");
+  const zoneNote = document.getElementById("delivery-zone-note");
+  const turnHint = document.getElementById("delivery-turn-hint");
+  const dateHint = document.getElementById("delivery-date-hint");
+  if (threshold) threshold.value = cfg.freeDeliveryThreshold;
+  if (allowDate) allowDate.checked = Boolean(cfg.allowDeliveryDate);
+  if (zoneNote) zoneNote.value = cfg.zoneNote;
+  if (turnHint) turnHint.value = cfg.turnaroundHint;
+  if (dateHint) dateHint.value = cfg.dateHint;
+  renderDeliveryZones();
+  renderDeliveryTurns();
+  fillDeliveryDefaults(cfg);
+}
+
+function collectDelivery() {
+  const zones = Array.prototype.map.call(document.querySelectorAll("[data-delivery-zone]"), function (row) {
+    return {
+      id: (row.querySelector("[data-zone-id]") || {}).value,
+      label: (row.querySelector("[data-zone-label]") || {}).value,
+      detail: (row.querySelector("[data-zone-detail]") || {}).value,
+      price: (row.querySelector("[data-zone-price]") || {}).value,
+      nairobi: Boolean((row.querySelector("[data-zone-nairobi]") || {}).checked),
+    };
+  });
+  const turnaround = Array.prototype.map.call(document.querySelectorAll("[data-delivery-turn]"), function (row) {
+    return {
+      id: (row.querySelector("[data-turn-id]") || {}).value,
+      label: (row.querySelector("[data-turn-label]") || {}).value,
+      timeLabel: (row.querySelector("[data-turn-time]") || {}).value,
+      days: (row.querySelector("[data-turn-days]") || {}).value,
+      extra: (row.querySelector("[data-turn-extra]") || {}).value,
+      regions: (row.querySelector("[data-turn-regions]") || {}).value,
+      nairobiOnly: Boolean((row.querySelector("[data-turn-nairobi]") || {}).checked),
+    };
+  });
+  deliveryDraft = normalizeDeliveryConfig({
+    freeDeliveryThreshold: (document.getElementById("delivery-threshold") || {}).value,
+    defaultZoneId: (document.getElementById("delivery-default-zone") || {}).value,
+    defaultTurnaroundId: (document.getElementById("delivery-default-turn") || {}).value,
+    allowDeliveryDate: Boolean((document.getElementById("delivery-allow-date") || {}).checked),
+    zoneNote: (document.getElementById("delivery-zone-note") || {}).value,
+    turnaroundHint: (document.getElementById("delivery-turn-hint") || {}).value,
+    dateHint: (document.getElementById("delivery-date-hint") || {}).value,
+    zones: zones,
+    turnaround: turnaround,
+  });
+  return deliveryDraft;
+}
+
+function moveItem(list, index, dir) {
+  const next = index + (dir === "up" ? -1 : 1);
+  if (next < 0 || next >= list.length) return list;
+  const copy = list.slice();
+  const item = copy.splice(index, 1)[0];
+  copy.splice(next, 0, item);
+  return copy;
+}
+
 function initShopAdmin() {
   const genderSelect = document.getElementById("product-gender");
   const categorySelect = document.getElementById("product-category");
@@ -542,10 +762,18 @@ function initShopAdmin() {
   renderProducts();
   renderOrders();
   renderAds();
+  renderDelivery();
   loadCatalog({ includeHidden: true, force: true }).then(function () {
     renderProducts();
     const err = catalogError();
     if (err) showToast(err);
+  });
+  loadDeliveryConfig({ force: true }).then(function (cfg) {
+    deliveryDraft = cfg;
+    renderDelivery();
+    const err = deliveryConfigError();
+    if (err) setDeliveryStatus(err, true);
+    else setDeliveryStatus("Live on checkout after you save. Use {threshold} in the zone note for the free-delivery amount.", false);
   });
 
   document.querySelectorAll("[data-shop-tab]").forEach(function (btn) {
@@ -797,6 +1025,119 @@ function initShopAdmin() {
 
   if (location.hash === "#orders") setTab("orders");
   if (location.hash === "#ads") setTab("ads");
+  if (location.hash === "#delivery") setTab("delivery");
+
+  const deliveryForm = document.getElementById("delivery-form");
+  if (deliveryForm) {
+    deliveryForm.addEventListener("submit", async function (event) {
+      event.preventDefault();
+      const payload = collectDelivery();
+      if (!payload.zones.length || !payload.turnaround.length) {
+        setDeliveryStatus("Add at least one zone and one turnaround.", true);
+        return;
+      }
+      const saveBtn = document.getElementById("delivery-save-btn");
+      if (saveBtn) {
+        saveBtn.disabled = true;
+        saveBtn.textContent = "Saving…";
+      }
+      setDeliveryStatus("Saving…", false);
+      try {
+        deliveryDraft = await saveDeliveryConfig(payload);
+        renderDelivery();
+        setDeliveryStatus("Saved. Checkout now uses these zones, turnaround times, and date rules.", false);
+        showToast("Delivery rules saved.");
+      } catch (err) {
+        setDeliveryStatus((err && err.message) || "Could not save delivery rules.", true);
+        showToast((err && err.message) || "Could not save delivery rules.");
+      } finally {
+        if (saveBtn) {
+          saveBtn.disabled = false;
+          saveBtn.textContent = "Save delivery rules";
+        }
+      }
+    });
+  }
+
+  const addZone = document.getElementById("delivery-zone-add");
+  if (addZone) {
+    addZone.addEventListener("click", function () {
+      collectDelivery();
+      deliveryDraft.zones.push({
+        id: "zone-" + Date.now().toString(36),
+        label: "New zone",
+        detail: "",
+        price: 0,
+        nairobi: false,
+      });
+      renderDelivery();
+    });
+  }
+  const addTurn = document.getElementById("delivery-turn-add");
+  if (addTurn) {
+    addTurn.addEventListener("click", function () {
+      collectDelivery();
+      deliveryDraft.turnaround.push({
+        id: "turn-" + Date.now().toString(36),
+        label: "New turnaround",
+        timeLabel: "3 days",
+        days: 3,
+        extra: 0,
+        nairobiOnly: false,
+        regions: "All regions",
+      });
+      renderDelivery();
+    });
+  }
+  const resetDelivery = document.getElementById("delivery-reset-btn");
+  if (resetDelivery) {
+    resetDelivery.addEventListener("click", function () {
+      if (!window.confirm("Replace the current form with the original Onurik delivery defaults? Save to publish them.")) return;
+      deliveryDraft = defaultDeliveryConfig();
+      renderDelivery();
+      setDeliveryStatus("Defaults loaded in the form. Save to publish them to checkout.", false);
+    });
+  }
+  const zonesList = document.getElementById("delivery-zones-list");
+  if (zonesList) {
+    zonesList.addEventListener("click", function (event) {
+      const remove = event.target.closest("[data-zone-remove]");
+      const move = event.target.closest("[data-zone-move]");
+      if (!remove && !move) return;
+      collectDelivery();
+      if (remove) {
+        deliveryDraft.zones.splice(Number(remove.getAttribute("data-zone-remove")), 1);
+      } else {
+        deliveryDraft.zones = moveItem(
+          deliveryDraft.zones,
+          Number(move.getAttribute("data-zone-index")),
+          move.getAttribute("data-zone-move")
+        );
+      }
+      deliveryDraft = normalizeDeliveryConfig(deliveryDraft);
+      renderDelivery();
+    });
+  }
+  const turnsList = document.getElementById("delivery-turns-list");
+  if (turnsList) {
+    turnsList.addEventListener("click", function (event) {
+      const remove = event.target.closest("[data-turn-remove]");
+      const move = event.target.closest("[data-turn-move]");
+      if (!remove && !move) return;
+      collectDelivery();
+      if (remove) {
+        deliveryDraft.turnaround.splice(Number(remove.getAttribute("data-turn-remove")), 1);
+      } else {
+        deliveryDraft.turnaround = moveItem(
+          deliveryDraft.turnaround,
+          Number(move.getAttribute("data-turn-index")),
+          move.getAttribute("data-turn-move")
+        );
+      }
+      deliveryDraft = normalizeDeliveryConfig(deliveryDraft);
+      renderDelivery();
+    });
+  }
 }
 
 if (ensureAuthGate()) initShopAdmin();
