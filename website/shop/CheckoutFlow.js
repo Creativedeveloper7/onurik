@@ -16,6 +16,21 @@ import { formatZoneNote } from "./delivery-config.js";
 import { addOrder } from "./orders-store.js";
 import { downloadReceiptFile, sendOrderReceipt } from "./send-receipt.js";
 import { isValidEmail } from "./receipt.js";
+import {
+  checkoutPageUrl,
+  clearWallePending,
+  confirmWalleReturnFromQuery,
+  createWalleSession,
+  isWalleCanceled,
+  isWallePaid,
+  isWalleSignedSuccess,
+  pinKesAmount,
+  readWallePending,
+  readWalleReturnQuery,
+  saveWallePending,
+  sessionMatchesPending,
+  wallePublishableKey,
+} from "./walle-checkout.js";
 
 const DRAFT_KEY = "onurik.shop.checkout.v1";
 const ORDER_KEY = "onurik.shop.lastOrder.v1";
@@ -52,31 +67,6 @@ function readOrder() {
   } catch {
     return null;
   }
-}
-
-function delay(ms) {
-  return new Promise(function (resolve) {
-    setTimeout(resolve, ms);
-  });
-}
-
-/** Placeholder — replace with a card processor (Stripe, Pesapal, etc.). */
-async function mockCardPayment() {
-  await delay(900);
-  return { ok: true, provider: "card", ref: "CARD-" + Date.now().toString(36).toUpperCase() };
-}
-
-/**
- * Placeholder — replace with Safaricom Daraja STK Push.
- * Expected live hook: POST /api/mpesa/stk-push { phone, amount, accountRef }
- */
-async function mockMpesaPayment(phone) {
-  await delay(1200);
-  const digits = String(phone || "").replace(/\D/g, "");
-  if (digits.length < 9) {
-    return { ok: false, error: "Enter a valid M-Pesa number." };
-  }
-  return { ok: true, provider: "mpesa", ref: "MPESA-" + Date.now().toString(36).toUpperCase() };
 }
 
 function progress(step) {
@@ -150,15 +140,11 @@ function startCheckout(root) {
       zoneId: savedDelivery.zoneId || cfg.defaultZoneId,
       turnaroundId: savedDelivery.turnaroundId || cfg.defaultTurnaroundId,
       deliveryDate: savedDelivery.deliveryDate,
-      payMethod: "mpesa",
-      cardName: "",
-      cardNumber: "",
-      cardExpiry: "",
-      cardCvc: "",
-      mpesaPhone: "",
+      payMethod: "wallee",
     },
     readDraft()
   );
+  draft.payMethod = "wallee";
   if (!draft.zoneId) draft.zoneId = savedDelivery.zoneId;
   if (!draft.turnaroundId) {
     draft.turnaroundId =
@@ -168,7 +154,16 @@ function startCheckout(root) {
   }
   let busy = false;
   let error = "";
-  let confirmed = Boolean(new URLSearchParams(location.search).get("confirmed"));
+  const params = new URLSearchParams(location.search);
+  const walleReturn = readWalleReturnQuery(params);
+  let confirmed = params.get("confirmed") === "1";
+  let wallePhase = "";
+  if (!confirmed && isWalleSignedSuccess(walleReturn)) wallePhase = "confirming";
+  if (!confirmed && walleReturn.cancelled) {
+    error = "Payment was cancelled. Your bag is still here — you can pay again.";
+    step = 4;
+    clearWallePending();
+  }
 
   function persist() {
     const quote = quoteDelivery({
@@ -420,6 +415,26 @@ function startCheckout(root) {
       return;
     }
 
+    if (wallePhase === "confirming" || wallePhase === "redirecting") {
+      root.innerHTML =
+        '<div class="max-w-2xl">' +
+        '<p class="font-montserrat text-[11px] uppercase tracking-[0.28em] text-white/45 mb-4">Shop / Payment</p>' +
+        '<h1 class="font-montserrat text-[clamp(2.5rem,5vw,4rem)] font-medium tracking-[-0.03em] text-white leading-[1.05]">' +
+        (wallePhase === "redirecting" ? "Opening secure checkout." : "Confirming payment.") +
+        "</h1>" +
+        '<p class="mt-5 text-white/50 max-w-lg">' +
+        (wallePhase === "redirecting"
+          ? "You are being sent to the Wallee hosted pay page. Enter your M-Pesa number there and approve the STK prompt. The bag total is locked on this session."
+          : "Wallee sent you back with a signed return. We are re-checking that the session is paid before we fulfil the order.") +
+        "</p>" +
+        (error ? '<p class="mt-6 text-sm text-white/55" role="alert">' + escapeHtml(error) + "</p>" : "") +
+        (error
+          ? '<div class="mt-10 flex flex-wrap gap-4"><button type="button" data-retry-walle class="inline-flex bg-primary px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-on-primary hover:opacity-80 transition-opacity">Try again</button><a href="cart.html" class="inline-flex border border-outline px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-on-surface">Back to bag</a></div>'
+          : "") +
+        "</div>";
+      return;
+    }
+
     if (!t.items.length) {
       root.innerHTML =
         '<div class="max-w-xl">' +
@@ -446,36 +461,27 @@ function startCheckout(root) {
     } else if (step === 2) {
       body = deliveryStep(t);
     } else if (step === 3) {
-      const cardOpen = draft.payMethod === "card";
+      const amount = pinKesAmount(t.total);
+      const configured = Boolean(wallePublishableKey());
       body =
-        '<form id="shop-step-form" class="flex flex-col gap-2">' +
-        '<label class="shop-radio' +
-        (draft.payMethod === "mpesa" ? " is-active" : "") +
-        '"><input class="sr-only" type="radio" name="payMethod" value="mpesa" ' +
-        (draft.payMethod === "mpesa" ? "checked" : "") +
-        '/><span class="shop-radio__mark"></span><span><span class="font-montserrat text-sm text-white">M-Pesa</span><span class="mt-1 block text-sm text-white/40">Safaricom Daraja — placeholder STK Push</span></span></label>' +
-        '<label class="shop-radio' +
-        (cardOpen ? " is-active" : "") +
-        '"><input class="sr-only" type="radio" name="payMethod" value="card" ' +
-        (cardOpen ? "checked" : "") +
-        '/><span class="shop-radio__mark"></span><span><span class="font-montserrat text-sm text-white">Card</span><span class="mt-1 block text-sm text-white/40">Visa / Mastercard — placeholder processor</span></span></label>' +
-        (draft.payMethod === "mpesa"
-          ? '<div class="pt-6">' +
-            field("mpesaPhone", "M-Pesa number", "tel", draft.mpesaPhone || draft.phone, "required") +
-            "</div>"
-          : '<div class="grid grid-cols-1 gap-8 pt-6 md:grid-cols-2">' +
-            '<div class="md:col-span-2">' +
-            field("cardName", "Name on card", "text", draft.cardName, "required") +
-            "</div>" +
-            '<div class="md:col-span-2">' +
-            field("cardNumber", "Card number", "text", draft.cardNumber, "required inputmode='numeric' autocomplete='cc-number'") +
-            "</div>" +
-            field("cardExpiry", "Expiry", "text", draft.cardExpiry, "required placeholder='MM/YY' autocomplete='cc-exp'") +
-            field("cardCvc", "CVC", "text", draft.cardCvc, "required inputmode='numeric' autocomplete='cc-csc'") +
-            "</div>") +
+        '<form id="shop-step-form" class="flex flex-col">' +
+        '<section class="shop-pay-host" aria-label="Hosted payment">' +
+        '<header class="shop-pay-host__head">' +
+        '<span class="material-symbols-outlined shop-pay-host__icon" aria-hidden="true">lock</span>' +
+        "<h2>Secure checkout</h2></header>" +
+        '<p class="shop-pay-host__amount">' +
+        formatKes(amount) +
+        "</p>" +
+        '<p class="shop-pay-host__copy">This amount is locked on the session. You will enter your M-Pesa number on the Wallee pay page, tap Pay with M-Pesa, and approve the STK prompt on your phone. Status updates live: Check your phone…, Paid, or Try again.</p>' +
+        (configured
+          ? ""
+          : '<p class="shop-pay-host__warn">Checkout is not configured on this environment. Set VITE_WALLE_PUBLISHABLE_KEY.</p>') +
+        "</section>" +
         '<div class="mt-10 flex justify-between gap-4">' +
         '<button type="button" data-back class="font-montserrat text-[11px] uppercase tracking-[0.2em] text-white/45 hover:text-white transition-colors">Back</button>' +
-        '<button class="inline-flex bg-primary px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-on-primary hover:opacity-80 transition-opacity" type="submit">Continue</button>' +
+        '<button class="inline-flex bg-primary px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-on-primary hover:opacity-80 transition-opacity" type="submit"' +
+        (configured ? "" : " disabled") +
+        ">Continue</button>" +
         "</div></form>";
     } else {
       body =
@@ -510,8 +516,8 @@ function startCheckout(root) {
             : "After production · " + formatDisplayDate(t.shipping.earliestDate)
         ) +
         "</dd></div>" +
-        '<div><dt class="font-montserrat text-[11px] uppercase tracking-[0.18em] text-white/40">Payment</dt><dd class="mt-1 text-white">' +
-        (draft.payMethod === "mpesa" ? "M-Pesa · " + escapeHtml(draft.mpesaPhone || draft.phone) : "Card") +
+        '<div><dt class="font-montserrat text-[11px] uppercase tracking-[0.18em] text-white/40">Payment</dt><dd class="mt-1 text-white">Wallee · M-Pesa STK · amount locked at ' +
+        formatKes(pinKesAmount(t.total)) +
         "</dd></div></dl>" +
         '<ul class="mt-8 divide-y divide-white/[0.08] border-y border-white/[0.08]">' +
         t.items
@@ -533,7 +539,7 @@ function startCheckout(root) {
         '<button type="button" data-confirm class="inline-flex bg-primary px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-on-primary hover:opacity-80 transition-opacity disabled:opacity-40" ' +
         (busy ? "disabled" : "") +
         ">" +
-        (busy ? "Processing…" : "Confirm order") +
+        (busy ? "Opening checkout…" : "Pay " + formatKes(pinKesAmount(t.total))) +
         "</button></div></div>";
     }
 
@@ -583,6 +589,11 @@ function startCheckout(root) {
     }
     if (event.target.closest("[data-confirm]")) {
       void confirmOrder();
+      return;
+    }
+    if (event.target.closest("[data-retry-walle]")) {
+      error = "";
+      void finalizeWalleReturn();
     }
   });
 
@@ -590,11 +601,6 @@ function startCheckout(root) {
     const form = root.querySelector("#shop-step-form");
     if (form) collectForm(form);
     const t = event.target;
-    if (t && t.name === "payMethod") {
-      draft.payMethod = t.value;
-      persist();
-      render();
-    }
     if (t && (t.name === "zoneId" || t.name === "turnaroundId" || t.name === "deliveryDate")) {
       persist();
       render();
@@ -645,31 +651,144 @@ function startCheckout(root) {
     render();
   });
 
+  async function fulfillPaidOrder(order, session) {
+    const paidOrder = Object.assign({}, order, {
+      paymentLabel:
+        session && session.paymentLabel && !/waiting/i.test(session.paymentLabel)
+          ? session.paymentLabel
+          : "Wallee · M-Pesa",
+      paymentRef: session && session.id ? session.id : order.paymentRef,
+      paymentStatus: session && session.status ? session.status : "paid",
+    });
+    const receipt = await sendOrderReceipt(paidOrder);
+    paidOrder.receiptSent = Boolean(receipt.ok);
+    paidOrder.receiptError = receipt.ok ? "" : receipt.error || "";
+    saveOrder(paidOrder);
+    addOrder(paidOrder);
+    clearCart();
+    clearWallePending();
+    try {
+      sessionStorage.removeItem(DRAFT_KEY);
+    } catch {
+      /* ignore */
+    }
+    confirmed = true;
+    wallePhase = "";
+    busy = false;
+    history.replaceState(null, "", "checkout.html?confirmed=1");
+    render();
+  }
+
+  async function finalizeWalleReturn() {
+    if (busy) return;
+    busy = true;
+    error = "";
+    wallePhase = "confirming";
+    render();
+    const paramsNow = new URLSearchParams(location.search);
+    const query = readWalleReturnQuery(paramsNow);
+    const pending = readWallePending();
+    const sessionId = query.wallee_session || (pending && pending.sessionId) || "";
+    if (!pending || !pending.order) {
+      busy = false;
+      error = "We couldn’t match this payment to an order in this browser. Keep the session id and contact the studio.";
+      render();
+      return;
+    }
+    if (query.reference && pending.order.id && query.reference !== pending.order.id) {
+      busy = false;
+      error = "This payment does not match the order started in this browser.";
+      render();
+      return;
+    }
+    if (!sessionId) {
+      busy = false;
+      error = "Missing payment session. Return to review and pay again.";
+      wallePhase = "";
+      step = 4;
+      render();
+      return;
+    }
+    const waited = await confirmWalleReturnFromQuery({
+      wallee_session: sessionId,
+      status: query.status,
+      reference: query.reference,
+      ts: query.ts,
+      sig: query.sig,
+    });
+    if (!waited.ok) {
+      busy = false;
+      error = waited.error || "Could not confirm payment.";
+      render();
+      return;
+    }
+    const session = waited.session;
+    if (waited.pending || (session && !isWallePaid(session) && !isWalleCanceled(session) && !waited.failed)) {
+      busy = false;
+      error = "Payment is still waiting. Approve the M-Pesa prompt on your phone, then try again.";
+      render();
+      return;
+    }
+    if (waited.failed) {
+      busy = false;
+      wallePhase = "";
+      step = 4;
+      error = "M-Pesa did not complete. Your bag is still here — you can pay again.";
+      history.replaceState(null, "", "checkout.html");
+      render();
+      return;
+    }
+    if (isWalleCanceled(session)) {
+      busy = false;
+      wallePhase = "";
+      step = 4;
+      error = "This payment session expired or was cancelled. Your bag is still here.";
+      clearWallePending();
+      history.replaceState(null, "", "checkout.html");
+      render();
+      return;
+    }
+    if (!isWallePaid(session) || !sessionMatchesPending(session, pending, query)) {
+      busy = false;
+      error = "The paid amount does not match this bag. The session was not fulfilled.";
+      render();
+      return;
+    }
+    await fulfillPaidOrder(pending.order, session);
+  }
+
   async function confirmOrder() {
     if (busy) return;
     busy = true;
     error = "";
     render();
     const t = totals();
-    let pay;
-    if (draft.payMethod === "mpesa") {
-      pay = await mockMpesaPayment(draft.mpesaPhone || draft.phone);
-    } else {
-      pay = await mockCardPayment();
-    }
-    if (!pay.ok) {
+    const amount = pinKesAmount(t.total);
+    if (!t.items.length) {
       busy = false;
-      error = pay.error || "Payment could not be completed.";
+      error = "Your cart is empty.";
+      render();
+      return;
+    }
+    if (amount < 1) {
+      busy = false;
+      error = "Bag total must be at least KSh 1.";
+      render();
+      return;
+    }
+    if (!wallePublishableKey()) {
+      busy = false;
+      error = "Checkout is not configured. Set VITE_WALLE_PUBLISHABLE_KEY.";
       render();
       return;
     }
     const order = {
       id: "ONK-" + String(Date.now()).slice(-8),
       items: t.items,
-      total: t.total,
+      total: amount,
       shipping: t.shipping,
-      paymentLabel: pay.provider === "mpesa" ? "M-Pesa" : "Card",
-      paymentRef: pay.ref,
+      paymentLabel: "Wallee",
+      paymentRef: "",
       customer: {
         name: draft.name,
         email: draft.email,
@@ -679,21 +798,42 @@ function startCheckout(root) {
       },
       createdAt: Date.now(),
     };
-    const receipt = await sendOrderReceipt(order);
-    order.receiptSent = Boolean(receipt.ok);
-    order.receiptError = receipt.ok ? "" : receipt.error || "";
-    saveOrder(order);
-    addOrder(order);
-    clearCart();
-    try {
-      sessionStorage.removeItem(DRAFT_KEY);
-    } catch {
-      /* ignore */
+    saveWallePending({
+      order: order,
+      amount: amount,
+      sessionId: "",
+      createdAt: Date.now(),
+    });
+    const created = await createWalleSession({
+      amount: amount,
+      reference: order.id,
+      description: "Onurik shop " + order.id,
+      successUrl: checkoutPageUrl(),
+      cancelUrl: checkoutPageUrl({
+        walle: "cancel",
+        ref: order.id,
+      }),
+    });
+    if (!created.ok || !created.session || !created.session.url) {
+      busy = false;
+      error = created.error || "Could not start payment.";
+      render();
+      return;
     }
-    confirmed = true;
-    busy = false;
-    history.replaceState(null, "", "checkout.html?confirmed=1");
+    const session = created.session;
+    saveWallePending({
+      order: order,
+      amount: amount,
+      sessionId: session.id,
+      createdAt: Date.now(),
+    });
+    wallePhase = "redirecting";
     render();
+    window.location = session.url;
+  }
+
+  if (wallePhase === "confirming") {
+    void finalizeWalleReturn();
   }
 
   render();

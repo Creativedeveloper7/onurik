@@ -311,6 +311,59 @@ body {
   background: transparent;
 }
 
+.shop-pay-host {
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1.25rem;
+  background: rgba(255, 255, 255, 0.02);
+  padding: 1.5rem 1.35rem 1.65rem;
+}
+
+.shop-pay-host__head {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 1.1rem;
+}
+
+.shop-pay-host__icon {
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.shop-pay-host__head h2 {
+  margin: 0;
+  font-family: Montserrat, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.shop-pay-host__amount {
+  margin: 0;
+  font-family: Montserrat, sans-serif;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+}
+
+.shop-pay-host__copy {
+  margin: 0.85rem 0 0;
+  max-width: 36rem;
+  font-size: 0.925rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.shop-pay-host__warn {
+  margin: 1rem 0 0;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.58);
+}
+
 .shop-zone-panel {
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.12);

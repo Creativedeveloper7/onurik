@@ -5,7 +5,7 @@ export async function sendOrderReceipt(order) {
   const timer = controller
     ? setTimeout(function () {
         controller.abort();
-      }, 15000)
+      }, 25000)
     : null;
   try {
     const res = await fetch("/api/shop-receipt", {
@@ -21,8 +21,9 @@ export async function sendOrderReceipt(order) {
       return { ok: false, error: data.error || "Receipt could not be sent." };
     }
     return { ok: true };
-  } catch {
-    return { ok: false, error: "Receipt could not be sent." };
+  } catch (err) {
+    const aborted = err && (err.name === "AbortError" || err.code === "ABORT_ERR");
+    return { ok: false, error: aborted ? "Receipt email timed out." : "Receipt could not be sent." };
   } finally {
     if (timer) clearTimeout(timer);
   }
