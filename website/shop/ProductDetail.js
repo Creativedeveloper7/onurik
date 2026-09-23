@@ -29,10 +29,10 @@ export async function mountProductDetail(root) {
   if (!product) {
     root.innerHTML =
       '<div class="py-24 max-w-xl">' +
-      '<p class="font-montserrat text-[11px] uppercase tracking-[0.28em] text-white/45 mb-4"><a href="index.html" class="hover:text-white/70">Shop</a></p>' +
+      '<p class="font-montserrat text-[11px] uppercase tracking-[0.28em] text-white/45 mb-4"><a href="/shop" class="hover:text-white/70">Shop</a></p>' +
       '<h1 class="font-montserrat text-4xl tracking-[-0.03em] text-white font-medium">Piece not found.</h1>' +
       '<p class="mt-4 text-white/45">It may have been moved. Return to the collection and choose another.</p>' +
-      '<a href="index.html" class="mt-10 inline-flex border border-outline px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-on-surface transition-colors hover:bg-primary hover:text-on-primary">Back to shop</a>' +
+      '<a href="/shop" class="mt-10 inline-flex border border-outline px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-on-surface transition-colors hover:bg-primary hover:text-on-primary">Back to shop</a>' +
       "</div>";
     return;
   }
@@ -127,15 +127,15 @@ export async function mountProductDetail(root) {
       "</div></div>" +
       '<div class="lg:col-span-5 lg:pt-4">' +
       '<p class="font-montserrat text-[11px] font-semibold uppercase tracking-[0.28em] text-white/45 mb-5">' +
-      '<a href="index.html" class="hover:text-white/70 transition-colors">Shop</a>' +
+      '<a href="/shop" class="hover:text-white/70 transition-colors">Shop</a>' +
       '<span class="text-white/20 mx-2">/</span>' +
-      '<a href="index.html?gender=' +
+      '<a href="/shop?gender=' +
       encodeURIComponent(product.gender) +
       '" class="hover:text-white/70 transition-colors">' +
       escapeHtml(genderLabel(product.gender)) +
       "</a>" +
       '<span class="text-white/20 mx-2">/</span>' +
-      '<a href="index.html?gender=' +
+      '<a href="/shop?gender=' +
       encodeURIComponent(product.gender) +
       "&category=" +
       encodeURIComponent(product.category) +
@@ -255,7 +255,7 @@ export async function mountProductDetail(root) {
       return;
     }
     if (event.target.closest("[data-checkout]")) {
-      if (addCurrent()) location.href = "checkout.html";
+      if (addCurrent()) location.href = "/shop/checkout";
     }
   });
 

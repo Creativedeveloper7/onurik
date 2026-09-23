@@ -364,6 +364,92 @@ body {
   color: rgba(255, 255, 255, 0.58);
 }
 
+.shop-policy-link {
+  display: block;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.shop-policy-link a {
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 0.28em;
+  text-decoration-color: rgba(255, 255, 255, 0.35);
+  transition: text-decoration-color 0.2s ease, color 0.2s ease;
+}
+
+.shop-policy-link a:hover {
+  text-decoration-color: #ffffff;
+}
+
+.shop-policy {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.shop-policy__lead {
+  margin-top: 2rem;
+  max-width: 40rem;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.shop-policy section {
+  margin-top: 2.75rem;
+}
+
+.shop-policy h2 {
+  margin: 0 0 0.85rem;
+  font-family: Montserrat, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.shop-policy p,
+.shop-policy li {
+  font-size: 0.975rem;
+  line-height: 1.65;
+}
+
+.shop-policy p + p {
+  margin-top: 0.85rem;
+}
+
+.shop-policy ul {
+  margin: 0.9rem 0 1rem;
+  padding-left: 1.15rem;
+  list-style: disc;
+}
+
+.shop-policy li + li {
+  margin-top: 0.4rem;
+}
+
+.shop-policy strong {
+  color: rgba(255, 255, 255, 0.88);
+  font-weight: 600;
+}
+
+.shop-policy a {
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 0.22em;
+  text-decoration-color: rgba(255, 255, 255, 0.3);
+}
+
+.shop-policy a:hover {
+  text-decoration-color: #ffffff;
+}
+
+.shop-policy__signoff {
+  margin-top: 1.5rem;
+  color: rgba(255, 255, 255, 0.72);
+}
+
 .shop-zone-panel {
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.12);

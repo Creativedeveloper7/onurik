@@ -5,11 +5,13 @@
  */
 
 const RETURN_KEY = "onurik:nav-return";
-const DEST_RE = /^(contact|works|about|work)\.html$/i;
+const DEST_RE = /^(contact|works|about|work)(\.html)?$/i;
 
 function pageFile(pathname) {
-  const part = String(pathname || "").split("/").pop() || "index.html";
-  return part || "index.html";
+  const raw = String(pathname || "/").replace(/\/+$/, "");
+  const part = raw.split("/").pop() || "";
+  if (!part || part === "index.html") return "index";
+  return part.replace(/\.html$/i, "") || "index";
 }
 
 function currentReturnUrl() {
@@ -84,10 +86,7 @@ function bindCtaCapture() {
 }
 
 function fallbackHome() {
-  const base = location.pathname.includes("/")
-    ? location.pathname.replace(/[^/]+$/, "index.html")
-    : "index.html";
-  return base.endsWith("index.html") ? base : "index.html";
+  return "/";
 }
 
 function goBack() {

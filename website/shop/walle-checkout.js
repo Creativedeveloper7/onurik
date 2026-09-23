@@ -21,7 +21,7 @@ export function pinKesAmount(value) {
 }
 
 export function checkoutPageUrl(params) {
-  const url = new URL("checkout.html", location.href);
+  const url = new URL("/shop/checkout", location.origin);
   url.search = "";
   Object.keys(params || {}).forEach(function (key) {
     if (params[key] != null && params[key] !== "") {

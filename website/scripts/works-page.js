@@ -53,7 +53,7 @@ function scopeBadges(project) {
 function projectCard(project) {
   const position = imageObjectPosition(project);
   return (
-    '<a href="work.html?id=' +
+    '<a href="/work?id=' +
     encodeURIComponent(project.id) +
     '" class="anim-project-card group flex flex-col overflow-hidden rounded-xl border border-white/[0.06] bg-surface-container-low transition duration-200 ease-out hover:-translate-y-0.5 hover:border-white/10 hover:shadow-[0_18px_40px_rgba(0,0,0,0.35)]" data-scope-tags="' +
     escapeHtml((project.scopeTags || []).join("|")) +

@@ -88,7 +88,7 @@ function bindCartPage(root) {
         '<p class="font-montserrat text-[11px] uppercase tracking-[0.28em] text-white/45 mb-4">Shop / Cart</p>' +
         '<h1 class="font-montserrat text-[clamp(2.5rem,6vw,4.5rem)] font-medium tracking-[-0.03em] text-white leading-[1.05]">Your cart is empty.</h1>' +
         '<p class="mt-5 text-white/45">When you add a piece, it will live here until you check out.</p>' +
-        '<a href="index.html" class="mt-10 inline-flex border border-outline px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-on-surface transition-colors hover:bg-primary hover:text-on-primary">Continue shopping</a>' +
+        '<a href="/shop" class="mt-10 inline-flex border border-outline px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-on-surface transition-colors hover:bg-primary hover:text-on-primary">Continue shopping</a>' +
         "</div>";
       return;
     }
@@ -98,7 +98,7 @@ function bindCartPage(root) {
         const sale = item.originalPrice && item.originalPrice > item.price;
         return (
           '<article class="grid grid-cols-[5.5rem_1fr] gap-4 border-b border-white/[0.08] py-6 md:grid-cols-[6.5rem_1fr_auto] md:gap-6">' +
-          '<a href="product.html?id=' +
+          '<a href="/shop/product?id=' +
           encodeURIComponent(item.productId) +
           '" class="aspect-[4/5] overflow-hidden bg-[#1c1b1b]">' +
           '<img src="' +
@@ -109,7 +109,7 @@ function bindCartPage(root) {
           "</a>" +
           '<div class="min-w-0">' +
           '<div class="flex items-start justify-between gap-3">' +
-          '<a href="product.html?id=' +
+          '<a href="/shop/product?id=' +
           encodeURIComponent(item.productId) +
           '" class="font-montserrat text-base text-white tracking-[-0.01em] hover:opacity-75 transition-opacity">' +
           escapeHtml(item.name) +
@@ -180,8 +180,8 @@ function bindCartPage(root) {
       "</span></div>" +
       "</div>" +
       '<div class="shop-cart-sticky mt-10 pb-6 pt-6">' +
-      '<a href="checkout.html" class="flex w-full items-center justify-center bg-primary px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-on-primary transition-opacity hover:opacity-80">Proceed to Checkout</a>' +
-      '<a href="index.html" class="mt-4 flex w-full items-center justify-center border border-outline px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-on-surface transition-colors hover:bg-primary hover:text-on-primary">Continue shopping</a>' +
+      '<a href="/shop/checkout" class="flex w-full items-center justify-center bg-primary px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-on-primary transition-opacity hover:opacity-80">Proceed to Checkout</a>' +
+      '<a href="/shop" class="mt-4 flex w-full items-center justify-center border border-outline px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-on-surface transition-colors hover:bg-primary hover:text-on-primary">Continue shopping</a>' +
       "</div></aside></div>";
   }
 

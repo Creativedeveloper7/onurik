@@ -84,7 +84,7 @@ function excerpt(text, max) {
       tbody.innerHTML = `<tr>
         <td class="p-8 text-center font-body-md text-body-md text-on-surface-variant sm:p-12" colspan="5">
           <p class="mx-auto max-w-md">No enquiries yet.</p>
-          <p class="mt-4"><a class="font-label-caps text-label-caps uppercase tracking-widest text-primary underline-offset-4 transition-colors hover:text-on-background hover:underline" href="../contact.html">View contact page</a></p>
+          <p class="mt-4"><a class="font-label-caps text-label-caps uppercase tracking-widest text-primary underline-offset-4 transition-colors hover:text-on-background hover:underline" href="/contact">View contact page</a></p>
         </td>
       </tr>`;
       setStatus("");

@@ -11,7 +11,7 @@
 import { next } from "@vercel/edge";
 
 export const config = {
-  matcher: ["/work.html"],
+  matcher: ["/work.html", "/work"],
 };
 
 const BOT_UA =

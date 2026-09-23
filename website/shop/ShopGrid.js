@@ -31,10 +31,10 @@ function writeParams(next) {
 }
 
 function breadcrumb(state) {
-  const parts = ['<a href="index.html" class="hover:text-white/70 transition-colors">Shop</a>'];
+  const parts = ['<a href="/shop" class="hover:text-white/70 transition-colors">Shop</a>'];
   if (state.gender) {
     parts.push(
-      '<a href="index.html?gender=' +
+      '<a href="/shop?gender=' +
         encodeURIComponent(state.gender) +
         '" class="hover:text-white/70 transition-colors">' +
         escapeHtml(genderLabel(state.gender)) +

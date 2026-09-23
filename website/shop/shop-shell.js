@@ -43,7 +43,7 @@ function bindMobileNav() {
 
 function resultRow(product) {
   return (
-    '<a href="product.html?id=' +
+    '<a href="/shop/product?id=' +
     encodeURIComponent(product.id) +
     '" class="flex items-center gap-4 py-3 border-b border-white/[0.08] hover:opacity-80 transition-opacity">' +
     '<img src="' +
@@ -132,7 +132,7 @@ function bindSearch() {
     if (event.key === "Enter") {
       event.preventDefault();
       const q = input.value.trim();
-      if (q) location.href = "index.html?q=" + encodeURIComponent(q);
+      if (q) location.href = "/shop?q=" + encodeURIComponent(q);
     }
   });
   document.addEventListener("keydown", function (event) {

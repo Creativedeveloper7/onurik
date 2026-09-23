@@ -1,10 +1,69 @@
 import { defineConfig, loadEnv } from "vite";
+import { existsSync } from "fs";
 import { resolve } from "path";
 import { fileURLToPath } from "url";
 import { dispatchShopReceipt } from "./api/send-shop-receipt.js";
 import { confirmWalleeReturn } from "./api/confirm-walle-return.js";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
+
+function cleanUrlsPlugin(root) {
+  function rewrite(req) {
+    const raw = req.url || "/";
+    const q = raw.indexOf("?");
+    const pathname = q === -1 ? raw : raw.slice(0, q);
+    const query = q === -1 ? "" : raw.slice(q);
+    if (
+      pathname.startsWith("/api") ||
+      pathname.startsWith("/walle-api") ||
+      pathname.startsWith("/@") ||
+      pathname.startsWith("/node_modules")
+    ) {
+      return null;
+    }
+    if (pathname.endsWith(".html")) {
+      const clean =
+        pathname === "/index.html"
+          ? "/"
+          : pathname.endsWith("/index.html")
+            ? pathname.slice(0, -"/index.html".length) || "/"
+            : pathname.slice(0, -5);
+      return { redirect: clean + query };
+    }
+    if (pathname === "/" || pathname.includes(".")) return null;
+    const htmlPath = resolve(root, pathname.slice(1) + ".html");
+    if (existsSync(htmlPath)) return { rewrite: pathname + ".html" + query };
+    const indexPath = resolve(root, pathname.slice(1), "index.html");
+    if (existsSync(indexPath)) return { rewrite: pathname + "/index.html" + query };
+    return null;
+  }
+
+  function middleware(req, res, next) {
+    const action = rewrite(req);
+    if (!action) {
+      next();
+      return;
+    }
+    if (action.redirect) {
+      res.statusCode = 302;
+      res.setHeader("Location", action.redirect);
+      res.end();
+      return;
+    }
+    req.url = action.rewrite;
+    next();
+  }
+
+  return {
+    name: "onurik-clean-urls",
+    configureServer: function (server) {
+      server.middlewares.use(middleware);
+    },
+    configurePreviewServer: function (server) {
+      server.middlewares.use(middleware);
+    },
+  };
+}
 
 function readRequestBody(req) {
   return new Promise(function (resolveBody, reject) {
@@ -173,7 +232,12 @@ export default defineConfig(function ({ mode }) {
   return {
     root: __dirname,
     envDir: resolve(__dirname, ".."),
-    plugins: [shopReceiptApiPlugin(env), walleReturnApiPlugin(env), walleDevProxyPlugin(env)],
+    plugins: [
+      cleanUrlsPlugin(__dirname),
+      shopReceiptApiPlugin(env),
+      walleReturnApiPlugin(env),
+      walleDevProxyPlugin(env),
+    ],
     build: {
       rollupOptions: {
         input: {
@@ -194,6 +258,7 @@ export default defineConfig(function ({ mode }) {
           shopProduct: resolve(__dirname, "shop/product.html"),
           shopCart: resolve(__dirname, "shop/cart.html"),
           shopCheckout: resolve(__dirname, "shop/checkout.html"),
+          shopReturns: resolve(__dirname, "shop/returns.html"),
         },
       },
     },

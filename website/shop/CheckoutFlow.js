@@ -410,7 +410,7 @@ function startCheckout(root) {
         (order
           ? '<button type="button" data-download-receipt class="inline-flex border border-outline px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-on-surface transition-colors hover:bg-primary hover:text-on-primary">Download receipt</button>'
           : "") +
-        '<a href="index.html" class="inline-flex border border-outline px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-on-surface transition-colors hover:bg-primary hover:text-on-primary">Back to shop</a>' +
+        '<a href="/shop" class="inline-flex border border-outline px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-on-surface transition-colors hover:bg-primary hover:text-on-primary">Back to shop</a>' +
         "</div></div>";
       return;
     }
@@ -429,7 +429,7 @@ function startCheckout(root) {
         "</p>" +
         (error ? '<p class="mt-6 text-sm text-white/55" role="alert">' + escapeHtml(error) + "</p>" : "") +
         (error
-          ? '<div class="mt-10 flex flex-wrap gap-4"><button type="button" data-retry-walle class="inline-flex bg-primary px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-on-primary hover:opacity-80 transition-opacity">Try again</button><a href="cart.html" class="inline-flex border border-outline px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-on-surface">Back to bag</a></div>'
+          ? '<div class="mt-10 flex flex-wrap gap-4"><button type="button" data-retry-walle class="inline-flex bg-primary px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-on-primary hover:opacity-80 transition-opacity">Try again</button><a href="/shop/cart" class="inline-flex border border-outline px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-on-surface">Back to bag</a></div>'
           : "") +
         "</div>";
       return;
@@ -439,7 +439,7 @@ function startCheckout(root) {
       root.innerHTML =
         '<div class="max-w-xl">' +
         '<h1 class="font-montserrat text-4xl tracking-[-0.03em] text-white font-medium">Your cart is empty.</h1>' +
-        '<a href="index.html" class="mt-8 inline-flex border border-outline px-8 py-4 font-montserrat text-xs uppercase tracking-[0.22em]">Return to shop</a>' +
+        '<a href="/shop" class="mt-8 inline-flex border border-outline px-8 py-4 font-montserrat text-xs uppercase tracking-[0.22em]">Return to shop</a>' +
         "</div>";
       return;
     }
@@ -534,6 +534,10 @@ function startCheckout(root) {
           })
           .join("") +
         "</ul>" +
+        '<p class="shop-policy-link text-sm text-white/50">' +
+        "By paying you accept the " +
+        '<a href="/shop/returns" target="_blank" rel="noopener noreferrer">Return &amp; Refund Policy</a>.' +
+        "</p>" +
         '<div class="mt-10 flex justify-between gap-4">' +
         '<button type="button" data-back class="font-montserrat text-[11px] uppercase tracking-[0.2em] text-white/45 hover:text-white transition-colors">Back</button>' +
         '<button type="button" data-confirm class="inline-flex bg-primary px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-on-primary hover:opacity-80 transition-opacity disabled:opacity-40" ' +
@@ -675,7 +679,7 @@ function startCheckout(root) {
     confirmed = true;
     wallePhase = "";
     busy = false;
-    history.replaceState(null, "", "checkout.html?confirmed=1");
+    history.replaceState(null, "", "/shop/checkout?confirmed=1");
     render();
   }
 
@@ -734,7 +738,7 @@ function startCheckout(root) {
       wallePhase = "";
       step = 4;
       error = "M-Pesa did not complete. Your bag is still here — you can pay again.";
-      history.replaceState(null, "", "checkout.html");
+      history.replaceState(null, "", "/shop/checkout");
       render();
       return;
     }
@@ -744,7 +748,7 @@ function startCheckout(root) {
       step = 4;
       error = "This payment session expired or was cancelled. Your bag is still here.";
       clearWallePending();
-      history.replaceState(null, "", "checkout.html");
+      history.replaceState(null, "", "/shop/checkout");
       render();
       return;
     }

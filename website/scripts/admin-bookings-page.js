@@ -78,7 +78,7 @@ function fmtRange(startIso, endIso, tz) {
         <span class="material-symbols-outlined mb-6 inline-block text-5xl text-on-surface-variant/40" aria-hidden="true">event_available</span>
         <p class="font-montserrat text-2xl font-medium text-on-background">No bookings</p>
         <p class="mt-4 font-body-md text-body-md text-on-surface-variant">Submit from the contact form to see sessions here.</p>
-        <p class="mt-8"><a class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-DEFAULT border border-outline-variant px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest text-on-surface transition-colors hover:bg-surface-container focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40" href="../contact.html">Contact page</a></p>
+        <p class="mt-8"><a class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-DEFAULT border border-outline-variant px-6 py-3 font-label-caps text-label-caps uppercase tracking-widest text-on-surface transition-colors hover:bg-surface-container focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40" href="/contact">Contact page</a></p>
       </div>`;
       setStatus("");
       return;

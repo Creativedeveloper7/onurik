@@ -48,7 +48,7 @@ tailwind.config = {
 </head>
 <body class="font-manrope min-h-screen selection:bg-white/20 selection:text-white">
 <header class="lg:hidden fixed top-0 left-0 right-0 z-[60] flex h-16 items-center justify-between border-b border-stone-100/10 bg-stone-950/95 px-4 backdrop-blur-xl">
-  <a href="/admin/index.html" class="inline-flex min-h-[44px] items-center gap-1 text-xs font-semibold uppercase tracking-[0.2em] text-stone-400 hover:text-stone-100">
+  <a href="/admin" class="inline-flex min-h-[44px] items-center gap-1 text-xs font-semibold uppercase tracking-[0.2em] text-stone-400 hover:text-stone-100">
     <span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_back</span>
     Menu
   </a>
@@ -67,15 +67,15 @@ tailwind.config = {
     </button>
   </div>
   <div class="flex flex-1 flex-col gap-1 py-6">
-    <a class="mx-4 mb-3 text-[10px] uppercase tracking-[0.2em] text-stone-500 hover:text-stone-100" href="/index.html">← Public site</a>
-    <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/index.html"><span class="material-symbols-outlined">dashboard</span><span class="tracking-wide">Dashboard</span></a>
-    <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/works.html"><span class="material-symbols-outlined">work</span><span class="tracking-wide">Works Manager</span></a>
-    <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-stone-100 bg-stone-800 px-6 py-3 text-sm text-stone-100" href="/admin/shop.html"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">storefront</span><span class="tracking-wide">Shop</span></a>
-    <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/revenue.html"><span class="material-symbols-outlined">account_balance_wallet</span><span class="tracking-wide">Revenue</span></a>
-    <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/carousel.html"><span class="material-symbols-outlined">view_carousel</span><span class="tracking-wide">Brands</span></a>
-    <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/enquiries.html"><span class="material-symbols-outlined">mail</span><span class="tracking-wide">Enquiries</span></a>
-    <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/bookings.html"><span class="material-symbols-outlined">calendar_today</span><span class="tracking-wide">Bookings</span></a>
-    <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/settings.html"><span class="material-symbols-outlined">settings</span><span class="tracking-wide">Settings</span></a>
+    <a class="mx-4 mb-3 text-[10px] uppercase tracking-[0.2em] text-stone-500 hover:text-stone-100" href="/">← Public site</a>
+    <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin"><span class="material-symbols-outlined">dashboard</span><span class="tracking-wide">Dashboard</span></a>
+    <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/works"><span class="material-symbols-outlined">work</span><span class="tracking-wide">Works Manager</span></a>
+    <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-stone-100 bg-stone-800 px-6 py-3 text-sm text-stone-100" href="/admin/shop"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">storefront</span><span class="tracking-wide">Shop</span></a>
+    <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/revenue"><span class="material-symbols-outlined">account_balance_wallet</span><span class="tracking-wide">Revenue</span></a>
+    <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/carousel"><span class="material-symbols-outlined">view_carousel</span><span class="tracking-wide">Brands</span></a>
+    <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/enquiries"><span class="material-symbols-outlined">mail</span><span class="tracking-wide">Enquiries</span></a>
+    <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/bookings"><span class="material-symbols-outlined">calendar_today</span><span class="tracking-wide">Bookings</span></a>
+    <a class="flex min-h-[44px] items-center gap-4 border-l-2 border-transparent px-6 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/settings"><span class="material-symbols-outlined">settings</span><span class="tracking-wide">Settings</span></a>
   </div>
 </nav>
 
@@ -85,21 +85,21 @@ tailwind.config = {
     <p class="mt-1 text-sm text-stone-500">Onurik Systems</p>
   </div>
   <div class="flex flex-1 flex-col gap-2 py-8">
-    <a class="mx-8 mb-4 text-[10px] uppercase tracking-[0.2em] text-stone-500 hover:text-stone-100" href="/index.html">← Public site</a>
-    <a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/index.html"><span class="material-symbols-outlined">dashboard</span><span>Dashboard</span></a>
-    <a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/works.html"><span class="material-symbols-outlined">work</span><span>Works Manager</span></a>
-    <a class="flex items-center gap-4 border-l-2 border-stone-100 bg-stone-800 px-8 py-3 text-sm text-stone-100" href="/admin/shop.html"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">storefront</span><span>Shop</span></a>
-    <a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/revenue.html"><span class="material-symbols-outlined">account_balance_wallet</span><span>Revenue</span></a>
-    <a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/carousel.html"><span class="material-symbols-outlined">view_carousel</span><span>Brands</span></a>
-    <a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/enquiries.html"><span class="material-symbols-outlined">mail</span><span>Enquiries</span></a>
-    <a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/bookings.html"><span class="material-symbols-outlined">calendar_today</span><span>Bookings</span></a>
-    <a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/settings.html"><span class="material-symbols-outlined">settings</span><span>Settings</span></a>
+    <a class="mx-8 mb-4 text-[10px] uppercase tracking-[0.2em] text-stone-500 hover:text-stone-100" href="/">← Public site</a>
+    <a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin"><span class="material-symbols-outlined">dashboard</span><span>Dashboard</span></a>
+    <a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/works"><span class="material-symbols-outlined">work</span><span>Works Manager</span></a>
+    <a class="flex items-center gap-4 border-l-2 border-stone-100 bg-stone-800 px-8 py-3 text-sm text-stone-100" href="/admin/shop"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">storefront</span><span>Shop</span></a>
+    <a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/revenue"><span class="material-symbols-outlined">account_balance_wallet</span><span>Revenue</span></a>
+    <a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/carousel"><span class="material-symbols-outlined">view_carousel</span><span>Brands</span></a>
+    <a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/enquiries"><span class="material-symbols-outlined">mail</span><span>Enquiries</span></a>
+    <a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/bookings"><span class="material-symbols-outlined">calendar_today</span><span>Bookings</span></a>
+    <a class="flex items-center gap-4 border-l-2 border-transparent px-8 py-3 text-sm text-stone-500 hover:bg-stone-800/50" href="/admin/settings"><span class="material-symbols-outlined">settings</span><span>Settings</span></a>
   </div>
 </nav>
 
 <main class="relative flex min-h-screen w-full flex-1 flex-col bg-background pt-16 lg:ml-64 lg:pt-0">
   <header class="border-b border-outline-variant/30 px-8 py-10 md:px-16">
-    <a href="/admin/index.html" class="mb-6 inline-flex min-h-[44px] items-center gap-2 border border-outline-variant/50 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/70 transition-colors hover:border-white/40 hover:bg-white/5 hover:text-white">
+    <a href="/admin" class="mb-6 inline-flex min-h-[44px] items-center gap-2 border border-outline-variant/50 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/70 transition-colors hover:border-white/40 hover:bg-white/5 hover:text-white">
       <span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_back</span>
       Back to menu
     </a>
@@ -281,7 +281,7 @@ tailwind.config = {
   <section id="shop-panel-orders" hidden class="px-8 py-8 md:px-16">
     <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
       <p id="orders-count" class="font-montserrat text-[11px] uppercase tracking-[0.18em] text-white/40">0 orders</p>
-      <a href="/admin/revenue.html" class="text-[11px] uppercase tracking-[0.16em] text-white/35 hover:text-white">Monitor revenue</a>
+      <a href="/admin/revenue" class="text-[11px] uppercase tracking-[0.16em] text-white/35 hover:text-white">Monitor revenue</a>
     </div>
     <div class="overflow-x-auto rounded border border-outline-variant/30 bg-surface-container-low">
       <table class="w-full min-w-[980px] border-collapse text-left">
@@ -309,7 +309,7 @@ tailwind.config = {
     <input id="admin-password" type="password" class="mb-3 w-full rounded border border-outline-variant/40 bg-surface-container-low px-3 py-2" placeholder="Enter password"/>
     <p id="admin-auth-error" class="min-h-5 text-sm text-white/50"></p>
     <button type="submit" class="min-h-[44px] w-full rounded border border-outline-variant px-4 py-2 text-xs uppercase tracking-[0.2em] hover:bg-surface-variant">Unlock Dashboard</button>
-    <a href="/admin/index.html" class="mt-4 inline-flex min-h-[44px] w-full items-center justify-center gap-2 text-[11px] uppercase tracking-[0.2em] text-white/40 hover:text-white">
+    <a href="/admin" class="mt-4 inline-flex min-h-[44px] w-full items-center justify-center gap-2 text-[11px] uppercase tracking-[0.2em] text-white/40 hover:text-white">
       <span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_back</span>
       Back to menu
     </a>

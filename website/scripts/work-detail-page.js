@@ -205,7 +205,7 @@ async function runWorkDetail() {
       description: "Browse published engineering and design projects on Onurik.",
     });
     document.getElementById("work-detail-root").innerHTML =
-      '<div class="mx-auto max-w-[1440px] px-8 py-24 md:px-16"><h1 class="font-montserrat text-3xl text-white">Missing project link</h1><p class="mt-4 text-white/60">Open a project from the Works page.</p><a href="works.html" class="mt-6 inline-flex border border-white/20 px-4 py-2 text-xs uppercase tracking-[0.2em] text-white/80 hover:text-white">Back to Works</a></div>';
+      '<div class="mx-auto max-w-[1440px] px-8 py-24 md:px-16"><h1 class="font-montserrat text-3xl text-white">Missing project link</h1><p class="mt-4 text-white/60">Open a project from the Works page.</p><a href="/works" class="mt-6 inline-flex border border-white/20 px-4 py-2 text-xs uppercase tracking-[0.2em] text-white/80 hover:text-white">Back to Works</a></div>';
     window.__onurikAnimRefresh?.();
     return;
   }
@@ -225,7 +225,7 @@ async function runWorkDetail() {
         "This project is unavailable or not published. Browse more work on Onurik.",
     });
     document.getElementById("work-detail-root").innerHTML =
-      '<div class="mx-auto max-w-[1440px] px-8 py-24 md:px-16"><h1 class="font-montserrat text-3xl text-white">Project not found</h1><a href="works.html" class="mt-6 inline-flex border border-white/20 px-4 py-2 text-xs uppercase tracking-[0.2em] text-white/80 hover:text-white">Back to Works</a></div>';
+      '<div class="mx-auto max-w-[1440px] px-8 py-24 md:px-16"><h1 class="font-montserrat text-3xl text-white">Project not found</h1><a href="/works" class="mt-6 inline-flex border border-white/20 px-4 py-2 text-xs uppercase tracking-[0.2em] text-white/80 hover:text-white">Back to Works</a></div>';
     window.__onurikAnimRefresh?.();
     return;
   }
@@ -254,7 +254,7 @@ async function runWorkDetail() {
 
   document.getElementById("work-detail-root").innerHTML =
     '<section class="mx-auto max-w-[1440px] px-8 pb-20 pt-32 md:px-16">' +
-    '<a href="works.html" class="mb-8 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/60 hover:text-white"><span aria-hidden="true">←</span> Back to works</a>' +
+    '<a href="/works" class="mb-8 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/60 hover:text-white"><span aria-hidden="true">←</span> Back to works</a>' +
     '<p class="mb-3 font-montserrat text-[11px] uppercase tracking-[0.22em] text-white/60">' +
     escapeHtml(current.category) +
     (client ? '<span class="text-white/30"> · </span>' + escapeHtml(client) : "") +
@@ -339,7 +339,7 @@ async function runWorkDetail() {
       ? related
           .map(function (item) {
             return (
-              '<a href="work.html?id=' +
+              '<a href="/work?id=' +
               encodeURIComponent(item.id) +
               '" class="group block overflow-hidden rounded-xl bg-[#1c1b1b]">' +
               '<img src="' +

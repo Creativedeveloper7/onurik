@@ -69,23 +69,23 @@ window.tailwind.config = {
 </head>
 <body class="bg-background text-on-background min-h-screen flex flex-col font-body-md antialiased selection:bg-surface-variant selection:text-primary">
 <nav class="fixed top-0 z-50 flex h-[4.25rem] w-full items-center gap-3 border-b border-white/10 bg-stone-950/75 px-8 backdrop-blur-xl md:px-16">
-<a href="../index.html" class="shrink-0 text-2xl font-bold tracking-tight text-stone-100 font-montserrat">Onurik</a>
+<a href="/" class="shrink-0 text-2xl font-bold tracking-tight text-stone-100 font-montserrat">Onurik</a>
 <div class="ml-auto hidden md:flex items-center gap-10 font-montserrat">
 <span class="text-xs uppercase tracking-[0.2em]">
-<a href="../works.html" class="text-white/35 hover:text-white/70 transition-colors">Works</a>
+<a href="/works" class="text-white/35 hover:text-white/70 transition-colors">Works</a>
 <span class="text-white/20 mx-3">/</span>
-<a href="../about.html" class="text-white/35 hover:text-white/70 transition-colors">Info</a>
+<a href="/about" class="text-white/35 hover:text-white/70 transition-colors">Info</a>
 <span class="text-white/20 mx-3">/</span>
-<a href="../contact.html" class="text-white/35 hover:text-white/70 transition-colors">Contact</a>
+<a href="/contact" class="text-white/35 hover:text-white/70 transition-colors">Contact</a>
 <span class="text-white/20 mx-3">/</span>
-<a href="index.html" class="text-stone-100 border-b border-stone-100 pb-0.5">Shop</a>
+<a href="/shop" class="text-stone-100 border-b border-stone-100 pb-0.5">Shop</a>
 </span>
 </div>
 <div class="ml-2 flex shrink-0 items-center gap-1 md:ml-8">
 <button type="button" id="shop-search-btn" class="inline-flex items-center justify-center p-2 text-stone-100 hover:opacity-70 transition-opacity focus:outline-none focus-visible:ring-1 focus-visible:ring-white/40" aria-label="Search shop">
 <span class="material-symbols-outlined text-[22px]" aria-hidden="true">search</span>
 </button>
-<a href="cart.html" class="relative inline-flex items-center justify-center p-2 text-stone-100 hover:opacity-70 transition-opacity focus:outline-none focus-visible:ring-1 focus-visible:ring-white/40" aria-label="Cart">
+<a href="/shop/cart" class="relative inline-flex items-center justify-center p-2 text-stone-100 hover:opacity-70 transition-opacity focus:outline-none focus-visible:ring-1 focus-visible:ring-white/40" aria-label="Cart">
 <span class="material-symbols-outlined text-[22px]" aria-hidden="true">shopping_bag</span>
 <span id="shop-cart-count" class="absolute right-0.5 top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-white px-1 font-montserrat text-[9px] font-semibold text-[#131313]" hidden>0</span>
 </a>
@@ -97,11 +97,11 @@ window.tailwind.config = {
 </nav>
 <div class="site-nav-overlay fixed inset-0 z-40 md:hidden opacity-0 pointer-events-none bg-black/70 backdrop-blur-sm transition-opacity duration-300" aria-hidden="true"></div>
 <nav id="site-nav-drawer" class="fixed top-0 right-0 z-50 h-full w-[min(100vw,18rem)] md:hidden pt-24 px-8 bg-neutral-950 border-l border-white/10 font-montserrat text-sm uppercase tracking-widest flex flex-col gap-6 shadow-2xl" aria-hidden="true" aria-label="Mobile">
-<a href="../works.html" class="text-white/80 hover:text-white transition-colors">Works</a>
-<a href="../about.html" class="text-white/80 hover:text-white transition-colors">Info</a>
-<a href="../contact.html" class="text-white/80 hover:text-white transition-colors">Contact</a>
-<a href="index.html" class="text-white/80 hover:text-white transition-colors">Shop</a>
-<a href="cart.html" class="mt-4 pt-4 border-t border-white/10 text-xs font-semibold uppercase tracking-[0.28em] text-white border-b border-stone-100 pb-0.5 self-start">Cart</a>
+<a href="/works" class="text-white/80 hover:text-white transition-colors">Works</a>
+<a href="/about" class="text-white/80 hover:text-white transition-colors">Info</a>
+<a href="/contact" class="text-white/80 hover:text-white transition-colors">Contact</a>
+<a href="/shop" class="text-white/80 hover:text-white transition-colors">Shop</a>
+<a href="/shop/cart" class="mt-4 pt-4 border-t border-white/10 text-xs font-semibold uppercase tracking-[0.28em] text-white border-b border-stone-100 pb-0.5 self-start">Cart</a>
 </nav>
 <main class="flex-grow pt-28 pb-24 px-8 md:px-16 w-full max-w-container-max mx-auto">
 <div id="shop-app"></div>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Checkout · Onurik Shop</title>
+<title>Return &amp; Refund Policy · Onurik Shop</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -104,7 +104,93 @@ window.tailwind.config = {
 <a href="/shop/cart" class="mt-4 pt-4 border-t border-white/10 text-xs font-semibold uppercase tracking-[0.28em] text-white/90 hover:text-white transition-colors">Cart</a>
 </nav>
 <main class="flex-grow pt-28 pb-24 px-8 md:px-16 w-full max-w-container-max mx-auto">
-<div id="shop-app"></div>
+<article class="shop-policy max-w-3xl">
+<p class="font-montserrat text-[11px] uppercase tracking-[0.28em] text-white/45 mb-4">Shop / Policy</p>
+<h1 class="font-montserrat text-[clamp(2.25rem,4vw,3.75rem)] font-medium tracking-[-0.03em] text-white leading-[1.05]">Return &amp; Refund Policy</h1>
+<p class="mt-4 font-montserrat text-[11px] uppercase tracking-[0.2em] text-white/40">Onurik Clothing · Effective September 2026</p>
+<p class="shop-policy__lead">At Onurik Clothing, we want you to be happy with every purchase. If there is an issue with your order, we’re happy to assist in accordance with the policy below.</p>
+
+<section>
+<h2>1. Returns &amp; Exchanges</h2>
+<p>We accept returns or exchanges within <strong>7 days of receiving your order</strong>, provided that:</p>
+<ul>
+<li>The item is <strong>unused, unworn and unwashed</strong>.</li>
+<li>The item is returned in its <strong>original condition and packaging</strong>.</li>
+<li>All original tags, labels and accessories remain attached.</li>
+<li>The item has not been altered, damaged, stained, or otherwise used.</li>
+</ul>
+<p>Items that do not meet these conditions may not qualify for a return or refund.</p>
+</section>
+
+<section>
+<h2>2. Wrong Size or Change of Mind</h2>
+<p>If you selected the wrong size or simply changed your mind, you may request an exchange within <strong>7 days of delivery</strong>.</p>
+<ul>
+<li>Exchanges are subject to <strong>stock availability</strong>.</li>
+<li>Any additional delivery or return costs may be the customer's responsibility.</li>
+<li>If the requested replacement is unavailable, we may offer an alternative item or store credit.</li>
+</ul>
+</section>
+
+<section>
+<h2>3. Damaged or Incorrect Items</h2>
+<p>If you receive an item that is <strong>damaged, defective, or different from what you ordered</strong>, please contact us within <strong>48 hours of delivery</strong>.</p>
+<p>Please provide your <strong>order number and clear photographs/videos</strong> showing the issue so our team can assess it.</p>
+<p>Where the issue is confirmed to be an Onurik error, we will arrange an appropriate replacement or refund.</p>
+</section>
+
+<section>
+<h2>4. Refunds</h2>
+<p>Approved refunds will be processed after the returned item has been received and inspected.</p>
+<p><strong>Refund settlements typically take 3–5 business days</strong> after the refund has been approved.</p>
+<p>The time it takes for the funds to appear in your account may also depend on your bank or payment provider.</p>
+</section>
+
+<section>
+<h2>5. Items Not Eligible for Refund or Exchange</h2>
+<p>For hygiene and product-integrity reasons, we generally cannot accept returns for items that have:</p>
+<ul>
+<li>Been worn, washed or altered</li>
+<li>Been damaged after delivery</li>
+<li>Been stained, torn or misused</li>
+<li>Missing original tags or packaging</li>
+<li>Been returned after the applicable return period</li>
+</ul>
+<p><strong>Sale, promotional or limited-edition items</strong> may have specific return conditions, which will be communicated at the time of purchase.</p>
+</section>
+
+<section>
+<h2>6. How to Request a Return</h2>
+<p>To request a return or exchange, contact <a href="/contact">Onurik Clothing</a> with:</p>
+<ul>
+<li>Your full name</li>
+<li>Order number</li>
+<li>Item(s) you wish to return</li>
+<li>Reason for the return</li>
+<li>Photos/videos where applicable</li>
+</ul>
+<p>Our team will review your request and provide the next steps.</p>
+</section>
+
+<section>
+<h2>7. Delivery &amp; Return Costs</h2>
+<p>Original delivery charges are generally <strong>non-refundable</strong>, except where the return is due to an error on our part or a confirmed defective/incorrect item.</p>
+<p>For size exchanges or change-of-mind returns, the customer may be responsible for applicable return and redelivery charges.</p>
+</section>
+
+<section>
+<h2>8. Final Sale</h2>
+<p>Certain items may be marked <strong>Final Sale</strong> at the time of purchase. Final Sale items cannot be returned or exchanged unless they arrive damaged or are incorrectly fulfilled by Onurik.</p>
+</section>
+
+<section>
+<h2>Our Commitment</h2>
+<p>We believe in making the Onurik experience simple, fair and transparent. If you have an issue with your order, <strong>reach out to us first</strong> and we'll do our best to find a fair solution.</p>
+<p class="shop-policy__signoff">Onurik Clothing<br/><em>Stay Moving.</em></p>
+</section>
+
+<p class="mt-12"><a href="/shop/checkout" class="font-montserrat text-[11px] uppercase tracking-[0.2em] text-white/45 hover:text-white transition-colors">Back to checkout</a></p>
+</article>
 </main>
 <footer class="w-full flex flex-col md:flex-row justify-between items-center px-8 md:px-16 bg-stone-950 text-stone-100 py-20 border-t border-stone-100/5 mt-auto">
 <div class="text-stone-100 font-bold mb-8 md:mb-0">ONURIK</div>
@@ -113,10 +199,7 @@ window.tailwind.config = {
 </footer>
 <script type="module">
   import { initShopShell } from "./shop-shell.js";
-  import { mountCheckoutFlow } from "./CheckoutFlow.js";
-  initShopShell().then(function () {
-    mountCheckoutFlow(document.getElementById("shop-app"));
-  });
+  initShopShell();
 </script>
 <script type="module" src="../scripts/animations.js"></script>
 <script type="module" src="../scripts/nav-close.js"></script>

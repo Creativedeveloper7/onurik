@@ -6,7 +6,7 @@ export function renderProductCard(product, options) {
   const compact = Boolean(opts.compact);
   const on = isWishlisted(product.id);
   const sale = product.originalPrice && product.originalPrice > product.price;
-  const href = "product.html?id=" + encodeURIComponent(product.id);
+  const href = "/shop/product?id=" + encodeURIComponent(product.id);
 
   return (
     '<article class="group relative flex flex-col border-b border-white/[0.08] pb-6">' +
