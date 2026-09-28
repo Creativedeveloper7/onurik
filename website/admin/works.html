@@ -111,6 +111,13 @@ tailwind.config = {
   <section class="px-8 py-8 md:px-16">
     <div class="grid grid-cols-1 gap-6 xl:grid-cols-5">
       <form id="project-form" class="xl:col-span-2 space-y-4 rounded border border-outline-variant/30 bg-surface-container-low p-5">
+        <div class="flex flex-wrap items-start justify-between gap-3 border-b border-outline-variant/30 pb-4">
+          <div>
+            <p id="project-form-mode" class="text-[11px] uppercase tracking-[0.2em] text-on-surface-variant">New project</p>
+            <p id="project-form-editing-title" class="mt-1 hidden font-montserrat text-sm text-white/85"></p>
+          </div>
+          <button id="project-cancel-edit" type="button" class="hidden rounded border border-outline-variant/40 px-3 py-1.5 text-[10px] uppercase tracking-[0.14em] hover:bg-white/10">Cancel edit</button>
+        </div>
         <p class="text-[11px] uppercase tracking-[0.2em] text-on-surface-variant">Project images (slider)</p>
         <div class="grid gap-3">
           <div class="flex gap-2">
