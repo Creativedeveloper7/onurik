@@ -9,21 +9,23 @@ export function renderProductCard(product, options) {
   const href = "/shop/product?id=" + encodeURIComponent(product.id);
 
   return (
-    '<article class="group relative flex flex-col border-b border-white/[0.08] pb-6">' +
+    '<article class="shop-card group relative flex flex-col">' +
     '<a href="' +
     href +
-    '" class="block focus:outline-none focus-visible:ring-1 focus-visible:ring-white/40">' +
-    '<div class="relative aspect-[4/5] overflow-hidden bg-[#1c1b1b]">' +
+    '" class="block">' +
+    '<div class="shop-card__media relative aspect-[4/5] overflow-hidden">' +
     '<img src="' +
     escapeAttr(product.images[0] || "") +
     '" alt="' +
     escapeAttr(product.name) +
-    '" class="shop-img h-full w-full object-cover transition-opacity duration-300 group-hover:opacity-85" width="600" height="750" loading="lazy"/>' +
+    '" class="shop-img h-full w-full object-cover" width="600" height="750" loading="lazy"/>' +
     (product.inStock
-      ? ""
-      : '<span class="absolute left-3 top-3 font-montserrat text-[10px] uppercase tracking-[0.18em] text-white/70">Sold out</span>') +
+      ? sale
+        ? '<span class="shop-hex absolute left-2 top-3">Sale</span>'
+        : ""
+      : '<span class="shop-hex shop-hex--ink absolute left-2 top-3">Sold out</span>') +
     "</div></a>" +
-    '<button type="button" class="shop-heart absolute right-2 top-2 z-[1] p-2 text-white/80 transition-opacity hover:opacity-70 focus:outline-none focus-visible:ring-1 focus-visible:ring-white/40' +
+    '<button type="button" class="shop-heart absolute right-3 top-3 z-[1]' +
     (on ? " is-on" : "") +
     '" data-wishlist="' +
     escapeAttr(product.id) +
@@ -34,27 +36,26 @@ export function renderProductCard(product, options) {
     '">' +
     '<span class="material-symbols-outlined text-[20px]" aria-hidden="true">favorite</span>' +
     "</button>" +
-    '<div class="mt-4 flex items-start justify-between gap-3">' +
+    '<div class="shop-card__body">' +
     '<a href="' +
     href +
-    '" class="min-w-0 focus:outline-none focus-visible:ring-1 focus-visible:ring-white/40">' +
-    '<h3 class="font-montserrat text-sm font-medium tracking-[-0.01em] text-[#f5f5f5] md:text-[15px]">' +
+    '" class="min-w-0">' +
+    '<h3 class="shop-card__title">' +
     escapeHtml(product.name) +
     "</h3>" +
     (compact
       ? ""
-      : '<p class="mt-1 font-montserrat text-[10px] uppercase tracking-[0.16em] text-white/35">' +
-        escapeHtml(product.gender) +
-        "</p>") +
+      : '<p class="shop-card__meta">' + escapeHtml(product.gender) + "</p>") +
     "</a>" +
-    '<div class="shrink-0 text-right font-montserrat text-sm text-[#f5f5f5]">' +
+    '<div class="mt-3 flex flex-wrap items-center gap-2">' +
+    '<span class="shop-price">' +
+    formatKes(product.price) +
+    "</span>" +
     (sale
-      ? '<span class="mr-2 text-white/35 line-through">' +
+      ? '<span class="ob-mono text-xs text-cocoa/60 line-through">' +
         formatKes(product.originalPrice) +
         "</span>"
       : "") +
-    "<span>" +
-    formatKes(product.price) +
-    "</span></div></div></article>"
+    "</div></div></article>"
   );
 }

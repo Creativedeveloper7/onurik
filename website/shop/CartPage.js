@@ -85,10 +85,10 @@ function bindCartPage(root) {
     if (!items.length) {
       root.innerHTML =
         '<div class="max-w-xl py-8">' +
-        '<p class="font-montserrat text-[11px] uppercase tracking-[0.28em] text-white/45 mb-4">Shop / Cart</p>' +
-        '<h1 class="font-montserrat text-[clamp(2.5rem,6vw,4.5rem)] font-medium tracking-[-0.03em] text-white leading-[1.05]">Your cart is empty.</h1>' +
-        '<p class="mt-5 text-white/45">When you add a piece, it will live here until you check out.</p>' +
-        '<a href="/shop" class="mt-10 inline-flex border border-outline px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-on-surface transition-colors hover:bg-primary hover:text-on-primary">Continue shopping</a>' +
+        '<p class="shop-eyebrow mb-4">Shop / Cart</p>' +
+        '<h1 class="shop-title text-[clamp(2.5rem,6vw,4.5rem)]">Your cart is empty.</h1>' +
+        '<p class="mt-5 text-cocoa/70">When you add a piece, it will live here until you check out.</p>' +
+        '<a href="/shop" class="mt-10 ob-btn ob-btn--cream ">Continue shopping</a>' +
         "</div>";
       return;
     }
@@ -97,10 +97,10 @@ function bindCartPage(root) {
       .map(function (item) {
         const sale = item.originalPrice && item.originalPrice > item.price;
         return (
-          '<article class="grid grid-cols-[5.5rem_1fr] gap-4 border-b border-white/[0.08] py-6 md:grid-cols-[6.5rem_1fr_auto] md:gap-6">' +
+          '<article class="grid grid-cols-[5.5rem_1fr] gap-4 border-b-2 border-dashed border-cocoa/25 py-6 md:grid-cols-[6.5rem_1fr_auto] md:gap-6">' +
           '<a href="/shop/product?id=' +
           encodeURIComponent(item.productId) +
-          '" class="aspect-[4/5] overflow-hidden bg-[#1c1b1b]">' +
+          '" class="aspect-[4/5] overflow-hidden rounded-xl border-[2.5px] border-ink bg-[#EBD6B5] shadow-sticker">' +
           '<img src="' +
           escapeAttr(item.image) +
           '" alt="' +
@@ -111,10 +111,10 @@ function bindCartPage(root) {
           '<div class="flex items-start justify-between gap-3">' +
           '<a href="/shop/product?id=' +
           encodeURIComponent(item.productId) +
-          '" class="font-montserrat text-base text-white tracking-[-0.01em] hover:opacity-75 transition-opacity">' +
+          '" class="ob-display text-2xl text-cocoa hover:text-tomato transition-colors">' +
           escapeHtml(item.name) +
           "</a>" +
-          '<button type="button" class="shrink-0 text-white/40 hover:text-white transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-white/40" data-remove="' +
+          '<button type="button" class="shrink-0 text-cocoa/60 hover:text-tomato transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-tomato" data-remove="' +
           escapeAttr(item.productId) +
           '" data-size="' +
           escapeAttr(item.size) +
@@ -124,15 +124,17 @@ function bindCartPage(root) {
           escapeAttr(item.name) +
           '"><span class="material-symbols-outlined text-[20px]">close</span></button>' +
           "</div>" +
-          '<p class="mt-1 font-montserrat text-[11px] uppercase tracking-[0.16em] text-white/35">' +
+          '<p class="mt-1 shop-label">' +
           escapeHtml(item.size) +
           (item.colorLabel ? " · " + escapeHtml(item.colorLabel) : "") +
           "</p>" +
-          '<div class="mt-3 font-montserrat text-sm text-white">' +
+          '<div class="mt-3 flex flex-wrap items-center gap-2">' +
           (sale
-            ? '<span class="mr-2 text-white/35 line-through">' + formatKes(item.originalPrice) + "</span>"
+            ? '<span class="ob-mono text-xs text-cocoa/60 line-through">' + formatKes(item.originalPrice) + "</span>"
             : "") +
+          '<span class="shop-price">' +
           formatKes(item.price) +
+          "</span>" +
           "</div>" +
           '<div class="mt-4 shop-stepper">' +
           '<button type="button" data-line-qty="-1" data-id="' +
@@ -160,28 +162,29 @@ function bindCartPage(root) {
     root.innerHTML =
       '<div class="grid grid-cols-1 gap-16 lg:grid-cols-12">' +
       '<div class="lg:col-span-7">' +
-      '<p class="font-montserrat text-[11px] uppercase tracking-[0.28em] text-white/45 mb-4">Shop / Cart</p>' +
-      '<h1 class="font-montserrat text-[clamp(2.5rem,5vw,4rem)] font-medium tracking-[-0.03em] text-white leading-[1.05] mb-10">My Cart</h1>' +
+      '<p class="shop-eyebrow mb-4">Shop / Cart</p>' +
+      '<h1 class="shop-title text-[clamp(2.75rem,6vw,5rem)] mb-10" data-ob-chars="jumble">My Cart</h1>' +
       rows +
       "</div>" +
       '<aside class="lg:col-span-5 lg:pt-16">' +
-      '<div class="border-t border-white/[0.08] pt-6 space-y-4 font-montserrat text-sm">' +
-      '<div class="flex justify-between text-white/55"><span>Subtotal</span><span class="text-white">' +
+      '<div class="shop-summary space-y-4 font-montserrat text-sm">' +
+      '<p class="shop-summary__title">Order summary</p>' +
+      '<div class="flex justify-between text-cocoa/70"><span>Subtotal</span><span class="text-cocoa">' +
       formatKes(subtotal) +
       "</span></div>" +
-      '<div class="flex justify-between text-white/55"><span>Delivery</span><span class="text-white">' +
+      '<div class="flex justify-between text-cocoa/70"><span>Delivery</span><span class="text-cocoa">' +
       (shipping.price ? formatKes(shipping.price) : "Free") +
       "</span></div>" +
-      '<p class="text-[11px] uppercase tracking-[0.16em] text-white/30">' +
+      '<p class="ob-mono text-[11px] uppercase tracking-[0.12em] text-cocoa/70">' +
       escapeHtml(shipping.label) +
       " — lock zone and turnaround at checkout</p>" +
-      '<div class="flex justify-between border-t border-white/[0.08] pt-4 text-white"><span class="uppercase tracking-[0.16em] text-[11px]">Bag Total</span><span class="text-lg">' +
+      '<div class="shop-total"><span class="shop-total__label">Bag Total</span><span class="shop-total__value">' +
       formatKes(total) +
       "</span></div>" +
       "</div>" +
       '<div class="shop-cart-sticky mt-10 pb-6 pt-6">' +
-      '<a href="/shop/checkout" class="flex w-full items-center justify-center bg-primary px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-on-primary transition-opacity hover:opacity-80">Proceed to Checkout</a>' +
-      '<a href="/shop" class="mt-4 flex w-full items-center justify-center border border-outline px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-on-surface transition-colors hover:bg-primary hover:text-on-primary">Continue shopping</a>' +
+      '<a href="/shop/checkout" class="ob-btn ob-btn--red flex w-full items-center justify-center">Proceed to Checkout <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></a>' +
+      '<a href="/shop" class="ob-btn ob-btn--cream mt-4 flex w-full items-center justify-center ">Continue shopping</a>' +
       "</div></aside></div>";
   }
 
