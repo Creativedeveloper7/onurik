@@ -31,17 +31,15 @@ function injectStyles() {
       width: 3.5rem;
       height: 3.5rem;
       border-radius: 9999px;
-      border: 0;
+      border: 2.5px solid #160e07;
       background: #25d366;
       color: #ffffff;
-      box-shadow:
-        0 10px 28px rgba(0, 0, 0, 0.35),
-        0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+      box-shadow: 4px 4px 0 #160e07;
       cursor: pointer;
       text-decoration: none;
       transition:
-        transform 0.22s ease,
-        box-shadow 0.22s ease,
+        transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
         opacity 0.2s ease,
         visibility 0.2s ease;
       animation: onurik-wa-pulse 4.5s ease-in-out infinite;
@@ -54,20 +52,16 @@ function injectStyles() {
       transform: scale(0.92);
     }
     .onurik-wa-float:hover {
-      transform: scale(1.06);
-      box-shadow:
-        0 14px 36px rgba(0, 0, 0, 0.42),
-        0 0 28px rgba(37, 211, 102, 0.35);
-      animation-play-state: paused;
+      transform: translate(-2px, -2px) rotate(-8deg) scale(1.06);
+      box-shadow: 7px 7px 0 #160e07;
+      animation: none;
     }
     .onurik-wa-float:focus {
       outline: none;
     }
     .onurik-wa-float:focus-visible {
-      box-shadow:
-        0 0 0 2px #131313,
-        0 0 0 4px rgba(229, 226, 221, 0.45),
-        0 10px 28px rgba(0, 0, 0, 0.35);
+      outline: 3px solid #ffcb05;
+      outline-offset: 3px;
     }
     .onurik-wa-float__tooltip {
       position: absolute;
@@ -76,16 +70,16 @@ function injectStyles() {
       transform: translateY(-50%) translateX(4px);
       padding: 0.4rem 0.7rem;
       border-radius: 0.5rem;
-      border: 1px solid rgba(201, 198, 193, 0.28);
-      background: rgba(32, 31, 31, 0.96);
-      color: #e8e2d6;
-      font-family: Montserrat, sans-serif;
+      border: 2px solid #160e07;
+      background: #f2a516;
+      color: #2a1b0e;
+      font-family: "Space Mono", ui-monospace, monospace;
       font-size: 0.6875rem;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 0.06em;
       text-transform: uppercase;
       white-space: nowrap;
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+      box-shadow: 3px 3px 0 #160e07;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.2s ease, transform 0.2s ease;
@@ -98,15 +92,16 @@ function injectStyles() {
     @keyframes onurik-wa-pulse {
       0%,
       100% {
-        box-shadow:
-          0 10px 28px rgba(0, 0, 0, 0.35),
-          0 0 0 0 rgba(37, 211, 102, 0);
+        transform: rotate(0deg);
       }
-      50% {
-        box-shadow:
-          0 12px 32px rgba(0, 0, 0, 0.38),
-          0 0 0 10px rgba(37, 211, 102, 0),
-          0 0 22px rgba(37, 211, 102, 0.35);
+      8% {
+        transform: rotate(-12deg);
+      }
+      14% {
+        transform: rotate(10deg);
+      }
+      20% {
+        transform: rotate(0deg);
       }
     }
     @media (hover: none), (pointer: coarse) {

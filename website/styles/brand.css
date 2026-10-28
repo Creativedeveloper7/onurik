@@ -1,0 +1,801 @@
+/**
+ * Onurik brand system — poster-print, hand-lettered, loud.
+ * Palette: mustard / sun / tomato / crimson / flame / butter / cream / paper / cocoa / ink.
+ * Type: Anton (condensed display), Bagel Fat One (chunky lettering), Permanent Marker (scribbles),
+ *       Space Grotesk (body), Space Mono (labels / captions).
+ * Motion hooks (see scripts/brand-fx.js): [data-ob-chars], [data-ob-float], [data-ob-draw],
+ *       [data-ob-scramble], [data-ob-magnet], .ob-marquee, [data-ob-tilt].
+ */
+
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Bagel+Fat+One&family=Permanent+Marker&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap");
+
+:root {
+  --ob-mustard: #f2a516;
+  --ob-sun: #ffcb05;
+  --ob-tomato: #d8202a;
+  --ob-crimson: #a8121a;
+  --ob-flame: #f24c00;
+  --ob-butter: #f6d58a;
+  --ob-cream: #f7e3c8;
+  --ob-paper: #fbf3e4;
+  --ob-cocoa: #2a1b0e;
+  --ob-ink: #160e07;
+  --ob-navy: #26307a;
+
+  --ob-font-display: "Anton", Impact, sans-serif;
+  --ob-font-letter: "Bagel Fat One", "Anton", sans-serif;
+  --ob-font-marker: "Permanent Marker", cursive;
+  --ob-font-body: "Space Grotesk", system-ui, sans-serif;
+  --ob-font-mono: "Space Mono", ui-monospace, monospace;
+
+  --ob-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ob-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Paper grain — SVG turbulence, multiplied over flat colour fields */
+  --ob-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: clip;
+  font-family: var(--ob-font-body);
+  background-color: #1e140b;
+  color: #f7e7cf;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--ob-sun);
+  color: var(--ob-ink);
+}
+
+:focus-visible {
+  outline: 3px solid var(--ob-sun);
+  outline-offset: 3px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--ob-ink);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--ob-mustard);
+  border: 2px solid var(--ob-ink);
+  border-radius: 999px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Type                                                                */
+/* ------------------------------------------------------------------ */
+
+.ob-display {
+  font-family: var(--ob-font-display);
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+}
+
+.ob-letter {
+  font-family: var(--ob-font-letter);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: 0;
+}
+
+.ob-marker {
+  font-family: var(--ob-font-marker);
+  font-weight: 400;
+}
+
+.ob-mono {
+  font-family: var(--ob-font-mono);
+}
+
+.ob-eyebrow {
+  font-family: var(--ob-font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.ob-outline {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1.5px var(--ob-outline-color, currentColor);
+}
+
+.ob-outline-thick {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 2.5px var(--ob-outline-color, var(--ob-ink));
+}
+
+/* Hard drop shadow behind display type, like screen-printed misregistration */
+.ob-shadow-text {
+  text-shadow: 0.06em 0.06em 0 var(--ob-shadow-color, var(--ob-crimson));
+}
+
+/* ------------------------------------------------------------------ */
+/* Surfaces                                                            */
+/* ------------------------------------------------------------------ */
+
+.ob-grain {
+  position: relative;
+  isolation: isolate;
+}
+.ob-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: var(--ob-grain);
+  opacity: 0.16;
+  mix-blend-mode: multiply;
+}
+:where(.ob-grain > *) {
+  position: relative;
+  z-index: 1;
+}
+
+.ob-bg-mustard {
+  background-color: var(--ob-mustard);
+  color: var(--ob-cocoa);
+}
+.ob-bg-sun {
+  background-color: var(--ob-sun);
+  color: var(--ob-ink);
+}
+.ob-bg-tomato {
+  background-color: var(--ob-tomato);
+  color: var(--ob-cream);
+}
+.ob-bg-crimson {
+  background-color: var(--ob-crimson);
+  color: var(--ob-cream);
+}
+.ob-bg-flame {
+  background-color: var(--ob-flame);
+  color: var(--ob-butter);
+}
+.ob-bg-cream {
+  background-color: var(--ob-cream);
+  color: var(--ob-cocoa);
+}
+.ob-bg-paper {
+  background-color: var(--ob-paper);
+  color: var(--ob-cocoa);
+}
+.ob-bg-cocoa {
+  background-color: var(--ob-cocoa);
+  color: var(--ob-cream);
+}
+.ob-bg-ink {
+  background-color: var(--ob-ink);
+  color: var(--ob-cream);
+}
+
+/* Fine horizontal rules over a field — the striped red of the "Kazi Esha" poster */
+.ob-lines {
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.09) 0 1px,
+    transparent 1px 5px
+  );
+}
+
+/* Torn paper edges between colour blocks */
+.ob-torn-top,
+.ob-torn-bottom {
+  position: relative;
+}
+.ob-torn-top::before,
+.ob-torn-bottom::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 22px;
+  z-index: 3;
+  background: inherit;
+  pointer-events: none;
+}
+.ob-torn-top::before {
+  top: -21px;
+  clip-path: polygon(0 100%, 0 55%, 3% 35%, 6% 70%, 10% 30%, 14% 62%, 18% 18%, 22% 58%, 27% 34%, 31% 72%, 36% 26%, 40% 64%, 45% 40%, 50% 80%, 54% 30%, 58% 66%, 63% 22%, 67% 60%, 72% 38%, 76% 76%, 80% 28%, 85% 64%, 89% 36%, 93% 70%, 97% 30%, 100% 52%, 100% 100%);
+}
+.ob-torn-bottom::before {
+  bottom: -21px;
+  clip-path: polygon(0 0, 100% 0, 100% 48%, 96% 74%, 92% 34%, 87% 66%, 83% 24%, 78% 70%, 73% 36%, 69% 78%, 64% 30%, 60% 62%, 55% 22%, 51% 70%, 46% 40%, 41% 76%, 37% 28%, 32% 64%, 27% 20%, 23% 60%, 18% 34%, 13% 74%, 9% 30%, 5% 66%, 2% 38%, 0 60%);
+}
+
+/* Window chrome dots ⊗ ⊖ ⊘ like a desktop app frame */
+.ob-chrome {
+  display: inline-flex;
+  gap: 0.45rem;
+}
+.ob-chrome span {
+  width: 0.95rem;
+  height: 0.95rem;
+  border-radius: 999px;
+  border: 1.5px solid currentColor;
+  display: grid;
+  place-items: center;
+  font: 700 0.6rem/1 var(--ob-font-mono);
+}
+
+/* ------------------------------------------------------------------ */
+/* Components                                                          */
+/* ------------------------------------------------------------------ */
+
+/* Pill tag: "movies", "poetry", "ad films" */
+.ob-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.85rem 0.35rem;
+  border-radius: 0.45rem;
+  background: var(--ob-mustard);
+  color: var(--ob-cocoa);
+  font: 700 0.9rem/1 var(--ob-font-body);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  box-shadow: 2px 2px 0 rgba(22, 14, 7, 0.35);
+}
+
+/* Round icon badge (yellow coin with line icon) */
+.ob-coin {
+  display: inline-grid;
+  place-items: center;
+  width: 3.1rem;
+  height: 3.1rem;
+  border-radius: 999px;
+  background: var(--ob-mustard);
+  color: var(--ob-cocoa);
+  box-shadow: 2px 3px 0 rgba(22, 14, 7, 0.35);
+}
+.ob-coin .material-symbols-outlined {
+  font-size: 1.5rem;
+}
+
+/* Search-pill heading: (🔍 what do we do?) */
+.ob-search-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1.05rem;
+  border: 2px solid currentColor;
+  border-radius: 999px;
+  font: 700 0.95rem/1 var(--ob-font-body);
+}
+
+/* Primary buttons */
+.ob-btn {
+  --ob-btn-bg: var(--ob-mustard);
+  --ob-btn-fg: var(--ob-cocoa);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.95rem 1.6rem;
+  border: 2.5px solid var(--ob-ink);
+  border-radius: 0.75rem;
+  background: var(--ob-btn-bg);
+  color: var(--ob-btn-fg);
+  font: 700 0.8rem/1 var(--ob-font-body);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  box-shadow: 4px 4px 0 var(--ob-ink);
+  transition:
+    transform 0.25s var(--ob-spring),
+    box-shadow 0.25s var(--ob-spring),
+    background-color 0.2s ease;
+  cursor: pointer;
+}
+.ob-btn:hover {
+  transform: translate(-2px, -2px) rotate(-1deg);
+  box-shadow: 7px 7px 0 var(--ob-ink);
+}
+.ob-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 var(--ob-ink);
+}
+.ob-btn .material-symbols-outlined {
+  font-size: 1.1rem;
+  transition: transform 0.3s var(--ob-spring);
+}
+.ob-btn:hover .material-symbols-outlined {
+  transform: translateX(3px) rotate(-8deg);
+}
+.ob-btn--red {
+  --ob-btn-bg: var(--ob-tomato);
+  --ob-btn-fg: var(--ob-cream);
+}
+.ob-btn--cream {
+  --ob-btn-bg: var(--ob-cream);
+  --ob-btn-fg: var(--ob-cocoa);
+}
+.ob-btn--ink {
+  --ob-btn-bg: var(--ob-cocoa);
+  --ob-btn-fg: var(--ob-mustard);
+  border-color: var(--ob-mustard);
+  box-shadow: 4px 4px 0 var(--ob-mustard);
+}
+.ob-btn--ink:hover {
+  box-shadow: 7px 7px 0 var(--ob-mustard);
+}
+.ob-btn--ghost {
+  --ob-btn-bg: transparent;
+  --ob-btn-fg: currentColor;
+  border-color: currentColor;
+  box-shadow: 4px 4px 0 currentColor;
+}
+
+/* "CLICK HERE!" stamp CTA — play disc + condensed shout + mono caption */
+.ob-stamp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.7rem 1.1rem 0.7rem 0.75rem;
+  border-radius: 0.6rem;
+  background: var(--ob-cocoa);
+  color: var(--ob-tomato);
+  transform: rotate(-3deg);
+  box-shadow: 5px 6px 0 rgba(0, 0, 0, 0.35);
+  transition: transform 0.35s var(--ob-spring);
+}
+.ob-stamp:hover {
+  transform: rotate(0deg) scale(1.04);
+}
+.ob-stamp__disc {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  border: 2.5px solid currentColor;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.ob-stamp__shout {
+  font: 400 1.6rem/0.85 var(--ob-font-display);
+  text-transform: uppercase;
+  padding-right: 0.9rem;
+  border-right: 2px solid currentColor;
+}
+.ob-stamp__caption {
+  font: 700 0.62rem/1.25 var(--ob-font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  max-width: 12ch;
+}
+.ob-stamp--mustard {
+  background: var(--ob-mustard);
+  color: var(--ob-cocoa);
+}
+.ob-stamp--red {
+  background: var(--ob-tomato);
+  color: var(--ob-cream);
+}
+
+/* Sticker: tilted, hard-shadowed card */
+.ob-sticker {
+  border: 2.5px solid var(--ob-ink);
+  border-radius: 1rem;
+  box-shadow: 6px 6px 0 var(--ob-ink);
+  transition:
+    transform 0.4s var(--ob-spring),
+    box-shadow 0.4s var(--ob-spring);
+}
+.ob-sticker:hover {
+  transform: translate(-3px, -3px) rotate(var(--ob-hover-tilt, -1.2deg));
+  box-shadow: 10px 10px 0 var(--ob-ink);
+}
+
+/* Taped polaroid frame */
+.ob-polaroid {
+  position: relative;
+  padding: 0.7rem 0.7rem 2.6rem;
+  background: var(--ob-paper);
+  box-shadow: 0 18px 40px rgba(22, 14, 7, 0.35);
+  transform: rotate(var(--ob-tilt, 2deg));
+  transition: transform 0.5s var(--ob-spring);
+}
+.ob-polaroid:hover {
+  transform: rotate(0deg) scale(1.015);
+}
+.ob-tape {
+  position: absolute;
+  width: 6.5rem;
+  height: 1.7rem;
+  background: rgba(251, 243, 228, 0.72);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  z-index: 5;
+}
+
+/* Hexagon badge "GEN-Z" */
+.ob-hex {
+  display: inline-grid;
+  place-items: center;
+  padding: 0.9rem 1.4rem;
+  background: var(--ob-mustard);
+  color: var(--ob-cocoa);
+  clip-path: polygon(14% 0, 86% 0, 100% 50%, 86% 100%, 14% 100%, 0 50%);
+  font: 400 1.4rem/1 var(--ob-font-display);
+  transform: rotate(-8deg);
+}
+
+/* Fields */
+.ob-field {
+  width: 100%;
+  border: 2.5px solid var(--ob-ink);
+  border-radius: 0.75rem;
+  background: var(--ob-paper);
+  color: var(--ob-cocoa);
+  padding: 0.85rem 1rem;
+  font: 500 1rem/1.4 var(--ob-font-body);
+  box-shadow: 3px 3px 0 var(--ob-ink);
+  transition:
+    box-shadow 0.25s var(--ob-spring),
+    transform 0.25s var(--ob-spring);
+}
+.ob-field:focus {
+  outline: none;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--ob-tomato);
+}
+.ob-field::placeholder {
+  color: #957a57;
+}
+
+/* ------------------------------------------------------------------ */
+/* Marquee                                                             */
+/* ------------------------------------------------------------------ */
+
+.ob-marquee {
+  --ob-marquee-speed: 28s;
+  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+  user-select: none;
+}
+.ob-marquee__track {
+  display: flex;
+  flex-shrink: 0;
+  min-width: 100%;
+  gap: 2.5rem;
+  padding-right: 2.5rem;
+  animation: ob-marquee var(--ob-marquee-speed) linear infinite;
+}
+.ob-marquee--reverse .ob-marquee__track {
+  animation-direction: reverse;
+}
+.ob-marquee:hover .ob-marquee__track {
+  animation-play-state: paused;
+}
+@keyframes ob-marquee {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Character animation (scripts/brand-fx.js splits [data-ob-chars])    */
+/* ------------------------------------------------------------------ */
+
+.ob-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.ob-char {
+  --r: 0deg;
+  --y: 0em;
+  --i: 0;
+  display: inline-block;
+  transform: translateY(var(--y)) rotate(var(--r));
+  transform-origin: 50% 80%;
+  will-change: transform;
+}
+
+/* jumble — hand-lettered uneven baseline like "KAZI ESHA" / "THE ART OF DOING NOTHING" */
+[data-ob-chars~="jumble"] .ob-char {
+  transition: transform 0.45s var(--ob-spring);
+}
+
+/* pop — characters spring up into place on first view */
+[data-ob-chars~="pop"]:not(.ob-chars-in) .ob-char {
+  opacity: 0;
+  transform: translateY(0.9em) rotate(calc(var(--r) * 4)) scale(0.6);
+}
+[data-ob-chars~="pop"].ob-chars-in .ob-char {
+  opacity: 1;
+  transition:
+    opacity 0.4s var(--ob-out) calc(var(--i) * 32ms),
+    transform 0.75s var(--ob-spring) calc(var(--i) * 32ms);
+}
+
+/* wave — perpetual gentle bob, offset per character */
+[data-ob-chars~="wave"].ob-chars-in .ob-char {
+  animation: ob-char-wave 3.2s ease-in-out calc(0.9s + var(--i) * 90ms) infinite;
+}
+@keyframes ob-char-wave {
+  0%,
+  100% {
+    transform: translateY(var(--y)) rotate(var(--r));
+  }
+  50% {
+    transform: translateY(calc(var(--y) - 0.07em)) rotate(calc(var(--r) * -1));
+  }
+}
+
+/* wobble — Dali-style melt: each char sways on its own clock */
+[data-ob-chars~="wobble"].ob-chars-in .ob-char {
+  animation: ob-char-wobble 2.6s ease-in-out calc(var(--i) * -0.37s) infinite;
+}
+@keyframes ob-char-wobble {
+  0%,
+  100% {
+    transform: translateY(var(--y)) rotate(var(--r)) skewX(0deg);
+  }
+  33% {
+    transform: translateY(calc(var(--y) + 0.03em)) rotate(calc(var(--r) + 3deg)) skewX(-3deg);
+  }
+  66% {
+    transform: translateY(calc(var(--y) - 0.03em)) rotate(calc(var(--r) - 3deg)) skewX(3deg);
+  }
+}
+
+/* Hover rubber-band, added per char by brand-fx.js */
+.ob-char.is-boing {
+  animation: ob-char-boing 0.7s var(--ob-spring) both !important;
+  color: var(--ob-boing-color, inherit);
+}
+@keyframes ob-char-boing {
+  0% {
+    transform: translateY(var(--y)) rotate(var(--r)) scale(1);
+  }
+  30% {
+    transform: translateY(calc(var(--y) - 0.22em)) rotate(calc(var(--r) - 10deg)) scale(1.18, 0.86);
+  }
+  55% {
+    transform: translateY(calc(var(--y) + 0.04em)) rotate(calc(var(--r) + 6deg)) scale(0.92, 1.1);
+  }
+  80% {
+    transform: translateY(calc(var(--y) - 0.04em)) rotate(calc(var(--r) - 2deg)) scale(1.03, 0.98);
+  }
+  100% {
+    transform: translateY(var(--y)) rotate(var(--r)) scale(1);
+  }
+}
+
+/* Scramble text uses fixed-width glyphs while resolving */
+[data-ob-scramble].is-scrambling {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Floating tags and coins */
+[data-ob-float] {
+  --ob-float-rot: 0deg;
+  animation: ob-float 5.5s ease-in-out var(--ob-float-delay, 0s) infinite;
+  will-change: transform;
+}
+@keyframes ob-float {
+  0%,
+  100% {
+    transform: translate3d(var(--ob-px, 0px), var(--ob-py, 0px), 0) rotate(var(--ob-float-rot));
+  }
+  50% {
+    transform: translate3d(var(--ob-px, 0px), calc(var(--ob-py, 0px) - 10px), 0)
+      rotate(calc(var(--ob-float-rot) * -0.6));
+  }
+}
+
+/* Scroll-in reveals for brand blocks */
+[data-ob-reveal] {
+  opacity: 0;
+  transform: translateY(2.2rem) rotate(var(--ob-reveal-rot, 0deg));
+  transition:
+    opacity 0.6s var(--ob-out),
+    transform 0.9s var(--ob-spring);
+  transition-delay: var(--ob-reveal-delay, 0s);
+}
+[data-ob-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+[data-ob-reveal="pop"] {
+  transform: scale(0.6) rotate(-10deg);
+}
+
+/* SVG strokes drawn on view */
+[data-ob-draw] path,
+[data-ob-draw] line,
+[data-ob-draw] polyline,
+[data-ob-draw] circle {
+  stroke-dasharray: var(--ob-len, 1000);
+  stroke-dashoffset: var(--ob-len, 1000);
+  transition: stroke-dashoffset 1.1s var(--ob-out) var(--ob-draw-delay, 0s);
+}
+[data-ob-draw].is-in path,
+[data-ob-draw].is-in line,
+[data-ob-draw].is-in polyline,
+[data-ob-draw].is-in circle {
+  stroke-dashoffset: 0;
+}
+
+/* Spinning badge text ring */
+.ob-spin {
+  animation: ob-spin 16s linear infinite;
+}
+@keyframes ob-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Melting clock (THE ART OF DOING NOTHING) */
+.ob-melt {
+  animation: ob-melt 6s ease-in-out infinite;
+  transform-origin: 50% 0%;
+}
+@keyframes ob-melt {
+  0%,
+  100% {
+    transform: rotate(-4deg) skewY(0deg) scaleY(1);
+    border-radius: 48% 52% 40% 60% / 45% 40% 60% 55%;
+  }
+  50% {
+    transform: rotate(5deg) skewY(-6deg) scaleY(1.08);
+    border-radius: 60% 40% 55% 45% / 38% 55% 45% 62%;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Site chrome                                                         */
+/* ------------------------------------------------------------------ */
+
+.ob-nav {
+  background: rgba(30, 20, 11, 0.86);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 2px solid rgba(242, 165, 22, 0.25);
+}
+.ob-nav__logo {
+  font-family: var(--ob-font-letter);
+  font-size: 1.75rem;
+  line-height: 1;
+  color: var(--ob-mustard);
+  --ob-boing-color: var(--ob-sun);
+}
+.ob-nav__link {
+  position: relative;
+  font: 700 0.78rem/1 var(--ob-font-body);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(247, 227, 200, 0.72);
+  transition: color 0.2s ease;
+}
+.ob-nav__link::after {
+  content: "";
+  position: absolute;
+  left: -4px;
+  right: -4px;
+  bottom: -7px;
+  height: 7px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 8' preserveAspectRatio='none'%3E%3Cpath d='M1 5 C 20 1, 35 8, 52 4 S 85 2, 99 5' fill='none' stroke='%23F2A516' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E")
+    no-repeat center / 100% 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s var(--ob-spring);
+}
+.ob-nav__link:hover,
+.ob-nav__link[aria-current="page"] {
+  color: var(--ob-cream);
+}
+.ob-nav__link:hover::after,
+.ob-nav__link[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+.ob-nav__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.05rem;
+  border-radius: 999px;
+  background: var(--ob-tomato);
+  color: var(--ob-cream);
+  font: 700 0.75rem/1 var(--ob-font-body);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border: 2px solid var(--ob-ink);
+  box-shadow: 3px 3px 0 var(--ob-ink);
+  transition:
+    transform 0.25s var(--ob-spring),
+    box-shadow 0.25s var(--ob-spring);
+}
+.ob-nav__cta:hover {
+  transform: translate(-1px, -2px) rotate(-3deg);
+  box-shadow: 5px 5px 0 var(--ob-ink);
+}
+
+/* Mobile drawer */
+#site-nav-drawer.ob-drawer {
+  background: var(--ob-mustard);
+  color: var(--ob-cocoa);
+  border-left: 3px solid var(--ob-ink);
+}
+.ob-drawer a.ob-drawer__link {
+  font: 400 2.6rem/1 var(--ob-font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: var(--ob-cocoa);
+  transition:
+    transform 0.3s var(--ob-spring),
+    color 0.2s ease;
+}
+.ob-drawer a.ob-drawer__link:hover {
+  color: var(--ob-tomato);
+  transform: translateX(6px) rotate(-2deg);
+}
+
+/* Footer */
+.ob-footer__giant {
+  font-family: var(--ob-font-display);
+  font-size: clamp(5rem, 22vw, 19rem);
+  line-height: 0.8;
+  text-transform: uppercase;
+}
+
+/* ------------------------------------------------------------------ */
+/* Reduced motion                                                      */
+/* ------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .ob-marquee__track,
+  [data-ob-float],
+  .ob-spin,
+  .ob-melt,
+  .ob-char,
+  [data-ob-chars] .ob-char {
+    animation: none !important;
+  }
+  [data-ob-chars~="pop"] .ob-char,
+  [data-ob-reveal] {
+    opacity: 1 !important;
+    transform: translateY(var(--y, 0)) rotate(var(--r, 0deg)) !important;
+    transition: none !important;
+  }
+  [data-ob-reveal] {
+    transform: none !important;
+  }
+  [data-ob-draw] path,
+  [data-ob-draw] line,
+  [data-ob-draw] polyline,
+  [data-ob-draw] circle {
+    stroke-dashoffset: 0 !important;
+    transition: none !important;
+  }
+  .ob-btn,
+  .ob-sticker,
+  .ob-polaroid,
+  .ob-stamp {
+    transition: none !important;
+  }
+}
+
+/* Existing motion system, rebranded */
+#anim-scroll-progress {
+  height: 4px;
+  background: repeating-linear-gradient(90deg, var(--ob-mustard) 0 18px, var(--ob-tomato) 18px 36px);
+  opacity: 1;
+}
