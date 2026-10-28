@@ -16,8 +16,7 @@
 <!-- Google Fonts -->
 <!-- Material Symbols -->
 <!-- Tailwind CSS -->
-<meta name="theme-color" content="#A8121A"/>
-<meta name="theme-color" content="#A8121A"/>
+<meta name="theme-color" content="#0A0A0B"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script src="/brand/tailwind-brand.js"></script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -26,47 +25,52 @@
 <link rel="stylesheet" href="styles/animations.css"/>
 <link rel="stylesheet" href="styles/brand.css"/>
 <style>
-  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24; }
-  #site-nav-drawer { transform: translateX(100%); transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  #site-nav-drawer { transform: translateX(100%); transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
   #site-nav-drawer.open { transform: translateX(0); }
   .site-nav-overlay.open { opacity: 1 !important; pointer-events: auto !important; }
   .ob-drawer a.ob-drawer__link[aria-current="page"] { color: #D8202A; }
 
-  /* Conversion bridge (shared with home) */
+  /* Rotating CTA lines (shared with home) */
   .conversion-bridge-slide {
     position: absolute; left: 0; top: 0; right: 0;
-    opacity: 0; transform: translateY(0.8rem) rotate(-1.5deg);
-    transition: opacity 0.55s ease-in-out, transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+    opacity: 0; filter: blur(6px); transform: translateY(0.6rem);
+    transition: opacity 0.6s ease, filter 0.6s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
     pointer-events: none;
   }
-  .conversion-bridge-slide.is-active { opacity: 1; transform: none; pointer-events: auto; }
+  .conversion-bridge-slide.is-active { opacity: 1; filter: none; transform: none; pointer-events: auto; }
   #conversion-bridge .bridge-shell { opacity: 0; transform: translateY(1.25rem); }
   #conversion-bridge.is-visible .bridge-shell { opacity: 1; transform: none; transition: opacity 0.85s ease-out, transform 0.85s ease-out; }
   @media (prefers-reduced-motion: reduce) {
-    .conversion-bridge-slide { transition: none; }
+    .conversion-bridge-slide { transition: none; filter: none; }
     .conversion-bridge-slide:not(.is-active) { visibility: hidden; }
     #conversion-bridge .bridge-shell { opacity: 1; transform: none; }
   }
 
-  .contact-hero__title { font-size: clamp(3.4rem, 10vw, 8.4rem); }
-  .contact-swirl path { transform-origin: center; animation: contact-swirl 26s ease-in-out infinite; }
-  .contact-swirl path:nth-child(2) { animation-duration: 34s; animation-direction: reverse; }
-  @keyframes contact-swirl { 0%, 100% { transform: rotate(0deg) scale(1); } 50% { transform: rotate(-7deg) scale(1.05); } }
-  .contact-orb { position: absolute; width: 1.7rem; height: 1.7rem; border-radius: 999px; background: #F24C00; box-shadow: inset -6px -3px 0 0 #26307A; }
-  .contact-bracket { position: absolute; width: 2.2rem; height: 2.2rem; border-color: #F24C00; border-style: solid; }
-  .ob-field[type="date"] { color-scheme: light; }
-  select.ob-field { appearance: none; padding-right: 2.75rem; cursor: pointer; }
+  .contact-hero__title { font-size: clamp(3.2rem, 8.5vw, 7.2rem); line-height: .95; letter-spacing: -0.05em; }
+
+  /* Fields: keep the brand shape over the Tailwind forms plugin reset */
+  #contact-form .ob-field {
+    border: 1px solid rgba(242, 239, 235, 0.14); border-radius: .9rem; background: rgba(255, 255, 255, 0.04);
+    color: #F2EFEB; padding: .85rem 1rem; font: 500 1rem/1.4 "Urbanist", system-ui, sans-serif; box-shadow: none;
+    transition: border-color .2s ease, box-shadow .25s ease, background-color .2s ease;
+  }
+  #contact-form .ob-field:hover { border-color: rgba(242, 239, 235, 0.26); }
+  #contact-form .ob-field:focus { outline: none; border-color: #FF5A1F; background: rgba(255, 90, 31, 0.05); box-shadow: 0 0 0 4px rgba(255, 90, 31, 0.16); }
+  #contact-form .ob-field::placeholder { color: rgba(242, 239, 235, 0.38); }
+  #contact-form .ob-field[type="date"] { color-scheme: dark; }
+  #contact-form select.ob-field { appearance: none; background-image: none; padding-right: 2.75rem; cursor: pointer; }
+  #contact-form select.ob-field option { background: #141415; color: #F2EFEB; }
 
   /* Contact form feedback — slide-up + fade */
   .contact-form-feedback { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows 0.48s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease; }
   .contact-form-feedback.is-visible { grid-template-rows: 1fr; opacity: 1; }
-  .contact-form-feedback__measure { min-height: 0; overflow: hidden; padding: 0 8px 8px 0; }
+  .contact-form-feedback__measure { min-height: 0; overflow: hidden; }
   .contact-form-feedback__inner { transform: translateY(10px); opacity: 0; transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.45s ease; }
   .contact-form-feedback.is-visible .contact-form-feedback__inner { transform: none; opacity: 1; }
-  .contact-form-feedback__shell { background: #F2A516; border: 2.5px solid #160E07; box-shadow: 4px 4px 0 #160E07; }
-  .contact-form-feedback.is-error .contact-form-feedback__shell { background: #F7E3C8; border-color: #D8202A; box-shadow: 4px 4px 0 #D8202A; }
+  .contact-form-feedback__shell { background: rgba(255, 90, 31, 0.1); border: 1px solid rgba(255, 90, 31, 0.5); box-shadow: 0 0 30px -10px rgba(255, 90, 31, 0.6); }
+  .contact-form-feedback.is-error .contact-form-feedback__shell { background: rgba(240, 76, 30, 0.08); border-color: rgba(255, 122, 107, 0.6); box-shadow: none; }
   @media (prefers-reduced-motion: reduce) {
-    .contact-swirl path { animation: none; }
     .contact-form-feedback, .contact-form-feedback__inner { transition: none !important; }
     .contact-form-feedback.is-visible .contact-form-feedback__inner { transform: none; }
     .contact-form-feedback { grid-template-rows: 1fr; }
@@ -78,7 +82,7 @@
 <!-- TopNavBar -->
 <nav class="ob-nav fixed top-0 w-full z-50 flex items-center gap-6 px-5 sm:px-8 md:px-12 h-[4.5rem]">
 <a href="/" class="ob-nav__logo" data-ob-chars="jumble" aria-label="Onurik home">Onurik</a>
-<button type="button" class="md:hidden ml-auto inline-flex items-center justify-center rounded-full w-11 h-11 bg-mustard text-cocoa border-2 border-ink shadow-sticker" aria-expanded="false" aria-controls="site-nav-drawer" id="site-mobile-menu-btn">
+<button type="button" class="md:hidden ml-auto inline-flex items-center justify-center rounded-full w-11 h-11 border border-white/15 bg-white/5 text-cream backdrop-blur" aria-expanded="false" aria-controls="site-nav-drawer" id="site-mobile-menu-btn">
 <span class="material-symbols-outlined text-2xl" aria-hidden="true">menu</span>
 <span class="sr-only">Open menu</span>
 </button>
@@ -96,7 +100,7 @@
 <a href="/shop" class="ob-drawer__link">Shop</a>
 <a href="/contact" class="ob-drawer__link" aria-current="page">Contact</a>
 <a href="/contact" class="ob-btn ob-btn--red mt-6 self-start">Enquire <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></a>
-<p class="ob-marker mt-auto mb-10 text-2xl text-cocoa/80 -rotate-3">think outside the box ✕</p>
+<p class="ob-marker mt-auto mb-10 text-xl">design · build · question</p>
 </nav>
 <script>
 (function () {
@@ -128,40 +132,30 @@
   });
 })();
 </script>
-<main class="ob-bg-crimson ob-grain relative flex-grow overflow-hidden pt-[4.5rem]">
+<main class="ob-bg-tomato ob-grain relative flex-grow overflow-hidden pt-[4.5rem]">
 <div class="absolute inset-0 ob-lines" aria-hidden="true"></div>
-<svg class="contact-swirl pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 1200 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-<path d="M-100 300 C 120 120, 360 420, 560 260 S 900 40, 1300 220 L 1300 520 C 1000 380, 820 640, 560 560 S 120 520, -100 640 Z" fill="#C8141E" opacity="0.7"/>
-<path d="M200 1100 C 260 860, 560 940, 640 800 S 980 760, 1300 900 L 1300 1100 Z" fill="#8E0F16" opacity="0.6"/>
-</svg>
+<div class="pointer-events-none absolute -right-32 top-1/3 h-[34rem] w-[34rem] rounded-full bg-mustard/15 blur-[130px]" aria-hidden="true"></div>
 
 <div class="relative z-[2] mx-auto grid max-w-[1440px] gap-14 px-5 pb-28 pt-10 sm:px-8 md:px-12 lg:grid-cols-12 lg:gap-10">
 <!-- Left: lettering + direct details -->
 <div class="lg:col-span-5">
-<div class="flex flex-wrap items-center gap-4 text-mustard">
-<div class="ob-chrome" aria-hidden="true"><span>×</span><span>−</span><span>↻</span></div>
-<span class="ob-search-pill"><span class="material-symbols-outlined text-lg" aria-hidden="true">search</span>what are you building?</span>
+<div class="flex flex-wrap items-center gap-4 text-cream/80">
+<span class="ob-chrome" aria-hidden="true"><span></span><span></span><span></span></span>
+<span class="ob-search-pill"><span class="material-symbols-outlined text-lg text-mustard" aria-hidden="true">search</span>what are you building?</span>
 </div>
 
-<div class="relative mt-12 inline-block px-6 py-6">
-<span class="contact-bracket left-0 top-0 border-l-[3px] border-t-[3px] -rotate-6" aria-hidden="true"></span>
-<span class="contact-bracket right-0 bottom-0 border-b-[3px] border-r-[3px] -rotate-6" aria-hidden="true"></span>
-<span class="contact-orb -top-3 left-1/3" data-ob-float aria-hidden="true"></span>
-<span class="contact-orb -right-3 top-1/3 scale-75" data-ob-float aria-hidden="true"></span>
-<span class="contact-orb bottom-2 -left-4 scale-90" data-ob-float aria-hidden="true"></span>
-<h1 class="contact-hero__title ob-letter text-paper" data-ob-chars="jumble pop wobble" data-ob-amp="1.5">Let's work together</h1>
-</div>
+<h1 class="contact-hero__title ob-display mt-10 text-cream" data-ob-chars="pop wave">Let's work together</h1>
 
-<p class="mt-8 max-w-md text-lg leading-relaxed text-cream/90">We partner with visionary organizations to architect digital experiences that prioritize clarity, intentionality, and quiet confidence. Tell us about your objective.</p>
+<p class="mt-8 max-w-md text-lg leading-relaxed text-cream/60">We partner with visionary organizations to architect digital experiences that prioritize clarity, intentionality, and quiet confidence. Tell us about your objective.</p>
 
 <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-<div class="ob-sticker ob-bg-mustard -rotate-2 px-5 py-4" data-ob-reveal>
-<h3 class="ob-eyebrow text-cocoa/75">Direct Inquiry</h3>
-<p class="mt-2 text-lg font-bold"><a class="underline decoration-2 underline-offset-4 hover:text-tomato" href="mailto:jason@onurik.space">jason@onurik.space</a></p>
+<div class="ob-widget" data-ob-reveal>
+<div class="ob-widget__head">Direct inquiry <span class="material-symbols-outlined text-mustard" aria-hidden="true">mail</span></div>
+<p class="text-lg font-semibold"><a class="underline decoration-mustard decoration-2 underline-offset-4 transition-colors hover:text-mustard" href="mailto:jason@onurik.space">jason@onurik.space</a></p>
 </div>
-<div class="ob-sticker ob-bg-paper rotate-1 px-5 py-4" data-ob-reveal style="--ob-reveal-delay:.1s">
-<h3 class="ob-eyebrow text-tomato">Operating Base</h3>
-<p class="ob-display mt-2 text-2xl">Nairobi, KE</p>
+<div class="ob-widget ob-widget--light" data-ob-reveal style="--ob-reveal-delay:.1s">
+<div class="ob-widget__head">Operating base <span class="ob-pulse" aria-hidden="true"></span></div>
+<p class="text-2xl font-semibold tracking-tight">Nairobi, KE</p>
 </div>
 </div>
 <div class="mt-10" data-onurik-social-contact-wrap hidden>
@@ -170,27 +164,28 @@
 </div>
 </div>
 
-<!-- Right: sticker form -->
-<div class="lg:col-span-6 lg:col-start-7 lg:pt-16">
-<div class="ob-sticker overflow-hidden bg-paper text-cocoa lg:rotate-[1deg]" style="--ob-hover-tilt:0deg">
-<div class="flex items-center justify-between border-b-[2.5px] border-ink bg-mustard px-4 py-2">
-<div class="ob-chrome text-cocoa" aria-hidden="true"><span>×</span><span>−</span><span>↻</span></div>
-<span class="ob-eyebrow text-cocoa">new_enquiry</span>
+<!-- Right: glass form window -->
+<div class="lg:col-span-6 lg:col-start-7 lg:pt-10">
+<div class="ob-sticker overflow-hidden text-cream" data-ob-reveal>
+<div class="flex items-center gap-3 border-b border-white/10 px-5 py-3.5">
+<span class="ob-chrome" aria-hidden="true"><span></span><span></span><span></span></span>
+<span class="h-2 flex-1 rounded-full bg-white/[0.06]" aria-hidden="true"></span>
+<span class="ob-eyebrow text-mustard">new enquiry</span>
 </div>
-<form id="contact-form" class="flex flex-col gap-6 p-6 md:p-10" novalidate>
+<form id="contact-form" class="flex flex-col gap-6 p-6 md:p-9" novalidate>
 <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
 <div class="flex flex-col gap-2">
-<label class="ob-eyebrow text-cocoa/80" for="name">Name</label>
+<label class="ob-eyebrow text-cream/55" for="name">Name</label>
 <input class="ob-field" id="name" name="name" placeholder="Your name" type="text"/>
 </div>
 <div class="flex flex-col gap-2">
-<label class="ob-eyebrow text-cocoa/80" for="email">Email</label>
+<label class="ob-eyebrow text-cream/55" for="email">Email</label>
 <input class="ob-field" id="email" name="email" placeholder="Email Address" type="email"/>
 </div>
 </div>
 <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
 <div class="relative flex flex-col gap-2">
-<label class="ob-eyebrow text-cocoa/80" for="project_type">Project Type</label>
+<label class="ob-eyebrow text-cream/55" for="project_type">Project Type</label>
 <select class="ob-field" id="project_type" name="project_type">
 <option disabled="" selected="" value="">Select Project Type</option>
 <option value="design_system">Develop System</option>
@@ -198,24 +193,24 @@
 <option value="brand_identity">Brand Identity</option>
 <option value="consulting">Consulting</option>
 </select>
-<span class="material-symbols-outlined pointer-events-none absolute bottom-3.5 right-3 text-cocoa" aria-hidden="true">expand_more</span>
+<span class="material-symbols-outlined pointer-events-none absolute bottom-3.5 right-3 text-cream/60" aria-hidden="true">expand_more</span>
 </div>
 <div class="flex flex-col gap-2">
-<label class="ob-eyebrow text-cocoa/80" for="start_date">Start Date</label>
+<label class="ob-eyebrow text-cream/55" for="start_date">Start Date</label>
 <input class="ob-field" id="start_date" name="start_date" type="date"/>
 </div>
 </div>
 <div class="flex flex-col gap-2">
-<label class="ob-eyebrow text-cocoa/80" for="message">Message</label>
+<label class="ob-eyebrow text-cream/55" for="message">Message</label>
 <textarea class="ob-field resize-none" id="message" name="message" placeholder="Tell us about the scope and objective of your initiative..." rows="5"></textarea>
 </div>
 <div class="mt-4 flex flex-col items-center justify-between gap-5 sm:flex-row">
-<button class="ob-btn ob-btn--red w-full sm:w-auto" type="submit">
+<button class="ob-btn w-full sm:w-auto" type="submit">
 Submit Inquiry
 <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
 </button>
-<span class="ob-marker text-xl text-cocoa/70" aria-hidden="true">or</span>
-<button id="contact-book-session" type="button" class="ob-btn w-full sm:w-auto">
+<span class="ob-marker text-lg text-cream/40" aria-hidden="true">or</span>
+<button id="contact-book-session" type="button" class="ob-btn ob-btn--ghost w-full text-cream sm:w-auto">
 <span class="material-symbols-outlined" aria-hidden="true">calendar_month</span>
 Book a Session
 </button>
@@ -224,8 +219,8 @@ Book a Session
 <div class="contact-form-feedback__measure">
 <div class="contact-form-feedback__shell rounded-xl px-4 py-3.5 md:px-5 md:py-4">
 <div class="contact-form-feedback__inner flex items-start gap-3">
-<span id="contact-form-feedback-icon" class="material-symbols-outlined mt-0.5 shrink-0 text-xl text-cocoa" aria-hidden="true">check_circle</span>
-<p id="contact-form-feedback-text" class="pt-px text-[15px] font-semibold leading-snug text-cocoa md:text-[16px]"></p>
+<span id="contact-form-feedback-icon" class="material-symbols-outlined mt-0.5 shrink-0 text-xl text-mustard" aria-hidden="true">check_circle</span>
+<p id="contact-form-feedback-text" class="pt-px text-[15px] font-semibold leading-snug text-cream md:text-[16px]"></p>
 </div>
 </div>
 </div>
@@ -240,13 +235,13 @@ Book a Session
 <div class="mx-auto max-w-[1440px] px-5 pt-16 sm:px-8 md:px-12">
 <div class="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
 <div>
-<p class="ob-letter text-3xl text-mustard md:text-4xl" data-ob-chars="jumble wobble">Got an idea?</p>
+<p class="ob-letter text-3xl text-mustard md:text-4xl" data-ob-chars="wobble">Got an idea?</p>
 <a href="/contact" class="ob-marker mt-2 inline-block text-xl text-cream/80 hover:text-tomato transition-colors">say hello → let’s build it</a>
 </div>
 <ul data-onurik-social-footer class="flex flex-wrap gap-6 ob-mono text-[11px] uppercase tracking-[0.18em] text-cream/70" aria-label="Social links" hidden></ul>
 </div>
 <p class="ob-footer__giant ob-outline mt-12 select-none text-center text-mustard" style="--ob-outline-color:#F2A516" data-ob-chars="jumble wave" data-ob-amp="0.6" aria-hidden="true">Onurik</p>
-<div class="flex flex-col items-center justify-between gap-3 border-t-2 border-cream/10 py-6 ob-mono text-[10px] uppercase tracking-[0.2em] text-cream/45 md:flex-row">
+<div class="flex flex-col items-center justify-between gap-3 border-t border-white/10 py-6 ob-mono text-[10px] uppercase tracking-[0.2em] text-cream/45 md:flex-row">
 <span>© 2026 Onurik. All rights reserved.</span>
 <span>Design ✶ Build ✶ Question everything</span>
 </div>

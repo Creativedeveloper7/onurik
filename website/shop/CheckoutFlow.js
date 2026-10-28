@@ -86,7 +86,7 @@ function progress(step) {
         cls +
         '"></span>' +
         '<span class="hidden sm:block font-montserrat text-[10px] uppercase tracking-[0.16em] ' +
-        (n === step ? "text-cocoa" : "text-cocoa/60") +
+        (n === step ? "text-cream" : "text-cream/60") +
         '">' +
         label +
         "</span></span>" +
@@ -213,28 +213,28 @@ function startCheckout(root) {
     return (
       '<dl class="shop-summary mt-6 space-y-3 font-montserrat text-sm">' +
       '<p class="shop-summary__title">Order summary</p>' +
-      '<div class="flex justify-between text-cocoa/70"><dt>Subtotal</dt><dd class="text-cocoa">' +
+      '<div class="flex justify-between text-cream/70"><dt>Subtotal</dt><dd class="text-cream">' +
       formatKes(t.subtotal) +
       "</dd></div>" +
-      '<div class="flex justify-between gap-6 text-cocoa/70"><dt>Delivery · ' +
+      '<div class="flex justify-between gap-6 text-cream/70"><dt>Delivery · ' +
       escapeHtml(getDeliveryZone(ship.zoneId).label) +
       "</dt><dd class=\"text-cocoa\">" +
       deliveryLine +
       "</dd></div>" +
       (ship.turnaroundExtra
-        ? '<div class="flex justify-between gap-6 text-cocoa/70"><dt>' +
+        ? '<div class="flex justify-between gap-6 text-cream/70"><dt>' +
           escapeHtml(ship.turnaroundLabel) +
-          '</dt><dd class="text-cocoa">+' +
+          '</dt><dd class="text-cream">+' +
           formatKes(ship.turnaroundExtra) +
           "</dd></div>"
-        : '<div class="flex justify-between gap-6 text-cocoa/70"><dt>' +
+        : '<div class="flex justify-between gap-6 text-cream/70"><dt>' +
           escapeHtml(ship.turnaroundLabel) +
-          '</dt><dd class="text-cocoa">No extra</dd></div>') +
+          '</dt><dd class="text-cream">No extra</dd></div>') +
       (ship.deliveryDate
-        ? '<p class="text-[11px] uppercase tracking-[0.16em] text-cocoa/60">Requested ' +
+        ? '<p class="text-[11px] uppercase tracking-[0.16em] text-cream/60">Requested ' +
           escapeHtml(formatDisplayDate(ship.deliveryDate)) +
           "</p>"
-        : '<p class="text-[11px] uppercase tracking-[0.16em] text-cocoa/60">Earliest after production · ' +
+        : '<p class="text-[11px] uppercase tracking-[0.16em] text-cream/60">Earliest after production · ' +
           escapeHtml(formatDisplayDate(ship.earliestDate)) +
           "</p>") +
       '<div class="shop-total"><dt class="shop-total__label">Bag Total</dt><dd class="shop-total__value">' +
@@ -322,7 +322,7 @@ function startCheckout(root) {
         '" value="' +
         escapeAttr(dateValue) +
         '"/>' +
-        '<p class="mt-3 text-sm text-cocoa/60">Earliest we can promise is ' +
+        '<p class="mt-3 text-sm text-cream/60">Earliest we can promise is ' +
         escapeHtml(formatDisplayDate(minDate)) +
         ", after production. " +
         escapeHtml(cfg.dateHint || "") +
@@ -339,9 +339,9 @@ function startCheckout(root) {
       "</section>" +
       '<div class="mt-10">' +
       '<div class="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-4">' +
-      '<h2 class="font-montserrat text-sm font-medium tracking-[-0.02em] text-cocoa">Select turnaround time</h2>' +
+      '<h2 class="font-montserrat text-sm font-medium tracking-[-0.02em] text-cream">Select turnaround time</h2>' +
       (cfg.turnaroundHint
-        ? '<p class="text-sm text-cocoa/60">' + escapeHtml(cfg.turnaroundHint) + "</p>"
+        ? '<p class="text-sm text-cream/60">' + escapeHtml(cfg.turnaroundHint) + "</p>"
         : "") +
       "</div>" +
       '<div class="shop-turn-grid">' +
@@ -369,14 +369,14 @@ function startCheckout(root) {
         '<div class="max-w-2xl">' +
         '<p class="shop-eyebrow mb-4">Shop / Order</p>' +
         '<h1 class="shop-title text-[clamp(2.5rem,5vw,4rem)]">Order confirmed.</h1>' +
-        '<p class="mt-5 text-cocoa/70 max-w-lg">' +
+        '<p class="mt-5 text-cream/70 max-w-lg">' +
         escapeHtml(receiptNote) +
         "</p>" +
         (order
           ? '<p class="mt-8 shop-label">Order ' +
             escapeHtml(order.id) +
             "</p>" +
-            '<ul class="mt-6 divide-y divide-cocoa/15 border-y border-cocoa/15">' +
+            '<ul class="mt-6 divide-y divide-cocoa/15 border-y border-white/10">' +
             (order.items || [])
               .map(function (item) {
                 return (
@@ -391,19 +391,19 @@ function startCheckout(root) {
               })
               .join("") +
             "</ul>" +
-            '<p class="mt-4 text-sm text-cocoa/70">' +
+            '<p class="mt-4 text-sm text-cream/70">' +
             escapeHtml(order.paymentLabel || "") +
             (order.paymentRef ? " · " + escapeHtml(order.paymentRef) : "") +
             "</p>" +
             (order.shipping
-              ? '<p class="mt-3 text-sm text-cocoa/70">' +
+              ? '<p class="mt-3 text-sm text-cream/70">' +
                 escapeHtml(order.shipping.label || "Delivery") +
                 (order.shipping.deliveryDate
                   ? " · " + escapeHtml(formatDisplayDate(order.shipping.deliveryDate))
                   : "") +
                 "</p>"
               : "") +
-            '<p class="mt-6 font-montserrat text-lg text-cocoa">Total ' +
+            '<p class="mt-6 font-montserrat text-lg text-cream">Total ' +
             formatKes(order.total) +
             "</p>"
           : "") +
@@ -423,7 +423,7 @@ function startCheckout(root) {
         '<h1 class="shop-title text-[clamp(2.5rem,5vw,4rem)]">' +
         (wallePhase === "redirecting" ? "Opening secure checkout." : "Confirming payment.") +
         "</h1>" +
-        '<p class="mt-5 text-cocoa/70 max-w-lg">' +
+        '<p class="mt-5 text-cream/70 max-w-lg">' +
         (wallePhase === "redirecting"
           ? "You are being sent to the Wallee hosted pay page. Enter your M-Pesa number there and approve the STK prompt. The bag total is locked on this session."
           : "Wallee sent you back with a signed return. We are re-checking that the session is paid before we fulfil the order.") +
@@ -488,7 +488,7 @@ function startCheckout(root) {
       body =
         '<div>' +
         '<dl class="space-y-4 text-sm">' +
-        '<div><dt class="shop-label">Ship to</dt><dd class="mt-1 text-cocoa">' +
+        '<div><dt class="shop-label">Ship to</dt><dd class="mt-1 text-cream">' +
         escapeHtml(draft.name) +
         "<br/>" +
         escapeHtml(draft.address) +
@@ -499,28 +499,28 @@ function startCheckout(root) {
         " · " +
         escapeHtml(draft.email) +
         "</dd></div>" +
-        '<div><dt class="shop-label">Delivery zone</dt><dd class="mt-1 text-cocoa">' +
+        '<div><dt class="shop-label">Delivery zone</dt><dd class="mt-1 text-cream">' +
         escapeHtml(getDeliveryZone(t.shipping.zoneId).label) +
-        '<span class="block text-cocoa/70">' +
+        '<span class="block text-cream/70">' +
         escapeHtml(getDeliveryZone(t.shipping.zoneId).detail) +
         "</span></dd></div>" +
-        '<div><dt class="shop-label">Turnaround</dt><dd class="mt-1 text-cocoa">' +
+        '<div><dt class="shop-label">Turnaround</dt><dd class="mt-1 text-cream">' +
         escapeHtml(t.shipping.turnaroundLabel) +
         (t.shipping.turnaroundExtra
           ? " · +" + formatKes(t.shipping.turnaroundExtra)
           : " · no extra") +
         "</dd></div>" +
-        '<div><dt class="shop-label">Delivery date</dt><dd class="mt-1 text-cocoa">' +
+        '<div><dt class="shop-label">Delivery date</dt><dd class="mt-1 text-cream">' +
         escapeHtml(
           t.shipping.deliveryDate
             ? formatDisplayDate(t.shipping.deliveryDate)
             : "After production · " + formatDisplayDate(t.shipping.earliestDate)
         ) +
         "</dd></div>" +
-        '<div><dt class="shop-label">Payment</dt><dd class="mt-1 text-cocoa">Wallee · M-Pesa STK · amount locked at ' +
+        '<div><dt class="shop-label">Payment</dt><dd class="mt-1 text-cream">Wallee · M-Pesa STK · amount locked at ' +
         formatKes(pinKesAmount(t.total)) +
         "</dd></div></dl>" +
-        '<ul class="mt-8 divide-y divide-cocoa/15 border-y border-cocoa/15">' +
+        '<ul class="mt-8 divide-y divide-cocoa/15 border-y border-white/10">' +
         t.items
           .map(function (item) {
             return (
@@ -535,7 +535,7 @@ function startCheckout(root) {
           })
           .join("") +
         "</ul>" +
-        '<p class="shop-policy-link text-sm text-cocoa/70">' +
+        '<p class="shop-policy-link text-sm text-cream/70">' +
         "By paying you accept the " +
         '<a href="/shop/returns" target="_blank" rel="noopener noreferrer">Return &amp; Refund Policy</a>.' +
         "</p>" +
@@ -552,14 +552,14 @@ function startCheckout(root) {
       '<div class="grid grid-cols-1 gap-16 lg:grid-cols-12">' +
       '<div class="lg:col-span-7">' +
       '<p class="shop-eyebrow mb-4">Shop / Checkout</p>' +
-      '<h1 class="shop-title text-[clamp(2.75rem,6vw,5rem)] mb-10" data-ob-chars="jumble">Checkout</h1>' +
+      '<h1 class="shop-title text-[clamp(2.75rem,6vw,5rem)] mb-10" data-ob-chars="pop">Checkout</h1>' +
       progress(step) +
       (error ? '<p class="mb-6 shop-alert" role="alert">' + escapeHtml(error) + "</p>" : "") +
       body +
       "</div>" +
       '<aside class="lg:col-span-5 lg:pt-24">' +
       '<p class="shop-label">Bag</p>' +
-      '<ul class="mt-4 space-y-3 text-sm text-cocoa/80">' +
+      '<ul class="mt-4 space-y-3 text-sm text-cream/80">' +
       t.items
         .map(function (item) {
           return (

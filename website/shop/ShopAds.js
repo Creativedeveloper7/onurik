@@ -56,7 +56,7 @@ export async function mountShopAds(root) {
       '<div class="shop-ads__shade"></div>' +
       '<div class="shop-ads__copy">' +
       '<p class="shop-ads__kicker"><span class="ob-chrome" aria-hidden="true"><span>×</span><span>−</span><span>↻</span></span> Shop / Film</p>' +
-      '<p class="shop-ads__title" data-ob-chars="jumble pop">' +
+      '<p class="shop-ads__title" data-ob-chars="pop">' +
       escapeHtml(ad.title || "Onurik") +
       "</p>" +
       "</div>" +

@@ -12,7 +12,7 @@
   gtag('config', 'G-JBH7KPGDZ2');
 </script>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta name="theme-color" content="#F2A516"/>
+<meta name="theme-color" content="#0A0A0B"/>
 <title>Product · Onurik Shop</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script src="/brand/tailwind-brand.js"></script>
@@ -31,7 +31,7 @@
 </head>
 <body class="shop-page min-h-screen flex flex-col font-body-md antialiased">
 <nav class="ob-nav fixed top-0 z-50 flex h-[4.5rem] w-full items-center gap-3 px-5 sm:px-8 md:px-12">
-<a href="/" class="ob-nav__logo shrink-0" data-ob-chars="jumble" aria-label="Onurik home">Onurik</a>
+<a href="/" class="ob-nav__logo shrink-0" data-ob-chars="pop" aria-label="Onurik home">Onurik</a>
 <div class="ml-auto hidden md:flex items-center gap-9">
 <a href="/works" class="ob-nav__link">Works</a>
 <a href="/about" class="ob-nav__link">Info</a>
@@ -39,14 +39,14 @@
 <a href="/contact" class="ob-nav__cta" data-ob-magnet="0.3">Contact <span class="material-symbols-outlined text-base" aria-hidden="true">north_east</span></a>
 </div>
 <div class="ml-auto flex shrink-0 items-center gap-2 md:ml-6">
-<button type="button" id="shop-search-btn" class="inline-flex h-11 w-11 items-center justify-center rounded-full border-2 border-mustard/60 text-mustard transition-transform hover:-rotate-12 hover:border-mustard" aria-label="Search shop">
+<button type="button" id="shop-search-btn" class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 text-cream backdrop-blur transition-colors hover:border-mustard hover:text-mustard" aria-label="Search shop">
 <span class="material-symbols-outlined text-[22px]" aria-hidden="true">search</span>
 </button>
-<a href="/shop/cart" class="relative inline-flex h-11 w-11 items-center justify-center rounded-full border-2 border-ink bg-mustard text-cocoa shadow-sticker transition-transform hover:-rotate-12" aria-label="Cart">
+<a href="/shop/cart" class="relative inline-flex h-11 w-11 items-center justify-center rounded-full bg-mustard text-white shadow-glow transition-transform hover:-translate-y-0.5" aria-label="Cart">
 <span class="material-symbols-outlined text-[22px]" aria-hidden="true">shopping_bag</span>
-<span id="shop-cart-count" class="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full border-2 border-ink bg-tomato px-1 font-mono text-[10px] font-bold text-cream" hidden>0</span>
+<span id="shop-cart-count" class="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full border-2 border-[#0a0a0b] bg-cream px-1 font-mono text-[10px] font-bold text-[#0a0a0b]" hidden>0</span>
 </a>
-<button type="button" class="md:hidden inline-flex h-11 w-11 items-center justify-center rounded-full border-2 border-ink bg-cream text-cocoa shadow-sticker" aria-expanded="false" aria-controls="site-nav-drawer" id="site-mobile-menu-btn">
+<button type="button" class="md:hidden inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 text-cream backdrop-blur" aria-expanded="false" aria-controls="site-nav-drawer" id="site-mobile-menu-btn">
 <span class="material-symbols-outlined text-2xl" aria-hidden="true">menu</span>
 <span class="sr-only">Open menu</span>
 </button>
@@ -59,7 +59,7 @@
 <a href="/shop" class="ob-drawer__link" aria-current="page">Shop</a>
 <a href="/contact" class="ob-drawer__link">Contact</a>
 <a href="/shop/cart" class="ob-btn ob-btn--red mt-6 self-start"><span class="material-symbols-outlined" aria-hidden="true">shopping_bag</span>Cart</a>
-<p class="ob-marker mt-auto mb-10 text-2xl text-cocoa/80 -rotate-3">wear the work ✕</p>
+<p class="ob-marker mt-auto mb-10 text-xl">wear the work</p>
 </nav>
 <main class="flex-grow pt-28 pb-24 px-5 sm:px-8 md:px-12 w-full max-w-container-max mx-auto">
 <div id="shop-app"></div>
@@ -68,12 +68,12 @@
 <div class="mx-auto max-w-[1440px] px-5 pt-16 sm:px-8 md:px-12">
 <div class="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
 <div>
-<p class="ob-letter text-3xl text-mustard md:text-4xl" data-ob-chars="jumble wobble">Got an idea?</p>
+<p class="ob-letter text-3xl text-mustard md:text-4xl" data-ob-chars="wobble">Got an idea?</p>
 <a href="/contact" class="ob-marker mt-2 inline-block text-xl text-cream/80 hover:text-tomato transition-colors">say hello → let’s build it</a>
 </div>
 <ul data-onurik-social-footer class="flex flex-wrap gap-6 ob-mono text-[11px] uppercase tracking-[0.18em] text-cream/70" aria-label="Social links" hidden></ul>
 </div>
-<p class="ob-footer__giant ob-outline mt-12 select-none text-center text-mustard" style="--ob-outline-color:#F2A516" data-ob-chars="jumble wave" data-ob-amp="0.6" aria-hidden="true">Onurik</p>
+<p class="ob-footer__giant ob-outline mt-12 select-none text-center text-mustard" style="--ob-outline-color:#F2A516" data-ob-chars="wave" data-ob-amp="0.6" aria-hidden="true">Onurik</p>
 <div class="flex flex-col items-center justify-between gap-3 border-t-2 border-cream/10 py-6 ob-mono text-[10px] uppercase tracking-[0.2em] text-cream/45 md:flex-row">
 <span>© 2026 Onurik. All rights reserved.</span>
 <a href="/shop/returns" class="hover:text-mustard transition-colors">Returns &amp; refunds</a>

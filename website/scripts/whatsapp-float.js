@@ -31,10 +31,10 @@ function injectStyles() {
       width: 3.5rem;
       height: 3.5rem;
       border-radius: 9999px;
-      border: 2.5px solid #160e07;
+      border: 1px solid rgba(255, 255, 255, 0.18);
       background: #25d366;
       color: #ffffff;
-      box-shadow: 4px 4px 0 #160e07;
+      box-shadow: 0 12px 30px -10px rgba(37, 211, 102, 0.7);
       cursor: pointer;
       text-decoration: none;
       transition:
@@ -52,15 +52,15 @@ function injectStyles() {
       transform: scale(0.92);
     }
     .onurik-wa-float:hover {
-      transform: translate(-2px, -2px) rotate(-8deg) scale(1.06);
-      box-shadow: 7px 7px 0 #160e07;
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 16px 36px -10px rgba(37, 211, 102, 0.85);
       animation: none;
     }
     .onurik-wa-float:focus {
       outline: none;
     }
     .onurik-wa-float:focus-visible {
-      outline: 3px solid #ffcb05;
+      outline: 2px solid #ff5a1f;
       outline-offset: 3px;
     }
     .onurik-wa-float__tooltip {
@@ -70,16 +70,17 @@ function injectStyles() {
       transform: translateY(-50%) translateX(4px);
       padding: 0.4rem 0.7rem;
       border-radius: 0.5rem;
-      border: 2px solid #160e07;
-      background: #f2a516;
-      color: #2a1b0e;
-      font-family: "Space Mono", ui-monospace, monospace;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(20, 20, 21, 0.85);
+      color: #f2efeb;
+      font-family: "Geist Mono", ui-monospace, monospace;
       font-size: 0.6875rem;
       font-weight: 700;
       letter-spacing: 0.06em;
       text-transform: uppercase;
       white-space: nowrap;
-      box-shadow: 3px 3px 0 #160e07;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 12px 30px -12px rgba(0, 0, 0, 0.7);
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.2s ease, transform 0.2s ease;
@@ -142,6 +143,11 @@ function shouldHideFloat() {
 
   const overlay = document.querySelector(".site-nav-overlay.open");
   if (overlay) return true;
+
+  // On phones the cart and checkout have action buttons along the bottom edge.
+  if (window.innerWidth < 768 && /^\/shop\/(cart|checkout)(\.html)?\/?$/.test(location.pathname)) {
+    return true;
+  }
 
   return false;
 }

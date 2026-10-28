@@ -87,7 +87,7 @@ function bindCartPage(root) {
         '<div class="max-w-xl py-8">' +
         '<p class="shop-eyebrow mb-4">Shop / Cart</p>' +
         '<h1 class="shop-title text-[clamp(2.5rem,6vw,4.5rem)]">Your cart is empty.</h1>' +
-        '<p class="mt-5 text-cocoa/70">When you add a piece, it will live here until you check out.</p>' +
+        '<p class="mt-5 text-cream/70">When you add a piece, it will live here until you check out.</p>' +
         '<a href="/shop" class="mt-10 ob-btn ob-btn--cream ">Continue shopping</a>' +
         "</div>";
       return;
@@ -100,7 +100,7 @@ function bindCartPage(root) {
           '<article class="grid grid-cols-[5.5rem_1fr] gap-4 border-b-2 border-dashed border-cocoa/25 py-6 md:grid-cols-[6.5rem_1fr_auto] md:gap-6">' +
           '<a href="/shop/product?id=' +
           encodeURIComponent(item.productId) +
-          '" class="aspect-[4/5] overflow-hidden rounded-xl border-[2.5px] border-ink bg-[#EBD6B5] shadow-sticker">' +
+          '" class="aspect-[4/5] shop-plate overflow-hidden rounded-xl border border-white/10">' +
           '<img src="' +
           escapeAttr(item.image) +
           '" alt="' +
@@ -111,10 +111,10 @@ function bindCartPage(root) {
           '<div class="flex items-start justify-between gap-3">' +
           '<a href="/shop/product?id=' +
           encodeURIComponent(item.productId) +
-          '" class="ob-display text-2xl text-cocoa hover:text-tomato transition-colors">' +
+          '" class="ob-display text-2xl text-cream hover:text-tomato transition-colors">' +
           escapeHtml(item.name) +
           "</a>" +
-          '<button type="button" class="shrink-0 text-cocoa/60 hover:text-tomato transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-tomato" data-remove="' +
+          '<button type="button" class="shrink-0 text-cream/60 hover:text-tomato transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-tomato" data-remove="' +
           escapeAttr(item.productId) +
           '" data-size="' +
           escapeAttr(item.size) +
@@ -130,7 +130,7 @@ function bindCartPage(root) {
           "</p>" +
           '<div class="mt-3 flex flex-wrap items-center gap-2">' +
           (sale
-            ? '<span class="ob-mono text-xs text-cocoa/60 line-through">' + formatKes(item.originalPrice) + "</span>"
+            ? '<span class="ob-mono text-xs text-cream/60 line-through">' + formatKes(item.originalPrice) + "</span>"
             : "") +
           '<span class="shop-price">' +
           formatKes(item.price) +
@@ -163,19 +163,19 @@ function bindCartPage(root) {
       '<div class="grid grid-cols-1 gap-16 lg:grid-cols-12">' +
       '<div class="lg:col-span-7">' +
       '<p class="shop-eyebrow mb-4">Shop / Cart</p>' +
-      '<h1 class="shop-title text-[clamp(2.75rem,6vw,5rem)] mb-10" data-ob-chars="jumble">My Cart</h1>' +
+      '<h1 class="shop-title text-[clamp(2.75rem,6vw,5rem)] mb-10" data-ob-chars="pop">My Cart</h1>' +
       rows +
       "</div>" +
       '<aside class="lg:col-span-5 lg:pt-16">' +
       '<div class="shop-summary space-y-4 font-montserrat text-sm">' +
       '<p class="shop-summary__title">Order summary</p>' +
-      '<div class="flex justify-between text-cocoa/70"><span>Subtotal</span><span class="text-cocoa">' +
+      '<div class="flex justify-between text-cream/70"><span>Subtotal</span><span class="text-cream">' +
       formatKes(subtotal) +
       "</span></div>" +
-      '<div class="flex justify-between text-cocoa/70"><span>Delivery</span><span class="text-cocoa">' +
+      '<div class="flex justify-between text-cream/70"><span>Delivery</span><span class="text-cream">' +
       (shipping.price ? formatKes(shipping.price) : "Free") +
       "</span></div>" +
-      '<p class="ob-mono text-[11px] uppercase tracking-[0.12em] text-cocoa/70">' +
+      '<p class="ob-mono text-[11px] uppercase tracking-[0.12em] text-cream/70">' +
       escapeHtml(shipping.label) +
       " — lock zone and turnaround at checkout</p>" +
       '<div class="shop-total"><span class="shop-total__label">Bag Total</span><span class="shop-total__value">' +

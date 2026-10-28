@@ -45,13 +45,13 @@ function renderProjectGallery(project) {
         escapeHtml(alt) +
         '" aria-label="Enlarge image: ' +
         escapeHtml(alt) +
-        '" class="group relative block h-full w-full cursor-zoom-in overflow-hidden text-left focus:outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-sun">' +
+        '" class="group relative block h-full w-full cursor-zoom-in overflow-hidden text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-mustard">' +
         '<img src="' +
         escapeHtml(src) +
         '" alt="' +
         escapeHtml(alt) +
         '" class="pointer-events-none h-full w-full object-cover transition duration-500 group-hover:opacity-95" draggable="false"/>' +
-        '<span class="pointer-events-none absolute right-3 top-3 inline-flex items-center gap-1 rounded-md border-2 border-ink bg-mustard px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-cocoa opacity-0 transition group-hover:opacity-100" aria-hidden="true">⤢ Zoom</span>' +
+        '<span class="pointer-events-none absolute right-3 top-3 inline-flex items-center gap-1 rounded-full border border-white/15 bg-ink/60 px-3 py-1.5 text-xs font-semibold text-cream opacity-0 backdrop-blur transition group-hover:opacity-100" aria-hidden="true">⤢ Zoom</span>' +
         "</button></div>"
       );
     })
@@ -68,8 +68,8 @@ function renderProjectGallery(project) {
             (index === 0 ? "true" : "false") +
             '" aria-label="Show image ' +
             (index + 1) +
-            '" class="h-3 w-3 rounded-full border-2 border-ink transition ' +
-            (index === 0 ? "bg-mustard" : "bg-cream/70 hover:bg-cream") +
+            '" class="h-2.5 w-2.5 rounded-full transition ' +
+            (index === 0 ? "bg-mustard" : "bg-cream/40 hover:bg-cream") +
             '"></button>'
           );
         })
@@ -78,10 +78,10 @@ function renderProjectGallery(project) {
     : "";
 
   const controls = multi
-    ? '<button type="button" data-slider-prev class="absolute left-3 top-1/2 z-10 inline-flex min-h-11 min-w-11 -translate-y-1/2 items-center justify-center rounded-full border-[2.5px] border-ink bg-mustard text-cocoa shadow-[3px_3px_0_#160E07] transition hover:-rotate-12 hover:bg-sun focus:outline-none focus-visible:ring-4 focus-visible:ring-sun" aria-label="Previous image">' +
+    ? '<button type="button" data-slider-prev class="absolute left-3 top-1/2 z-10 inline-flex min-h-11 min-w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-ink/50 text-cream backdrop-blur transition hover:border-transparent hover:bg-mustard hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-mustard" aria-label="Previous image">' +
       '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" class="h-5 w-5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>' +
       "</button>" +
-      '<button type="button" data-slider-next class="absolute right-3 top-1/2 z-10 inline-flex min-h-11 min-w-11 -translate-y-1/2 items-center justify-center rounded-full border-[2.5px] border-ink bg-mustard text-cocoa shadow-[3px_3px_0_#160E07] transition hover:-rotate-12 hover:bg-sun focus:outline-none focus-visible:ring-4 focus-visible:ring-sun" aria-label="Next image">' +
+      '<button type="button" data-slider-next class="absolute right-3 top-1/2 z-10 inline-flex min-h-11 min-w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-ink/50 text-cream backdrop-blur transition hover:border-transparent hover:bg-mustard hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-mustard" aria-label="Next image">' +
       '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" class="h-5 w-5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>' +
       "</button>"
     : "";
@@ -131,7 +131,7 @@ function bindProjectSlider(root) {
       const active = i === index;
       dot.setAttribute("aria-selected", active ? "true" : "false");
       dot.classList.toggle("bg-mustard", active);
-      dot.classList.toggle("bg-cream/70", !active);
+      dot.classList.toggle("bg-cream/40", !active);
     });
     if (status) status.textContent = "Image " + (index + 1) + " of " + total;
   }
@@ -205,7 +205,7 @@ async function runWorkDetail() {
       description: "Browse published engineering and design projects on Onurik.",
     });
     document.getElementById("work-detail-root").innerHTML =
-      '<div class="ob-bg-tomato ob-grain relative min-h-[70vh]"><div class="absolute inset-0 ob-lines" aria-hidden="true"></div><div class="relative mx-auto max-w-[1440px] px-5 py-28 sm:px-8 md:px-12"><p class="ob-eyebrow text-mustard">○○○ Works</p><h1 class="ob-display mt-4 text-[clamp(3rem,9vw,7rem)] text-cream" data-ob-chars="jumble pop">Missing project link</h1><p class="ob-marker mt-4 text-2xl text-butter -rotate-1">Open a project from the Works page.</p><a href="/works" class="ob-btn ob-btn--cream mt-10"><span class="material-symbols-outlined" aria-hidden="true">arrow_back</span> Back to Works</a></div></div>';
+      '<div class="ob-bg-tomato ob-grain relative min-h-[70vh]"><div class="absolute inset-0 ob-lines" aria-hidden="true"></div><div class="relative mx-auto max-w-[1440px] px-5 py-28 sm:px-8 md:px-12"><p class="ob-eyebrow text-mustard">Works</p><h1 class="ob-display mt-4 text-[clamp(3rem,9vw,7rem)] text-cream" data-ob-chars="pop">Missing project link</h1><p class="ob-marker mt-4 text-2xl text-cream/60">Open a project from the Works page.</p><a href="/works" class="ob-btn ob-btn--cream mt-10"><span class="material-symbols-outlined" aria-hidden="true">arrow_back</span> Back to Works</a></div></div>';
     window.__onurikAnimRefresh?.();
     return;
   }
@@ -225,7 +225,7 @@ async function runWorkDetail() {
         "This project is unavailable or not published. Browse more work on Onurik.",
     });
     document.getElementById("work-detail-root").innerHTML =
-      '<div class="ob-bg-tomato ob-grain relative min-h-[70vh]"><div class="absolute inset-0 ob-lines" aria-hidden="true"></div><div class="relative mx-auto max-w-[1440px] px-5 py-28 sm:px-8 md:px-12"><p class="ob-eyebrow text-mustard">○○○ Works</p><h1 class="ob-display mt-4 text-[clamp(3rem,9vw,7rem)] text-cream" data-ob-chars="jumble pop">Project not found</h1><a href="/works" class="ob-btn ob-btn--cream mt-10"><span class="material-symbols-outlined" aria-hidden="true">arrow_back</span> Back to Works</a></div></div>';
+      '<div class="ob-bg-tomato ob-grain relative min-h-[70vh]"><div class="absolute inset-0 ob-lines" aria-hidden="true"></div><div class="relative mx-auto max-w-[1440px] px-5 py-28 sm:px-8 md:px-12"><p class="ob-eyebrow text-mustard">Works</p><h1 class="ob-display mt-4 text-[clamp(3rem,9vw,7rem)] text-cream" data-ob-chars="pop">Project not found</h1><a href="/works" class="ob-btn ob-btn--cream mt-10"><span class="material-symbols-outlined" aria-hidden="true">arrow_back</span> Back to Works</a></div></div>';
     window.__onurikAnimRefresh?.();
     return;
   }
@@ -252,18 +252,19 @@ async function runWorkDetail() {
   const client = (current.client || "").trim();
   const techTags = Array.isArray(current.tags) ? current.tags.filter(Boolean) : [];
 
-  function caseCard(label, inner, tone, tilt) {
+  function caseCard(step, label, inner) {
     return (
-      '<div class="ob-sticker ' +
-      tone +
-      ' p-6 md:p-7" style="transform: rotate(' +
-      tilt +
-      ')" data-ob-reveal>' +
-      '<h2 class="font-display text-3xl uppercase leading-none">' +
+      '<article class="ob-flow__step case-step ob-sticker text-cream" data-ob-reveal>' +
+      '<div class="case-step__chrome" aria-hidden="true"><span class="ob-chrome"><span></span><span></span><span></span></span><span class="case-step__bar"></span></div>' +
+      '<div class="case-step__body">' +
+      '<p class="ob-step-label">Step ' +
+      String(step).padStart(2, "0") +
+      "</p>" +
+      '<h2 class="mt-3 text-[1.9rem] font-semibold leading-tight tracking-tight">' +
       label +
       "</h2>" +
       inner +
-      "</div>"
+      "</div></article>"
     );
   }
 
@@ -271,40 +272,33 @@ async function runWorkDetail() {
   if (challenge) {
     caseCards.push(
       caseCard(
-        "The Challenge",
-        '<p class="mt-4 text-base leading-relaxed opacity-90">' + escapeHtml(challenge) + "</p>",
-        "ob-bg-cream",
-        "-1deg"
+        caseCards.length + 1,
+        "The challenge",
+        '<p class="mt-4 text-base leading-relaxed text-cream/65">' + escapeHtml(challenge) + "</p>"
       )
     );
   }
   if (approach.length) {
     caseCards.push(
       caseCard(
-        "What I Did",
-        '<ul class="mt-4 space-y-2.5 text-base leading-relaxed">' +
+        caseCards.length + 1,
+        "What I did",
+        '<ul class="mt-5 grid gap-2.5">' +
           approach
-            .map(function (item) {
-              return (
-                '<li class="flex gap-3"><span class="shrink-0 text-tomato" aria-hidden="true">✶</span><span>' +
-                escapeHtml(item) +
-                "</span></li>"
-              );
+            .map(function (item, i) {
+              return '<li class="ob-option' + (i === 0 ? " is-on" : "") + '">' + escapeHtml(item) + "</li>";
             })
             .join("") +
-          "</ul>",
-        "ob-bg-mustard",
-        "1deg"
+          "</ul>"
       )
     );
   }
   if (result) {
     caseCards.push(
       caseCard(
-        "The Result",
-        '<p class="mt-4 text-base leading-relaxed opacity-90">' + escapeHtml(result) + "</p>",
-        "ob-bg-tomato",
-        "-0.6deg"
+        caseCards.length + 1,
+        "The result",
+        '<p class="mt-4 text-base leading-relaxed text-cream/65">' + escapeHtml(result) + "</p>"
       )
     );
   }
@@ -314,27 +308,27 @@ async function runWorkDetail() {
     '<div class="absolute inset-0 ob-lines" aria-hidden="true"></div>' +
     '<div class="relative mx-auto max-w-[1440px] px-5 pb-24 pt-12 sm:px-8 md:px-12">' +
     '<div class="flex flex-wrap items-center justify-between gap-4">' +
-    '<a href="/works" class="ob-search-pill text-mustard transition hover:-rotate-2 hover:text-sun"><span class="material-symbols-outlined text-lg" aria-hidden="true">arrow_back</span> Back to works</a>' +
-    '<div class="ob-chrome text-mustard" aria-hidden="true"><span>×</span><span>−</span><span>↻</span></div>' +
+    '<a href="/works" class="ob-search-pill text-cream/80 transition hover:border-mustard hover:text-cream"><span class="material-symbols-outlined text-lg" aria-hidden="true">arrow_back</span> Back to works</a>' +
+    '<div class="ob-chrome" aria-hidden="true"><span></span><span></span><span></span></div>' +
     "</div>" +
-    '<p class="ob-eyebrow mt-12 text-mustard">○○○ ' +
+    '<p class="ob-eyebrow mt-12 text-mustard">' +
     escapeHtml(current.category) +
     (client ? '<span class="text-cream/50"> · </span>' + escapeHtml(client) : "") +
     "</p>" +
-    '<h1 class="work-title font-display mt-4 max-w-[16ch] uppercase leading-[0.9] text-cream ob-shadow-text" style="--ob-shadow-color:#A8121A" data-ob-chars="jumble pop" data-ob-amp="0.8">' +
+    '<h1 class="work-title ob-display mt-4 max-w-[18ch] text-cream" data-ob-chars="pop wave">' +
     escapeHtml(current.title) +
     "</h1>" +
     (scopeTags.length
       ? '<div class="mt-8 flex flex-wrap gap-3">' +
         scopeTags
           .map(function (tag) {
-            return '<span class="ob-tag" data-ob-float>' + escapeHtml(tag) + "</span>";
+            return '<span class="ob-tag text-cream">' + escapeHtml(tag) + "</span>";
           })
           .join("") +
         "</div>"
       : "") +
     (!challenge && !approach.length && !result && current.description
-      ? '<p class="font-mono mt-8 max-w-3xl text-sm leading-relaxed text-cream/90 md:text-base">' +
+      ? '<p class="mt-8 max-w-3xl text-lg leading-relaxed text-cream/65">' +
         escapeHtml(current.description) +
         "</p>"
       : "") +
@@ -342,25 +336,26 @@ async function runWorkDetail() {
     "</section>" +
     '<section class="ob-bg-cocoa ob-grain ob-torn-top relative">' +
     '<div class="relative mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:px-12">' +
-    '<div class="ob-sticker overflow-hidden bg-cocoa" style="--ob-hover-tilt:0deg">' +
-    '<div class="flex items-center justify-between border-b-[2.5px] border-ink bg-mustard px-4 py-2 text-cocoa">' +
-    '<span class="ob-chrome" aria-hidden="true"><span>×</span><span>−</span><span>↻</span></span>' +
-    '<span class="ob-eyebrow">gallery</span>' +
+    '<div class="overflow-hidden rounded-[1.6rem] border border-white/10 bg-[#141415] shadow-sticker-lg">' +
+    '<div class="flex items-center gap-3 border-b border-white/10 px-4 py-3">' +
+    '<span class="ob-chrome" aria-hidden="true"><span></span><span></span><span></span></span>' +
+    '<span class="h-2 flex-1 rounded-full bg-white/[0.06]" aria-hidden="true"></span>' +
+    '<span class="ob-eyebrow text-cream/45">gallery</span>' +
     "</div>" +
     renderProjectGallery(current) +
     "</div>" +
     (caseCards.length
-      ? '<div class="mt-16 ob-carousel text-cream" data-ob-carousel aria-label="Case study" style="--ob-slide:88%; --ob-slide-md:58%; --ob-slide-lg:40%">' +
-        '<div class="ob-carousel__track">' +
+      ? '<p class="ob-eyebrow mt-20 text-mustard">Case study</p>' +
+        '<div class="work-case ob-flow mt-8" data-ob-flow aria-label="Case study">' +
         caseCards.join("") +
-        "</div></div>"
+        "</div>"
       : "") +
     (techTags.length
       ? '<div class="mt-12 flex flex-wrap gap-2">' +
         techTags
           .map(function (tag) {
             return (
-              '<span class="rounded-md border-2 border-mustard/60 px-3 py-1 font-mono text-xs font-bold uppercase tracking-[0.08em] text-mustard">' +
+              '<span class="ob-tag text-cream/85">' +
               escapeHtml(tag) +
               "</span>"
             );
@@ -373,16 +368,17 @@ async function runWorkDetail() {
       ? '<a href="' +
         escapeHtml(current.projectUrl) +
         '" target="_blank" rel="noreferrer" class="ob-stamp ob-stamp--mustard"><span class="ob-stamp__disc"><span class="material-symbols-outlined" aria-hidden="true">play_arrow</span></span><span class="ob-stamp__shout">Click<br/>here!</span><span class="ob-stamp__caption">Open the project</span></a>'
-      : '<span class="ob-tag !bg-cream"><span aria-hidden="true">🔒</span> Access Restricted</span>') +
-    '<button id="share-project-btn" type="button" class="ob-btn ob-btn--cream"><span aria-hidden="true">↗</span> Share</button>' +
+      : '<span class="ob-tag text-cream"><span aria-hidden="true">🔒</span> Access restricted</span>') +
+    '<button id="share-project-btn" type="button" class="ob-btn ob-btn--ghost text-cream"><span aria-hidden="true">↗</span> Share</button>' +
     "</div>" +
     "</div>" +
     "</section>" +
-    '<section class="ob-bg-mustard ob-grain ob-torn-top relative">' +
+    '<section class="ob-bg-ink ob-grain ob-torn-top relative">' +
     '<div class="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:px-12">' +
-    '<h2 class="font-display text-[clamp(2.6rem,6vw,4.5rem)] uppercase leading-none text-cocoa" data-ob-chars="jumble pop">Related Works</h2>' +
+    '<p class="ob-eyebrow text-mustard">Keep exploring</p>' +
+    '<h2 class="ob-display mt-4 text-[clamp(2.4rem,5vw,4rem)] text-cream" data-ob-chars="pop">Related works</h2>' +
     (related.length
-      ? '<div class="mt-12 ob-carousel text-cocoa" data-ob-carousel aria-label="Related works" style="--ob-car-accent:#D8202A; --ob-slide:80%; --ob-slide-md:45%; --ob-slide-lg:30%">' +
+      ? '<div class="mt-12 ob-carousel text-cream" data-ob-carousel aria-label="Related works" style="--ob-slide:80%; --ob-slide-md:45%; --ob-slide-lg:30%">' +
         '<div class="ob-carousel__track">'
       : '<div class="mt-12">') +
     (related.length
@@ -391,8 +387,8 @@ async function runWorkDetail() {
             return (
               '<a href="/work?id=' +
               encodeURIComponent(item.id) +
-              '" class="work-related-card ob-polaroid group block" style="--ob-tilt:0deg">' +
-              '<div class="overflow-hidden bg-cocoa">' +
+              '" class="work-related-card group block overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-3 text-cream shadow-sticker">' +
+              '<div class="overflow-hidden rounded-[1.1rem] bg-cocoa">' +
               '<img src="' +
               escapeHtml(
                 normalizeProjectImages(item)[0] ||
@@ -403,15 +399,15 @@ async function runWorkDetail() {
               escapeHtml(item.title) +
               '" loading="lazy" class="h-52 w-full object-cover transition duration-700 group-hover:scale-105"/>' +
               "</div>" +
-              '<p class="mt-3 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-tomato">' +
+              '<div class="px-2 pb-2 pt-4"><p class="ob-eyebrow text-mustard">' +
               escapeHtml(item.category) +
-              '</p><h3 class="font-display text-2xl uppercase leading-none text-cocoa">' +
+              '</p><h3 class="mt-2 text-2xl font-semibold leading-tight tracking-tight text-cream">' +
               escapeHtml(item.title) +
-              "</h3></a>"
+              "</h3></div></a>"
             );
           })
           .join("")
-      : '<p class="ob-marker text-2xl text-cocoa/75 -rotate-1">No related works yet.</p>') +
+      : '<p class="ob-marker text-2xl text-cream/55">No related works yet.</p>') +
     (related.length ? "</div></div>" : "</div>") +
     "</div></section>";
 
@@ -425,14 +421,14 @@ async function runWorkDetail() {
     const rawUrl = window.location.href;
     const menu = document.createElement("div");
     menu.className =
-      "absolute left-0 top-[calc(100%+0.75rem)] z-20 hidden min-w-[220px] rounded-xl border-[2.5px] border-ink bg-paper p-2 text-cocoa shadow-[6px_6px_0_#160E07]";
+      "absolute left-0 top-[calc(100%+0.75rem)] z-20 hidden min-w-[220px] rounded-2xl border border-white/15 bg-[#141415]/90 p-2 text-cream shadow-sticker-lg backdrop-blur-xl";
     menu.innerHTML =
-      '<button data-share="whatsapp" class="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm font-bold text-cocoa hover:bg-mustard">WhatsApp <span aria-hidden="true">↗</span></button>' +
-      '<button data-share="x" class="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm font-bold text-cocoa hover:bg-mustard">X (Twitter) <span aria-hidden="true">↗</span></button>' +
-      '<button data-share="linkedin" class="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm font-bold text-cocoa hover:bg-mustard">LinkedIn <span aria-hidden="true">↗</span></button>' +
-      '<button data-share="facebook" class="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm font-bold text-cocoa hover:bg-mustard">Facebook <span aria-hidden="true">↗</span></button>' +
-      '<button data-share="email" class="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm font-bold text-cocoa hover:bg-mustard">Email <span aria-hidden="true">↗</span></button>' +
-      '<button data-share="copy" class="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm font-bold text-cocoa hover:bg-mustard">Copy Link <span aria-hidden="true">⧉</span></button>';
+      '<button data-share="whatsapp" class="flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-cream transition hover:bg-mustard hover:text-white">WhatsApp <span aria-hidden="true">↗</span></button>' +
+      '<button data-share="x" class="flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-cream transition hover:bg-mustard hover:text-white">X (Twitter) <span aria-hidden="true">↗</span></button>' +
+      '<button data-share="linkedin" class="flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-cream transition hover:bg-mustard hover:text-white">LinkedIn <span aria-hidden="true">↗</span></button>' +
+      '<button data-share="facebook" class="flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-cream transition hover:bg-mustard hover:text-white">Facebook <span aria-hidden="true">↗</span></button>' +
+      '<button data-share="email" class="flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-cream transition hover:bg-mustard hover:text-white">Email <span aria-hidden="true">↗</span></button>' +
+      '<button data-share="copy" class="flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-cream transition hover:bg-mustard hover:text-white">Copy Link <span aria-hidden="true">⧉</span></button>';
 
     const wrapper = shareButton.parentElement;
     if (wrapper) {
@@ -499,7 +495,7 @@ if (document.readyState === "loading") {
       const root = document.getElementById("work-detail-root");
       if (root) {
         root.innerHTML =
-          '<div class="ob-bg-tomato ob-grain relative min-h-[70vh]"><div class="absolute inset-0 ob-lines" aria-hidden="true"></div><div class="relative mx-auto max-w-[1440px] px-5 py-28 sm:px-8 md:px-12"><p class="ob-eyebrow text-mustard">○○○ Works</p><h1 class="ob-display mt-4 text-[clamp(3rem,9vw,7rem)] text-cream" data-ob-chars="jumble pop">Could not load project</h1><p class="ob-marker mt-4 text-2xl text-butter -rotate-1">Try refreshing the page.</p></div></div>';
+          '<div class="ob-bg-tomato ob-grain relative min-h-[70vh]"><div class="absolute inset-0 ob-lines" aria-hidden="true"></div><div class="relative mx-auto max-w-[1440px] px-5 py-28 sm:px-8 md:px-12"><p class="ob-eyebrow text-mustard">Works</p><h1 class="ob-display mt-4 text-[clamp(3rem,9vw,7rem)] text-cream" data-ob-chars="pop">Could not load project</h1><p class="ob-marker mt-4 text-2xl text-cream/60">Try refreshing the page.</p></div></div>';
       }
     });
   });
@@ -513,7 +509,7 @@ if (document.readyState === "loading") {
     const root = document.getElementById("work-detail-root");
     if (root) {
       root.innerHTML =
-        '<div class="ob-bg-tomato ob-grain relative min-h-[70vh]"><div class="absolute inset-0 ob-lines" aria-hidden="true"></div><div class="relative mx-auto max-w-[1440px] px-5 py-28 sm:px-8 md:px-12"><p class="ob-eyebrow text-mustard">○○○ Works</p><h1 class="ob-display mt-4 text-[clamp(3rem,9vw,7rem)] text-cream" data-ob-chars="jumble pop">Could not load project</h1><p class="ob-marker mt-4 text-2xl text-butter -rotate-1">Try refreshing the page.</p></div></div>';
+        '<div class="ob-bg-tomato ob-grain relative min-h-[70vh]"><div class="absolute inset-0 ob-lines" aria-hidden="true"></div><div class="relative mx-auto max-w-[1440px] px-5 py-28 sm:px-8 md:px-12"><p class="ob-eyebrow text-mustard">Works</p><h1 class="ob-display mt-4 text-[clamp(3rem,9vw,7rem)] text-cream" data-ob-chars="pop">Could not load project</h1><p class="ob-marker mt-4 text-2xl text-cream/60">Try refreshing the page.</p></div></div>';
     }
   });
 }

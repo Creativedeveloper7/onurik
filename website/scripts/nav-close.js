@@ -130,24 +130,32 @@ function injectStyles() {
       width: 2.75rem;
       height: 2.75rem;
       border-radius: 9999px;
-      border: 2.5px solid #160e07;
-      background: #f2a516;
-      color: #2a1b0e;
-      box-shadow: 3px 3px 0 #160e07;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(20, 20, 21, 0.6);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+      color: #f2efeb;
+      box-shadow: 0 12px 30px -12px rgba(0, 0, 0, 0.8);
       cursor: pointer;
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s ease;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.3s ease;
     }
     .onurik-nav-close:hover {
-      transform: translate(-1px, -2px) rotate(90deg);
-      background: #ffcb05;
-      box-shadow: 5px 5px 0 #160e07;
+      transform: rotate(90deg);
+      border-color: transparent;
+      background: #ff5a1f;
+      color: #fff;
+      box-shadow: 0 10px 30px -8px rgba(255, 90, 31, 0.85);
     }
     .onurik-nav-close:focus {
       outline: none;
     }
     .onurik-nav-close:focus-visible {
-      outline: 3px solid #ffcb05;
+      outline: 2px solid #ff5a1f;
       outline-offset: 3px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .onurik-nav-close { transition: none; }
+      .onurik-nav-close:hover { transform: none; }
     }
     .onurik-nav-close .sr-only {
       position: absolute;

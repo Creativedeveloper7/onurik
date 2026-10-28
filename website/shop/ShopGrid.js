@@ -47,7 +47,7 @@ function breadcrumb(state) {
   if (state.q) {
     parts.push("<span>Search</span>");
   }
-  return parts.join('<span class="text-cocoa/40 mx-2">/</span>');
+  return parts.join('<span class="text-cream/40 mx-2">/</span>');
 }
 
 function heading(state) {
@@ -78,8 +78,8 @@ export async function mountShopGrid(root) {
     if (loadError && !getCatalog().length) {
       root.innerHTML =
         '<div class="shop-state shop-state--error">' +
-        '<p class="shop-title text-[clamp(2.25rem,5vw,3.5rem)]" data-ob-chars="jumble">Catalog unavailable.</p>' +
-        '<p class="ob-mono mt-4 text-sm text-cocoa/75 max-w-md mx-auto">' +
+        '<p class="shop-title text-[clamp(2.25rem,5vw,3.5rem)]" data-ob-chars="pop">Catalog unavailable.</p>' +
+        '<p class="ob-mono mt-4 text-sm text-cream/75 max-w-md mx-auto">' +
         escapeHtml(loadError) +
         "</p></div>";
       return;
@@ -130,12 +130,12 @@ export async function mountShopGrid(root) {
     const catalogEmpty = !getCatalog().length;
     const empty = catalogEmpty
       ? '<div class="shop-state col-span-full">' +
-        '<p class="shop-title text-[clamp(2.25rem,5vw,3.5rem)]" data-ob-chars="jumble">The shop is empty.</p>' +
-        '<p class="ob-mono mt-4 text-sm text-cocoa/75 max-w-md mx-auto">Pieces will appear here once they go live from the studio.</p>' +
+        '<p class="shop-title text-[clamp(2.25rem,5vw,3.5rem)]" data-ob-chars="pop">The shop is empty.</p>' +
+        '<p class="ob-mono mt-4 text-sm text-cream/75 max-w-md mx-auto">Pieces will appear here once they go live from the studio.</p>' +
         "</div>"
       : '<div class="shop-state col-span-full">' +
-        '<p class="shop-title text-[clamp(2.25rem,5vw,3.5rem)]" data-ob-chars="jumble">Nothing in this collection yet.</p>' +
-        '<p class="ob-mono mt-4 text-sm text-cocoa/75 max-w-md mx-auto">This pairing of gender and product type is waiting on the next drop.</p>' +
+        '<p class="shop-title text-[clamp(2.25rem,5vw,3.5rem)]" data-ob-chars="pop">Nothing in this collection yet.</p>' +
+        '<p class="ob-mono mt-4 text-sm text-cream/75 max-w-md mx-auto">This pairing of gender and product type is waiting on the next drop.</p>' +
         '<button type="button" data-reset class="ob-btn ob-btn--red mt-8">View all merch</button>' +
         "</div>";
 
@@ -145,26 +145,37 @@ export async function mountShopGrid(root) {
     root.innerHTML =
       '<div class="flex flex-col gap-10">' +
       '<div class="shop-masthead">' +
-      (state.q
-        ? ""
-        : '<div class="shop-masthead__tags hidden md:block" aria-hidden="true">' +
-          '<span class="ob-tag" data-ob-float data-ob-depth="16" style="left:12%;top:12%;--ob-float-rot:-8deg">hoodies</span>' +
-          '<span class="ob-coin" data-ob-float data-ob-depth="24" style="left:40%;top:4%"><span class="material-symbols-outlined">checkroom</span></span>' +
-          '<span class="ob-tag" data-ob-float data-ob-depth="12" style="right:8%;top:20%;--ob-float-rot:6deg">tees</span>' +
-          '<span class="ob-hex" data-ob-float data-ob-depth="20" style="left:28%;top:52%">AfroWear</span>' +
-          '<span class="ob-tag" data-ob-float data-ob-depth="18" style="right:18%;top:62%;--ob-float-rot:-4deg">caps</span>' +
-          '<span class="ob-coin" data-ob-float data-ob-depth="28" style="right:2%;top:-4%"><span class="material-symbols-outlined">shopping_bag</span></span>' +
-          "</div>") +
+      '<div class="shop-masthead__copy">' +
       '<p class="shop-eyebrow mb-4">' +
       breadcrumb(state) +
       "</p>" +
-      '<h1 class="shop-title text-[clamp(3.25rem,10vw,8rem)]" data-ob-chars="jumble">' +
+      '<h1 class="shop-title text-[clamp(3.25rem,9vw,7.5rem)]" data-ob-chars="pop wave">' +
       escapeHtml(heading(state)) +
       "</h1>" +
       (state.q
-        ? '<p class="ob-mono mt-4 text-sm text-cocoa/75">Results for “' + escapeHtml(state.q) + '”</p>'
-        : '<p class="ob-marker mt-3 -rotate-1 text-[clamp(1.25rem,2.4vw,1.75rem)] text-tomato">wear the work.</p>' +
-          '<p class="mt-4 max-w-xl text-[15px] leading-relaxed text-cocoa/80">Studio merch — hoodies, tees, caps, and AfroWear. Built with the same restraint as the rest of the work.</p>') +
+        ? '<p class="ob-mono mt-4 text-sm text-cream/75">Results for “' + escapeHtml(state.q) + '”</p>'
+        : '<p class="ob-marker mt-3 text-[clamp(1.25rem,2.4vw,1.75rem)] text-mustard">wear the work.</p>' +
+          '<p class="mt-4 max-w-xl text-[15px] leading-relaxed text-cream/70">Studio merch — hoodies, tees, caps, and AfroWear. Built with the same restraint as the rest of the work.</p>') +
+      "</div>" +
+      (state.q
+        ? ""
+        : '<div class="shop-masthead__widgets" aria-hidden="true">' +
+          '<div class="ob-widget" data-ob-float data-ob-depth="14">' +
+          '<div class="ob-widget__head">In the collection <span class="material-symbols-outlined">checkroom</span></div>' +
+          '<p class="ob-dot text-[3.2rem] leading-none text-cream">' +
+          String(getCatalog().length).padStart(2, "0") +
+          "</p>" +
+          '<div class="ob-widget__foot"><span class="ob-pulse"></span><span>Pieces live<small>Updated from the studio</small></span></div>' +
+          "</div>" +
+          '<div class="ob-widget ob-widget--accent" data-ob-float data-ob-depth="22">' +
+          '<div class="ob-widget__head">Categories <span class="material-symbols-outlined">arrow_forward</span></div>' +
+          '<p class="text-sm leading-relaxed opacity-90">' +
+          CATEGORIES.map(function (c) {
+            return escapeHtml(c.label);
+          }).join(" · ") +
+          "</p>" +
+          "</div>" +
+          "</div>") +
       "</div>" +
       '<div class="shop-filters">' +
       '<div class="flex flex-wrap items-center gap-2.5">' +

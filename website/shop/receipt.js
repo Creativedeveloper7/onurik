@@ -134,15 +134,15 @@ export function buildReceiptHtml(raw) {
       const meta = lineMeta(item);
       return (
         "<tr>" +
-        '<td style="padding:12px 0;border-bottom:2px dashed #D9C2A0;color:#2A1B0E;font-size:14px;">' +
+        '<td style="padding:12px 0;border-bottom:1px solid #ECEAE7;color:#141415;font-size:14px;">' +
         escapeHtml(item.name) +
         " × " +
         item.qty +
         (meta
-          ? '<div style="margin-top:4px;color:#6E5539;font-size:12px;">' + escapeHtml(meta) + "</div>"
+          ? '<div style="margin-top:4px;color:#6E6A65;font-size:12px;">' + escapeHtml(meta) + "</div>"
           : "") +
         "</td>" +
-        '<td style="padding:12px 0;border-bottom:2px dashed #D9C2A0;color:#2A1B0E;font-size:14px;text-align:right;white-space:nowrap;">' +
+        '<td style="padding:12px 0;border-bottom:1px solid #ECEAE7;color:#141415;font-size:14px;text-align:right;white-space:nowrap;">' +
         escapeHtml(formatKes(item.price * item.qty)) +
         "</td></tr>"
       );
@@ -154,20 +154,20 @@ export function buildReceiptHtml(raw) {
     "<title>Receipt " +
     escapeHtml(order.id) +
     " · Onurik</title></head>" +
-    '<body style="margin:0;background:#F7E3C8;color:#2A1B0E;font-family:\'Space Grotesk\',Arial,sans-serif;">' +
-    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F7E3C8;padding:32px 16px;">' +
+    '<body style="margin:0;background:#F2EFEB;color:#141415;font-family:\'Urbanist\',\'Helvetica Neue\',Arial,sans-serif;">' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F2EFEB;padding:32px 16px;">' +
     '<tr><td align="center">' +
-    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#FBF3E4;border:3px solid #160E07;border-radius:16px;padding:36px 32px;">' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#FFFFFF;border:1px solid #E2DFDA;border-radius:20px;padding:36px 32px;">' +
     "<tr><td>" +
-    '<p style="margin:0;letter-spacing:0.28em;text-transform:uppercase;font-size:11px;font-weight:700;color:#D8202A;">Onurik Shop</p>' +
-    '<h1 style="margin:16px 0 8px;font-size:40px;line-height:1;font-weight:400;font-family:Anton,Impact,Arial Narrow,sans-serif;text-transform:uppercase;color:#2A1B0E;">E-receipt</h1>' +
-    '<p style="margin:0;color:#6E5539;font-size:13px;">Order ' +
+    '<p style="margin:0;letter-spacing:0.28em;text-transform:uppercase;font-size:11px;font-weight:700;color:#FF5A1F;">Onurik Shop</p>' +
+    '<h1 style="margin:16px 0 8px;font-size:40px;line-height:1;font-weight:600;letter-spacing:-0.02em;color:#141415;">E-receipt</h1>' +
+    '<p style="margin:0;color:#6E6A65;font-size:13px;">Order ' +
     escapeHtml(order.id) +
     " · " +
     escapeHtml(when) +
     "</p>" +
-    '<p style="margin:28px 0 8px;letter-spacing:0.18em;text-transform:uppercase;font-size:11px;color:#6E5539;">Billed to</p>' +
-    '<p style="margin:0;font-size:14px;line-height:1.6;color:#2A1B0E;">' +
+    '<p style="margin:28px 0 8px;letter-spacing:0.18em;text-transform:uppercase;font-size:11px;color:#6E6A65;">Billed to</p>' +
+    '<p style="margin:0;font-size:14px;line-height:1.6;color:#141415;">' +
     escapeHtml(order.customer.name) +
     "<br/>" +
     escapeHtml(order.customer.email) +
@@ -177,9 +177,9 @@ export function buildReceiptHtml(raw) {
         escapeHtml([order.customer.address, order.customer.city].filter(Boolean).join(", "))
       : "") +
     "</p>" +
-    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:28px;border-top:3px solid #160E07;">' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:28px;border-top:2px solid #141415;">' +
     rows +
-    '<tr><td style="padding:12px 0;color:#6E5539;font-size:13px;">' +
+    '<tr><td style="padding:12px 0;color:#6E6A65;font-size:13px;">' +
     escapeHtml(order.shipping.label) +
     (order.shipping.turnaroundLabel
       ? '<div style="margin-top:4px;font-size:12px;">' +
@@ -191,18 +191,18 @@ export function buildReceiptHtml(raw) {
         escapeHtml(order.shipping.deliveryDate) +
         "</div>"
       : "") +
-    '</td><td style="padding:12px 0;color:#2A1B0E;font-size:13px;text-align:right;vertical-align:top;">' +
+    '</td><td style="padding:12px 0;color:#141415;font-size:13px;text-align:right;vertical-align:top;">' +
     (order.shipping.price ? escapeHtml(formatKes(order.shipping.price)) : "Free") +
     "</td></tr>" +
-    '<tr><td style="padding:16px 0 0;letter-spacing:0.16em;text-transform:uppercase;font-size:11px;color:#6E5539;">Total paid</td>' +
-    '<td style="padding:16px 0 0;font-size:22px;font-weight:700;text-align:right;color:#2A1B0E;background:#F2A516;padding:10px 12px;">' +
+    '<tr><td style="padding:16px 0 0;letter-spacing:0.16em;text-transform:uppercase;font-size:11px;color:#6E6A65;">Total paid</td>' +
+    '<td style="padding:16px 0 0;font-size:22px;font-weight:700;text-align:right;color:#FFFFFF;background:#FF5A1F;padding:10px 12px;">' +
     escapeHtml(formatKes(order.total)) +
     "</td></tr></table>" +
-    '<p style="margin:28px 0 0;font-size:13px;color:#6E5539;">Paid by ' +
+    '<p style="margin:28px 0 0;font-size:13px;color:#6E6A65;">Paid by ' +
     escapeHtml(order.paymentLabel) +
     (order.paymentRef ? " · " + escapeHtml(order.paymentRef) : "") +
     ".</p>" +
-    '<p style="margin:12px 0 0;font-size:13px;line-height:1.6;color:#6E5539;">This is your official receipt for this purchase. Keep it for your records. Questions — reply to this email or write jason@onurik.space.</p>' +
+    '<p style="margin:12px 0 0;font-size:13px;line-height:1.6;color:#6E6A65;">This is your official receipt for this purchase. Keep it for your records. Questions — reply to this email or write jason@onurik.space.</p>' +
     "</td></tr></table></td></tr></table></body></html>"
   );
 }

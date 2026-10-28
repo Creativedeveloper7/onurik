@@ -52,7 +52,7 @@ export function renderProductCard(product, options) {
     formatKes(product.price) +
     "</span>" +
     (sale
-      ? '<span class="ob-mono text-xs text-cocoa/60 line-through">' +
+      ? '<span class="ob-mono text-xs text-cream/60 line-through">' +
         formatKes(product.originalPrice) +
         "</span>"
       : "") +

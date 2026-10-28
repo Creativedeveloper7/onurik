@@ -188,7 +188,7 @@ function viewerHtml(product, list, index, state) {
     escapeHtml(product.name) +
     (state.showBack && back ? ", back view" : ", front view") +
     "</figcaption></figure>" +
-    '<h2 class="rack-viewer__title" id="rack-viewer-title" data-ob-chars="jumble">' +
+    '<h2 class="rack-viewer__title" id="rack-viewer-title" data-ob-chars="pop">' +
     escapeHtml(product.name) +
     "</h2>" +
     (back
@@ -205,7 +205,7 @@ function viewerHtml(product, list, index, state) {
     '<aside class="rack-viewer__panel" aria-labelledby="rack-viewer-title">' +
     '<p class="shop-eyebrow mb-4">' +
     escapeHtml(genderLabel(product.gender)) +
-    '<span class="text-cocoa/45 mx-2">/</span>' +
+    '<span class="text-cream/45 mx-2">/</span>' +
     escapeHtml(categoryLabel(product.category)) +
     "</p>" +
     '<div class="flex items-start justify-between gap-4">' +
@@ -227,7 +227,7 @@ function viewerHtml(product, list, index, state) {
     "</div>" +
     (product.inStock ? "" : '<p class="mt-5"><span class="shop-hex shop-hex--ink">Currently unavailable</span></p>') +
     (product.description
-      ? '<p class="mt-7 text-[15px] leading-relaxed text-cocoa/80">' + escapeHtml(product.description) + "</p>"
+      ? '<p class="mt-7 text-[15px] leading-relaxed text-cream/80">' + escapeHtml(product.description) + "</p>"
       : "") +
     optionsHtml(product, state.selection) +
     buyButtonsHtml(product) +

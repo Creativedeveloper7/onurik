@@ -50,9 +50,9 @@ function resultRow(product) {
     escapeHtml(product.images[0] || "") +
     '" alt="' +
     escapeHtml(product.name) +
-    '" class="shop-img h-14 w-11 shrink-0 rounded-md border-2 border-ink object-cover" width="44" height="56"/>' +
+    '" class="shop-img h-14 w-11 shrink-0 rounded-lg border border-white/10 object-cover" width="44" height="56"/>' +
     '<span class="flex min-w-0 flex-col">' +
-    '<span class="ob-display text-xl text-cocoa truncate">' +
+    '<span class="ob-display text-xl text-cream truncate">' +
     escapeHtml(product.name) +
     "</span>" +
     '<span class="shop-price mt-1 self-start">' +
@@ -69,11 +69,11 @@ function bindSearch() {
   overlay.setAttribute("hidden", "");
   overlay.innerHTML =
     '<div class="mx-auto flex min-h-full max-w-container-max flex-col px-8 pt-28 md:px-16">' +
-    '<p class="ob-display mb-5 text-[clamp(2.75rem,8vw,5.5rem)] text-cocoa" data-ob-chars="jumble">What are you after?</p>' +
+    '<p class="ob-display mb-5 text-[clamp(2.75rem,8vw,5.5rem)] text-cream" data-ob-chars="pop">What are you after?</p>' +
     '<div class="flex items-center justify-between gap-4">' +
     '<label class="sr-only" for="shop-search-input">Search merch</label>' +
     '<input id="shop-search-input" class="ob-field text-lg" type="search" placeholder="Search merch" autocomplete="off"/>' +
-    '<button type="button" id="shop-search-close" class="shrink-0 inline-flex h-12 w-12 items-center justify-center rounded-full border-[2.5px] border-ink bg-tomato text-cream shadow-sticker transition-transform hover:-rotate-12">' +
+    '<button type="button" id="shop-search-close" class="shrink-0 inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/15 bg-white/5 text-cream backdrop-blur transition-colors hover:border-mustard hover:bg-mustard">' +
     '<span class="material-symbols-outlined">close</span><span class="sr-only">Close search</span></button>' +
     "</div>" +
     '<div id="shop-search-results" class="mt-6" role="listbox" aria-label="Search results"></div>' +

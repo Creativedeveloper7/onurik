@@ -23,8 +23,8 @@ export async function mountProductDetail(root) {
     root.innerHTML =
       '<div class="py-24 max-w-xl">' +
       '<p class="shop-eyebrow mb-4"><a href="/shop" class="hover:text-tomato">Shop</a></p>' +
-      '<h1 class="shop-title text-[clamp(2.75rem,6vw,4.5rem)]" data-ob-chars="jumble">Piece not found.</h1>' +
-      '<p class="mt-4 text-cocoa/70">It may have been moved. Return to the collection and choose another.</p>' +
+      '<h1 class="shop-title text-[clamp(2.75rem,6vw,4.5rem)]" data-ob-chars="pop">Piece not found.</h1>' +
+      '<p class="mt-4 text-cream/70">It may have been moved. Return to the collection and choose another.</p>' +
       '<a href="/shop" class="mt-10 ob-btn ob-btn--cream ">Back to shop</a>' +
       "</div>";
     return;
@@ -40,7 +40,7 @@ export async function mountProductDetail(root) {
     const thumbs = product.images
       .map(function (src, i) {
         return (
-          '<button type="button" class="shop-thumb aspect-[4/5] w-16 overflow-hidden bg-[#EBD6B5] focus:outline-none focus-visible:ring-1 focus-visible:ring-tomato' +
+          '<button type="button" class="shop-thumb aspect-[4/5] w-16 overflow-hidden bg-white/5 focus:outline-none focus-visible:ring-1 focus-visible:ring-tomato' +
           (i === imageIndex ? " is-active" : "") +
           '" data-image="' +
           i +
@@ -68,7 +68,7 @@ export async function mountProductDetail(root) {
     root.innerHTML =
       '<div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">' +
       '<div class="lg:col-span-7">' +
-      '<div class="shop-hero-frame aspect-[4/5] overflow-hidden bg-[#EBD6B5]">' +
+      '<div class="shop-hero-frame aspect-[4/5] overflow-hidden bg-white/5">' +
       '<img id="shop-hero-image" src="' +
       escapeAttr(main) +
       '" alt="' +
@@ -81,13 +81,13 @@ export async function mountProductDetail(root) {
       '<div class="lg:col-span-5 lg:pt-4">' +
       '<p class="shop-eyebrow mb-5">' +
       '<a href="/shop" class="hover:text-tomato transition-colors">Shop</a>' +
-      '<span class="text-cocoa/45 mx-2">/</span>' +
+      '<span class="text-cream/45 mx-2">/</span>' +
       '<a href="/shop?gender=' +
       encodeURIComponent(product.gender) +
       '" class="hover:text-tomato transition-colors">' +
       escapeHtml(genderLabel(product.gender)) +
       "</a>" +
-      '<span class="text-cocoa/45 mx-2">/</span>' +
+      '<span class="text-cream/45 mx-2">/</span>' +
       '<a href="/shop?gender=' +
       encodeURIComponent(product.gender) +
       "&category=" +
@@ -96,10 +96,10 @@ export async function mountProductDetail(root) {
       escapeHtml(categoryLabel(product.category)) +
       "</a></p>" +
       '<div class="flex items-start justify-between gap-4">' +
-      '<h1 class="shop-title text-[clamp(2.5rem,5vw,4.25rem)]" data-ob-chars="jumble">' +
+      '<h1 class="shop-title text-[clamp(2.5rem,5vw,4.25rem)]" data-ob-chars="pop">' +
       escapeHtml(product.name) +
       "</h1>" +
-      '<button type="button" class="shop-heart shrink-0 mt-2 p-1 text-cocoa/80 hover:opacity-70 transition-opacity focus:outline-none focus-visible:ring-1 focus-visible:ring-tomato' +
+      '<button type="button" class="shop-heart shrink-0 mt-2 p-1 text-cream/80 hover:opacity-70 transition-opacity focus:outline-none focus-visible:ring-1 focus-visible:ring-tomato' +
       (wished ? " is-on" : "") +
       '" data-wishlist="' +
       escapeAttr(product.id) +
@@ -113,16 +113,16 @@ export async function mountProductDetail(root) {
       priceBlock(product) +
       "</div>" +
       stockNote +
-      '<p class="mt-8 max-w-md text-[15px] leading-relaxed text-cocoa/80">' +
+      '<p class="mt-8 max-w-md text-[15px] leading-relaxed text-cream/80">' +
       escapeHtml(product.description) +
       "</p>" +
       optionsHtml(product, selection) +
       buyButtonsHtml(product) +
       "</div></div>" +
       (related
-        ? '<section class="mt-24 border-t border-cocoa/15 pt-14" aria-labelledby="related-heading">' +
-          '<h2 id="related-heading" class="shop-title text-[clamp(2rem,4vw,3.25rem)] mb-8" data-ob-chars="jumble">You may also like</h2>' +
-          '<div class="ob-carousel text-cocoa" data-ob-carousel aria-label="You may also like" style="--ob-slide:72%; --ob-slide-md:34%; --ob-slide-lg:24%">' +
+        ? '<section class="mt-24 border-t border-white/10 pt-14" aria-labelledby="related-heading">' +
+          '<h2 id="related-heading" class="shop-title text-[clamp(2rem,4vw,3.25rem)] mb-8" data-ob-chars="pop">You may also like</h2>' +
+          '<div class="ob-carousel text-cream" data-ob-carousel aria-label="You may also like" style="--ob-slide:72%; --ob-slide-md:34%; --ob-slide-lg:24%">' +
           '<div class="ob-carousel__track shop-related">' +
           related +
           "</div></div></section>"

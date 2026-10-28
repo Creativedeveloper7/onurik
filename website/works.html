@@ -13,8 +13,7 @@
 </script>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Works - Onurik</title>
-<meta name="theme-color" content="#F2A516"/>
-<meta name="theme-color" content="#F2A516"/>
+<meta name="theme-color" content="#0A0A0B"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script src="/brand/tailwind-brand.js"></script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -23,54 +22,67 @@
 <link rel="stylesheet" href="styles/animations.css"/>
 <link rel="stylesheet" href="styles/brand.css"/>
 <style>
-  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24; }
-  #site-nav-drawer { transform: translateX(100%); transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  #site-nav-drawer { transform: translateX(100%); transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
   #site-nav-drawer.open { transform: translateX(0); }
   .site-nav-overlay.open { opacity: 1 !important; pointer-events: auto !important; }
   .ob-drawer a.ob-drawer__link[aria-current="page"] { color: #D8202A; }
 
-  /* Conversion bridge (shared with home) */
+  /* Rotating CTA lines (shared with home) */
   .conversion-bridge-slide {
     position: absolute; left: 0; top: 0; right: 0;
-    opacity: 0; transform: translateY(0.8rem) rotate(-1.5deg);
-    transition: opacity 0.55s ease-in-out, transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+    opacity: 0; filter: blur(6px); transform: translateY(0.6rem);
+    transition: opacity 0.6s ease, filter 0.6s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
     pointer-events: none;
   }
-  .conversion-bridge-slide.is-active { opacity: 1; transform: none; pointer-events: auto; }
+  .conversion-bridge-slide.is-active { opacity: 1; filter: none; transform: none; pointer-events: auto; }
   #conversion-bridge .bridge-shell { opacity: 0; transform: translateY(1.25rem); }
   #conversion-bridge.is-visible .bridge-shell { opacity: 1; transform: none; transition: opacity 0.85s ease-out, transform 0.85s ease-out; }
   @media (prefers-reduced-motion: reduce) {
-    .conversion-bridge-slide { transition: none; }
+    .conversion-bridge-slide { transition: none; filter: none; }
     .conversion-bridge-slide:not(.is-active) { visibility: hidden; }
     #conversion-bridge .bridge-shell { opacity: 1; transform: none; }
   }
 
-  .works-hero__title { font-size: clamp(5rem, 20vw, 16rem); line-height: .82; }
+  .works-hero__title { font-size: clamp(5rem, 17vw, 13rem); line-height: .86; letter-spacing: -0.05em; }
 
-  /* Category tabs → one project carousel per category */
-  .works-panel[hidden] { display: none; }
-  .works-panel:not([hidden]) { animation: works-panel-in .55s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
-  @keyframes works-panel-in {
-    0% { transform: translateY(14px) rotate(-.4deg); opacity: 0; }
-    100% { transform: none; opacity: 1; }
+  /* Category folders (tablist) → one project carousel per category */
+  .works-folders { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3.25rem 1.1rem; padding-top: 1.5rem; }
+  @media (min-width: 1024px) { .works-folders { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2rem; } }
+  .works-folder { padding: 0; border: 0; background: none; font: inherit; text-align: left; opacity: .72; transition: opacity .3s ease, transform .45s cubic-bezier(0.22, 1, 0.36, 1); }
+  .works-folder:hover, .works-folder:focus-visible, .works-folder.is-active { opacity: 1; }
+  .works-folder.is-active { transform: translateY(-6px); }
+  .works-folder .ob-folder__label { font-size: clamp(1rem, 1.7vw, 1.45rem); line-height: 1.05; }
+  .works-folder .ob-folder__front { inset: 46% 0 0; padding: .9rem 1rem 1rem; }
+  .works-folder .ob-folder__pill { top: .7rem; left: .8rem; padding: .35rem .7rem; font-size: .7rem; }
+  .works-folder .ob-folder__arrow { top: .6rem; right: .8rem; }
+  .works-folder.is-active .ob-folder__card:nth-child(1) { transform: translateX(-46%) rotate(-15deg) translateY(-4%); }
+  .works-folder.is-active .ob-folder__card:nth-child(2) { transform: translateY(-16%); }
+  .works-folder.is-active .ob-folder__card:nth-child(3) { transform: translateX(46%) rotate(15deg) translateY(-4%); }
+  .works-folder__ph { display: block; }
+  @media (max-width: 639px) {
+    .works-folder .ob-folder__pill { display: none; }
+    .works-folder .ob-folder__meta { font-size: .58rem; }
   }
-  .works-panel .ob-carousel { --ob-slide: 86%; --ob-slide-md: 47%; --ob-slide-lg: 31.5%; --ob-gap: 1.75rem; --ob-car-ink: #F7E3C8; }
-  .works-panel .ob-carousel__track { padding-bottom: 2.25rem; }
 
-  /* Collage cards (markup from scripts/works-page.js) */
-  [data-project-category] > .works-card:nth-child(4n+1) { --card-tilt: -1.2deg; }
-  [data-project-category] > .works-card:nth-child(4n+2) { --card-tilt: 1deg; }
-  [data-project-category] > .works-card:nth-child(4n+3) { --card-tilt: .6deg; }
-  [data-project-category] > .works-card:nth-child(4n) { --card-tilt: -.8deg; }
-  .works-card { transform: rotate(var(--card-tilt, 0deg)); transition: transform .45s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .45s cubic-bezier(0.34, 1.56, 0.64, 1); }
-  .works-card:hover { transform: translate(-4px, -4px) rotate(0deg); box-shadow: 12px 12px 0 #F2A516; }
-  .works-card__stamp { transform: rotate(-4deg) translateY(.4rem) scale(.9); opacity: 0; transition: transform .4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity .25s ease; }
-  .works-card:hover .works-card__stamp, .works-card:focus-visible .works-card__stamp { transform: rotate(-4deg); opacity: 1; }
-  @media (hover: none) { .works-card__stamp { opacity: 1; transform: rotate(-4deg); } }
+  .works-panel[hidden] { display: none; }
+  .works-panel:not([hidden]) { animation: works-panel-in .6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+  @keyframes works-panel-in {
+    0% { transform: translateY(14px); opacity: 0; filter: blur(6px); }
+    100% { transform: none; opacity: 1; filter: none; }
+  }
+  .works-panel .ob-carousel { --ob-slide: 86%; --ob-slide-md: 47%; --ob-slide-lg: 31.5%; --ob-gap: 1.5rem; --ob-car-ink: #F2EFEB; }
+
+  /* Project cards (markup from scripts/works-page.js) */
+  .works-card { transition: transform .45s cubic-bezier(0.22, 1, 0.36, 1), border-color .3s ease, box-shadow .45s ease; }
+  .works-card:hover, .works-card:focus-visible { transform: translateY(-6px); border-color: rgba(255, 90, 31, .55); box-shadow: 0 30px 60px -24px rgba(0,0,0,.8), 0 0 0 4px rgba(255, 90, 31, .12); }
+  .works-card__view { opacity: 0; transform: translateY(6px); transition: opacity .3s ease, transform .35s cubic-bezier(0.22, 1, 0.36, 1); }
+  .works-card:hover .works-card__view, .works-card:focus-visible .works-card__view { opacity: 1; transform: none; }
+  @media (hover: none) { .works-card__view { opacity: 1; transform: none; } }
 
   @media (prefers-reduced-motion: reduce) {
     .works-panel:not([hidden]) { animation: none; }
-    .works-card, .works-card:hover { transform: none; }
+    .works-card, .works-card:hover, .works-folder, .works-folder.is-active { transform: none; transition: none; }
   }
 </style>
 </head>
@@ -78,7 +90,7 @@
 <!-- TopNavBar -->
 <nav class="ob-nav fixed top-0 w-full z-50 flex items-center gap-6 px-5 sm:px-8 md:px-12 h-[4.5rem]">
 <a href="/" class="ob-nav__logo" data-ob-chars="jumble" aria-label="Onurik home">Onurik</a>
-<button type="button" class="md:hidden ml-auto inline-flex items-center justify-center rounded-full w-11 h-11 bg-mustard text-cocoa border-2 border-ink shadow-sticker" aria-expanded="false" aria-controls="site-nav-drawer" id="site-mobile-menu-btn">
+<button type="button" class="md:hidden ml-auto inline-flex items-center justify-center rounded-full w-11 h-11 border border-white/15 bg-white/5 text-cream backdrop-blur" aria-expanded="false" aria-controls="site-nav-drawer" id="site-mobile-menu-btn">
 <span class="material-symbols-outlined text-2xl" aria-hidden="true">menu</span>
 <span class="sr-only">Open menu</span>
 </button>
@@ -96,7 +108,7 @@
 <a href="/shop" class="ob-drawer__link">Shop</a>
 <a href="/contact" class="ob-drawer__link">Contact</a>
 <a href="/contact" class="ob-btn ob-btn--red mt-6 self-start">Enquire <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></a>
-<p class="ob-marker mt-auto mb-10 text-2xl text-cocoa/80 -rotate-3">think outside the box ✕</p>
+<p class="ob-marker mt-auto mb-10 text-xl">design · build · question</p>
 </nav>
 <script>
 (function () {
@@ -128,76 +140,113 @@
   });
 })();
 </script>
-<!-- Header: mustard poster with outline title marquee and video collage -->
-<header class="ob-bg-mustard ob-grain relative overflow-hidden pt-[4.5rem]">
-<div class="ob-marquee ob-display pointer-events-none select-none pt-4 text-[clamp(3rem,8vw,6rem)] leading-none text-cocoa/70" style="--ob-marquee-speed:40s" aria-hidden="true">
-<div class="ob-marquee__track"><span class="ob-outline" style="--ob-outline-color:#2A1B0E">Works</span><span class="ob-outline" style="--ob-outline-color:#2A1B0E">Onurik</span><span class="ob-outline" style="--ob-outline-color:#2A1B0E">Works</span><span class="ob-outline" style="--ob-outline-color:#2A1B0E">Onurik</span></div>
-</div>
-<div class="relative z-[2] mx-auto grid max-w-[1440px] items-end gap-12 px-5 pb-20 pt-6 sm:px-8 md:px-12 lg:grid-cols-12" data-anim-stagger>
+<!-- Header: dark field, title + window-chrome video card with floating widgets -->
+<header class="ob-bg-tomato ob-grain relative overflow-hidden pt-[4.5rem]">
+<div class="absolute inset-0 ob-lines" aria-hidden="true"></div>
+<div class="relative z-[2] mx-auto grid max-w-[1440px] items-center gap-14 px-5 pb-24 pt-14 sm:px-8 md:px-12 lg:grid-cols-12">
 <div class="lg:col-span-7">
-<h1 class="works-hero__title ob-display text-cocoa" data-ob-chars="jumble pop" data-ob-amp="0.8">Works</h1>
-<p class="mt-4 flex items-center gap-2 text-lg font-bold uppercase tracking-wide text-cocoa"><span class="material-symbols-outlined" aria-hidden="true">play_circle</span>Selected projects</p>
-<p class="ob-mono mt-6 max-w-lg text-sm leading-relaxed text-cocoa/80">A curated selection of our finest technical and aesthetic achievements.</p>
+<span class="ob-search-pill text-cream/80"><span class="ob-pulse" aria-hidden="true"></span>Selected projects</span>
+<h1 class="works-hero__title ob-display mt-6 text-cream" data-ob-chars="pop wave">Works</h1>
+<p class="mt-6 max-w-lg text-lg leading-relaxed text-cream/60">A curated selection of our finest technical and aesthetic achievements.</p>
+<a href="#works-categories" class="ob-stamp mt-10" data-ob-magnet="0.2">
+<span class="ob-stamp__disc"><span class="material-symbols-outlined" aria-hidden="true">south</span></span>
+<span class="ob-stamp__shout">Browse by category</span>
+<span class="ob-stamp__caption">Folders</span>
+</a>
 </div>
-<div class="relative lg:col-span-5">
-<div class="mb-4 flex items-center justify-end gap-4 text-cocoa" aria-hidden="true"><span class="h-[2px] w-40 bg-cocoa"></span><span class="ob-display text-2xl tracking-[0.3em]">***</span></div>
-<figure class="ob-sticker relative overflow-hidden bg-cocoa rotate-[2deg]" style="--ob-hover-tilt:-1deg">
-<video class="block aspect-[16/10] w-full object-cover sepia-[0.3]" autoplay="" loop="" muted="" playsinline="" preload="metadata" aria-hidden="true">
+<div class="relative mx-auto mt-10 w-full max-w-[34rem] lg:col-span-5 lg:mt-0">
+<figure class="overflow-hidden rounded-[1.6rem] border border-white/10 bg-[#141415] shadow-sticker-lg" data-ob-depth="8">
+<div class="flex items-center gap-3 border-b border-white/10 px-4 py-3" aria-hidden="true">
+<span class="ob-chrome"><span></span><span></span><span></span></span>
+<span class="h-2 flex-1 rounded-full bg-white/[0.06]"></span>
+<span class="ob-eyebrow text-cream/45">showreel</span>
+</div>
+<video class="block aspect-[16/10] w-full object-cover" autoplay="" loop="" muted="" playsinline="" preload="metadata" aria-hidden="true">
 <source src="/videos/work.mp4" type="video/mp4"/>
 </video>
 </figure>
-<a href="#works-categories" class="ob-stamp absolute -bottom-8 -left-4 sm:left-6" data-ob-magnet="0.2">
-<span class="ob-stamp__disc"><span class="material-symbols-outlined" aria-hidden="true">play_arrow</span></span>
-<span class="ob-stamp__shout">Click<br/>here!</span>
-<span class="ob-stamp__caption">Browse by category</span>
-</a>
+<div class="ob-widget absolute -left-3 -top-12 w-44 sm:-left-10" data-ob-float data-ob-depth="18" aria-hidden="true">
+<div class="ob-widget__head">Categories <span class="material-symbols-outlined">folder_open</span></div>
+<p class="ob-dot text-center text-[3rem] leading-none text-cream">04</p>
+</div>
+<div class="ob-widget ob-widget--accent absolute -bottom-10 -right-3 w-44 sm:-right-6" data-ob-float data-ob-depth="24" aria-hidden="true">
+<div class="ob-widget__head">Craft <span class="material-symbols-outlined">arrow_forward</span></div>
+<div class="ob-bars !h-10"><span style="--h:25%;--b:0"></span><span style="--h:50%;--b:1"></span><span style="--h:80%;--b:2"></span><span style="--h:100%;--b:3"></span><span style="--h:70%;--b:4"></span><span style="--h:45%;--b:5"></span><span style="--h:25%;--b:6"></span></div>
+</div>
 </div>
 </div>
 </header>
 
 <main class="flex-grow">
-<section id="works-categories" class="ob-bg-cocoa ob-grain ob-torn-top relative scroll-mt-24">
-<div class="mx-auto max-w-[1440px] px-5 pb-24 pt-20 sm:px-8 md:px-12 md:pt-24">
+<section id="works-categories" class="ob-bg-cocoa ob-grain ob-torn-top relative scroll-mt-24 overflow-hidden">
+<div class="pointer-events-none absolute left-1/2 top-10 h-[28rem] w-[46rem] -translate-x-1/2 rounded-full bg-mustard/10 blur-[120px]" aria-hidden="true"></div>
+<div class="relative mx-auto max-w-[1440px] px-5 pb-24 pt-20 sm:px-8 md:px-12 md:pt-24">
 <div id="works-scope-filter" class="mb-12 hidden"></div>
-<div class="mb-8 flex items-center gap-4">
-<span class="h-[3px] w-24 bg-mustard" aria-hidden="true"></span>
 <p class="ob-eyebrow text-mustard" data-ob-scramble>Browse by category</p>
+<h2 class="ob-display mt-4 text-[clamp(2.2rem,5vw,4rem)] text-cream">Open a folder.</h2>
+<div class="works-folders mt-10 text-cream" role="tablist" aria-label="Project categories">
+<button type="button" class="ob-folder works-folder is-active" role="tab" id="works-tab-standard" aria-controls="works-panel-standard" aria-selected="true" tabindex="0" data-works-tab="standard" data-ob-folder="Standard Projects">
+<span class="ob-folder__back" aria-hidden="true"></span>
+<span class="ob-folder__cards" data-ob-folder-cards aria-hidden="true"><span class="ob-folder__card works-folder__ph" style="background:linear-gradient(160deg,#2a2a2c,#141415)"></span><span class="ob-folder__card works-folder__ph" style="background:linear-gradient(160deg,#ff8a4c,#b8330f)"></span><span class="ob-folder__card works-folder__ph" style="background:linear-gradient(160deg,#3a3836,#0f0f10)"></span></span>
+<span class="ob-folder__front">
+<span class="ob-folder__pill" aria-hidden="true">01</span>
+<span class="ob-folder__arrow material-symbols-outlined" aria-hidden="true">north_east</span>
+<span class="ob-folder__label">Standard Projects</span>
+<span class="ob-folder__meta" data-ob-folder-count>Folder</span>
+</span>
+</button>
+<button type="button" class="ob-folder works-folder" role="tab" id="works-tab-branding" aria-controls="works-panel-branding" aria-selected="false" tabindex="-1" data-works-tab="branding" data-ob-folder="Branding &amp; Identity">
+<span class="ob-folder__back" aria-hidden="true"></span>
+<span class="ob-folder__cards" data-ob-folder-cards aria-hidden="true"><span class="ob-folder__card works-folder__ph" style="background:linear-gradient(160deg,#2a2a2c,#141415)"></span><span class="ob-folder__card works-folder__ph" style="background:linear-gradient(160deg,#ff8a4c,#b8330f)"></span><span class="ob-folder__card works-folder__ph" style="background:linear-gradient(160deg,#3a3836,#0f0f10)"></span></span>
+<span class="ob-folder__front">
+<span class="ob-folder__pill" aria-hidden="true">02</span>
+<span class="ob-folder__arrow material-symbols-outlined" aria-hidden="true">north_east</span>
+<span class="ob-folder__label">Branding &amp; Identity</span>
+<span class="ob-folder__meta" data-ob-folder-count>Folder</span>
+</span>
+</button>
+<button type="button" class="ob-folder works-folder" role="tab" id="works-tab-design" aria-controls="works-panel-design" aria-selected="false" tabindex="-1" data-works-tab="design" data-ob-folder="Design &amp; Art Direction">
+<span class="ob-folder__back" aria-hidden="true"></span>
+<span class="ob-folder__cards" data-ob-folder-cards aria-hidden="true"><span class="ob-folder__card works-folder__ph" style="background:linear-gradient(160deg,#2a2a2c,#141415)"></span><span class="ob-folder__card works-folder__ph" style="background:linear-gradient(160deg,#ff8a4c,#b8330f)"></span><span class="ob-folder__card works-folder__ph" style="background:linear-gradient(160deg,#3a3836,#0f0f10)"></span></span>
+<span class="ob-folder__front">
+<span class="ob-folder__pill" aria-hidden="true">03</span>
+<span class="ob-folder__arrow material-symbols-outlined" aria-hidden="true">north_east</span>
+<span class="ob-folder__label">Design &amp; Art Direction</span>
+<span class="ob-folder__meta" data-ob-folder-count>Folder</span>
+</span>
+</button>
+<button type="button" class="ob-folder works-folder" role="tab" id="works-tab-dev" aria-controls="works-panel-dev" aria-selected="false" tabindex="-1" data-works-tab="dev" data-ob-folder="Development">
+<span class="ob-folder__back" aria-hidden="true"></span>
+<span class="ob-folder__cards" data-ob-folder-cards aria-hidden="true"><span class="ob-folder__card works-folder__ph" style="background:linear-gradient(160deg,#2a2a2c,#141415)"></span><span class="ob-folder__card works-folder__ph" style="background:linear-gradient(160deg,#ff8a4c,#b8330f)"></span><span class="ob-folder__card works-folder__ph" style="background:linear-gradient(160deg,#3a3836,#0f0f10)"></span></span>
+<span class="ob-folder__front">
+<span class="ob-folder__pill" aria-hidden="true">04</span>
+<span class="ob-folder__arrow material-symbols-outlined" aria-hidden="true">north_east</span>
+<span class="ob-folder__label">Development</span>
+<span class="ob-folder__meta" data-ob-folder-count>Folder</span>
+</span>
+</button>
 </div>
-<div class="ob-tabs text-cream" role="tablist" aria-label="Project categories">
-<button type="button" class="ob-tab" role="tab" id="works-tab-standard" aria-controls="works-panel-standard" aria-selected="true" tabindex="0" data-works-tab="standard">
-<span class="ob-tab__num" aria-hidden="true">01</span>Standard Projects<span class="ob-tab__count" data-works-count="Standard Projects"></span>
-</button>
-<button type="button" class="ob-tab" role="tab" id="works-tab-branding" aria-controls="works-panel-branding" aria-selected="false" tabindex="-1" data-works-tab="branding">
-<span class="ob-tab__num" aria-hidden="true">02</span>Branding &amp; Identity<span class="ob-tab__count" data-works-count="Branding &amp; Identity"></span>
-</button>
-<button type="button" class="ob-tab" role="tab" id="works-tab-design" aria-controls="works-panel-design" aria-selected="false" tabindex="-1" data-works-tab="design">
-<span class="ob-tab__num" aria-hidden="true">03</span>Design &amp; Art Direction<span class="ob-tab__count" data-works-count="Design &amp; Art Direction"></span>
-</button>
-<button type="button" class="ob-tab" role="tab" id="works-tab-dev" aria-controls="works-panel-dev" aria-selected="false" tabindex="-1" data-works-tab="dev">
-<span class="ob-tab__num" aria-hidden="true">04</span>Development<span class="ob-tab__count" data-works-count="Development"></span>
-</button>
-</div>
-<div class="mt-8">
+<div class="mt-16">
 <div class="works-panel" role="tabpanel" id="works-panel-standard" aria-labelledby="works-tab-standard">
-<p class="ob-mono mb-6 text-xs uppercase tracking-[0.14em] text-cream/60">— Lab experiments &amp; core products</p>
+<p class="ob-eyebrow mb-6 text-cream/50">— Lab experiments &amp; core products</p>
 <div class="ob-carousel" data-ob-carousel aria-label="Standard Projects projects">
 <div class="ob-carousel__track" data-project-category="Standard Projects"></div>
 </div>
 </div>
 <div class="works-panel" role="tabpanel" id="works-panel-branding" aria-labelledby="works-tab-branding" hidden>
-<p class="ob-mono mb-6 text-xs uppercase tracking-[0.14em] text-cream/60">— Onurik Designs &amp; brand ecosystems</p>
+<p class="ob-eyebrow mb-6 text-cream/50">— Onurik Designs &amp; brand ecosystems</p>
 <div class="ob-carousel" data-ob-carousel aria-label="Branding &amp; Identity projects">
 <div class="ob-carousel__track" data-project-category="Branding &amp; Identity"></div>
 </div>
 </div>
 <div class="works-panel" role="tabpanel" id="works-panel-design" aria-labelledby="works-tab-design" hidden>
-<p class="ob-mono mb-6 text-xs uppercase tracking-[0.14em] text-cream/60">— Editorial, photography &amp; spatial</p>
+<p class="ob-eyebrow mb-6 text-cream/50">— Editorial, photography &amp; spatial</p>
 <div class="ob-carousel" data-ob-carousel aria-label="Design &amp; Art Direction projects">
 <div class="ob-carousel__track" data-project-category="Design &amp; Art Direction"></div>
 </div>
 </div>
 <div class="works-panel" role="tabpanel" id="works-panel-dev" aria-labelledby="works-tab-dev" hidden>
-<p class="ob-mono mb-6 text-xs uppercase tracking-[0.14em] text-cream/60">— Open source contributions</p>
+<p class="ob-eyebrow mb-6 text-cream/50">— Open source contributions</p>
 <div class="ob-carousel" data-ob-carousel aria-label="Development projects">
 <div class="ob-carousel__track" data-project-category="Development"></div>
 </div>
@@ -207,44 +256,41 @@
 </div>
 </section>
 
-<section id="conversion-bridge" class="ob-bg-flame ob-grain relative w-full overflow-hidden" aria-labelledby="conversion-bridge-heading">
-<div class="ob-melt pointer-events-none absolute -right-10 top-10 hidden h-44 w-36 border-[10px] border-butter md:block" aria-hidden="true">
-<span class="absolute left-1/2 top-1/2 h-12 w-[3px] -translate-x-1/2 -translate-y-full bg-cocoa origin-bottom"></span>
-<span class="absolute left-1/2 top-1/2 h-9 w-[3px] -translate-x-1/2 -translate-y-full rotate-[120deg] bg-cocoa origin-bottom"></span>
-</div>
-<div class="bridge-shell mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:px-12 md:py-28">
+<section id="conversion-bridge" class="ob-bg-flame relative w-full overflow-hidden" aria-labelledby="conversion-bridge-heading">
+<div class="pointer-events-none absolute inset-0 ob-dotgrid opacity-40" aria-hidden="true"></div>
+<div class="bridge-shell relative mx-auto max-w-[1440px] px-5 py-24 sm:px-8 md:px-12 md:py-28">
 <h2 id="conversion-bridge-heading" class="sr-only">Partner with Onurik</h2>
 <div class="flex flex-col gap-12 lg:flex-row lg:items-center lg:justify-between">
-<div class="w-full lg:max-w-[68%]">
-<p class="ob-eyebrow text-butter/90">#100 / let’s talk</p>
-<div class="relative mt-6 min-h-[15rem] sm:min-h-[13rem] md:min-h-[14rem]" aria-live="polite">
+<div class="w-full lg:max-w-[66%]">
+<p class="ob-eyebrow text-white/80">Let’s talk</p>
+<div class="relative mt-6 min-h-[14rem] sm:min-h-[12rem] md:min-h-[13rem]" aria-live="polite">
 <div id="conversion-bridge-slides" class="absolute inset-0">
 <div class="conversion-bridge-slide is-active" data-slide="0">
-<p class="ob-mono mb-4 text-base text-butter/85">Let’s talk about what you’re building —</p>
-<p class="ob-letter text-[clamp(2rem,5vw,4.2rem)] text-butter ob-shadow-text" style="--ob-shadow-color:#A8121A">and make it something people actually remember.</p>
+<p class="mb-4 text-lg text-white/75">Let’s talk about what you’re building —</p>
+<p class="ob-display text-[clamp(2.2rem,5vw,4.4rem)] text-white">and make it something people actually remember.</p>
 </div>
 <div class="conversion-bridge-slide" data-slide="1">
-<p class="ob-mono mb-4 text-base text-butter/85">Every great idea deserves a moment.</p>
-<p class="ob-letter text-[clamp(2rem,5vw,4.2rem)] text-butter ob-shadow-text" style="--ob-shadow-color:#A8121A">Let’s make yours impossible to miss.</p>
+<p class="mb-4 text-lg text-white/75">Every great idea deserves a moment.</p>
+<p class="ob-display text-[clamp(2.2rem,5vw,4.4rem)] text-white">Let’s make yours impossible to miss.</p>
 </div>
 <div class="conversion-bridge-slide" data-slide="2">
-<p class="ob-mono mb-4 text-base text-butter/85">This could be something big —</p>
-<p class="ob-letter text-[clamp(2rem,5vw,4.2rem)] text-butter ob-shadow-text" style="--ob-shadow-color:#A8121A">Let’s make sure it feels like it.</p>
+<p class="mb-4 text-lg text-white/75">This could be something big —</p>
+<p class="ob-display text-[clamp(2.2rem,5vw,4.4rem)] text-white">Let’s make sure it feels like it.</p>
 </div>
 <div class="conversion-bridge-slide" data-slide="3">
-<p class="ob-mono mb-4 text-base text-butter/85">Most products get ignored.</p>
-<p class="ob-letter text-[clamp(2rem,5vw,4.2rem)] text-butter ob-shadow-text" style="--ob-shadow-color:#A8121A">Let’s make sure yours isn’t one of them.</p>
+<p class="mb-4 text-lg text-white/75">Most products get ignored.</p>
+<p class="ob-display text-[clamp(2.2rem,5vw,4.4rem)] text-white">Let’s make sure yours isn’t one of them.</p>
 </div>
 </div>
 </div>
-<p class="ob-marker mt-4 text-xl text-cocoa -rotate-1">— this is what I do at Onurik.</p>
-<p class="mt-6 max-w-2xl text-base leading-relaxed text-butter/90">I work with founders and teams who care about how their product looks and feels. Design, development, and identity — done with intention, not templates.</p>
+<p class="ob-marker mt-4 text-xl text-white/85">— this is what I do at Onurik.</p>
+<p class="mt-6 max-w-2xl text-base leading-relaxed text-white/80">I work with founders and teams who care about how their product looks and feels. Design, development, and identity — done with intention, not templates.</p>
 </div>
 <div class="flex shrink-0 justify-center lg:justify-end">
-<a href="/contact" class="bridge-cta ob-stamp ob-stamp--mustard scale-110" data-ob-magnet="0.25">
+<a href="/contact" class="bridge-cta ob-stamp" data-ob-magnet="0.25">
 <span class="ob-stamp__disc"><span class="material-symbols-outlined" aria-hidden="true">play_arrow</span></span>
-<span class="ob-stamp__shout">Click<br/>here!</span>
-<span class="ob-stamp__caption">Let’s work together</span>
+<span class="ob-stamp__shout">Let’s work together</span>
+<span class="ob-stamp__caption">Contact</span>
 </a>
 </div>
 </div>
@@ -290,6 +336,7 @@
     tabs.forEach(function (t) {
       var on = t === tab;
       t.setAttribute("aria-selected", on ? "true" : "false");
+      t.classList.toggle("is-active", on);
       t.tabIndex = on ? 0 : -1;
       var panel = document.getElementById(t.getAttribute("aria-controls"));
       if (panel) panel.hidden = !on;
@@ -327,7 +374,7 @@
 <ul data-onurik-social-footer class="flex flex-wrap gap-6 ob-mono text-[11px] uppercase tracking-[0.18em] text-cream/70" aria-label="Social links" hidden></ul>
 </div>
 <p class="ob-footer__giant ob-outline mt-12 select-none text-center text-mustard" style="--ob-outline-color:#F2A516" data-ob-chars="jumble wave" data-ob-amp="0.6" aria-hidden="true">Onurik</p>
-<div class="flex flex-col items-center justify-between gap-3 border-t-2 border-cream/10 py-6 ob-mono text-[10px] uppercase tracking-[0.2em] text-cream/45 md:flex-row">
+<div class="flex flex-col items-center justify-between gap-3 border-t border-white/10 py-6 ob-mono text-[10px] uppercase tracking-[0.2em] text-cream/45 md:flex-row">
 <span>© 2026 Onurik. All rights reserved.</span>
 <span>Design ✶ Build ✶ Question everything</span>
 </div>

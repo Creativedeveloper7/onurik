@@ -13,8 +13,7 @@
 </script>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>About · Onurik</title>
-<meta name="theme-color" content="#D8202A"/>
-<meta name="theme-color" content="#D8202A"/>
+<meta name="theme-color" content="#0A0A0B"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script src="/brand/tailwind-brand.js"></script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -23,38 +22,41 @@
 <link rel="stylesheet" href="styles/animations.css"/>
 <link rel="stylesheet" href="styles/brand.css"/>
 <style>
-  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24; }
-  #site-nav-drawer { transform: translateX(100%); transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  #site-nav-drawer { transform: translateX(100%); transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
   #site-nav-drawer.open { transform: translateX(0); }
   .site-nav-overlay.open { opacity: 1 !important; pointer-events: auto !important; }
   .ob-drawer a.ob-drawer__link[aria-current="page"] { color: #D8202A; }
 
-  /* Conversion bridge (shared with home) */
+  /* Rotating CTA lines (shared with home) */
   .conversion-bridge-slide {
     position: absolute; left: 0; top: 0; right: 0;
-    opacity: 0; transform: translateY(0.8rem) rotate(-1.5deg);
-    transition: opacity 0.55s ease-in-out, transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+    opacity: 0; filter: blur(6px); transform: translateY(0.6rem);
+    transition: opacity 0.6s ease, filter 0.6s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
     pointer-events: none;
   }
-  .conversion-bridge-slide.is-active { opacity: 1; transform: none; pointer-events: auto; }
+  .conversion-bridge-slide.is-active { opacity: 1; filter: none; transform: none; pointer-events: auto; }
   #conversion-bridge .bridge-shell { opacity: 0; transform: translateY(1.25rem); }
   #conversion-bridge.is-visible .bridge-shell { opacity: 1; transform: none; transition: opacity 0.85s ease-out, transform 0.85s ease-out; }
   @media (prefers-reduced-motion: reduce) {
-    .conversion-bridge-slide { transition: none; }
+    .conversion-bridge-slide { transition: none; filter: none; }
     .conversion-bridge-slide:not(.is-active) { visibility: hidden; }
     #conversion-bridge .bridge-shell { opacity: 1; transform: none; }
   }
 
-  .about-hero__title { font-size: clamp(3.6rem, 13vw, 11rem); }
-  .about-dots span { position: absolute; display: grid; place-items: center; width: 1.6rem; height: 1.6rem; border-radius: 999px; background: #F24C00; box-shadow: inset -5px -3px 0 0 #26307A; }
-  .about-card { transform: rotate(var(--about-tilt, 0deg)); }
+  .about-hero__title { font-size: clamp(3.4rem, 10vw, 8.5rem); line-height: .92; letter-spacing: -0.05em; }
+  .about-card { min-height: 19rem; }
+  @media (max-width: 639px) {
+    .about-collage .ob-widget { padding: .8rem; gap: .55rem; }
+    .about-collage .ob-widget__head { font-size: .85rem; }
+  }
 </style>
 </head>
 <body class="bg-background text-on-background min-h-screen flex flex-col font-body-md overflow-x-hidden">
 <!-- TopNavBar -->
 <nav class="ob-nav fixed top-0 w-full z-50 flex items-center gap-6 px-5 sm:px-8 md:px-12 h-[4.5rem]">
 <a href="/" class="ob-nav__logo" data-ob-chars="jumble" aria-label="Onurik home">Onurik</a>
-<button type="button" class="md:hidden ml-auto inline-flex items-center justify-center rounded-full w-11 h-11 bg-mustard text-cocoa border-2 border-ink shadow-sticker" aria-expanded="false" aria-controls="site-nav-drawer" id="site-mobile-menu-btn">
+<button type="button" class="md:hidden ml-auto inline-flex items-center justify-center rounded-full w-11 h-11 border border-white/15 bg-white/5 text-cream backdrop-blur" aria-expanded="false" aria-controls="site-nav-drawer" id="site-mobile-menu-btn">
 <span class="material-symbols-outlined text-2xl" aria-hidden="true">menu</span>
 <span class="sr-only">Open menu</span>
 </button>
@@ -72,7 +74,7 @@
 <a href="/shop" class="ob-drawer__link">Shop</a>
 <a href="/contact" class="ob-drawer__link">Contact</a>
 <a href="/contact" class="ob-btn ob-btn--red mt-6 self-start">Enquire <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></a>
-<p class="ob-marker mt-auto mb-10 text-2xl text-cocoa/80 -rotate-3">think outside the box ✕</p>
+<p class="ob-marker mt-auto mb-10 text-xl">design · build · question</p>
 </nav>
 <script>
 (function () {
@@ -106,90 +108,84 @@
 </script>
 <main class="flex-grow">
 
-<!-- Hero: red poster with hand-lettered name and the "think outside the box" card -->
+<!-- Hero: dark field, name + portrait card with fact widgets -->
 <section class="ob-bg-tomato ob-grain relative overflow-hidden pt-[4.5rem]">
 <div class="absolute inset-0 ob-lines" aria-hidden="true"></div>
-<svg class="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-<path d="M-40 640 C 200 480, 380 760, 640 600 S 1000 420, 1260 560 L 1260 860 L -40 860 Z" fill="#A8121A" opacity="0.5"/>
-<path d="M760 -40 C 900 120, 1120 60, 1240 180 L 1240 -40 Z" fill="#A8121A" opacity="0.45"/>
-</svg>
-<div class="relative z-[2] mx-auto grid max-w-[1440px] items-center gap-14 px-5 pb-24 pt-10 sm:px-8 md:px-12 lg:grid-cols-12 lg:pb-32">
-<div class="lg:col-span-7">
-<div class="flex items-center gap-4 text-mustard">
-<div class="ob-chrome" aria-hidden="true"><span>×</span><span>−</span><span>↻</span></div>
-<span class="ob-search-pill"><span class="material-symbols-outlined text-lg" aria-hidden="true">search</span>who is onurik?</span>
+<div class="relative z-[2] mx-auto grid max-w-[1440px] items-center gap-16 px-5 pb-28 pt-12 sm:px-8 md:px-12 lg:grid-cols-12">
+<div class="lg:col-span-6">
+<div class="flex items-center gap-4 text-cream/80">
+<span class="ob-chrome" aria-hidden="true"><span></span><span></span><span></span></span>
+<span class="ob-search-pill"><span class="material-symbols-outlined text-lg text-mustard" aria-hidden="true">search</span>who is onurik?</span>
 </div>
-<div class="about-dots relative" aria-hidden="true">
-<span data-ob-float style="right:8%; top:1.5rem"></span>
-<span data-ob-float style="left:58%; top:-0.5rem; transform:scale(.7)"></span>
-</div>
-<h1 class="about-hero__title ob-letter mt-10 text-paper ob-shadow-text" style="--ob-shadow-color:#A8121A" data-ob-chars="jumble pop wobble" data-ob-amp="1.3">Onurik Systems</h1>
-<p class="mt-8 inline-flex flex-wrap items-center gap-3">
-<span class="ob-tag text-base" data-ob-reveal style="--ob-reveal-rot:-3deg">Principal Architect &amp; Design Director</span>
-</p>
-<p class="ob-mono mt-8 max-w-xl text-sm leading-relaxed text-cream/85" data-ob-reveal style="--ob-reveal-delay:.15s">We design, we engineer, and we see it through.</p>
+<h1 class="about-hero__title ob-display mt-10 text-cream" data-ob-chars="pop wave">Onurik Systems</h1>
+<p class="mt-8"><span class="ob-tag text-[0.95rem] text-cream" data-ob-reveal>Principal Architect &amp; Design Director</span></p>
+<p class="mt-6 max-w-xl text-lg leading-relaxed text-cream/60" data-ob-reveal style="--ob-reveal-delay:.15s">We design, we engineer, and we see it through.</p>
 </div>
 
-<div class="relative lg:col-span-5">
-<div class="ob-sticker ob-bg-sun ob-grain relative mx-auto max-w-sm rotate-[3deg] px-8 pb-10 pt-12" style="--ob-hover-tilt:5deg" data-ob-reveal="pop">
-<p class="ob-marker text-[2.6rem] leading-[1.05] text-ink" data-ob-chars="jumble pop" data-ob-amp="1.6">Think outside the</p>
-<div class="relative mt-1 flex items-end gap-4">
-<p class="ob-marker text-[2.6rem] leading-none text-ink" data-ob-chars="jumble" data-ob-amp="1.6">box</p>
+<div class="about-collage relative mx-auto h-[30rem] w-full max-w-[34rem] sm:h-[34rem] lg:col-span-6" aria-hidden="true">
+<div class="absolute left-[18%] top-[6%] h-[80%] w-[60%] overflow-hidden rounded-[1.75rem] border border-white/10 bg-cocoa shadow-sticker-lg" data-ob-depth="8">
+<img src="/images/jason.png" alt="" class="h-full w-full object-cover object-[center_15%] grayscale-[0.35]"/>
+<div class="absolute inset-0 bg-gradient-to-t from-[#b8330f]/80 via-[#b8330f]/5 to-transparent"></div>
 </div>
-<svg class="mx-auto mt-2 w-48 text-ink" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" aria-hidden="true" data-ob-draw>
-<path d="M42 10 L38 112"/><path d="M80 8 L78 110"/><path d="M8 42 L114 38"/><path d="M10 80 L112 78"/>
-<circle cx="22" cy="24" r="9"/><path d="M53 16 L67 30 M67 16 L53 30"/><path d="M90 16 L104 30 M104 16 L90 30"/>
-<path d="M16 54 L30 68 M30 54 L16 68"/><path d="M53 54 L67 68 M67 54 L53 68"/><circle cx="97" cy="60" r="9"/>
-<circle cx="22" cy="98" r="9"/><circle cx="60" cy="97" r="9"/><path d="M90 90 L104 104 M104 90 L90 104"/>
-<path d="M62 -8 L58 76" stroke="#D8202A" stroke-width="4.5"/>
-</svg>
+<div class="ob-widget absolute left-0 top-[14%] w-[42%] max-w-[12.5rem]" data-ob-float data-ob-depth="18">
+<div class="ob-widget__head">Experience <span class="material-symbols-outlined">north_east</span></div>
+<p class="ob-dot text-center text-[3rem] leading-none text-cream">10+</p>
+<p class="text-center text-xs text-cream/55">years · brands &amp; systems</p>
+</div>
+<div class="ob-widget ob-widget--light absolute right-0 top-0 w-[42%] max-w-[13rem]" data-ob-float data-ob-depth="14">
+<div class="ob-widget__head">Focus <span class="ob-pulse"></span></div>
+<p class="text-sm leading-snug opacity-70">Sub-Saharan Africa — East &amp; Central.</p>
+</div>
+<div class="ob-widget ob-widget--accent absolute bottom-0 right-[2%] w-[48%] max-w-[14rem]" data-ob-float data-ob-depth="26">
+<div class="ob-widget__head">Approach <span class="material-symbols-outlined">arrow_forward</span></div>
+<div class="ob-bars !h-10"><span style="--h:25%;--b:0"></span><span style="--h:50%;--b:1"></span><span style="--h:80%;--b:2"></span><span style="--h:100%;--b:3"></span><span style="--h:70%;--b:4"></span><span style="--h:45%;--b:5"></span><span style="--h:25%;--b:6"></span></div>
+<p class="text-xs font-medium">Design · Engineer · See it through</p>
 </div>
 </div>
 </div>
 
-<div class="ob-marquee absolute bottom-0 left-0 right-0 z-[3] border-y-[3px] border-ink bg-mustard py-3 text-cocoa" style="--ob-marquee-speed:30s" aria-hidden="true">
-<div class="ob-marquee__track ob-display text-[1.6rem] md:text-[2rem]">
-<span>We design</span><span class="text-tomato">✶</span><span class="ob-outline-thick">We engineer</span><span class="text-tomato">✶</span><span>We see it through</span><span class="text-tomato">✶</span><span class="ob-outline-thick">No shortcuts</span><span class="text-tomato">✶</span>
+<div class="ob-marquee absolute bottom-0 left-0 right-0 z-[3] border-t border-white/10 bg-ink/70 py-3.5 text-cream/55 backdrop-blur" style="--ob-marquee-speed:34s" aria-hidden="true">
+<div class="ob-marquee__track ob-eyebrow !text-[0.78rem]">
+<span>We design</span><span class="text-mustard">✦</span><span>We engineer</span><span class="text-mustard">✦</span><span>We see it through</span><span class="text-mustard">✦</span><span>No shortcuts</span><span class="text-mustard">✦</span>
 </div>
 </div>
 </section>
 
-<!-- Story: cream paper -->
-<section class="ob-bg-cream ob-grain relative">
-<div class="mx-auto grid max-w-[1440px] gap-14 px-5 py-[clamp(5rem,11vw,8rem)] sm:px-8 md:px-12 lg:grid-cols-12 lg:items-center">
+<!-- Story: dark field, story cards as glass windows -->
+<section class="ob-bg-cocoa ob-grain relative overflow-hidden">
+<div class="pointer-events-none absolute -left-40 top-1/4 h-[28rem] w-[28rem] rounded-full bg-mustard/10 blur-[120px]" aria-hidden="true"></div>
+<div class="relative mx-auto grid max-w-[1440px] gap-14 px-5 py-[clamp(5rem,11vw,8rem)] sm:px-8 md:px-12 lg:grid-cols-12 lg:items-center">
 <div class="lg:col-span-5">
-<div>
-<p class="ob-eyebrow text-tomato">○○○ The story</p>
-<h2 class="ob-display mt-5 text-[clamp(3rem,7vw,6rem)] text-cocoa">
-<span class="block" data-ob-chars="jumble pop">Structure</span>
-<span class="block text-tomato" data-ob-chars="jumble pop">&amp; story.</span>
+<p class="ob-eyebrow text-mustard">The story</p>
+<h2 class="ob-display mt-5 text-[clamp(3rem,6.5vw,5.6rem)] text-cream">
+<span class="block" data-ob-chars="pop">Structure</span>
+<span class="block text-mustard" data-ob-chars="pop">&amp; story.</span>
 </h2>
-<p class="ob-marker mt-6 -rotate-2 text-2xl text-cocoa/80">how things look, how they function, how they hold.</p>
+<p class="ob-marker mt-6 text-2xl text-cream/60">how things look, how they function, how they hold.</p>
 <span class="ob-hex mt-10" aria-hidden="true">10+ yrs</span>
 </div>
-</div>
 <div class="min-w-0 lg:col-span-7">
-<div class="ob-carousel text-cocoa" data-ob-carousel aria-label="The Onurik story" style="--ob-slide:88%; --ob-slide-md:62%; --ob-slide-lg:64%">
+<div class="ob-carousel text-cream" data-ob-carousel aria-label="The Onurik story" style="--ob-slide:88%; --ob-slide-md:62%; --ob-slide-lg:64%">
 <div class="ob-carousel__track">
-<article class="about-card ob-sticker ob-bg-paper flex min-h-[19rem] flex-col p-7 md:p-8" style="--ob-hover-tilt:-1deg; --about-tilt:-1deg">
-<span class="ob-eyebrow opacity-70">01 / 05</span>
-<div class="mt-6 flex-1 text-lg leading-relaxed"><p>With over a decade shaping brands and engineering systems, I’ve built a way of working that understands both structure and story—how things look, how they function, and how they hold over time.</p></div>
+<article class="about-card ob-sticker text-cream flex flex-col overflow-hidden !p-0">
+<div class="flex items-center gap-3 border-b border-white/10 px-5 py-3" aria-hidden="true"><span class="ob-chrome"><span></span><span></span><span></span></span><span class="ml-auto ob-eyebrow opacity-60">01 / 05</span></div>
+<div class="flex-1 p-7 text-lg leading-relaxed md:p-8"><p>With over a decade shaping brands and engineering systems, I’ve built a way of working that understands both structure and story—how things look, how they function, and how they hold over time.</p></div>
 </article>
-<article class="about-card ob-sticker ob-bg-mustard flex min-h-[19rem] flex-col p-7 md:p-8" style="--ob-hover-tilt:1deg; --about-tilt:1deg">
-<span class="ob-eyebrow opacity-70">02 / 05</span>
-<div class="mt-6 flex-1 text-lg leading-relaxed"><p>My focus is rooted in the Sub-Saharan market, particularly East and Central Africa, where I’ve worked closely with businesses building for real impact. This is where I’ve learned what it means to design with context. Not borrowed ideas, but systems and brands that feel ours—built to hold, sustain, and grow within the environments they serve.</p></div>
+<article class="about-card ob-sticker text-cream flex flex-col overflow-hidden !p-0">
+<div class="flex items-center gap-3 border-b border-white/10 px-5 py-3" aria-hidden="true"><span class="ob-chrome"><span></span><span></span><span></span></span><span class="ml-auto ob-eyebrow opacity-60">02 / 05</span></div>
+<div class="flex-1 p-7 text-lg leading-relaxed md:p-8"><p>My focus is rooted in the Sub-Saharan market, particularly East and Central Africa, where I’ve worked closely with businesses building for real impact. This is where I’ve learned what it means to design with context. Not borrowed ideas, but systems and brands that feel ours—built to hold, sustain, and grow within the environments they serve.</p></div>
 </article>
-<article class="about-card ob-sticker ob-bg-paper flex min-h-[19rem] flex-col p-7 md:p-8" style="--ob-hover-tilt:-0.6deg; --about-tilt:-0.6deg">
-<span class="ob-eyebrow opacity-70">03 / 05</span>
-<div class="mt-6 flex-1 text-lg leading-relaxed"><p>At Onurik, we approach every project as both builders and learners. We take on complex challenges, stay through the uncertainty, and refine until the system works the way it should.</p></div>
+<article class="about-card ob-sticker text-cream flex flex-col overflow-hidden !p-0">
+<div class="flex items-center gap-3 border-b border-white/10 px-5 py-3" aria-hidden="true"><span class="ob-chrome"><span></span><span></span><span></span></span><span class="ml-auto ob-eyebrow opacity-60">03 / 05</span></div>
+<div class="flex-1 p-7 text-lg leading-relaxed md:p-8"><p>At Onurik, we approach every project as both builders and learners. We take on complex challenges, stay through the uncertainty, and refine until the system works the way it should.</p></div>
 </article>
-<article class="about-card ob-sticker ob-bg-tomato flex min-h-[19rem] flex-col p-7 md:p-8" style="--ob-hover-tilt:0.8deg; --about-tilt:0.8deg">
-<span class="ob-eyebrow opacity-70">04 / 05</span>
-<div class="mt-6 flex-1 text-lg leading-relaxed"><p class="ob-display text-[clamp(2rem,3.4vw,2.8rem)] leading-[0.95]">No shortcuts. No surface-level solutions.</p><p class="ob-marker mt-4 text-2xl normal-case text-butter">Just work that stands.</p></div>
+<article class="about-card ob-sticker ob-bg-flame !border-transparent flex flex-col overflow-hidden !p-0">
+<div class="flex items-center gap-3 border-b border-white/10 px-5 py-3" aria-hidden="true"><span class="ob-chrome"><span></span><span></span><span></span></span><span class="ml-auto ob-eyebrow opacity-60">04 / 05</span></div>
+<div class="flex-1 p-7 text-lg leading-relaxed md:p-8"><p class="ob-display text-[clamp(2rem,3.4vw,2.8rem)]">No shortcuts. No surface-level solutions.</p><p class="ob-marker mt-4 text-2xl text-white/85">Just work that stands.</p></div>
 </article>
-<article class="about-card ob-sticker ob-bg-cocoa flex min-h-[19rem] flex-col p-7 md:p-8" style="--ob-hover-tilt:-1deg; --about-tilt:-1deg">
-<span class="ob-eyebrow opacity-70">05 / 05</span>
-<div class="mt-6 flex-1 text-lg leading-relaxed"><p>We design, we engineer, and we see it through—because the goal isn’t just to launch, but to last.</p></div>
+<article class="about-card ob-sticker text-cream flex flex-col overflow-hidden !p-0">
+<div class="flex items-center gap-3 border-b border-white/10 px-5 py-3" aria-hidden="true"><span class="ob-chrome"><span></span><span></span><span></span></span><span class="ml-auto ob-eyebrow opacity-60">05 / 05</span></div>
+<div class="flex-1 p-7 text-lg leading-relaxed md:p-8"><p>We design, we engineer, and we see it through—because the goal isn’t just to launch, but to last.</p></div>
 </article>
 </div>
 </div>
@@ -198,56 +194,54 @@
 </section>
 
 <!-- Manifesto band -->
-<section class="ob-bg-mustard ob-grain ob-torn-top relative overflow-hidden">
+<section class="ob-bg-mustard relative overflow-hidden">
+<div class="pointer-events-none absolute inset-6 border border-mustard/30 md:inset-10" aria-hidden="true"></div>
 <div class="mx-auto max-w-[1440px] px-5 py-20 text-center sm:px-8 md:px-12 md:py-28">
-<p class="ob-eyebrow text-cocoa/80">✶✶✶</p>
-<p class="ob-letter mt-6 text-[clamp(2.4rem,7vw,6rem)] text-cocoa" data-ob-chars="jumble pop wave" data-ob-amp="1.2">We are Africans, and Africa is our business.</p>
-<p class="ob-marker mt-8 text-2xl text-tomato -rotate-1">Let’s partner in building what’s next.</p>
+<span class="ob-tag text-cocoa">Manifesto</span>
+<p class="ob-display mx-auto mt-8 max-w-5xl text-[clamp(2.4rem,6.5vw,5.6rem)] text-cocoa" data-ob-chars="pop wave">We are Africans, and Africa is our business.</p>
+<p class="ob-marker mt-8 text-2xl text-tomato">Let’s partner in building what’s next.</p>
 <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
 <a class="ob-btn ob-btn--red" href="mailto:contact@onurik.com">contact@onurik.com <span class="material-symbols-outlined" aria-hidden="true">mail</span></a>
-<a class="ob-btn ob-btn--cream" href="/works">See the works <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></a>
+<a class="ob-btn ob-btn--ghost text-cocoa" href="/works">See the works <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></a>
 </div>
 </div>
 </section>
 
-<section id="conversion-bridge" class="ob-bg-flame ob-grain relative w-full overflow-hidden" aria-labelledby="conversion-bridge-heading">
-<div class="ob-melt pointer-events-none absolute -right-10 top-10 hidden h-44 w-36 border-[10px] border-butter md:block" aria-hidden="true">
-<span class="absolute left-1/2 top-1/2 h-12 w-[3px] -translate-x-1/2 -translate-y-full bg-cocoa origin-bottom"></span>
-<span class="absolute left-1/2 top-1/2 h-9 w-[3px] -translate-x-1/2 -translate-y-full rotate-[120deg] bg-cocoa origin-bottom"></span>
-</div>
-<div class="bridge-shell mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:px-12 md:py-28">
+<section id="conversion-bridge" class="ob-bg-flame relative w-full overflow-hidden" aria-labelledby="conversion-bridge-heading">
+<div class="pointer-events-none absolute inset-0 ob-dotgrid opacity-40" aria-hidden="true"></div>
+<div class="bridge-shell relative mx-auto max-w-[1440px] px-5 py-24 sm:px-8 md:px-12 md:py-28">
 <h2 id="conversion-bridge-heading" class="sr-only">Partner with Onurik</h2>
 <div class="flex flex-col gap-12 lg:flex-row lg:items-center lg:justify-between">
-<div class="w-full lg:max-w-[68%]">
-<p class="ob-eyebrow text-butter/90">#100 / let’s talk</p>
-<div class="relative mt-6 min-h-[15rem] sm:min-h-[13rem] md:min-h-[14rem]" aria-live="polite">
+<div class="w-full lg:max-w-[66%]">
+<p class="ob-eyebrow text-white/80">Let’s talk</p>
+<div class="relative mt-6 min-h-[14rem] sm:min-h-[12rem] md:min-h-[13rem]" aria-live="polite">
 <div id="conversion-bridge-slides" class="absolute inset-0">
 <div class="conversion-bridge-slide is-active" data-slide="0">
-<p class="ob-mono mb-4 text-base text-butter/85">Let’s talk about what you’re building —</p>
-<p class="ob-letter text-[clamp(2rem,5vw,4.2rem)] text-butter ob-shadow-text" style="--ob-shadow-color:#A8121A">and make it something people actually remember.</p>
+<p class="mb-4 text-lg text-white/75">Let’s talk about what you’re building —</p>
+<p class="ob-display text-[clamp(2.2rem,5vw,4.4rem)] text-white">and make it something people actually remember.</p>
 </div>
 <div class="conversion-bridge-slide" data-slide="1">
-<p class="ob-mono mb-4 text-base text-butter/85">Every great idea deserves a moment.</p>
-<p class="ob-letter text-[clamp(2rem,5vw,4.2rem)] text-butter ob-shadow-text" style="--ob-shadow-color:#A8121A">Let’s make yours impossible to miss.</p>
+<p class="mb-4 text-lg text-white/75">Every great idea deserves a moment.</p>
+<p class="ob-display text-[clamp(2.2rem,5vw,4.4rem)] text-white">Let’s make yours impossible to miss.</p>
 </div>
 <div class="conversion-bridge-slide" data-slide="2">
-<p class="ob-mono mb-4 text-base text-butter/85">This could be something big —</p>
-<p class="ob-letter text-[clamp(2rem,5vw,4.2rem)] text-butter ob-shadow-text" style="--ob-shadow-color:#A8121A">Let’s make sure it feels like it.</p>
+<p class="mb-4 text-lg text-white/75">This could be something big —</p>
+<p class="ob-display text-[clamp(2.2rem,5vw,4.4rem)] text-white">Let’s make sure it feels like it.</p>
 </div>
 <div class="conversion-bridge-slide" data-slide="3">
-<p class="ob-mono mb-4 text-base text-butter/85">Most products get ignored.</p>
-<p class="ob-letter text-[clamp(2rem,5vw,4.2rem)] text-butter ob-shadow-text" style="--ob-shadow-color:#A8121A">Let’s make sure yours isn’t one of them.</p>
+<p class="mb-4 text-lg text-white/75">Most products get ignored.</p>
+<p class="ob-display text-[clamp(2.2rem,5vw,4.4rem)] text-white">Let’s make sure yours isn’t one of them.</p>
 </div>
 </div>
 </div>
-<p class="ob-marker mt-4 text-xl text-cocoa -rotate-1">— this is what I do at Onurik.</p>
-<p class="mt-6 max-w-2xl text-base leading-relaxed text-butter/90">I work with founders and teams who care about how their product looks and feels. Design, development, and identity — done with intention, not templates.</p>
+<p class="ob-marker mt-4 text-xl text-white/85">— this is what I do at Onurik.</p>
+<p class="mt-6 max-w-2xl text-base leading-relaxed text-white/80">I work with founders and teams who care about how their product looks and feels. Design, development, and identity — done with intention, not templates.</p>
 </div>
 <div class="flex shrink-0 justify-center lg:justify-end">
-<a href="/contact" class="bridge-cta ob-stamp ob-stamp--mustard scale-110" data-ob-magnet="0.25">
+<a href="/contact" class="bridge-cta ob-stamp" data-ob-magnet="0.25">
 <span class="ob-stamp__disc"><span class="material-symbols-outlined" aria-hidden="true">play_arrow</span></span>
-<span class="ob-stamp__shout">Click<br/>here!</span>
-<span class="ob-stamp__caption">Let’s work together</span>
+<span class="ob-stamp__shout">Let’s work together</span>
+<span class="ob-stamp__caption">Contact</span>
 </a>
 </div>
 </div>
@@ -291,13 +285,13 @@
 <div class="mx-auto max-w-[1440px] px-5 pt-16 sm:px-8 md:px-12">
 <div class="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
 <div>
-<p class="ob-letter text-3xl text-mustard md:text-4xl" data-ob-chars="jumble wobble">Got an idea?</p>
+<p class="ob-letter text-3xl text-mustard md:text-4xl" data-ob-chars="wobble">Got an idea?</p>
 <a href="/contact" class="ob-marker mt-2 inline-block text-xl text-cream/80 hover:text-tomato transition-colors">say hello → let’s build it</a>
 </div>
 <ul data-onurik-social-footer class="flex flex-wrap gap-6 ob-mono text-[11px] uppercase tracking-[0.18em] text-cream/70" aria-label="Social links" hidden></ul>
 </div>
 <p class="ob-footer__giant ob-outline mt-12 select-none text-center text-mustard" style="--ob-outline-color:#F2A516" data-ob-chars="jumble wave" data-ob-amp="0.6" aria-hidden="true">Onurik</p>
-<div class="flex flex-col items-center justify-between gap-3 border-t-2 border-cream/10 py-6 ob-mono text-[10px] uppercase tracking-[0.2em] text-cream/45 md:flex-row">
+<div class="flex flex-col items-center justify-between gap-3 border-t border-white/10 py-6 ob-mono text-[10px] uppercase tracking-[0.2em] text-cream/45 md:flex-row">
 <span>© 2026 Onurik. All rights reserved.</span>
 <span>Design ✶ Build ✶ Question everything</span>
 </div>

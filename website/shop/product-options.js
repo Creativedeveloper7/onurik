@@ -14,7 +14,7 @@ export function priceBlock(product) {
     formatKes(product.price) +
     "</span>" +
     (sale
-      ? '<span class="ob-mono text-cocoa/60 line-through text-base">' + formatKes(product.originalPrice) + "</span>" +
+      ? '<span class="ob-mono text-cream/60 line-through text-base">' + formatKes(product.originalPrice) + "</span>" +
         '<span class="shop-hex">Sale</span>'
       : "") +
     "</div>"
@@ -72,7 +72,7 @@ export function optionsHtml(product, selection) {
   const current = selectedColor(product, selection);
 
   return (
-    '<div class="mt-10 border-t border-cocoa/15 pt-8">' +
+    '<div class="mt-10 border-t border-white/10 pt-8">' +
     '<p class="shop-label mb-3">Size</p>' +
     '<div class="flex flex-wrap gap-2">' +
     sizes +
