@@ -412,7 +412,7 @@ async function runWorkDetail() {
     (current.privacy === "public" && current.projectUrl
       ? '<a href="' +
         escapeHtml(current.projectUrl) +
-        '" target="_blank" rel="noreferrer" class="ob-stamp ob-stamp--mustard"><span class="ob-stamp__disc"><span class="material-symbols-outlined" aria-hidden="true">play_arrow</span></span><span class="ob-stamp__shout">Click<br/>here!</span><span class="ob-stamp__caption">Open the project</span></a>'
+        '" target="_blank" rel="noreferrer" class="ob-stamp ob-stamp--mustard"><span class="ob-stamp__disc"><span class="material-symbols-outlined" aria-hidden="true">play_arrow</span></span><span class="ob-stamp__shout">Visit project</span><span class="ob-stamp__caption">Live site</span></a>'
       : '<span class="ob-tag text-cream"><span aria-hidden="true">🔒</span> Access restricted</span>') +
     '<button id="share-project-btn" type="button" class="ob-btn ob-btn--ghost text-cream"><span aria-hidden="true">↗</span> Share</button>' +
     "</div>" +
@@ -460,71 +460,7 @@ async function runWorkDetail() {
   bindProjectSlider(document.getElementById("work-detail-root"));
 
   const shareButton = document.getElementById("share-project-btn");
-  if (shareButton) {
-    const shareUrl = encodeURIComponent(window.location.href);
-    const shareText = encodeURIComponent(current.title + " · " + current.description);
-    const rawUrl = window.location.href;
-    const menu = document.createElement("div");
-    menu.className =
-      "absolute left-0 top-[calc(100%+0.75rem)] z-20 hidden min-w-[220px] rounded-2xl border border-white/15 bg-[#141415]/90 p-2 text-cream shadow-sticker-lg backdrop-blur-xl";
-    menu.innerHTML =
-      '<button data-share="whatsapp" class="flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-cream transition hover:bg-mustard hover:text-white">WhatsApp <span aria-hidden="true">↗</span></button>' +
-      '<button data-share="x" class="flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-cream transition hover:bg-mustard hover:text-white">X (Twitter) <span aria-hidden="true">↗</span></button>' +
-      '<button data-share="linkedin" class="flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-cream transition hover:bg-mustard hover:text-white">LinkedIn <span aria-hidden="true">↗</span></button>' +
-      '<button data-share="facebook" class="flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-cream transition hover:bg-mustard hover:text-white">Facebook <span aria-hidden="true">↗</span></button>' +
-      '<button data-share="email" class="flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-cream transition hover:bg-mustard hover:text-white">Email <span aria-hidden="true">↗</span></button>' +
-      '<button data-share="copy" class="flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-cream transition hover:bg-mustard hover:text-white">Copy Link <span aria-hidden="true">⧉</span></button>';
-
-    const wrapper = shareButton.parentElement;
-    if (wrapper) {
-      wrapper.classList.add("relative");
-      wrapper.appendChild(menu);
-    }
-
-    function closeMenu() {
-      menu.classList.add("hidden");
-    }
-
-    shareButton.addEventListener("click", function () {
-      menu.classList.toggle("hidden");
-    });
-
-    menu.addEventListener("click", async function (event) {
-      const item = event.target.closest("button[data-share]");
-      if (!item) return;
-      const action = item.getAttribute("data-share");
-      let target = "";
-      if (action === "whatsapp") target = "https://wa.me/?text=" + encodeURIComponent(current.title + " " + rawUrl);
-      if (action === "x") target = "https://twitter.com/intent/tweet?text=" + shareText + "&url=" + shareUrl;
-      if (action === "linkedin") target = "https://www.linkedin.com/sharing/share-offsite/?url=" + shareUrl;
-      if (action === "facebook") target = "https://www.facebook.com/sharer/sharer.php?u=" + shareUrl;
-      if (action === "email") target = "mailto:?subject=" + encodeURIComponent(current.title + " · Onurik") + "&body=" + encodeURIComponent(current.description + "\n\n" + rawUrl);
-      if (action === "copy") {
-        try {
-          await navigator.clipboard.writeText(rawUrl);
-          shareButton.textContent = "Link Copied";
-          window.setTimeout(function () {
-            shareButton.innerHTML = '<span aria-hidden="true">↗</span> Share';
-          }, 1400);
-        } catch (_err) {
-          shareButton.textContent = "Copy Failed";
-          window.setTimeout(function () {
-            shareButton.innerHTML = '<span aria-hidden="true">↗</span> Share';
-          }, 1400);
-        }
-        closeMenu();
-        return;
-      }
-      if (target) window.open(target, "_blank", "noopener,noreferrer");
-      closeMenu();
-    });
-
-    document.addEventListener("click", function (event) {
-      if (!menu.contains(event.target) && event.target !== shareButton && !shareButton.contains(event.target)) {
-        closeMenu();
-      }
-    });
-  }
+  if (shareButton) bindShareMenu(shareButton, current);
 
   window.__onurikAnimRefresh?.();
 }
@@ -558,4 +494,166 @@ if (document.readyState === "loading") {
         '<div class="ob-bg-tomato ob-grain relative min-h-[70vh]"><div class="absolute inset-0 ob-lines" aria-hidden="true"></div><div class="relative mx-auto max-w-[1440px] px-5 py-28 sm:px-8 md:px-12"><p class="ob-eyebrow text-mustard">Works</p><h1 class="ob-display mt-4 text-[clamp(3rem,9vw,7rem)] text-cream" data-ob-chars="pop">Could not load project</h1><p class="ob-marker mt-4 text-2xl text-cream/60">Try refreshing the page.</p></div></div>';
     }
   });
+}
+
+/* ---------------- Share menu ---------------- */
+
+const SHARE_ITEM_CLASS =
+  "flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-cream transition hover:bg-mustard hover:text-white focus-visible:bg-mustard focus-visible:text-white focus-visible:outline-none";
+
+function shareItem(action, label, icon) {
+  return (
+    '<button type="button" role="menuitem" data-share="' +
+    action +
+    '" class="' +
+    SHARE_ITEM_CLASS +
+    '"><span class="material-symbols-outlined text-[1.15rem] opacity-80" aria-hidden="true">' +
+    icon +
+    '</span><span class="flex-1">' +
+    label +
+    "</span></button>"
+  );
+}
+
+/**
+ * Share popover anchored to the Share button. It lives on <body> with fixed positioning so
+ * no section can clip or cover it, opens below the button (or above when there isn't room)
+ * and stays inside the viewport on small screens.
+ */
+function bindShareMenu(shareButton, project) {
+  const canonical = document.querySelector('link[rel="canonical"]');
+  const rawUrl = (canonical && canonical.href) || window.location.href.split("#")[0];
+  const title = project.title + " · Onurik";
+  const blurb = (project.description || "").trim();
+  const shareUrl = encodeURIComponent(rawUrl);
+  const shareText = encodeURIComponent(blurb ? project.title + " — " + blurb : project.title);
+
+  const menu = document.createElement("div");
+  menu.id = "share-project-menu";
+  menu.setAttribute("role", "menu");
+  menu.setAttribute("aria-label", "Share this project");
+  menu.hidden = true;
+  menu.className =
+    "fixed z-[70] w-[min(15.5rem,calc(100vw-1.5rem))] rounded-2xl border border-white/15 bg-[#141415]/95 p-2 text-cream shadow-sticker-lg backdrop-blur-xl";
+  menu.innerHTML =
+    (typeof navigator.share === "function" ? shareItem("native", "Share via…", "ios_share") : "") +
+    shareItem("whatsapp", "WhatsApp", "chat") +
+    shareItem("linkedin", "LinkedIn", "work") +
+    shareItem("x", "X (Twitter)", "tag") +
+    shareItem("facebook", "Facebook", "thumb_up") +
+    shareItem("email", "Email", "mail") +
+    shareItem("copy", "Copy link", "content_copy");
+  document.body.appendChild(menu);
+
+  shareButton.setAttribute("aria-haspopup", "menu");
+  shareButton.setAttribute("aria-controls", menu.id);
+  shareButton.setAttribute("aria-expanded", "false");
+
+  function place() {
+    const r = shareButton.getBoundingClientRect();
+    const gap = 10;
+    const margin = 12;
+    const w = menu.offsetWidth;
+    const h = menu.offsetHeight;
+    let left = Math.min(Math.max(r.left, margin), window.innerWidth - w - margin);
+    let top = r.bottom + gap;
+    if (top + h > window.innerHeight - margin && r.top - gap - h >= margin) top = r.top - gap - h;
+    top = Math.max(margin, Math.min(top, window.innerHeight - h - margin));
+    menu.style.left = Math.round(left) + "px";
+    menu.style.top = Math.round(top) + "px";
+  }
+
+  function open() {
+    menu.hidden = false;
+    place();
+    shareButton.setAttribute("aria-expanded", "true");
+    const first = menu.querySelector("[data-share]");
+    if (first) first.focus({ preventScroll: true });
+  }
+
+  function close(returnFocus) {
+    if (menu.hidden) return;
+    menu.hidden = true;
+    shareButton.setAttribute("aria-expanded", "false");
+    if (returnFocus) shareButton.focus({ preventScroll: true });
+  }
+
+  function flash(text) {
+    shareButton.textContent = text;
+    window.setTimeout(function () {
+      shareButton.innerHTML = '<span aria-hidden="true">↗</span> Share';
+    }, 1400);
+  }
+
+  shareButton.addEventListener("click", function () {
+    if (menu.hidden) open();
+    else close(false);
+  });
+
+  menu.addEventListener("click", async function (event) {
+    const item = event.target.closest("button[data-share]");
+    if (!item) return;
+    const action = item.getAttribute("data-share");
+    let target = "";
+    if (action === "whatsapp") target = "https://wa.me/?text=" + encodeURIComponent(project.title + " " + rawUrl);
+    if (action === "x") target = "https://twitter.com/intent/tweet?text=" + shareText + "&url=" + shareUrl;
+    if (action === "linkedin") target = "https://www.linkedin.com/sharing/share-offsite/?url=" + shareUrl;
+    if (action === "facebook") target = "https://www.facebook.com/sharer/sharer.php?u=" + shareUrl;
+    if (action === "email") {
+      target = "mailto:?subject=" + encodeURIComponent(title) + "&body=" + encodeURIComponent((blurb ? blurb + "\n\n" : "") + rawUrl);
+    }
+    close(false);
+    if (action === "native") {
+      try {
+        await navigator.share({ title: title, text: blurb || project.title, url: rawUrl });
+      } catch (_err) {
+        /* dismissed */
+      }
+      return;
+    }
+    if (action === "copy") {
+      try {
+        await navigator.clipboard.writeText(rawUrl);
+        flash("Link copied");
+      } catch (_err) {
+        flash("Copy failed");
+      }
+      return;
+    }
+    if (action === "email") window.location.href = target;
+    else if (target) window.open(target, "_blank", "noopener,noreferrer");
+  });
+
+  menu.addEventListener("keydown", function (event) {
+    const items = Array.from(menu.querySelectorAll("[data-share]"));
+    const at = items.indexOf(document.activeElement);
+    if (event.key === "Escape") {
+      // Keep Escape from also reaching the page-level close control (which leaves the page).
+      event.preventDefault();
+      event.stopPropagation();
+      close(true);
+    } else if (event.key === "ArrowDown") {
+      event.preventDefault();
+      items[(at + 1) % items.length].focus();
+    } else if (event.key === "ArrowUp") {
+      event.preventDefault();
+      items[(at - 1 + items.length) % items.length].focus();
+    } else if (event.key === "Tab") {
+      close(false);
+    }
+  });
+
+  document.addEventListener("click", function (event) {
+    if (!menu.contains(event.target) && !shareButton.contains(event.target)) close(false);
+  });
+  window.addEventListener("resize", function () {
+    if (!menu.hidden) place();
+  });
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!menu.hidden) place();
+    },
+    { passive: true },
+  );
 }
