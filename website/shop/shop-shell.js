@@ -45,17 +45,17 @@ function resultRow(product) {
   return (
     '<a href="/shop/product?id=' +
     encodeURIComponent(product.id) +
-    '" class="flex items-center gap-4 py-3 border-b border-white/[0.08] hover:opacity-80 transition-opacity">' +
+    '" class="shop-search-row">' +
     '<img src="' +
     escapeHtml(product.images[0] || "") +
     '" alt="' +
     escapeHtml(product.name) +
-    '" class="shop-img h-14 w-11 object-cover" width="44" height="56"/>' +
+    '" class="shop-img h-14 w-11 shrink-0 rounded-md border-2 border-ink object-cover" width="44" height="56"/>' +
     '<span class="flex min-w-0 flex-col">' +
-    '<span class="font-montserrat text-sm text-white truncate">' +
+    '<span class="ob-display text-xl text-cocoa truncate">' +
     escapeHtml(product.name) +
     "</span>" +
-    '<span class="text-xs text-white/40 mt-0.5">' +
+    '<span class="shop-price mt-1 self-start">' +
     formatKes(product.price) +
     "</span></span></a>"
   );
@@ -69,10 +69,11 @@ function bindSearch() {
   overlay.setAttribute("hidden", "");
   overlay.innerHTML =
     '<div class="mx-auto flex min-h-full max-w-container-max flex-col px-8 pt-28 md:px-16">' +
-    '<div class="flex items-center justify-between gap-4 border-b border-white/15">' +
+    '<p class="ob-display mb-5 text-[clamp(2.75rem,8vw,5.5rem)] text-cocoa" data-ob-chars="jumble">What are you after?</p>' +
+    '<div class="flex items-center justify-between gap-4">' +
     '<label class="sr-only" for="shop-search-input">Search merch</label>' +
-    '<input id="shop-search-input" class="shop-field border-0 py-4 text-lg font-montserrat tracking-tight placeholder:text-white/30" type="search" placeholder="Search merch" autocomplete="off"/>' +
-    '<button type="button" id="shop-search-close" class="shrink-0 p-2 text-white/70 hover:text-white transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-white/40">' +
+    '<input id="shop-search-input" class="ob-field text-lg" type="search" placeholder="Search merch" autocomplete="off"/>' +
+    '<button type="button" id="shop-search-close" class="shrink-0 inline-flex h-12 w-12 items-center justify-center rounded-full border-[2.5px] border-ink bg-tomato text-cream shadow-sticker transition-transform hover:-rotate-12">' +
     '<span class="material-symbols-outlined">close</span><span class="sr-only">Close search</span></button>' +
     "</div>" +
     '<div id="shop-search-results" class="mt-6" role="listbox" aria-label="Search results"></div>' +
@@ -88,12 +89,12 @@ function bindSearch() {
     const list = filterProducts({ q: q, sort: "newest" }).slice(0, 8);
     if (!q.trim()) {
       results.innerHTML =
-        '<p class="font-montserrat text-[11px] uppercase tracking-[0.2em] text-white/35">Type to search the collection</p>';
+        '<p class="shop-label">Type to search the collection</p>';
       return;
     }
     if (!list.length) {
       results.innerHTML =
-        '<p class="font-montserrat text-[11px] uppercase tracking-[0.2em] text-white/35">No matches</p>';
+        '<p class="shop-label">No matches</p>';
       return;
     }
     results.innerHTML = list.map(resultRow).join("");

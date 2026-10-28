@@ -164,12 +164,12 @@ function renderGallery() {
         escapeHtml(src) +
         '" alt="" class="h-28 w-full object-cover"/>' +
         (index === 0
-          ? '<span class="absolute left-2 top-2 rounded bg-black/70 px-2 py-0.5 text-[10px] uppercase tracking-wide text-white">Cover</span>'
+          ? '<span class="absolute left-2 top-2 rounded bg-black/70 px-2 py-0.5 text-[10px] uppercase tracking-wide text-cream">Cover</span>'
           : "") +
         '<div class="absolute inset-x-0 bottom-0 flex justify-end gap-1 bg-black/70 p-1">' +
         '<button type="button" data-gallery-action="remove" data-gallery-index="' +
         index +
-        '" class="inline-flex min-h-8 min-w-8 items-center justify-center rounded text-white/80 hover:bg-white/15" aria-label="Remove image"><span class="material-symbols-outlined text-base">close</span></button>' +
+        '" class="inline-flex min-h-8 min-w-8 items-center justify-center rounded text-cream/90 hover:bg-white/15" aria-label="Remove image"><span class="material-symbols-outlined text-base">close</span></button>' +
         "</div></div>"
       );
     })
@@ -213,7 +213,7 @@ function renderColors() {
         '"/>' +
         '<button type="button" data-color-remove="' +
         index +
-        '" class="inline-flex items-center justify-center rounded border border-outline-variant/40 text-white/50 hover:text-white" aria-label="Remove colour"><span class="material-symbols-outlined text-base">close</span></button>' +
+        '" class="inline-flex items-center justify-center rounded border border-outline-variant/40 text-cream/75 hover:text-mustard" aria-label="Remove colour"><span class="material-symbols-outlined text-base">close</span></button>' +
         "</div>"
       );
     })
@@ -315,35 +315,35 @@ function renderProducts() {
           ? '<img src="' + escapeHtml(cover) + '" alt="" class="h-full w-full object-cover"/>'
           : "") +
         "</div></td>" +
-        '<td class="p-3"><p class="text-sm text-white">' +
+        '<td class="p-3"><p class="text-sm text-cream">' +
         escapeHtml(product.name) +
-        '</p><p class="mt-1 text-[10px] uppercase tracking-[0.14em] text-white/35">' +
+        '</p><p class="mt-1 text-[10px] uppercase tracking-[0.14em] text-cream/60">' +
         escapeHtml(product.id) +
         "</p></td>" +
-        '<td class="p-3 text-sm text-white/70">' +
+        '<td class="p-3 text-sm text-cream/85">' +
         escapeHtml(genderLabel(product.gender)) +
         " · " +
         escapeHtml(categoryLabel(product.category)) +
         "</td>" +
         '<td class="p-3 text-sm">' +
         (sale
-          ? '<span class="mr-2 text-white/35 line-through">' + formatKes(product.originalPrice) + "</span>"
+          ? '<span class="mr-2 text-cream/60 line-through">' + formatKes(product.originalPrice) + "</span>"
           : "") +
         formatKes(product.price) +
         "</td>" +
-        '<td class="p-3 text-[11px] uppercase tracking-[0.14em] text-white/50">' +
+        '<td class="p-3 text-[11px] uppercase tracking-[0.14em] text-cream/75">' +
         (product.inStock ? "In stock" : "Sold out") +
         "</td>" +
-        '<td class="p-3 text-[11px] uppercase tracking-[0.14em] text-white/50">' +
+        '<td class="p-3 text-[11px] uppercase tracking-[0.14em] text-cream/75">' +
         (product.published === false ? "Hidden" : "Live") +
         "</td>" +
         '<td class="p-3 text-right whitespace-nowrap">' +
         '<button type="button" data-product-edit="' +
         escapeHtml(product.id) +
-        '" class="mr-2 text-[11px] uppercase tracking-[0.14em] text-white/70 hover:text-white">Edit</button>' +
+        '" class="mr-2 text-[11px] uppercase tracking-[0.14em] text-cream/85 hover:text-mustard">Edit</button>' +
         '<button type="button" data-product-delete="' +
         escapeHtml(product.id) +
-        '" class="text-[11px] uppercase tracking-[0.14em] text-white/40 hover:text-white">Delete</button>' +
+        '" class="text-[11px] uppercase tracking-[0.14em] text-cream/65 hover:text-mustard">Delete</button>' +
         "</td></tr>"
       );
     })
@@ -390,30 +390,30 @@ function renderOrders() {
         : "—";
       return (
         "<tr class=\"border-b border-outline-variant/20 align-top\">" +
-        '<td class="p-3"><p class="text-sm text-white">' +
+        '<td class="p-3"><p class="text-sm text-cream">' +
         escapeHtml(order.id) +
-        '</p><p class="mt-1 text-[11px] text-white/40">' +
+        '</p><p class="mt-1 text-[11px] text-cream/65">' +
         escapeHtml(when) +
         "</p></td>" +
         '<td class="p-3 text-sm">' +
         escapeHtml(customer.name || "—") +
-        '<p class="mt-1 text-xs text-white/40">' +
+        '<p class="mt-1 text-xs text-cream/65">' +
         escapeHtml(customer.email || "") +
         "<br/>" +
         escapeHtml(customer.phone || "") +
         "</p></td>" +
-        '<td class="p-3 text-xs text-white/70 leading-relaxed">' +
+        '<td class="p-3 text-xs text-cream/85 leading-relaxed">' +
         lines +
         "</td>" +
         '<td class="p-3 text-sm">' +
         formatKes(order.total) +
-        '<p class="mt-1 text-[11px] uppercase tracking-[0.12em] text-white/35">' +
+        '<p class="mt-1 text-[11px] uppercase tracking-[0.12em] text-cream/60">' +
         escapeHtml(order.paymentLabel || "") +
         "</p></td>" +
-        '<td class="p-3 text-xs text-white/55">' +
+        '<td class="p-3 text-xs text-cream/75">' +
         escapeHtml((order.shipping && order.shipping.label) || "—") +
         (order.shipping && order.shipping.deliveryDate
-          ? '<br/><span class="text-white/35">' +
+          ? '<br/><span class="text-cream/60">' +
             escapeHtml(order.shipping.deliveryDate) +
             "</span>"
           : "") +
@@ -427,7 +427,7 @@ function renderOrders() {
         "</select></td>" +
         '<td class="p-3 text-right"><button type="button" data-order-delete="' +
         escapeHtml(order.id) +
-        '" class="text-[11px] uppercase tracking-[0.14em] text-white/40 hover:text-white">Delete</button></td>' +
+        '" class="text-[11px] uppercase tracking-[0.14em] text-cream/65 hover:text-mustard">Delete</button></td>' +
         "</tr>"
       );
     })
@@ -474,16 +474,16 @@ async function renderAds() {
         "</div>" +
         '<div class="flex flex-col justify-between gap-4 p-4">' +
         '<div>' +
-        '<p class="font-montserrat text-sm text-white">' +
+        '<p class="font-montserrat text-sm text-cream">' +
         escapeHtml(ad.title || "Untitled clip") +
         "</p>" +
-        '<p class="mt-1 text-xs text-white/40">' +
+        '<p class="mt-1 text-xs text-cream/65">' +
         escapeHtml(ad.source === "url" ? "Direct URL" : ad.filename || "Upload") +
         (ad.size ? " · " + formatAdSize(ad.size) : "") +
         (ad.published === false ? " · Hidden" : " · Live") +
         "</p></div>" +
         '<div class="flex flex-wrap items-center gap-3 text-[11px] uppercase tracking-[0.14em]">' +
-        '<label class="inline-flex cursor-pointer items-center gap-2 text-white/70">' +
+        '<label class="inline-flex cursor-pointer items-center gap-2 text-cream/85">' +
         '<input type="checkbox" data-ad-live="' +
         escapeHtml(ad.id) +
         '"' +
@@ -491,17 +491,17 @@ async function renderAds() {
         ' class="rounded border-outline-variant/40 bg-surface-container"/> Live</label>' +
         '<button type="button" data-ad-up="' +
         escapeHtml(ad.id) +
-        '" class="text-white/45 hover:text-white"' +
+        '" class="text-cream/70 hover:text-mustard"' +
         (index === 0 ? " disabled" : "") +
         ">Up</button>" +
         '<button type="button" data-ad-down="' +
         escapeHtml(ad.id) +
-        '" class="text-white/45 hover:text-white"' +
+        '" class="text-cream/70 hover:text-mustard"' +
         (index === ads.length - 1 ? " disabled" : "") +
         ">Down</button>" +
         '<button type="button" data-ad-delete="' +
         escapeHtml(ad.id) +
-        '" class="ml-auto text-white/35 hover:text-white">Delete</button>' +
+        '" class="ml-auto text-cream/60 hover:text-mustard">Delete</button>' +
         "</div></div></div></article>"
       );
     })
@@ -594,33 +594,33 @@ function renderDeliveryZones() {
         '<input type="hidden" data-zone-id value="' +
         escapeHtml(zone.id) +
         '"/>' +
-        '<label class="md:col-span-3"><span class="mb-1 block text-[10px] uppercase tracking-[0.14em] text-white/35">Name</span>' +
+        '<label class="md:col-span-3"><span class="mb-1 block text-[10px] uppercase tracking-[0.14em] text-cream/60">Name</span>' +
         '<input data-zone-label class="w-full rounded border border-outline-variant/40 bg-surface-container-low px-3 py-2" type="text" value="' +
         escapeHtml(zone.label) +
         '" required/></label>' +
-        '<label class="md:col-span-5"><span class="mb-1 block text-[10px] uppercase tracking-[0.14em] text-white/35">Areas</span>' +
+        '<label class="md:col-span-5"><span class="mb-1 block text-[10px] uppercase tracking-[0.14em] text-cream/60">Areas</span>' +
         '<input data-zone-detail class="w-full rounded border border-outline-variant/40 bg-surface-container-low px-3 py-2" type="text" value="' +
         escapeHtml(zone.detail) +
         '"/></label>' +
-        '<label class="md:col-span-2"><span class="mb-1 block text-[10px] uppercase tracking-[0.14em] text-white/35">Price (KSh)</span>' +
+        '<label class="md:col-span-2"><span class="mb-1 block text-[10px] uppercase tracking-[0.14em] text-cream/60">Price (KSh)</span>' +
         '<input data-zone-price class="w-full rounded border border-outline-variant/40 bg-surface-container-low px-3 py-2" type="number" min="0" step="1" value="' +
         zone.price +
         '"/></label>' +
         '<div class="flex flex-wrap items-end justify-between gap-2 md:col-span-2">' +
-        '<label class="inline-flex items-center gap-2 pb-2 text-xs text-white/70">' +
+        '<label class="inline-flex items-center gap-2 pb-2 text-xs text-cream/85">' +
         '<input data-zone-nairobi type="checkbox"' +
         (zone.nairobi ? " checked" : "") +
         ' class="rounded border-outline-variant/40 bg-surface-container-low"/>Nairobi</label>' +
         '<div class="flex gap-1 pb-1">' +
         '<button type="button" data-zone-move="up" data-zone-index="' +
         index +
-        '" class="px-2 text-white/35 hover:text-white" aria-label="Move up">↑</button>' +
+        '" class="px-2 text-cream/60 hover:text-mustard" aria-label="Move up">↑</button>' +
         '<button type="button" data-zone-move="down" data-zone-index="' +
         index +
-        '" class="px-2 text-white/35 hover:text-white" aria-label="Move down">↓</button>' +
+        '" class="px-2 text-cream/60 hover:text-mustard" aria-label="Move down">↓</button>' +
         '<button type="button" data-zone-remove="' +
         index +
-        '" class="px-2 text-white/35 hover:text-white" aria-label="Remove">✕</button>' +
+        '" class="px-2 text-cream/60 hover:text-mustard" aria-label="Remove">✕</button>' +
         "</div></div></div>"
       );
     })
@@ -642,41 +642,41 @@ function renderDeliveryTurns() {
         '<input type="hidden" data-turn-id value="' +
         escapeHtml(item.id) +
         '"/>' +
-        '<label class="md:col-span-2"><span class="mb-1 block text-[10px] uppercase tracking-[0.14em] text-white/35">Name</span>' +
+        '<label class="md:col-span-2"><span class="mb-1 block text-[10px] uppercase tracking-[0.14em] text-cream/60">Name</span>' +
         '<input data-turn-label class="w-full rounded border border-outline-variant/40 bg-surface-container-low px-3 py-2" type="text" value="' +
         escapeHtml(item.label) +
         '" required/></label>' +
-        '<label class="md:col-span-2"><span class="mb-1 block text-[10px] uppercase tracking-[0.14em] text-white/35">Time label</span>' +
+        '<label class="md:col-span-2"><span class="mb-1 block text-[10px] uppercase tracking-[0.14em] text-cream/60">Time label</span>' +
         '<input data-turn-time class="w-full rounded border border-outline-variant/40 bg-surface-container-low px-3 py-2" type="text" value="' +
         escapeHtml(item.timeLabel) +
         '"/></label>' +
-        '<label class="md:col-span-1"><span class="mb-1 block text-[10px] uppercase tracking-[0.14em] text-white/35">Days</span>' +
+        '<label class="md:col-span-1"><span class="mb-1 block text-[10px] uppercase tracking-[0.14em] text-cream/60">Days</span>' +
         '<input data-turn-days class="w-full rounded border border-outline-variant/40 bg-surface-container-low px-3 py-2" type="number" min="1" step="1" value="' +
         item.days +
         '"/></label>' +
-        '<label class="md:col-span-2"><span class="mb-1 block text-[10px] uppercase tracking-[0.14em] text-white/35">Extra (KSh)</span>' +
+        '<label class="md:col-span-2"><span class="mb-1 block text-[10px] uppercase tracking-[0.14em] text-cream/60">Extra (KSh)</span>' +
         '<input data-turn-extra class="w-full rounded border border-outline-variant/40 bg-surface-container-low px-3 py-2" type="number" min="0" step="1" value="' +
         item.extra +
         '"/></label>' +
-        '<label class="md:col-span-2"><span class="mb-1 block text-[10px] uppercase tracking-[0.14em] text-white/35">Regions</span>' +
+        '<label class="md:col-span-2"><span class="mb-1 block text-[10px] uppercase tracking-[0.14em] text-cream/60">Regions</span>' +
         '<input data-turn-regions class="w-full rounded border border-outline-variant/40 bg-surface-container-low px-3 py-2" type="text" value="' +
         escapeHtml(item.regions) +
         '"/></label>' +
         '<div class="flex flex-wrap items-end justify-between gap-2 md:col-span-3">' +
-        '<label class="inline-flex items-center gap-2 pb-2 text-xs text-white/70">' +
+        '<label class="inline-flex items-center gap-2 pb-2 text-xs text-cream/85">' +
         '<input data-turn-nairobi type="checkbox"' +
         (item.nairobiOnly ? " checked" : "") +
         ' class="rounded border-outline-variant/40 bg-surface-container-low"/>Nairobi only</label>' +
         '<div class="flex gap-1 pb-1">' +
         '<button type="button" data-turn-move="up" data-turn-index="' +
         index +
-        '" class="px-2 text-white/35 hover:text-white" aria-label="Move up">↑</button>' +
+        '" class="px-2 text-cream/60 hover:text-mustard" aria-label="Move up">↑</button>' +
         '<button type="button" data-turn-move="down" data-turn-index="' +
         index +
-        '" class="px-2 text-white/35 hover:text-white" aria-label="Move down">↓</button>' +
+        '" class="px-2 text-cream/60 hover:text-mustard" aria-label="Move down">↓</button>' +
         '<button type="button" data-turn-remove="' +
         index +
-        '" class="px-2 text-white/35 hover:text-white" aria-label="Remove">✕</button>' +
+        '" class="px-2 text-cream/60 hover:text-mustard" aria-label="Remove">✕</button>' +
         "</div></div></div>"
       );
     })

@@ -13,251 +13,66 @@
 </script>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>About · Onurik</title>
+<meta name="theme-color" content="#D8202A"/>
+<meta name="theme-color" content="#D8202A"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="/brand/tailwind-brand.js"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Manrope:wght@400;500;600;700&amp;family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "primary-container": "#e5e2dd",
-                    "primary": "#ffffff",
-                    "on-surface": "#e5e2e1",
-                    "surface-dim": "#131313",
-                    "background": "#131313",
-                    "on-primary-container": "#656461",
-                    "on-tertiary-container": "#656464",
-                    "surface-container-lowest": "#0e0e0e",
-                    "tertiary-fixed-dim": "#c8c6c5",
-                    "inverse-surface": "#e5e2e1",
-                    "primary-fixed-dim": "#c9c6c1",
-                    "tertiary-container": "#e5e2e1",
-                    "outline-variant": "#474741",
-                    "surface-container-high": "#2a2a2a",
-                    "secondary-fixed-dim": "#ccc6ba",
-                    "on-tertiary-fixed-variant": "#474746",
-                    "error-container": "#93000a",
-                    "primary-fixed": "#e5e2dd",
-                    "inverse-on-surface": "#313030",
-                    "outline": "#929189",
-                    "on-error": "#690005",
-                    "surface-variant": "#353534",
-                    "on-secondary-fixed-variant": "#4a473e",
-                    "on-background": "#e5e2e1",
-                    "on-tertiary": "#313030",
-                    "on-error-container": "#ffdad6",
-                    "error": "#ffb4ab",
-                    "on-secondary-fixed": "#1e1b14",
-                    "secondary-fixed": "#e8e2d6",
-                    "secondary": "#ccc6ba",
-                    "on-secondary": "#333028",
-                    "on-primary": "#31302d",
-                    "inverse-primary": "#5f5e5b",
-                    "surface-container": "#201f1f",
-                    "surface-tint": "#c9c6c1",
-                    "secondary-container": "#4a473e",
-                    "on-primary-fixed": "#1c1c19",
-                    "surface": "#131313",
-                    "on-secondary-container": "#bab5a9",
-                    "on-primary-fixed-variant": "#474743",
-                    "surface-bright": "#3a3939",
-                    "on-surface-variant": "#c8c7be",
-                    "tertiary": "#ffffff",
-                    "on-tertiary-fixed": "#1c1b1b",
-                    "tertiary-fixed": "#e5e2e1",
-                    "surface-container-low": "#1c1b1b",
-                    "surface-container-highest": "#353534"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0.125rem",
-                    "lg": "0.25rem",
-                    "xl": "0.5rem",
-                    "full": "0.75rem"
-            },
-            "spacing": {
-                    "gutter": "32px",
-                    "element-gap": "24px",
-                    "margin": "64px",
-                    "container-max": "1440px",
-                    "section-gap": "160px"
-            },
-            "fontFamily": {
-                    "headline-md": [
-                            "Montserrat", "sans-serif"
-                    ],
-                    "display-xl": [
-                            "Montserrat", "sans-serif"
-                    ],
-                    "label-caps": [
-                            "Manrope", "sans-serif"
-                    ],
-                    "body-md": [
-                            "Manrope", "sans-serif"
-                    ],
-                    "display-lg": [
-                            "Montserrat", "sans-serif"
-                    ],
-                    "body-lg": [
-                            "Manrope", "sans-serif"
-                    ],
-                    "montserrat": [
-                            "Montserrat", "sans-serif"
-                    ]
-            },
-            "fontSize": {
-                    "headline-md": [
-                            "32px",
-                            {
-                                    "lineHeight": "40px",
-                                    "letterSpacing": "0em",
-                                    "fontWeight": "500"
-                            }
-                    ],
-                    "display-xl": [
-                            "80px",
-                            {
-                                    "lineHeight": "96px",
-                                    "letterSpacing": "-0.02em",
-                                    "fontWeight": "500"
-                            }
-                    ],
-                    "label-caps": [
-                            "12px",
-                            {
-                                    "lineHeight": "16px",
-                                    "letterSpacing": "0.05em",
-                                    "fontWeight": "600"
-                            }
-                    ],
-                    "body-md": [
-                            "16px",
-                            {
-                                    "lineHeight": "24px",
-                                    "letterSpacing": "0.01em",
-                                    "fontWeight": "400"
-                            }
-                    ],
-                    "display-lg": [
-                            "64px",
-                            {
-                                    "lineHeight": "72px",
-                                    "letterSpacing": "-0.02em",
-                                    "fontWeight": "500"
-                            }
-                    ],
-                    "body-lg": [
-                            "18px",
-                            {
-                                    "lineHeight": "28px",
-                                    "letterSpacing": "0.01em",
-                                    "fontWeight": "400"
-                            }
-                    ]
-            }
-        },
-        },
-      }
-    </script>
-<style>
-        body {
-            background-color: #131313;
-            color: #e5e2e1;
-        }
-        .material-symbols-outlined {
-            font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
-        }
-        #site-nav-drawer {
-            transform: translateX(100%);
-            transition: transform 0.3s ease-out;
-        }
-        #site-nav-drawer.open {
-            transform: translateX(0);
-        }
-        .site-nav-overlay.open {
-            opacity: 1 !important;
-            pointer-events: auto !important;
-        }
-
-        /* Conversion bridge (same as homepage / works) */
-        #conversion-bridge {
-            opacity: 0;
-            transform: translateY(1.25rem);
-            will-change: opacity, transform;
-        }
-        #conversion-bridge.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-            transition: opacity 0.85s ease-out, transform 0.85s ease-out;
-        }
-        .conversion-bridge-slide {
-            position: absolute;
-            left: 0;
-            top: 0;
-            right: 0;
-            opacity: 0;
-            transform: translateY(0.65rem);
-            transition: opacity 0.65s ease-in-out, transform 0.65s ease-in-out;
-            pointer-events: none;
-        }
-        .conversion-bridge-slide.is-active {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
-        }
-        .bridge-intro { font-family: Montserrat, sans-serif; }
-        .bridge-headline {
-            font-family: Montserrat, sans-serif;
-            font-style: italic;
-            font-weight: 700;
-        }
-        .bridge-subtext { font-family: Inter, sans-serif; }
-        @media (prefers-reduced-motion: reduce) {
-            #conversion-bridge {
-                opacity: 1;
-                transform: none;
-                transition: none;
-            }
-            .conversion-bridge-slide {
-                transition: none;
-            }
-            .conversion-bridge-slide:not(.is-active) {
-                opacity: 0;
-                visibility: hidden;
-            }
-            .conversion-bridge-slide.is-active {
-                transform: none;
-            }
-        }
-    </style>
 <link rel="stylesheet" href="styles/animations.css"/>
+<link rel="stylesheet" href="styles/brand.css"/>
+<style>
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24; }
+  #site-nav-drawer { transform: translateX(100%); transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  #site-nav-drawer.open { transform: translateX(0); }
+  .site-nav-overlay.open { opacity: 1 !important; pointer-events: auto !important; }
+  .ob-drawer a.ob-drawer__link[aria-current="page"] { color: #D8202A; }
+
+  /* Conversion bridge (shared with home) */
+  .conversion-bridge-slide {
+    position: absolute; left: 0; top: 0; right: 0;
+    opacity: 0; transform: translateY(0.8rem) rotate(-1.5deg);
+    transition: opacity 0.55s ease-in-out, transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+  }
+  .conversion-bridge-slide.is-active { opacity: 1; transform: none; pointer-events: auto; }
+  #conversion-bridge .bridge-shell { opacity: 0; transform: translateY(1.25rem); }
+  #conversion-bridge.is-visible .bridge-shell { opacity: 1; transform: none; transition: opacity 0.85s ease-out, transform 0.85s ease-out; }
+  @media (prefers-reduced-motion: reduce) {
+    .conversion-bridge-slide { transition: none; }
+    .conversion-bridge-slide:not(.is-active) { visibility: hidden; }
+    #conversion-bridge .bridge-shell { opacity: 1; transform: none; }
+  }
+
+  .about-hero__title { font-size: clamp(3.6rem, 13vw, 11rem); }
+  .about-dots span { position: absolute; display: grid; place-items: center; width: 1.6rem; height: 1.6rem; border-radius: 999px; background: #F24C00; box-shadow: inset -5px -3px 0 0 #26307A; }
+  .about-story p + p { margin-top: 1.4rem; }
+</style>
 </head>
-<body class="font-body-md antialiased min-h-screen flex flex-col selection:bg-primary selection:text-on-primary">
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md overflow-x-hidden">
 <!-- TopNavBar -->
-<header class="fixed top-0 z-50 flex h-[4.25rem] w-full full-width docked items-center justify-between gap-4 border-b border-white/10 bg-stone-950/75 px-8 font-montserrat text-stone-100 backdrop-blur-xl md:px-16">
-<a href="/" class="shrink-0 text-2xl font-bold tracking-tight text-stone-100">Onurik</a>
-<nav class="hidden md:flex items-center gap-10 text-xs uppercase tracking-[0.2em]">
-<a class="text-white/35 transition-colors hover:text-white/70" href="/works">Works</a>
-<a class="border-b border-stone-100 pb-0.5 text-xs font-semibold uppercase tracking-[0.28em] text-stone-100 hover:border-white hover:text-white transition-colors" href="/about">Info</a>
-<a class="text-white/35 transition-colors hover:text-white/70" href="/shop">Shop</a>
-<a class="text-white/35 transition-colors hover:text-white/70" href="/contact">Contact</a>
-</nav>
-<div class="flex shrink-0 items-center gap-2">
-<a href="/contact" class="hidden md:inline-flex items-center justify-center rounded-full border border-stone-100/30 px-6 py-2 text-xs font-semibold uppercase tracking-[0.28em] transition-colors duration-300 hover:bg-stone-100 hover:text-stone-950">Enquire</a>
-<button type="button" id="site-mobile-menu-btn" class="inline-flex items-center justify-center rounded-md p-2 text-stone-100 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40 md:hidden" aria-expanded="false" aria-controls="site-nav-drawer">
+<nav class="ob-nav fixed top-0 w-full z-50 flex items-center gap-6 px-5 sm:px-8 md:px-12 h-[4.5rem]">
+<a href="/" class="ob-nav__logo" data-ob-chars="jumble" aria-label="Onurik home">Onurik</a>
+<button type="button" class="md:hidden ml-auto inline-flex items-center justify-center rounded-full w-11 h-11 bg-mustard text-cocoa border-2 border-ink shadow-sticker" aria-expanded="false" aria-controls="site-nav-drawer" id="site-mobile-menu-btn">
 <span class="material-symbols-outlined text-2xl" aria-hidden="true">menu</span>
 <span class="sr-only">Open menu</span>
 </button>
+<div class="ml-auto hidden md:flex items-center gap-9">
+<a href="/works" class="ob-nav__link">Works</a>
+<a href="/about" class="ob-nav__link" aria-current="page">Info</a>
+<a href="/shop" class="ob-nav__link">Shop</a>
+<a href="/contact" class="ob-nav__cta" data-ob-magnet="0.3">Contact <span class="material-symbols-outlined text-base" aria-hidden="true">north_east</span></a>
 </div>
-</header>
-<div class="site-nav-overlay fixed inset-0 z-40 opacity-0 pointer-events-none bg-black/70 backdrop-blur-sm transition-opacity duration-300 md:hidden" aria-hidden="true"></div>
-<nav id="site-nav-drawer" class="fixed top-0 right-0 z-50 flex h-full w-[min(100vw,18rem)] flex-col gap-6 border-l border-white/10 bg-neutral-950 px-8 pb-8 pt-24 text-sm uppercase tracking-widest shadow-2xl md:hidden" aria-hidden="true" aria-label="Mobile">
-<a href="/works" class="text-white/80 transition-colors hover:text-white">Works</a>
-<a href="/about" class="border-b border-stone-100 pb-0.5 text-xs font-semibold uppercase tracking-[0.28em] text-white self-start">Info</a>
-<a href="/shop" class="text-white/80 transition-colors hover:text-white">Shop</a>
-<a href="/contact" class="text-white/80 transition-colors hover:text-white">Contact</a>
-<a href="/contact" class="mt-auto border-t border-white/10 pt-6 text-xs font-semibold uppercase tracking-[0.28em] text-white/90 hover:text-white transition-colors">Enquire</a>
+</nav>
+<div class="site-nav-overlay fixed inset-0 z-40 md:hidden opacity-0 pointer-events-none bg-ink/70 backdrop-blur-sm transition-opacity duration-300" aria-hidden="true"></div>
+<nav id="site-nav-drawer" class="ob-drawer ob-grain fixed top-0 right-0 z-50 h-full w-[min(100vw,20rem)] md:hidden pt-24 px-8 flex flex-col gap-5 shadow-2xl" aria-hidden="true" aria-label="Mobile">
+<a href="/works" class="ob-drawer__link">Works</a>
+<a href="/about" class="ob-drawer__link" aria-current="page">Info</a>
+<a href="/shop" class="ob-drawer__link">Shop</a>
+<a href="/contact" class="ob-drawer__link">Contact</a>
+<a href="/contact" class="ob-btn ob-btn--red mt-6 self-start">Enquire <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></a>
+<p class="ob-marker mt-auto mb-10 text-2xl text-cocoa/80 -rotate-3">think outside the box ✕</p>
 </nav>
 <script>
 (function () {
@@ -289,69 +104,131 @@
   });
 })();
 </script>
-<!-- Main Content -->
-<main class="flex-grow flex flex-col items-center justify-center pt-[160px] pb-section-gap px-gutter">
-<div class="max-w-[640px] w-full text-center flex flex-col gap-element-gap" data-anim-stagger>
-<div class="mb-8">
-<h1 class="font-display-xl text-display-xl text-on-surface mb-4 font-medium" data-anim-split="words">Onurik Systems</h1>
-<p class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-[0.2em] font-medium">Principal Architect &amp; Design Director</p>
+<main class="flex-grow">
+
+<!-- Hero: red poster with hand-lettered name and the "think outside the box" card -->
+<section class="ob-bg-tomato ob-grain relative overflow-hidden pt-[4.5rem]">
+<div class="absolute inset-0 ob-lines" aria-hidden="true"></div>
+<svg class="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+<path d="M-40 640 C 200 480, 380 760, 640 600 S 1000 420, 1260 560 L 1260 860 L -40 860 Z" fill="#A8121A" opacity="0.5"/>
+<path d="M760 -40 C 900 120, 1120 60, 1240 180 L 1240 -40 Z" fill="#A8121A" opacity="0.45"/>
+</svg>
+<div class="relative z-[2] mx-auto grid max-w-[1440px] items-center gap-14 px-5 pb-24 pt-10 sm:px-8 md:px-12 lg:grid-cols-12 lg:pb-32">
+<div class="lg:col-span-7">
+<div class="flex items-center gap-4 text-mustard">
+<div class="ob-chrome" aria-hidden="true"><span>×</span><span>−</span><span>↻</span></div>
+<span class="ob-search-pill"><span class="material-symbols-outlined text-lg" aria-hidden="true">search</span>who is onurik?</span>
 </div>
-<div class="w-full h-px bg-outline-variant/30 my-8"></div>
-<div class="text-left font-body-lg text-body-lg text-on-surface space-y-6">
-<p>
-                    With over a decade shaping brands and engineering systems, I’ve built a way of working that understands both structure and story—how things look, how they function, and how they hold over time.
-                </p>
-<p>
-                    My focus is rooted in the Sub-Saharan market, particularly East and Central Africa, where I’ve worked closely with businesses building for real impact. This is where I’ve learned what it means to design with context. Not borrowed ideas, but systems and brands that feel ours—built to hold, sustain, and grow within the environments they serve.
-                </p>
-<p>
-                    At Onurik, we approach every project as both builders and learners. We take on complex challenges, stay through the uncertainty, and refine until the system works the way it should. No shortcuts. No surface-level solutions. Just work that stands.
-                </p>
-<p>
-                    We design, we engineer, and we see it through—because the goal isn’t just to launch, but to last.
-                </p>
-<p>
-                    We are Africans, and Africa is our business.
-                </p>
-<p>
-                    Let’s partner in building what’s next.
-                </p>
+<div class="about-dots relative" aria-hidden="true">
+<span data-ob-float style="right:8%; top:1.5rem"></span>
+<span data-ob-float style="left:58%; top:-0.5rem; transform:scale(.7)"></span>
+</div>
+<h1 class="about-hero__title ob-letter mt-10 text-paper ob-shadow-text" style="--ob-shadow-color:#A8121A" data-ob-chars="jumble pop wobble" data-ob-amp="1.3">Onurik Systems</h1>
+<p class="mt-8 inline-flex flex-wrap items-center gap-3">
+<span class="ob-tag text-base" data-ob-reveal style="--ob-reveal-rot:-3deg">Principal Architect &amp; Design Director</span>
+</p>
+<p class="ob-mono mt-8 max-w-xl text-sm leading-relaxed text-cream/85" data-ob-reveal style="--ob-reveal-delay:.15s">We design, we engineer, and we see it through.</p>
+</div>
+
+<div class="relative lg:col-span-5">
+<div class="ob-sticker ob-bg-sun ob-grain relative mx-auto max-w-sm rotate-[3deg] px-8 pb-10 pt-12" style="--ob-hover-tilt:5deg" data-ob-reveal="pop">
+<p class="ob-marker text-[2.6rem] leading-[1.05] text-ink" data-ob-chars="jumble pop" data-ob-amp="1.6">Think outside the</p>
+<div class="relative mt-1 flex items-end gap-4">
+<p class="ob-marker text-[2.6rem] leading-none text-ink" data-ob-chars="jumble" data-ob-amp="1.6">box</p>
+</div>
+<svg class="mx-auto mt-2 w-48 text-ink" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" aria-hidden="true" data-ob-draw>
+<path d="M42 10 L38 112"/><path d="M80 8 L78 110"/><path d="M8 42 L114 38"/><path d="M10 80 L112 78"/>
+<circle cx="22" cy="24" r="9"/><path d="M53 16 L67 30 M67 16 L53 30"/><path d="M90 16 L104 30 M104 16 L90 30"/>
+<path d="M16 54 L30 68 M30 54 L16 68"/><path d="M53 54 L67 68 M67 54 L53 68"/><circle cx="97" cy="60" r="9"/>
+<circle cx="22" cy="98" r="9"/><circle cx="60" cy="97" r="9"/><path d="M90 90 L104 104 M104 90 L90 104"/>
+<path d="M62 -8 L58 76" stroke="#D8202A" stroke-width="4.5"/>
+</svg>
+</div>
 </div>
 </div>
 
-<!-- Conversion bridge (same section as homepage / works) -->
-<section id="conversion-bridge" class="mt-16 w-full border-t border-white/[0.06] bg-[#131313] md:mt-24 lg:mt-32" aria-labelledby="conversion-bridge-heading">
-<div class="mx-auto max-w-[1440px] px-8 py-16 md:px-16 md:py-24 lg:py-28">
+<div class="ob-marquee absolute bottom-0 left-0 right-0 z-[3] border-y-[3px] border-ink bg-mustard py-3 text-cocoa" style="--ob-marquee-speed:30s" aria-hidden="true">
+<div class="ob-marquee__track ob-display text-[1.6rem] md:text-[2rem]">
+<span>We design</span><span class="text-tomato">✶</span><span class="ob-outline-thick">We engineer</span><span class="text-tomato">✶</span><span>We see it through</span><span class="text-tomato">✶</span><span class="ob-outline-thick">No shortcuts</span><span class="text-tomato">✶</span>
+</div>
+</div>
+</section>
+
+<!-- Story: cream paper -->
+<section class="ob-bg-cream ob-grain relative">
+<div class="mx-auto grid max-w-[1440px] gap-14 px-5 py-[clamp(5rem,11vw,8rem)] sm:px-8 md:px-12 lg:grid-cols-12">
+<div class="lg:col-span-5">
+<div class="lg:sticky lg:top-28">
+<p class="ob-eyebrow text-tomato">○○○ The story</p>
+<h2 class="ob-display mt-5 text-[clamp(3rem,7vw,6rem)] text-cocoa">
+<span class="block" data-ob-chars="jumble pop">Structure</span>
+<span class="block text-tomato" data-ob-chars="jumble pop">&amp; story.</span>
+</h2>
+<p class="ob-marker mt-6 -rotate-2 text-2xl text-cocoa/80">how things look, how they function, how they hold.</p>
+<span class="ob-hex mt-10" aria-hidden="true">10+ yrs</span>
+</div>
+</div>
+<div class="about-story lg:col-span-7 text-lg leading-relaxed text-cocoa/85" data-anim-stagger>
+<p>With over a decade shaping brands and engineering systems, I’ve built a way of working that understands both structure and story—how things look, how they function, and how they hold over time.</p>
+<p>My focus is rooted in the Sub-Saharan market, particularly East and Central Africa, where I’ve worked closely with businesses building for real impact. This is where I’ve learned what it means to design with context. Not borrowed ideas, but systems and brands that feel ours—built to hold, sustain, and grow within the environments they serve.</p>
+<p>At Onurik, we approach every project as both builders and learners. We take on complex challenges, stay through the uncertainty, and refine until the system works the way it should.</p>
+<p class="ob-display !mt-10 text-[clamp(2rem,4vw,3.2rem)] text-cocoa">No shortcuts. No surface-level solutions. <span class="ob-marker normal-case text-tomato">Just work that stands.</span></p>
+<p class="!mt-10">We design, we engineer, and we see it through—because the goal isn’t just to launch, but to last.</p>
+</div>
+</div>
+</section>
+
+<!-- Manifesto band -->
+<section class="ob-bg-mustard ob-grain ob-torn-top relative overflow-hidden">
+<div class="mx-auto max-w-[1440px] px-5 py-20 text-center sm:px-8 md:px-12 md:py-28">
+<p class="ob-eyebrow text-cocoa/80">✶✶✶</p>
+<p class="ob-letter mt-6 text-[clamp(2.4rem,7vw,6rem)] text-cocoa" data-ob-chars="jumble pop wave" data-ob-amp="1.2">We are Africans, and Africa is our business.</p>
+<p class="ob-marker mt-8 text-2xl text-tomato -rotate-1">Let’s partner in building what’s next.</p>
+<div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+<a class="ob-btn ob-btn--red" href="mailto:contact@onurik.com">contact@onurik.com <span class="material-symbols-outlined" aria-hidden="true">mail</span></a>
+<a class="ob-btn ob-btn--cream" href="/works">See the works <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></a>
+</div>
+</div>
+</section>
+
+<section id="conversion-bridge" class="ob-bg-flame ob-grain relative w-full overflow-hidden" aria-labelledby="conversion-bridge-heading">
+<div class="ob-melt pointer-events-none absolute -right-10 top-10 hidden h-44 w-36 border-[10px] border-butter md:block" aria-hidden="true">
+<span class="absolute left-1/2 top-1/2 h-12 w-[3px] -translate-x-1/2 -translate-y-full bg-cocoa origin-bottom"></span>
+<span class="absolute left-1/2 top-1/2 h-9 w-[3px] -translate-x-1/2 -translate-y-full rotate-[120deg] bg-cocoa origin-bottom"></span>
+</div>
+<div class="bridge-shell mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:px-12 md:py-28">
 <h2 id="conversion-bridge-heading" class="sr-only">Partner with Onurik</h2>
-<div class="flex flex-col gap-12 lg:flex-row lg:items-center lg:justify-between lg:gap-12 xl:gap-16">
-<div class="w-full lg:w-[70%] lg:max-w-[70%] lg:flex-[7]">
-<div class="relative min-h-[13.5rem] sm:min-h-[12rem] md:min-h-[11rem] lg:min-h-[13rem]" aria-live="polite">
+<div class="flex flex-col gap-12 lg:flex-row lg:items-center lg:justify-between">
+<div class="w-full lg:max-w-[68%]">
+<p class="ob-eyebrow text-butter/90">#100 / let’s talk</p>
+<div class="relative mt-6 min-h-[15rem] sm:min-h-[13rem] md:min-h-[14rem]" aria-live="polite">
 <div id="conversion-bridge-slides" class="absolute inset-0">
 <div class="conversion-bridge-slide is-active" data-slide="0">
-<p class="bridge-intro mb-3 text-base leading-snug text-white/50 md:text-lg">Let’s talk about what you’re building —</p>
-<p class="bridge-headline text-2xl leading-[1.15] text-white md:text-3xl lg:text-[2.125rem] lg:leading-[1.2]">and make it something people actually remember.</p>
+<p class="ob-mono mb-4 text-base text-butter/85">Let’s talk about what you’re building —</p>
+<p class="ob-letter text-[clamp(2rem,5vw,4.2rem)] text-butter ob-shadow-text" style="--ob-shadow-color:#A8121A">and make it something people actually remember.</p>
 </div>
 <div class="conversion-bridge-slide" data-slide="1">
-<p class="bridge-intro mb-3 text-base leading-snug text-white/50 md:text-lg">Every great idea deserves a moment.</p>
-<p class="bridge-headline text-2xl leading-[1.15] text-white md:text-3xl lg:text-[2.125rem] lg:leading-[1.2]">Let’s make yours impossible to miss.</p>
+<p class="ob-mono mb-4 text-base text-butter/85">Every great idea deserves a moment.</p>
+<p class="ob-letter text-[clamp(2rem,5vw,4.2rem)] text-butter ob-shadow-text" style="--ob-shadow-color:#A8121A">Let’s make yours impossible to miss.</p>
 </div>
 <div class="conversion-bridge-slide" data-slide="2">
-<p class="bridge-intro mb-3 text-base leading-snug text-white/50 md:text-lg">This could be something big —</p>
-<p class="bridge-headline text-2xl leading-[1.15] text-white md:text-3xl lg:text-[2.125rem] lg:leading-[1.2]">Let’s make sure it feels like it.</p>
+<p class="ob-mono mb-4 text-base text-butter/85">This could be something big —</p>
+<p class="ob-letter text-[clamp(2rem,5vw,4.2rem)] text-butter ob-shadow-text" style="--ob-shadow-color:#A8121A">Let’s make sure it feels like it.</p>
 </div>
 <div class="conversion-bridge-slide" data-slide="3">
-<p class="bridge-intro mb-3 text-base leading-snug text-white/50 md:text-lg">Most products get ignored.</p>
-<p class="bridge-headline text-2xl leading-[1.15] text-white md:text-3xl lg:text-[2.125rem] lg:leading-[1.2]">Let’s make sure yours isn’t one of them.</p>
+<p class="ob-mono mb-4 text-base text-butter/85">Most products get ignored.</p>
+<p class="ob-letter text-[clamp(2rem,5vw,4.2rem)] text-butter ob-shadow-text" style="--ob-shadow-color:#A8121A">Let’s make sure yours isn’t one of them.</p>
 </div>
 </div>
 </div>
-<p class="bridge-intro mt-6 text-sm text-white/45 md:text-[15px]">— this is what I do at Onurik.</p>
-<p class="bridge-subtext mt-6 max-w-2xl text-[15px] leading-relaxed text-white/[0.58] md:text-base md:leading-relaxed">I work with founders and teams who care about how their product looks and feels. Design, development, and identity — done with intention, not templates.</p>
+<p class="ob-marker mt-4 text-xl text-cocoa -rotate-1">— this is what I do at Onurik.</p>
+<p class="mt-6 max-w-2xl text-base leading-relaxed text-butter/90">I work with founders and teams who care about how their product looks and feels. Design, development, and identity — done with intention, not templates.</p>
 </div>
-<div class="flex w-full shrink-0 justify-center lg:w-[30%] lg:max-w-[30%] lg:flex-[3] lg:justify-end lg:self-center">
-<a href="/contact" class="bridge-cta group inline-flex items-center justify-center gap-2.5 rounded-full border border-[#c9c6c1]/35 bg-[#201f1f] px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-[#e8e2d6] shadow-sm transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-[#e5e2dd]/55 hover:bg-[#2a2a2a] hover:shadow-[0_8px_32px_rgba(229,226,221,0.1)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e5e2dd]/40">
-<span>Let’s work together</span>
-<span class="material-symbols-outlined text-[1.125rem] transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true">arrow_forward</span>
+<div class="flex shrink-0 justify-center lg:justify-end">
+<a href="/contact" class="bridge-cta ob-stamp ob-stamp--mustard scale-110" data-ob-magnet="0.25">
+<span class="ob-stamp__disc"><span class="material-symbols-outlined" aria-hidden="true">play_arrow</span></span>
+<span class="ob-stamp__shout">Click<br/>here!</span>
+<span class="ob-stamp__caption">Let’s work together</span>
 </a>
 </div>
 </div>
@@ -359,52 +236,56 @@
 </section>
 <script>
 (function () {
-  var section = document.getElementById("conversion-bridge");
-  var slides = section ? section.querySelectorAll(".conversion-bridge-slide") : [];
-  if (!slides.length) return;
-  var i = 0;
-  var period = 3600;
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  function go(n) {
-    slides.forEach(function (el, j) {
-      el.classList.toggle("is-active", j === n);
-    });
-    i = n;
+  var period = 3600;
+
+  function initRotatingSlides(sectionId, slideSelector) {
+    var section = document.getElementById(sectionId);
+    var slides = section ? section.querySelectorAll(slideSelector) : [];
+    if (!slides.length) return;
+    var i = 0;
+    function go(n) {
+      slides.forEach(function (el, j) {
+        el.classList.toggle("is-active", j === n);
+      });
+      i = n;
+    }
+    if (sectionId === "conversion-bridge" && section) {
+      requestAnimationFrame(function () {
+        section.classList.add("is-visible");
+      });
+    }
+    if (!reduceMotion) {
+      setInterval(function () {
+        go((i + 1) % slides.length);
+      }, period);
+    }
   }
-  function next() {
-    go((i + 1) % slides.length);
-  }
-  if (section) {
-    requestAnimationFrame(function () {
-      section.classList.add("is-visible");
-    });
-  }
-  if (!reduceMotion) {
-    setInterval(next, period);
-  }
+
+  initRotatingSlides("conversion-bridge", ".conversion-bridge-slide");
+  initRotatingSlides("services-positioning", ".services-heading-slide");
 })();
 </script>
-
-<div class="max-w-[640px] w-full text-center flex flex-col gap-element-gap">
-<div class="w-full h-px bg-outline-variant/30 my-8"></div>
-<div class="flex flex-col md:flex-row justify-center items-center gap-8 font-label-caps text-label-caps text-on-surface">
-<a class="hover:text-primary transition-colors duration-300 tracking-[0.15em]" href="mailto:contact@onurik.com">CONTACT@ONURIK.COM</a>
-<span class="hidden md:inline text-outline-variant">•</span>
-<div class="flex gap-6">
-<a class="hover:text-primary transition-colors duration-300 tracking-[0.15em]" href="#">INSTAGRAM</a>
-<a class="hover:text-primary transition-colors duration-300 tracking-[0.15em]" href="#">LINKEDIN</a>
-</div>
-</div>
-</div>
 </main>
 <!-- Footer -->
-<footer class="w-full flex flex-col md:flex-row justify-between items-center px-8 md:px-16 bg-stone-950 text-stone-100 font-label-caps text-[10px] tracking-[0.2em] uppercase py-20 border-t border-stone-100/5">
-<div class="text-stone-100 font-bold mb-8 md:mb-0">
-            © 2026 ONURIK. ALL RIGHTS RESERVED.
-        </div>
-<nav data-onurik-social-footer class="flex gap-6 flex-wrap justify-center" aria-label="Social links" hidden></nav>
+<footer class="ob-bg-ink ob-grain relative w-full overflow-hidden">
+<div class="mx-auto max-w-[1440px] px-5 pt-16 sm:px-8 md:px-12">
+<div class="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
+<div>
+<p class="ob-letter text-3xl text-mustard md:text-4xl" data-ob-chars="jumble wobble">Got an idea?</p>
+<a href="/contact" class="ob-marker mt-2 inline-block text-xl text-cream/80 hover:text-tomato transition-colors">say hello → let’s build it</a>
+</div>
+<ul data-onurik-social-footer class="flex flex-wrap gap-6 ob-mono text-[11px] uppercase tracking-[0.18em] text-cream/70" aria-label="Social links" hidden></ul>
+</div>
+<p class="ob-footer__giant ob-outline mt-12 select-none text-center text-mustard" style="--ob-outline-color:#F2A516" data-ob-chars="jumble wave" data-ob-amp="0.6" aria-hidden="true">Onurik</p>
+<div class="flex flex-col items-center justify-between gap-3 border-t-2 border-cream/10 py-6 ob-mono text-[10px] uppercase tracking-[0.2em] text-cream/45 md:flex-row">
+<span>© 2026 Onurik. All rights reserved.</span>
+<span>Design ✶ Build ✶ Question everything</span>
+</div>
+</div>
 </footer>
 <script type="module" src="./scripts/animations.js"></script>
+<script type="module" src="./scripts/brand-fx.js"></script>
 <script type="module" src="./scripts/nav-close.js"></script>
 <script type="module" src="./scripts/whatsapp-float.js"></script>
 <script type="module" src="./scripts/site-social-links.js"></script>

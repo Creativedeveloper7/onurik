@@ -116,9 +116,9 @@ function setStatusUi(value, isEditing) {
   if (hidden) hidden.value = value;
   document.querySelectorAll(".status-pill").forEach(function (pill) {
     const active = pill.getAttribute("data-status-pill") === value;
-    pill.classList.toggle("bg-white", active);
-    pill.classList.toggle("text-black", active);
-    pill.classList.toggle("text-white/70", !active);
+    pill.classList.toggle("bg-mustard", active);
+    pill.classList.toggle("text-cocoa", active);
+    pill.classList.toggle("text-cream/85", !active);
   });
   if (submit) {
     if (isEditing) {
@@ -153,8 +153,8 @@ function renderScopeTagPicker() {
         escapeHtml(tag) +
         '" class="rounded-full border px-3 py-1.5 text-[11px] tracking-wide transition ' +
         (active
-          ? "border-white bg-white text-black"
-          : "border-white/25 text-white/75 hover:border-white/50 hover:text-white") +
+          ? "border-ink bg-mustard text-cocoa"
+          : "border-white/25 text-cream/90 hover:border-white/50 hover:text-mustard") +
         '">' +
         escapeHtml(tag) +
         "</button>"
@@ -238,17 +238,17 @@ function renderGalleryList() {
         escapeHtml(src) +
         '" alt="" class="h-28 w-full object-cover"/>' +
         (index === 0
-          ? '<span class="absolute left-2 top-2 rounded bg-black/70 px-2 py-0.5 text-[10px] uppercase tracking-wide text-white">Cover</span>'
+          ? '<span class="absolute left-2 top-2 rounded bg-black/70 px-2 py-0.5 text-[10px] uppercase tracking-wide text-cream">Cover</span>'
           : "") +
         '<div class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-1 bg-black/70 p-1">' +
         '<button type="button" data-gallery-action="up" data-gallery-index="' +
         index +
-        '" class="inline-flex min-h-8 min-w-8 items-center justify-center rounded text-white/80 hover:bg-white/15 disabled:opacity-30" aria-label="Move image earlier"' +
+        '" class="inline-flex min-h-8 min-w-8 items-center justify-center rounded text-cream/90 hover:bg-white/15 disabled:opacity-30" aria-label="Move image earlier"' +
         (index === 0 ? " disabled" : "") +
         '><span class="material-symbols-outlined text-base">arrow_upward</span></button>' +
         '<button type="button" data-gallery-action="down" data-gallery-index="' +
         index +
-        '" class="inline-flex min-h-8 min-w-8 items-center justify-center rounded text-white/80 hover:bg-white/15 disabled:opacity-30" aria-label="Move image later"' +
+        '" class="inline-flex min-h-8 min-w-8 items-center justify-center rounded text-cream/90 hover:bg-white/15 disabled:opacity-30" aria-label="Move image later"' +
         (index >= galleryImages.length - 1 ? " disabled" : "") +
         '><span class="material-symbols-outlined text-base">arrow_downward</span></button>' +
         '<button type="button" data-gallery-action="remove" data-gallery-index="' +
@@ -334,7 +334,7 @@ function renderRows(projects, editingId) {
   if (!body) return;
   if (!projects.length) {
     body.innerHTML =
-      '<tr><td colspan="8" class="p-10 text-center text-on-surface-variant"><span class="material-symbols-outlined mb-3 block text-4xl text-white/25">deployed_code</span><p>No projects yet. Add your first one.</p></td></tr>';
+      '<tr><td colspan="8" class="p-10 text-center text-on-surface-variant"><span class="material-symbols-outlined mb-3 block text-4xl text-cream/55">deployed_code</span><p>No projects yet. Add your first one.</p></td></tr>';
     return;
   }
   const sorted = sortProjectsForAdminTable(projects);
@@ -359,7 +359,7 @@ function renderRows(projects, editingId) {
         '<td class="p-3 font-medium">' +
         escapeHtml(project.title) +
         (isEditing
-          ? ' <span class="ml-2 rounded-full border border-white/30 px-2 py-0.5 text-[10px] uppercase tracking-[0.12em] text-white/70">Editing</span>'
+          ? ' <span class="ml-2 rounded-full border border-white/30 px-2 py-0.5 text-[10px] uppercase tracking-[0.12em] text-cream/85">Editing</span>'
           : "") +
         "</td>" +
         '<td class="p-3 text-on-surface-variant">' +
@@ -452,7 +452,7 @@ async function initForm() {
     }
     if (cancelEditBtn) cancelEditBtn.classList.toggle("hidden", !isEditing);
     form.classList.toggle("ring-1", isEditing);
-    form.classList.toggle("ring-white/25", isEditing);
+    form.classList.toggle("ring-mustard", isEditing);
     setStatusUi(saveMode.value || "published", isEditing);
   }
 
@@ -649,14 +649,14 @@ async function initForm() {
   if (dropzone && fileInput) {
     dropzone.addEventListener("dragover", function (event) {
       event.preventDefault();
-      dropzone.classList.add("border-white/60");
+      dropzone.classList.add("border-mustard");
     });
     dropzone.addEventListener("dragleave", function () {
-      dropzone.classList.remove("border-white/60");
+      dropzone.classList.remove("border-mustard");
     });
     dropzone.addEventListener("drop", function (event) {
       event.preventDefault();
-      dropzone.classList.remove("border-white/60");
+      dropzone.classList.remove("border-mustard");
       const files = event.dataTransfer && event.dataTransfer.files;
       if (!files || !files.length) return;
       addGalleryFiles(files);

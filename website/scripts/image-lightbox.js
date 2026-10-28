@@ -22,7 +22,7 @@ function ensureLightbox() {
   overlay = document.createElement("div");
   overlay.id = "image-lightbox";
   overlay.className =
-    "fixed inset-0 z-[10050] flex items-center justify-center bg-black/80 p-4 opacity-0 transition-opacity duration-200 ease-out";
+    "fixed inset-0 z-[10050] flex items-center justify-center bg-ink/90 p-4 opacity-0 transition-opacity duration-200 ease-out";
   overlay.setAttribute("hidden", "");
   overlay.setAttribute("aria-hidden", "true");
 
@@ -38,7 +38,7 @@ function ensureLightbox() {
   closeBtn.type = "button";
   closeBtn.setAttribute("aria-label", "Close image");
   closeBtn.className =
-    "fixed z-[10051] inline-flex min-h-11 min-w-11 items-center justify-center rounded-md text-white/90 transition hover:bg-white/10 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50";
+    "fixed z-[10051] inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border-[2.5px] border-ink bg-mustard text-cocoa shadow-[3px_3px_0_#160E07] transition hover:rotate-90 hover:bg-sun focus:outline-none focus-visible:ring-4 focus-visible:ring-sun";
   closeBtn.style.cssText =
     "top:max(0.75rem,env(safe-area-inset-top));right:max(0.75rem,env(safe-area-inset-right));";
   closeBtn.innerHTML =
@@ -46,7 +46,7 @@ function ensureLightbox() {
 
   imgEl = document.createElement("img");
   imgEl.className =
-    "max-h-[90vh] max-w-[90vw] object-contain select-none rounded-sm shadow-2xl";
+    "max-h-[90vh] max-w-[90vw] object-contain select-none rounded-lg border-[3px] border-cream shadow-[10px_10px_0_#F2A516]";
   imgEl.alt = "";
   imgEl.draggable = false;
 

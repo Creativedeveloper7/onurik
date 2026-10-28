@@ -72,9 +72,9 @@ function userFacingSupabaseErr(err) {
   function resetFeedbackChrome() {
     iconEl.textContent = "check_circle";
     iconEl.className =
-      "material-symbols-outlined shrink-0 text-xl text-secondary-fixed mt-0.5";
+      "material-symbols-outlined shrink-0 text-xl text-cocoa mt-0.5";
     textEl.className =
-      "font-body-md text-[15px] md:text-[16px] leading-snug text-primary-fixed pt-px";
+      "text-[15px] md:text-[16px] font-semibold leading-snug text-cocoa pt-px";
   }
 
   function hideFeedback() {
@@ -96,10 +96,8 @@ function userFacingSupabaseErr(err) {
     if (kind === "error") {
       box.classList.add("is-error");
       iconEl.textContent = "error_outline";
-      iconEl.classList.remove("text-secondary-fixed");
-      iconEl.classList.add("text-outline");
-      textEl.classList.remove("text-primary-fixed");
-      textEl.classList.add("text-on-surface-variant");
+      iconEl.classList.remove("text-cocoa");
+      iconEl.classList.add("text-tomato");
     } else {
       box.classList.remove("is-error");
     }
