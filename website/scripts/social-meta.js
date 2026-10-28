@@ -4,12 +4,13 @@
  */
 
 const DEFAULT_SITE_NAME = "Onurik";
-const DEFAULT_OG_TITLE = "Work | Onurik";
+const DEFAULT_OG_TITLE = "Case Study | Onurik";
 const DEFAULT_DESCRIPTION =
-  "Explore engineering and design work by Onurik — human-centered systems and product experiences.";
-/** Absolute, HTTPS, ~1200×630; safe default when no project image is usable for previews. */
-export const ONURIK_DEFAULT_OG_IMAGE =
-  "https://placehold.co/1200x630/131313/e5e2e1/png?text=Onurik";
+  "Case study from Onurik, a Nairobi branding, web design and product studio: the challenge, what we did and the result.";
+/** Public site origin used for canonical URLs and structured data. */
+export const ONURIK_SITE = "https://www.onurik.space";
+/** Absolute, HTTPS, 1200×630; safe default when no project image is usable for previews. */
+export const ONURIK_DEFAULT_OG_IMAGE = ONURIK_SITE + "/brand/og-image.jpg";
 
 const OG_IMAGE_WIDTH = "1200";
 const OG_IMAGE_HEIGHT = "630";
@@ -49,7 +50,7 @@ export function truncateForMeta(description, max) {
  * @param {string} key
  * @param {string} content
  */
-function upsertMeta(keyAttr, key, content) {
+export function upsertMeta(keyAttr, key, content) {
   const head = document.head;
   if (!head) return;
   const safe = String(content ?? "");
@@ -72,7 +73,7 @@ function upsertMeta(keyAttr, key, content) {
 /**
  * @param {string} href
  */
-function upsertCanonical(href) {
+export function upsertCanonical(href) {
   const head = document.head;
   if (!head) return;
   let el = head.querySelector('link[rel="canonical"]');
@@ -107,7 +108,7 @@ export function applyWorkSocialPreview(opts) {
   let image = absoluteUrlForOg(opts.imageUrl, origin);
   if (!image) image = ONURIK_DEFAULT_OG_IMAGE;
 
-  document.title = title + " · " + siteName;
+  document.title = opts.documentTitle || title + " · " + siteName;
 
   upsertMeta("name", "description", desc);
 
@@ -147,4 +148,27 @@ export function applyWorkSocialPreviewFallback(opts) {
     canonicalUrl: canonicalUrl || (typeof location !== "undefined" ? location.href : ""),
     siteName,
   });
+}
+
+/**
+ * Replace (or add) a JSON-LD block in <head>, keyed by id so re-renders don't duplicate it.
+ * @param {string} id
+ * @param {object} data
+ */
+export function setJsonLd(id, data) {
+  const head = document.head;
+  if (!head) return;
+  let el = document.getElementById(id);
+  if (!el) {
+    el = document.createElement("script");
+    el.type = "application/ld+json";
+    el.id = id;
+    head.appendChild(el);
+  }
+  el.textContent = JSON.stringify(Object.assign({ "@context": "https://schema.org" }, data));
+}
+
+/** @param {string} content e.g. "noindex, follow" */
+export function setRobots(content) {
+  upsertMeta("name", "robots", content);
 }

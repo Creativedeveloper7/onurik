@@ -19,9 +19,8 @@ const BOT_UA =
 
 const DEFAULT_SITE = "Onurik";
 const DEFAULT_DESC =
-  "Explore engineering and design work by Onurik — human-centered systems and product experiences.";
-const DEFAULT_OG_IMAGE =
-  "https://placehold.co/1200x630/131313/e5e2e1/png?text=Onurik";
+  "Case study from Onurik, a Nairobi branding, web design and product studio: the challenge, what we did and the result.";
+const DEFAULT_OG_IMAGE = "https://www.onurik.space/brand/og-image.jpg";
 
 function escapeAttr(s) {
   return String(s ?? "")

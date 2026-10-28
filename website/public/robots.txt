@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/
+Disallow: /shop/cart
+Disallow: /shop/checkout
+
+Sitemap: https://www.onurik.space/sitemap.xml

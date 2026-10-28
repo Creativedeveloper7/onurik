@@ -4,8 +4,11 @@ import {
   normalizeProjectImages,
 } from "./projects-store.js";
 import {
+  ONURIK_SITE,
   applyWorkSocialPreview,
   applyWorkSocialPreviewFallback,
+  setJsonLd,
+  setRobots,
 } from "./social-meta.js";
 import { bindImageLightbox } from "./image-lightbox.js";
 
@@ -204,6 +207,7 @@ async function runWorkDetail() {
       title: "Work | Onurik",
       description: "Browse published engineering and design projects on Onurik.",
     });
+    setRobots("noindex, follow");
     document.getElementById("work-detail-root").innerHTML =
       '<div class="ob-bg-tomato ob-grain relative min-h-[70vh]"><div class="absolute inset-0 ob-lines" aria-hidden="true"></div><div class="relative mx-auto max-w-[1440px] px-5 py-28 sm:px-8 md:px-12"><p class="ob-eyebrow text-mustard">Works</p><h1 class="ob-display mt-4 text-[clamp(3rem,9vw,7rem)] text-cream" data-ob-chars="pop">Missing project link</h1><p class="ob-marker mt-4 text-2xl text-cream/60">Open a project from the Works page.</p><a href="/works" class="ob-btn ob-btn--cream mt-10"><span class="material-symbols-outlined" aria-hidden="true">arrow_back</span> Back to Works</a></div></div>';
     window.__onurikAnimRefresh?.();
@@ -224,18 +228,59 @@ async function runWorkDetail() {
       description:
         "This project is unavailable or not published. Browse more work on Onurik.",
     });
+    setRobots("noindex, follow");
     document.getElementById("work-detail-root").innerHTML =
       '<div class="ob-bg-tomato ob-grain relative min-h-[70vh]"><div class="absolute inset-0 ob-lines" aria-hidden="true"></div><div class="relative mx-auto max-w-[1440px] px-5 py-28 sm:px-8 md:px-12"><p class="ob-eyebrow text-mustard">Works</p><h1 class="ob-display mt-4 text-[clamp(3rem,9vw,7rem)] text-cream" data-ob-chars="pop">Project not found</h1><a href="/works" class="ob-btn ob-btn--cream mt-10"><span class="material-symbols-outlined" aria-hidden="true">arrow_back</span> Back to Works</a></div></div>';
     window.__onurikAnimRefresh?.();
     return;
   }
 
+  // One clean URL per project, whatever query or .html variant the visitor arrived on.
+  const projectUrl = ONURIK_SITE + "/work?id=" + encodeURIComponent(current.id);
+  const category = (current.category || "").trim();
+  const summary =
+    (current.description || "").trim() ||
+    (current.challenge || "").trim() ||
+    (current.result || "").trim() ||
+    "Case study by Onurik, a branding, web design and product studio in Nairobi, Kenya.";
+  const coverImage = projectImages(current)[0];
   applyWorkSocialPreview({
     title: current.title,
-    description: current.description,
-    imageUrl: projectImages(current)[0],
-    canonicalUrl,
+    documentTitle: current.title + (category ? " — " + category + " Case Study" : " — Case Study") + " | Onurik",
+    description: summary,
+    imageUrl: coverImage,
+    canonicalUrl: projectUrl,
     siteName: "Onurik",
+  });
+  setJsonLd("ld-work", {
+    "@graph": [
+      {
+        "@type": "CreativeWork",
+        "@id": projectUrl + "#work",
+        url: projectUrl,
+        name: current.title,
+        headline: current.title,
+        description: summary,
+        image: coverImage ? new URL(coverImage, ONURIK_SITE).href : undefined,
+        genre: category || undefined,
+        keywords:
+          []
+            .concat(current.scopeTags || [], current.tags || [])
+            .filter(Boolean)
+            .join(", ") || undefined,
+        sourceOrganization: current.client ? { "@type": "Organization", name: current.client } : undefined,
+        creator: { "@id": ONURIK_SITE + "/#organization" },
+        isPartOf: { "@id": ONURIK_SITE + "/works#page" },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: ONURIK_SITE + "/" },
+          { "@type": "ListItem", position: 2, name: "Works", item: ONURIK_SITE + "/works" },
+          { "@type": "ListItem", position: 3, name: current.title, item: projectUrl },
+        ],
+      },
+    ],
   });
 
   const related = projects
@@ -492,6 +537,7 @@ if (document.readyState === "loading") {
         title: "Could not load project",
         description: "The project list could not be loaded. Try again shortly.",
       });
+      setRobots("noindex, follow");
       const root = document.getElementById("work-detail-root");
       if (root) {
         root.innerHTML =

@@ -227,6 +227,98 @@ function walleDevProxyPlugin(env) {
   };
 }
 
+const SITE_ORIGIN = "https://www.onurik.space";
+const SITEMAP_STATIC = [
+  { path: "/", priority: "1.0", changefreq: "weekly" },
+  { path: "/works", priority: "0.9", changefreq: "weekly" },
+  { path: "/about", priority: "0.8", changefreq: "monthly" },
+  { path: "/contact", priority: "0.8", changefreq: "monthly" },
+  { path: "/shop", priority: "0.8", changefreq: "weekly" },
+  { path: "/shop/returns", priority: "0.4", changefreq: "yearly" },
+];
+
+function xmlEscape(value) {
+  return String(value).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+}
+
+/** Published rows from a public Supabase table (same anon access the site itself uses). */
+async function fetchRows(env, table, query) {
+  const base = String(env.VITE_SUPABASE_URL || "").replace(/\/$/, "");
+  const key = String(env.VITE_SUPABASE_ANON_KEY || "").trim();
+  if (!base || !key) return [];
+  try {
+    const res = await fetch(base + "/rest/v1/" + table + "?" + query, {
+      headers: { apikey: key, Authorization: "Bearer " + key },
+      signal: AbortSignal.timeout(8000),
+    });
+    if (!res.ok) return [];
+    const rows = await res.json();
+    return Array.isArray(rows) ? rows : [];
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Writes dist/sitemap.xml after each build: the main pages plus every published project
+ * (/work?id=) and product (/shop/product?id=) when Supabase credentials are available.
+ */
+function sitemapPlugin(env) {
+  let outDir = "";
+  return {
+    name: "onurik-sitemap",
+    apply: "build",
+    configResolved(config) {
+      outDir = config.build.outDir;
+    },
+    async closeBundle() {
+      const today = new Date().toISOString().slice(0, 10);
+      const urls = SITEMAP_STATIC.map(function (u) {
+        return { loc: SITE_ORIGIN + u.path, lastmod: today, changefreq: u.changefreq, priority: u.priority };
+      });
+      const projects = await fetchRows(env, "onurik_projects", "select=id,updated_at,status&status=eq.published");
+      projects.forEach(function (row) {
+        urls.push({
+          loc: SITE_ORIGIN + "/work?id=" + encodeURIComponent(row.id),
+          lastmod: String(row.updated_at || today).slice(0, 10),
+          changefreq: "monthly",
+          priority: "0.7",
+        });
+      });
+      const products = await fetchRows(env, "onurik_shop_products", "select=id,updated_at,published&published=eq.true");
+      products.forEach(function (row) {
+        urls.push({
+          loc: SITE_ORIGIN + "/shop/product?id=" + encodeURIComponent(row.id),
+          lastmod: String(row.updated_at || today).slice(0, 10),
+          changefreq: "weekly",
+          priority: "0.6",
+        });
+      });
+      const body =
+        '<?xml version="1.0" encoding="UTF-8"?>\n' +
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+        urls
+          .map(function (u) {
+            return (
+              "  <url><loc>" +
+              xmlEscape(u.loc) +
+              "</loc><lastmod>" +
+              u.lastmod +
+              "</lastmod><changefreq>" +
+              u.changefreq +
+              "</changefreq><priority>" +
+              u.priority +
+              "</priority></url>"
+            );
+          })
+          .join("\n") +
+        "\n</urlset>\n";
+      const { writeFileSync } = await import("fs");
+      writeFileSync(resolve(outDir, "sitemap.xml"), body);
+    },
+  };
+}
+
 export default defineConfig(function ({ mode }) {
   const env = loadEnv(mode, resolve(__dirname, ".."), "");
   return {
@@ -237,6 +329,7 @@ export default defineConfig(function ({ mode }) {
       shopReceiptApiPlugin(env),
       walleReturnApiPlugin(env),
       walleDevProxyPlugin(env),
+      sitemapPlugin(env),
     ],
     build: {
       rollupOptions: {

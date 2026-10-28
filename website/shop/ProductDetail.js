@@ -10,6 +10,95 @@ import {
 import { getProductById, loadCatalog, relatedProducts } from "./products.js";
 import { renderProductCard } from "./ProductCard.js";
 import { isWishlisted, toggleWishlist } from "./wishlist-store.js";
+import {
+  ONURIK_SITE,
+  absoluteUrlForOg,
+  setJsonLd,
+  setRobots,
+  upsertCanonical,
+  upsertMeta,
+} from "../scripts/social-meta.js";
+
+/** Title, description, canonical URL, share tags and Product structured data for one piece. */
+function applyProductSeo(product) {
+  const url = ONURIK_SITE + "/shop/product?id=" + encodeURIComponent(product.id);
+  const category = categoryLabel(product.category);
+  const audience = genderLabel(product.gender);
+  const title = product.name + " — " + audience + " " + category + " | Onurik Clothing";
+  const description = (
+    product.description ||
+    product.name + " — " + audience.toLowerCase() + " " + category.toLowerCase() + " by Onurik Clothing, designed in Nairobi."
+  ).replace(/\s+/g, " ").trim().slice(0, 150) + " Pay with M-Pesa, delivery across Kenya.";
+  const images = product.images
+    .map(function (src) {
+      return absoluteUrlForOg(src, ONURIK_SITE);
+    })
+    .filter(Boolean);
+
+  document.title = title;
+  upsertMeta("name", "description", description);
+  upsertCanonical(url);
+  upsertMeta("property", "og:title", title);
+  upsertMeta("property", "og:description", description);
+  upsertMeta("property", "og:url", url);
+  upsertMeta("name", "twitter:title", title);
+  upsertMeta("name", "twitter:description", description);
+  if (images[0]) {
+    upsertMeta("property", "og:image", images[0]);
+    upsertMeta("property", "og:image:alt", product.name);
+    upsertMeta("name", "twitter:image", images[0]);
+  }
+  setJsonLd("ld-product", {
+    "@graph": [
+      {
+        "@type": "Product",
+        "@id": url + "#product",
+        url: url,
+        name: product.name,
+        description: description,
+        image: images.length ? images : undefined,
+        sku: product.id,
+        category: category,
+        brand: { "@type": "Brand", name: "Onurik Clothing" },
+        audience: { "@type": "PeopleAudience", suggestedGender: product.gender === "women" ? "female" : "male" },
+        color: product.colors.map(function (c) {
+          return c.label;
+        }).join(", "),
+        size: product.sizes.join(", "),
+        offers: {
+          "@type": "Offer",
+          url: url,
+          price: product.price,
+          priceCurrency: "KES",
+          availability: product.inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+          itemCondition: "https://schema.org/NewCondition",
+          seller: { "@id": ONURIK_SITE + "/shop#store" },
+          hasMerchantReturnPolicy: {
+            "@type": "MerchantReturnPolicy",
+            applicableCountry: "KE",
+            returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+            merchantReturnDays: 7,
+            merchantReturnLink: ONURIK_SITE + "/shop/returns",
+          },
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: ONURIK_SITE + "/" },
+          { "@type": "ListItem", position: 2, name: "Shop", item: ONURIK_SITE + "/shop" },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: category,
+            item: ONURIK_SITE + "/shop?category=" + encodeURIComponent(product.category),
+          },
+          { "@type": "ListItem", position: 4, name: product.name, item: url },
+        ],
+      },
+    ],
+  });
+}
 
 export async function mountProductDetail(root) {
   if (!root) return;
@@ -27,15 +116,17 @@ export async function mountProductDetail(root) {
       '<p class="mt-4 text-cream/70">It may have been moved. Return to the collection and choose another.</p>' +
       '<a href="/shop" class="mt-10 ob-btn ob-btn--cream ">Back to shop</a>' +
       "</div>";
+    setRobots("noindex, follow");
     return;
   }
+
+  applyProductSeo(product);
 
   let imageIndex = 0;
   const selection = initialSelection(product);
 
   function render() {
     const wished = isWishlisted(product.id);
-    document.title = product.name + " · Onurik Shop";
     const main = product.images[imageIndex] || product.images[0];
     const thumbs = product.images
       .map(function (src, i) {

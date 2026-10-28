@@ -57,7 +57,15 @@ function heading(state) {
   }
   if (state.gender) return genderLabel(state.gender);
   if (state.category) return categoryLabel(state.category);
-  return "Merch";
+  return "Onurik Merch";
+}
+
+/** Browser-tab / search title for the current filter (the unfiltered shop keeps its static title). */
+const SHOP_TITLE = "Onurik Clothing — Streetwear, Hoodies & Tees in Kenya";
+function pageTitle(state) {
+  if (state.q) return "Search: " + state.q + " | Onurik Clothing";
+  if (!state.gender && !state.category) return SHOP_TITLE;
+  return heading(state).replace(" · ", " ") + " — Streetwear | Onurik Clothing Kenya";
 }
 
 export async function mountShopGrid(root) {
@@ -155,7 +163,7 @@ export async function mountShopGrid(root) {
       (state.q
         ? '<p class="ob-mono mt-4 text-sm text-cream/75">Results for “' + escapeHtml(state.q) + '”</p>'
         : '<p class="ob-marker mt-3 text-[clamp(1.25rem,2.4vw,1.75rem)] text-mustard">wear the work.</p>' +
-          '<p class="mt-4 max-w-xl text-[15px] leading-relaxed text-cream/70">Studio merch — hoodies, tees, caps, and AfroWear. Built with the same restraint as the rest of the work.</p>') +
+          '<p class="mt-4 max-w-xl text-[15px] leading-relaxed text-cream/70">Streetwear designed in Nairobi by Onurik Clothing — hoodies, t-shirts, caps, bucket hats and AfroWear. Pay with M-Pesa, delivery across Kenya and 7-day returns.</p>') +
       "</div>" +
       (state.q
         ? ""
@@ -208,8 +216,7 @@ export async function mountShopGrid(root) {
   function apply(patch) {
     state = Object.assign({}, state, patch);
     writeParams(state);
-    const title = heading(state);
-    document.title = title + " · Onurik Shop";
+    document.title = pageTitle(state);
     render();
   }
 
@@ -244,7 +251,7 @@ export async function mountShopGrid(root) {
     }
   });
 
-  document.title = heading(state) + " · Onurik Shop";
+  document.title = pageTitle(state);
   render();
   await loadCatalog();
   render();
