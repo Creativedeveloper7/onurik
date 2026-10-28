@@ -15,6 +15,7 @@ const ONURIK_PROJECT_CATEGORIES = [
   "Branding & Identity",
   "Design & Art Direction",
   "Development",
+  "Onurik Wear",
 ];
 
 /** Predefined scope tags for case studies — extend this list as needed. */

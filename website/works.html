@@ -14,14 +14,14 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Doto:wght@500;700;900&amp;family=Geist+Mono:wght@400;500;600&amp;family=Urbanist:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&amp;display=swap"/>
 <title>Portfolio — Branding, Web &amp; Product Design Projects | Onurik</title>
-<meta name="description" content="Selected work by Onurik: brand identities, websites, dashboards and digital products designed in Nairobi for clients across Kenya and East Africa."/>
+<meta name="description" content="Selected work by Onurik: brand identities, websites, digital products and our Onurik Wear streetwear label — designed in Nairobi for clients across East Africa."/>
 <meta name="robots" content="index, follow, max-image-preview:large"/>
 <link rel="canonical" href="https://www.onurik.space/works"/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="Onurik"/>
 <meta property="og:locale" content="en_KE"/>
 <meta property="og:title" content="Portfolio — Branding, Web &amp; Product Design Projects | Onurik"/>
-<meta property="og:description" content="Selected work by Onurik: brand identities, websites, dashboards and digital products designed in Nairobi for clients across Kenya and East Africa."/>
+<meta property="og:description" content="Selected work by Onurik: brand identities, websites, digital products and our Onurik Wear streetwear label — designed in Nairobi for clients across East Africa."/>
 <meta property="og:url" content="https://www.onurik.space/works"/>
 <meta property="og:image" content="https://www.onurik.space/brand/og-image.jpg"/>
 <meta property="og:image:width" content="1200"/>
@@ -29,7 +29,7 @@
 <meta property="og:image:alt" content="Onurik — branding, web design and digital products, Nairobi"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="Portfolio — Branding, Web &amp; Product Design Projects | Onurik"/>
-<meta name="twitter:description" content="Selected work by Onurik: brand identities, websites, dashboards and digital products designed in Nairobi for clients across Kenya and East Africa."/>
+<meta name="twitter:description" content="Selected work by Onurik: brand identities, websites, digital products and our Onurik Wear streetwear label — designed in Nairobi for clients across East Africa."/>
 <meta name="twitter:image" content="https://www.onurik.space/brand/og-image.jpg"/>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"CollectionPage","@id":"https://www.onurik.space/works#page","url":"https://www.onurik.space/works","name":"Onurik portfolio — branding, web and product design projects","isPartOf":{"@id":"https://www.onurik.space/#website"},"about":{"@id":"https://www.onurik.space/#organization"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.onurik.space/"},{"@type":"ListItem","position":2,"name":"Works","item":"https://www.onurik.space/works"}]}]}</script>
 <link rel="icon" type="image/png" href="/brand/onurik-logo-512.png"/>
@@ -66,7 +66,10 @@
 
   /* Category folders (tablist) → one project carousel per category */
   .works-folders { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3.25rem 1.1rem; padding-top: 1.5rem; }
-  @media (min-width: 1024px) { .works-folders { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2rem; } }
+  @media (min-width: 1024px) { .works-folders { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1.6rem; } }
+  @media (max-width: 1023px) { .works-folders > .works-folder:last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc(50% - 0.55rem); } }
+  .works-card__plate { background: #ECEAE7; }
+  .works-card__plate img { mix-blend-mode: multiply; }
   .works-folder { padding: 0; border: 0; background: none; font: inherit; text-align: left; opacity: .72; transition: opacity .3s ease, transform .45s cubic-bezier(0.22, 1, 0.36, 1); }
   .works-folder:hover, .works-folder:focus-visible, .works-folder.is-active { opacity: 1; }
   .works-folder.is-active { transform: translateY(-6px); }
@@ -244,6 +247,16 @@
 <span class="ob-folder__meta" data-ob-folder-count>Folder</span>
 </span>
 </button>
+<button type="button" class="ob-folder works-folder" role="tab" id="works-tab-wear" aria-controls="works-panel-wear" aria-selected="false" tabindex="-1" data-works-tab="wear" data-ob-folder="Onurik Wear" data-wear-folder>
+<span class="ob-folder__back" aria-hidden="true"></span>
+<span class="ob-folder__cards" data-ob-folder-cards aria-hidden="true"><span class="ob-folder__card works-folder__ph" style="background:linear-gradient(160deg,#2a2a2c,#141415)"></span><span class="ob-folder__card works-folder__ph" style="background:linear-gradient(160deg,#ff8a4c,#b8330f)"></span><span class="ob-folder__card works-folder__ph" style="background:linear-gradient(160deg,#3a3836,#0f0f10)"></span></span>
+<span class="ob-folder__front">
+<span class="ob-folder__pill" aria-hidden="true">05</span>
+<span class="ob-folder__arrow material-symbols-outlined" aria-hidden="true">north_east</span>
+<span class="ob-folder__label">Onurik Wear</span>
+<span class="ob-folder__meta" data-ob-folder-count>Streetwear</span>
+</span>
+</button>
 </div>
 <div class="mt-16">
 <div class="works-panel" role="tabpanel" id="works-panel-standard" aria-labelledby="works-tab-standard">
@@ -268,6 +281,16 @@
 <p class="ob-eyebrow mb-6 text-cream/50">— Open source contributions</p>
 <div class="ob-carousel" data-ob-carousel aria-label="Development projects">
 <div class="ob-carousel__track" data-project-category="Development"></div>
+</div>
+</div>
+<div class="works-panel" role="tabpanel" id="works-panel-wear" aria-labelledby="works-tab-wear" hidden>
+<p class="ob-eyebrow mb-6 text-cream/50">— Our own label: streetwear designed in Nairobi — hoodies, tees, caps &amp; AfroWear</p>
+<div class="ob-carousel" data-ob-carousel aria-label="Onurik Wear projects and pieces">
+<div class="ob-carousel__track" data-project-category="Onurik Wear"></div>
+</div>
+<div class="mt-8 flex flex-wrap items-center gap-4">
+<a href="/shop" class="ob-btn">Shop Onurik Wear <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></a>
+<a href="/shop/returns" class="ob-btn ob-btn--ghost text-cream">Delivery &amp; returns</a>
 </div>
 </div>
 </div>
