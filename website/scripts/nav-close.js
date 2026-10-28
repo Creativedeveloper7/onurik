@@ -121,7 +121,7 @@ function injectStyles() {
   style.textContent = `
     .onurik-nav-close {
       position: fixed;
-      top: calc(4.25rem + 0.85rem);
+      top: calc(4.5rem + 0.85rem);
       right: 1.25rem;
       z-index: 60;
       display: inline-flex;
@@ -130,26 +130,24 @@ function injectStyles() {
       width: 2.75rem;
       height: 2.75rem;
       border-radius: 9999px;
-      border: 1px solid rgba(201, 198, 193, 0.35);
-      background: rgba(32, 31, 31, 0.92);
-      color: #e8e2d6;
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      border: 2.5px solid #160e07;
+      background: #f2a516;
+      color: #2a1b0e;
+      box-shadow: 3px 3px 0 #160e07;
       cursor: pointer;
-      transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s ease;
     }
     .onurik-nav-close:hover {
-      transform: translateY(-1px);
-      background: rgba(42, 42, 42, 0.98);
-      border-color: rgba(229, 226, 221, 0.55);
-      box-shadow: 0 12px 32px rgba(229, 226, 221, 0.08);
+      transform: translate(-1px, -2px) rotate(90deg);
+      background: #ffcb05;
+      box-shadow: 5px 5px 0 #160e07;
     }
     .onurik-nav-close:focus {
       outline: none;
     }
     .onurik-nav-close:focus-visible {
-      box-shadow: 0 0 0 2px #131313, 0 0 0 4px rgba(229, 226, 221, 0.45);
+      outline: 3px solid #ffcb05;
+      outline-offset: 3px;
     }
     .onurik-nav-close .sr-only {
       position: absolute;

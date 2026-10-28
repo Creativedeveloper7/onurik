@@ -13,247 +13,102 @@
 </script>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Works - Onurik</title>
+<meta name="theme-color" content="#F2A516"/>
+<meta name="theme-color" content="#F2A516"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="/brand/tailwind-brand.js"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Noto+Serif:wght@400;700;900&amp;family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-  tailwind.config = {
-    darkMode: "class",
-    theme: {
-      extend: {
-        colors: {
-          "primary-container": "#e5e2dd",
-          "primary": "#ffffff",
-          "on-surface": "#e5e2e1",
-          "surface-dim": "#131313",
-          "background": "#131313",
-          "on-primary-container": "#656461",
-          "on-tertiary-container": "#656464",
-          "surface-container-lowest": "#0e0e0e",
-          "tertiary-fixed-dim": "#c8c6c5",
-          "inverse-surface": "#e5e2e1",
-          "primary-fixed-dim": "#c9c6c1",
-          "tertiary-container": "#e5e2e1",
-          "outline-variant": "#474741",
-          "surface-container-high": "#2a2a2a",
-          "secondary-fixed-dim": "#ccc6ba",
-          "on-tertiary-fixed-variant": "#474746",
-          "error-container": "#93000a",
-          "primary-fixed": "#e5e2dd",
-          "inverse-on-surface": "#313030",
-          "outline": "#929189",
-          "on-error": "#690005",
-          "surface-variant": "#353534",
-          "on-secondary-fixed-variant": "#4a473e",
-          "on-background": "#e5e2e1",
-          "on-tertiary": "#313030",
-          "on-error-container": "#ffdad6",
-          "error": "#ffb4ab",
-          "on-secondary-fixed": "#1e1b14",
-          "secondary-fixed": "#e8e2d6",
-          "secondary": "#ccc6ba",
-          "on-secondary": "#333028",
-          "on-primary": "#31302d",
-          "inverse-primary": "#5f5e5b",
-          "surface-container": "#201f1f",
-          "surface-tint": "#c9c6c1",
-          "secondary-container": "#4a473e",
-          "on-primary-fixed": "#1c1c19",
-          "surface": "#131313",
-          "on-secondary-container": "#bab5a9",
-          "on-primary-fixed-variant": "#474743",
-          "surface-bright": "#3a3939",
-          "on-surface-variant": "#c8c7be",
-          "tertiary": "#ffffff",
-          "on-tertiary-fixed": "#1c1b1b",
-          "tertiary-fixed": "#e5e2e1",
-          "surface-container-low": "#1c1b1b",
-          "surface-container-highest": "#353534"
-        },
-        borderRadius: {
-          DEFAULT: "0.125rem",
-          lg: "0.25rem",
-          xl: "0.5rem",
-          full: "0.75rem"
-        },
-        spacing: {
-          gutter: "32px",
-          "element-gap": "24px",
-          margin: "64px",
-          "container-max": "1440px",
-          "section-gap": "160px"
-        },
-        fontFamily: {
-          montserrat: ["Montserrat", "sans-serif"],
-          "noto-serif": ["Noto Serif", "serif"],
-          "headline-md": ["Noto Serif", "serif"],
-          "display-xl": ["Noto Serif", "serif"],
-          "label-caps": ["Inter", "sans-serif"],
-          "body-md": ["Inter", "sans-serif"],
-          "display-lg": ["Noto Serif", "serif"],
-          "body-lg": ["Inter", "sans-serif"]
-        },
-        fontSize: {
-          "headline-md": ["32px", { lineHeight: "1.2", fontWeight: "400" }],
-          "display-xl": ["84px", { lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "400" }],
-          "label-caps": ["12px", { lineHeight: "1.0", letterSpacing: "0.1em", fontWeight: "600" }],
-          "body-md": ["16px", { lineHeight: "1.6", fontWeight: "400" }],
-          "display-lg": ["64px", { lineHeight: "1.1", letterSpacing: "-0.01em", fontWeight: "400" }],
-          "body-lg": ["20px", { lineHeight: "1.6", fontWeight: "400" }]
-        }
-      }
-    }
-  }
-</script>
+<link rel="stylesheet" href="styles/animations.css"/>
+<link rel="stylesheet" href="styles/brand.css"/>
 <style>
-  body { background-color: #131313; color: #e5e2e1; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24; }
+  #site-nav-drawer { transform: translateX(100%); transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  #site-nav-drawer.open { transform: translateX(0); }
+  .site-nav-overlay.open { opacity: 1 !important; pointer-events: auto !important; }
+  .ob-drawer a.ob-drawer__link[aria-current="page"] { color: #D8202A; }
 
-  @keyframes wobble-open {
-    0%   { transform: scaleY(0.92); opacity: 0; }
-    40%  { transform: scaleY(1.03); opacity: 1; }
-    65%  { transform: scaleY(0.98); }
-    82%  { transform: scaleY(1.01); }
-    100% { transform: scaleY(1);    opacity: 1; }
-  }
-
-  @keyframes wobble-item {
-    0%   { transform: translateY(10px); opacity: 0; }
-    50%  { transform: translateY(-4px); opacity: 1; }
-    75%  { transform: translateY(2px);  }
-    100% { transform: translateY(0);    opacity: 1; }
-  }
-
-  .accordion-content {
-    display: none;
-    transform-origin: top center;
-  }
-  .accordion-content.open {
-    display: block;
-    animation: wobble-open 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-  }
-  .accordion-content.open > * {
-    animation: wobble-item 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    animation-delay: 0.08s;
-    opacity: 0;
-  }
-
-  .accordion-arrow {
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-  .accordion-btn.active .accordion-arrow {
-    transform: rotate(45deg);
-  }
-
-  .accordion-btn {
-    position: relative;
-    overflow: hidden;
-  }
-  .accordion-btn::after {
-    content: "";
-    position: absolute;
-    bottom: 0; left: 0;
-    width: 0; height: 1px;
-    background: #e5e2e1;
-    transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-  .accordion-btn.active::after {
-    width: 100%;
-  }
-
-  .material-symbols-outlined {
-    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
-  }
-  #site-nav-drawer {
-    transform: translateX(100%);
-    transition: transform 0.3s ease-out;
-  }
-  #site-nav-drawer.open {
-    transform: translateX(0);
-  }
-  .site-nav-overlay.open {
-    opacity: 1 !important;
-    pointer-events: auto !important;
-  }
-
-  /* Conversion bridge (same as homepage) */
-  #conversion-bridge {
-    opacity: 0;
-    transform: translateY(1.25rem);
-    will-change: opacity, transform;
-  }
-  #conversion-bridge.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.85s ease-out, transform 0.85s ease-out;
-  }
+  /* Conversion bridge (shared with home) */
   .conversion-bridge-slide {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    opacity: 0;
-    transform: translateY(0.65rem);
-    transition: opacity 0.65s ease-in-out, transform 0.65s ease-in-out;
+    position: absolute; left: 0; top: 0; right: 0;
+    opacity: 0; transform: translateY(0.8rem) rotate(-1.5deg);
+    transition: opacity 0.55s ease-in-out, transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
     pointer-events: none;
   }
-  .conversion-bridge-slide.is-active {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-  .bridge-intro { font-family: Montserrat, sans-serif; }
-  .bridge-headline {
-    font-family: Montserrat, sans-serif;
-    font-style: italic;
-    font-weight: 700;
-  }
-  .bridge-subtext { font-family: Inter, sans-serif; }
+  .conversion-bridge-slide.is-active { opacity: 1; transform: none; pointer-events: auto; }
+  #conversion-bridge .bridge-shell { opacity: 0; transform: translateY(1.25rem); }
+  #conversion-bridge.is-visible .bridge-shell { opacity: 1; transform: none; transition: opacity 0.85s ease-out, transform 0.85s ease-out; }
   @media (prefers-reduced-motion: reduce) {
-    #conversion-bridge {
-      opacity: 1;
-      transform: none;
-      transition: none;
-    }
-    .conversion-bridge-slide {
-      transition: none;
-    }
-    .conversion-bridge-slide:not(.is-active) {
-      opacity: 0;
-      visibility: hidden;
-    }
-    .conversion-bridge-slide.is-active {
-      transform: none;
-    }
+    .conversion-bridge-slide { transition: none; }
+    .conversion-bridge-slide:not(.is-active) { visibility: hidden; }
+    #conversion-bridge .bridge-shell { opacity: 1; transform: none; }
+  }
+
+  .works-hero__title { font-size: clamp(5rem, 20vw, 16rem); line-height: .82; }
+
+  /* Accordion rows: big condensed index cards */
+  @keyframes wobble-open {
+    0% { transform: scaleY(0.94) rotate(-.6deg); opacity: 0; }
+    60% { transform: scaleY(1.01) rotate(.3deg); opacity: 1; }
+    100% { transform: none; opacity: 1; }
+  }
+  @keyframes wobble-item {
+    0% { transform: translateY(14px); opacity: 0; }
+    60% { transform: translateY(-4px); opacity: 1; }
+    100% { transform: none; opacity: 1; }
+  }
+  .accordion-content { display: none; transform-origin: top center; }
+  .accordion-content.open { display: block; animation: wobble-open 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+  .accordion-content.open > * { animation: wobble-item 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) .08s forwards; opacity: 0; }
+  .accordion-btn { transition: transform .35s cubic-bezier(0.34, 1.56, 0.64, 1), background-color .25s ease; }
+  .accordion-btn:hover { transform: translateX(6px) rotate(-.4deg); }
+  .accordion-btn .accordion-num { transition: transform .4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .accordion-btn:hover .accordion-num, .accordion-btn.active .accordion-num { transform: rotate(-8deg) scale(1.08); }
+  .accordion-arrow { transition: transform .45s cubic-bezier(0.34, 1.56, 0.64, 1), background-color .2s ease; }
+  .accordion-btn.active .accordion-arrow { transform: rotate(135deg); background: #D8202A; color: #F7E3C8; }
+  .accordion-btn.active .accordion-title { color: #F2A516; }
+
+  /* Collage cards (markup from scripts/works-page.js) */
+  [data-project-category] > .works-card:nth-child(4n+1) { --card-tilt: -1.2deg; }
+  [data-project-category] > .works-card:nth-child(4n+2) { --card-tilt: 1deg; }
+  [data-project-category] > .works-card:nth-child(4n+3) { --card-tilt: .6deg; }
+  [data-project-category] > .works-card:nth-child(4n) { --card-tilt: -.8deg; }
+  .works-card { transform: rotate(var(--card-tilt, 0deg)); transition: transform .45s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .45s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .works-card:hover { transform: translate(-4px, -4px) rotate(0deg); box-shadow: 12px 12px 0 #F2A516; }
+  .works-card__stamp { transform: rotate(-4deg) translateY(.4rem) scale(.9); opacity: 0; transition: transform .4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity .25s ease; }
+  .works-card:hover .works-card__stamp, .works-card:focus-visible .works-card__stamp { transform: rotate(-4deg); opacity: 1; }
+  @media (hover: none) { .works-card__stamp { opacity: 1; transform: rotate(-4deg); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .accordion-content.open, .accordion-content.open > * { animation: none; opacity: 1; }
+    .accordion-btn:hover, .works-card, .works-card:hover { transform: none; }
   }
 </style>
-<link rel="stylesheet" href="styles/animations.css"/>
 </head>
-<body class="bg-background text-on-background font-body-md antialiased overflow-x-hidden">
-
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md overflow-x-hidden">
 <!-- TopNavBar -->
-<nav class="fixed top-0 z-50 flex h-[4.25rem] w-full items-center justify-between gap-4 border-b border-white/10 bg-stone-950/75 px-8 backdrop-blur-xl transition-colors duration-500 font-montserrat md:px-16">
-  <a href="/" class="text-2xl font-bold text-stone-100 tracking-tight shrink-0">Onurik</a>
-  <div class="hidden md:flex items-center gap-10 text-xs uppercase tracking-[0.2em]">
-    <a class="border-b border-stone-100 pb-0.5 text-xs font-medium uppercase tracking-[0.28em] text-stone-100 hover:border-white hover:text-white transition-colors" href="/works">Works</a>
-    <a class="text-white/35 hover:text-white/70 transition-colors" href="/about">Info</a>
-    <a class="text-white/35 hover:text-white/70 transition-colors" href="/shop">Shop</a>
-    <a class="text-white/35 hover:text-white/70 transition-colors" href="/contact">Contact</a>
-  </div>
-  <div class="flex shrink-0 items-center gap-2">
-    <a href="/contact" class="hidden md:inline-flex items-center justify-center border border-stone-100/20 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-stone-100/85 hover:text-stone-100 hover:border-stone-100/40 transition-colors duration-500">Enquire</a>
-    <button type="button" id="site-mobile-menu-btn" class="md:hidden inline-flex items-center justify-center rounded-md p-2 text-stone-100 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40" aria-expanded="false" aria-controls="site-nav-drawer">
-      <span class="material-symbols-outlined text-2xl" aria-hidden="true">menu</span>
-      <span class="sr-only">Open menu</span>
-    </button>
-  </div>
+<nav class="ob-nav fixed top-0 w-full z-50 flex items-center gap-6 px-5 sm:px-8 md:px-12 h-[4.5rem]">
+<a href="/" class="ob-nav__logo" data-ob-chars="jumble" aria-label="Onurik home">Onurik</a>
+<button type="button" class="md:hidden ml-auto inline-flex items-center justify-center rounded-full w-11 h-11 bg-mustard text-cocoa border-2 border-ink shadow-sticker" aria-expanded="false" aria-controls="site-nav-drawer" id="site-mobile-menu-btn">
+<span class="material-symbols-outlined text-2xl" aria-hidden="true">menu</span>
+<span class="sr-only">Open menu</span>
+</button>
+<div class="ml-auto hidden md:flex items-center gap-9">
+<a href="/works" class="ob-nav__link" aria-current="page">Works</a>
+<a href="/about" class="ob-nav__link">Info</a>
+<a href="/shop" class="ob-nav__link">Shop</a>
+<a href="/contact" class="ob-nav__cta" data-ob-magnet="0.3">Contact <span class="material-symbols-outlined text-base" aria-hidden="true">north_east</span></a>
+</div>
 </nav>
-<div class="site-nav-overlay fixed inset-0 z-40 md:hidden opacity-0 pointer-events-none bg-black/70 backdrop-blur-sm transition-opacity duration-300" aria-hidden="true"></div>
-<nav id="site-nav-drawer" class="fixed top-0 right-0 z-50 flex h-full w-[min(100vw,18rem)] flex-col gap-6 border-l border-white/10 bg-neutral-950 px-8 pb-8 pt-24 font-montserrat text-sm uppercase tracking-widest shadow-2xl md:hidden" aria-hidden="true" aria-label="Mobile">
-  <a href="/works" class="border-b border-stone-100 pb-0.5 text-xs font-medium uppercase tracking-[0.28em] text-white self-start">Works</a>
-  <a href="/about" class="text-white/80 transition-colors hover:text-white">Info</a>
-  <a href="/shop" class="text-white/80 transition-colors hover:text-white">Shop</a>
-  <a href="/contact" class="text-white/80 transition-colors hover:text-white">Contact</a>
-  <a href="/contact" class="mt-auto border-t border-white/10 pt-6 text-xs font-semibold uppercase tracking-[0.28em] text-white/90 hover:text-white transition-colors">Enquire</a>
+<div class="site-nav-overlay fixed inset-0 z-40 md:hidden opacity-0 pointer-events-none bg-ink/70 backdrop-blur-sm transition-opacity duration-300" aria-hidden="true"></div>
+<nav id="site-nav-drawer" class="ob-drawer ob-grain fixed top-0 right-0 z-50 h-full w-[min(100vw,20rem)] md:hidden pt-24 px-8 flex flex-col gap-5 shadow-2xl" aria-hidden="true" aria-label="Mobile">
+<a href="/works" class="ob-drawer__link" aria-current="page">Works</a>
+<a href="/about" class="ob-drawer__link">Info</a>
+<a href="/shop" class="ob-drawer__link">Shop</a>
+<a href="/contact" class="ob-drawer__link">Contact</a>
+<a href="/contact" class="ob-btn ob-btn--red mt-6 self-start">Enquire <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></a>
+<p class="ob-marker mt-auto mb-10 text-2xl text-cocoa/80 -rotate-3">think outside the box ✕</p>
 </nav>
 <script>
 (function () {
@@ -285,122 +140,137 @@
   });
 })();
 </script>
-
-<!-- Banner: video at public/videos/work.mp4 → /videos/work.mp4 -->
-<header class="relative isolate mb-16 flex w-full min-h-[min(52vh,520px)] items-end justify-center pt-48 pb-10 md:mb-24 md:pb-14 lg:mb-28 lg:pb-16">
-  <div class="pointer-events-none absolute inset-0 z-0 overflow-hidden bg-[#252525]" aria-hidden="true" data-anim-parallax="0.08">
-    <video class="absolute inset-0 h-full w-full object-cover object-center" autoplay="" loop="" muted="" playsinline="" preload="metadata">
-      <source src="/videos/work.mp4" type="video/mp4"/>
-    </video>
-    <div class="absolute inset-0 bg-[#131313]/35"></div>
-  </div>
-  <div class="relative z-10 mx-auto w-full max-w-[1440px] px-8 pb-2 pt-0 text-center md:px-16 md:pb-3" data-anim-stagger>
-    <h1 class="sr-only">Works</h1>
-    <p class="font-body-lg text-body-lg max-w-2xl mx-auto text-on-background/90 [text-shadow:0_1px_24px_rgba(0,0,0,0.5)]">A curated selection of our finest technical and aesthetic achievements.</p>
-  </div>
+<!-- Header: mustard poster with outline title marquee and video collage -->
+<header class="ob-bg-mustard ob-grain relative overflow-hidden pt-[4.5rem]">
+<div class="ob-marquee ob-display pointer-events-none select-none pt-4 text-[clamp(3rem,8vw,6rem)] leading-none text-cocoa/70" style="--ob-marquee-speed:40s" aria-hidden="true">
+<div class="ob-marquee__track"><span class="ob-outline" style="--ob-outline-color:#2A1B0E">Works</span><span class="ob-outline" style="--ob-outline-color:#2A1B0E">Onurik</span><span class="ob-outline" style="--ob-outline-color:#2A1B0E">Works</span><span class="ob-outline" style="--ob-outline-color:#2A1B0E">Onurik</span></div>
+</div>
+<div class="relative z-[2] mx-auto grid max-w-[1440px] items-end gap-12 px-5 pb-20 pt-6 sm:px-8 md:px-12 lg:grid-cols-12" data-anim-stagger>
+<div class="lg:col-span-7">
+<h1 class="works-hero__title ob-display text-cocoa" data-ob-chars="jumble pop" data-ob-amp="0.8">Works</h1>
+<p class="mt-4 flex items-center gap-2 text-lg font-bold uppercase tracking-wide text-cocoa"><span class="material-symbols-outlined" aria-hidden="true">play_circle</span>Selected projects</p>
+<p class="ob-mono mt-6 max-w-lg text-sm leading-relaxed text-cocoa/80">A curated selection of our finest technical and aesthetic achievements.</p>
+</div>
+<div class="relative lg:col-span-5">
+<div class="mb-4 flex items-center justify-end gap-4 text-cocoa" aria-hidden="true"><span class="h-[2px] w-40 bg-cocoa"></span><span class="ob-display text-2xl tracking-[0.3em]">***</span></div>
+<figure class="ob-sticker relative overflow-hidden bg-cocoa rotate-[2deg]" style="--ob-hover-tilt:-1deg">
+<video class="block aspect-[16/10] w-full object-cover sepia-[0.3]" autoplay="" loop="" muted="" playsinline="" preload="metadata" aria-hidden="true">
+<source src="/videos/work.mp4" type="video/mp4"/>
+</video>
+</figure>
+<a href="#works-categories" class="ob-stamp absolute -bottom-8 -left-4 sm:left-6" data-ob-magnet="0.2">
+<span class="ob-stamp__disc"><span class="material-symbols-outlined" aria-hidden="true">play_arrow</span></span>
+<span class="ob-stamp__shout">Click<br/>here!</span>
+<span class="ob-stamp__caption">Browse by category</span>
+</a>
+</div>
+</div>
 </header>
 
-<main class="max-w-[1440px] mx-auto px-8 pt-14 pb-24 md:px-16 md:pt-20 lg:pt-24">
-  <div id="works-scope-filter" class="mb-10 md:mb-14 hidden"></div>
-  <p class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest mb-10 md:mb-14">Browse by category</p>
+<main class="flex-grow">
+<section id="works-categories" class="ob-bg-cocoa ob-grain ob-torn-top relative scroll-mt-24">
+<div class="mx-auto max-w-[1440px] px-5 pb-24 pt-20 sm:px-8 md:px-12 md:pt-24">
+<div id="works-scope-filter" class="mb-12 hidden"></div>
+<div class="mb-8 flex items-center gap-4">
+<span class="h-[3px] w-24 bg-mustard" aria-hidden="true"></span>
+<p class="ob-eyebrow text-mustard" data-ob-scramble>Browse by category</p>
+</div>
+<div class="accordion-group border-t-[3px] border-mustard/25">
 
-  <div class="accordion-group border-t border-surface-container-high">
+<div class="accordion-item border-b-[3px] border-mustard/25">
+<button type="button" class="accordion-btn group flex w-full items-center justify-between gap-4 py-6 text-left md:py-8" data-target="section-standard" aria-expanded="false" aria-controls="acc-standard" id="acc-btn-standard">
+<div class="flex min-w-0 flex-wrap items-center gap-x-5 gap-y-2">
+<span class="accordion-num ob-coin !h-12 !w-12 shrink-0 ob-display text-xl tabular-nums" aria-hidden="true">01</span>
+<span class="accordion-title ob-display text-[clamp(2rem,5vw,3.8rem)] text-cream transition-colors duration-300">Standard Projects</span>
+<span class="ob-mono hidden text-xs uppercase tracking-[0.14em] text-cream/55 md:inline">— Lab experiments &amp; core products</span>
+</div>
+<span class="accordion-arrow material-symbols-outlined grid h-12 w-12 shrink-0 select-none place-items-center rounded-full border-[2.5px] border-mustard text-2xl text-mustard" aria-hidden="true">add</span>
+</button>
+<div class="accordion-content" id="acc-standard" role="region" aria-labelledby="acc-btn-standard">
+<div class="grid grid-cols-1 gap-10 pb-16 pt-2 md:grid-cols-2 md:gap-12 lg:gap-14" data-project-category="Standard Projects"></div>
+</div>
+</div>
+<div class="accordion-item border-b-[3px] border-mustard/25">
+<button type="button" class="accordion-btn group flex w-full items-center justify-between gap-4 py-6 text-left md:py-8" data-target="section-branding" aria-expanded="false" aria-controls="acc-branding" id="acc-btn-branding">
+<div class="flex min-w-0 flex-wrap items-center gap-x-5 gap-y-2">
+<span class="accordion-num ob-coin !h-12 !w-12 shrink-0 ob-display text-xl tabular-nums" aria-hidden="true">02</span>
+<span class="accordion-title ob-display text-[clamp(2rem,5vw,3.8rem)] text-cream transition-colors duration-300">Branding &amp; Identity</span>
+<span class="ob-mono hidden text-xs uppercase tracking-[0.14em] text-cream/55 md:inline">— Onurik Designs &amp; brand ecosystems</span>
+</div>
+<span class="accordion-arrow material-symbols-outlined grid h-12 w-12 shrink-0 select-none place-items-center rounded-full border-[2.5px] border-mustard text-2xl text-mustard" aria-hidden="true">add</span>
+</button>
+<div class="accordion-content" id="acc-branding" role="region" aria-labelledby="acc-btn-branding">
+<div class="grid grid-cols-1 gap-10 pb-16 pt-2 md:grid-cols-2 md:gap-12 lg:gap-14" data-project-category="Branding &amp; Identity"></div>
+</div>
+</div>
+<div class="accordion-item border-b-[3px] border-mustard/25">
+<button type="button" class="accordion-btn group flex w-full items-center justify-between gap-4 py-6 text-left md:py-8" data-target="section-design" aria-expanded="false" aria-controls="acc-design" id="acc-btn-design">
+<div class="flex min-w-0 flex-wrap items-center gap-x-5 gap-y-2">
+<span class="accordion-num ob-coin !h-12 !w-12 shrink-0 ob-display text-xl tabular-nums" aria-hidden="true">03</span>
+<span class="accordion-title ob-display text-[clamp(2rem,5vw,3.8rem)] text-cream transition-colors duration-300">Design &amp; Art Direction</span>
+<span class="ob-mono hidden text-xs uppercase tracking-[0.14em] text-cream/55 md:inline">— Editorial, photography &amp; spatial</span>
+</div>
+<span class="accordion-arrow material-symbols-outlined grid h-12 w-12 shrink-0 select-none place-items-center rounded-full border-[2.5px] border-mustard text-2xl text-mustard" aria-hidden="true">add</span>
+</button>
+<div class="accordion-content" id="acc-design" role="region" aria-labelledby="acc-btn-design">
+<div class="grid grid-cols-1 gap-10 pb-16 pt-2 md:grid-cols-2 md:gap-12 lg:gap-14" data-project-category="Design &amp; Art Direction"></div>
+</div>
+</div>
+<div class="accordion-item border-b-[3px] border-mustard/25">
+<button type="button" class="accordion-btn group flex w-full items-center justify-between gap-4 py-6 text-left md:py-8" data-target="section-dev" aria-expanded="false" aria-controls="acc-dev" id="acc-btn-dev">
+<div class="flex min-w-0 flex-wrap items-center gap-x-5 gap-y-2">
+<span class="accordion-num ob-coin !h-12 !w-12 shrink-0 ob-display text-xl tabular-nums" aria-hidden="true">04</span>
+<span class="accordion-title ob-display text-[clamp(2rem,5vw,3.8rem)] text-cream transition-colors duration-300">Development</span>
+<span class="ob-mono hidden text-xs uppercase tracking-[0.14em] text-cream/55 md:inline">— Open source contributions</span>
+</div>
+<span class="accordion-arrow material-symbols-outlined grid h-12 w-12 shrink-0 select-none place-items-center rounded-full border-[2.5px] border-mustard text-2xl text-mustard" aria-hidden="true">add</span>
+</button>
+<div class="accordion-content" id="acc-dev" role="region" aria-labelledby="acc-btn-dev">
+<div class="grid grid-cols-1 gap-10 pb-16 pt-2 md:grid-cols-2 md:gap-12 lg:gap-14" data-project-category="Development"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
 
-    <!-- 1. Standard Projects -->
-    <div class="accordion-item border-b border-surface-container-high">
-      <button type="button" class="accordion-btn w-full flex items-center justify-between py-6 text-left group" data-target="section-standard" aria-expanded="false" aria-controls="acc-standard" id="acc-btn-standard">
-        <div class="flex items-center gap-5 flex-wrap">
-          <span class="font-label-caps text-label-caps text-on-surface-variant tabular-nums">01</span>
-          <span class="font-montserrat font-medium text-xl md:text-2xl text-primary group-hover:text-on-surface transition-colors duration-300">Standard Projects</span>
-          <span class="hidden md:inline font-body-md text-body-md text-on-surface-variant opacity-60 ml-2">— Lab experiments &amp; core products</span>
-        </div>
-        <span class="accordion-arrow material-symbols-outlined text-on-surface-variant text-2xl select-none shrink-0" aria-hidden="true">add</span>
-      </button>
-      <div class="accordion-content" id="acc-standard" role="region" aria-labelledby="acc-btn-standard">
-        <div class="pb-16 grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-12 lg:gap-14" data-project-category="Standard Projects"></div>
-      </div>
-    </div>
-
-    <!-- 2. Branding & Identity -->
-    <div class="accordion-item border-b border-surface-container-high">
-      <button type="button" class="accordion-btn w-full flex items-center justify-between py-6 text-left group" data-target="section-branding" aria-expanded="false" aria-controls="acc-branding" id="acc-btn-branding">
-        <div class="flex items-center gap-5 flex-wrap">
-          <span class="font-label-caps text-label-caps text-on-surface-variant tabular-nums">02</span>
-          <span class="font-montserrat font-medium text-xl md:text-2xl text-primary group-hover:text-on-surface transition-colors duration-300">Branding &amp; Identity</span>
-          <span class="hidden md:inline font-body-md text-body-md text-on-surface-variant opacity-60 ml-2">— Onurik Designs &amp; brand ecosystems</span>
-        </div>
-        <span class="accordion-arrow material-symbols-outlined text-on-surface-variant text-2xl select-none shrink-0" aria-hidden="true">add</span>
-      </button>
-      <div class="accordion-content" id="acc-branding" role="region" aria-labelledby="acc-btn-branding">
-        <div class="pb-16 grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-12 lg:gap-14" data-project-category="Branding &amp; Identity"></div>
-      </div>
-    </div>
-
-    <!-- 3. Design & Art Direction -->
-    <div class="accordion-item border-b border-surface-container-high">
-      <button type="button" class="accordion-btn w-full flex items-center justify-between py-6 text-left group" data-target="section-design" aria-expanded="false" aria-controls="acc-design" id="acc-btn-design">
-        <div class="flex items-center gap-5 flex-wrap">
-          <span class="font-label-caps text-label-caps text-on-surface-variant tabular-nums">03</span>
-          <span class="font-montserrat font-medium text-xl md:text-2xl text-primary group-hover:text-on-surface transition-colors duration-300">Design &amp; Art Direction</span>
-          <span class="hidden md:inline font-body-md text-body-md text-on-surface-variant opacity-60 ml-2">— Editorial, photography &amp; spatial</span>
-        </div>
-        <span class="accordion-arrow material-symbols-outlined text-on-surface-variant text-2xl select-none shrink-0" aria-hidden="true">add</span>
-      </button>
-      <div class="accordion-content" id="acc-design" role="region" aria-labelledby="acc-btn-design">
-        <div class="pb-16 grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-12 lg:gap-14" data-project-category="Design &amp; Art Direction"></div>
-      </div>
-    </div>
-
-    <!-- 4. Development -->
-    <div class="accordion-item border-b border-surface-container-high">
-      <button type="button" class="accordion-btn w-full flex items-center justify-between py-6 text-left group" data-target="section-dev" aria-expanded="false" aria-controls="acc-dev" id="acc-btn-dev">
-        <div class="flex items-center gap-5 flex-wrap">
-          <span class="font-label-caps text-label-caps text-on-surface-variant tabular-nums">04</span>
-          <span class="font-montserrat font-medium text-xl md:text-2xl text-primary group-hover:text-on-surface transition-colors duration-300">Development</span>
-          <span class="hidden md:inline font-body-md text-body-md text-on-surface-variant opacity-60 ml-2">— Open source contributions</span>
-        </div>
-        <span class="accordion-arrow material-symbols-outlined text-on-surface-variant text-2xl select-none shrink-0" aria-hidden="true">add</span>
-      </button>
-      <div class="accordion-content" id="acc-dev" role="region" aria-labelledby="acc-btn-dev">
-        <div class="pb-16 grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-12 lg:gap-14" data-project-category="Development"></div>
-      </div>
-    </div>
-
-  </div>
-
-<!-- Conversion bridge (same section as homepage) -->
-<section id="conversion-bridge" class="w-full border-t border-white/[0.06] bg-[#131313]" aria-labelledby="conversion-bridge-heading">
-<div class="mx-auto max-w-[1440px] px-8 py-16 md:px-16 md:py-24 lg:py-28">
+<section id="conversion-bridge" class="ob-bg-flame ob-grain relative w-full overflow-hidden" aria-labelledby="conversion-bridge-heading">
+<div class="ob-melt pointer-events-none absolute -right-10 top-10 hidden h-44 w-36 border-[10px] border-butter md:block" aria-hidden="true">
+<span class="absolute left-1/2 top-1/2 h-12 w-[3px] -translate-x-1/2 -translate-y-full bg-cocoa origin-bottom"></span>
+<span class="absolute left-1/2 top-1/2 h-9 w-[3px] -translate-x-1/2 -translate-y-full rotate-[120deg] bg-cocoa origin-bottom"></span>
+</div>
+<div class="bridge-shell mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:px-12 md:py-28">
 <h2 id="conversion-bridge-heading" class="sr-only">Partner with Onurik</h2>
-<div class="flex flex-col gap-12 lg:flex-row lg:items-center lg:justify-between lg:gap-12 xl:gap-16">
-<div class="w-full lg:w-[70%] lg:max-w-[70%] lg:flex-[7]">
-<div class="relative min-h-[13.5rem] sm:min-h-[12rem] md:min-h-[11rem] lg:min-h-[13rem]" aria-live="polite">
+<div class="flex flex-col gap-12 lg:flex-row lg:items-center lg:justify-between">
+<div class="w-full lg:max-w-[68%]">
+<p class="ob-eyebrow text-butter/90">#100 / let’s talk</p>
+<div class="relative mt-6 min-h-[15rem] sm:min-h-[13rem] md:min-h-[14rem]" aria-live="polite">
 <div id="conversion-bridge-slides" class="absolute inset-0">
 <div class="conversion-bridge-slide is-active" data-slide="0">
-<p class="bridge-intro mb-3 text-base leading-snug text-white/50 md:text-lg">Let’s talk about what you’re building —</p>
-<p class="bridge-headline text-2xl leading-[1.15] text-white md:text-3xl lg:text-[2.125rem] lg:leading-[1.2]">and make it something people actually remember.</p>
+<p class="ob-mono mb-4 text-base text-butter/85">Let’s talk about what you’re building —</p>
+<p class="ob-letter text-[clamp(2rem,5vw,4.2rem)] text-butter ob-shadow-text" style="--ob-shadow-color:#A8121A">and make it something people actually remember.</p>
 </div>
 <div class="conversion-bridge-slide" data-slide="1">
-<p class="bridge-intro mb-3 text-base leading-snug text-white/50 md:text-lg">Every great idea deserves a moment.</p>
-<p class="bridge-headline text-2xl leading-[1.15] text-white md:text-3xl lg:text-[2.125rem] lg:leading-[1.2]">Let’s make yours impossible to miss.</p>
+<p class="ob-mono mb-4 text-base text-butter/85">Every great idea deserves a moment.</p>
+<p class="ob-letter text-[clamp(2rem,5vw,4.2rem)] text-butter ob-shadow-text" style="--ob-shadow-color:#A8121A">Let’s make yours impossible to miss.</p>
 </div>
 <div class="conversion-bridge-slide" data-slide="2">
-<p class="bridge-intro mb-3 text-base leading-snug text-white/50 md:text-lg">This could be something big —</p>
-<p class="bridge-headline text-2xl leading-[1.15] text-white md:text-3xl lg:text-[2.125rem] lg:leading-[1.2]">Let’s make sure it feels like it.</p>
+<p class="ob-mono mb-4 text-base text-butter/85">This could be something big —</p>
+<p class="ob-letter text-[clamp(2rem,5vw,4.2rem)] text-butter ob-shadow-text" style="--ob-shadow-color:#A8121A">Let’s make sure it feels like it.</p>
 </div>
 <div class="conversion-bridge-slide" data-slide="3">
-<p class="bridge-intro mb-3 text-base leading-snug text-white/50 md:text-lg">Most products get ignored.</p>
-<p class="bridge-headline text-2xl leading-[1.15] text-white md:text-3xl lg:text-[2.125rem] lg:leading-[1.2]">Let’s make sure yours isn’t one of them.</p>
+<p class="ob-mono mb-4 text-base text-butter/85">Most products get ignored.</p>
+<p class="ob-letter text-[clamp(2rem,5vw,4.2rem)] text-butter ob-shadow-text" style="--ob-shadow-color:#A8121A">Let’s make sure yours isn’t one of them.</p>
 </div>
 </div>
 </div>
-<p class="bridge-intro mt-6 text-sm text-white/45 md:text-[15px]">— this is what I do at Onurik.</p>
-<p class="bridge-subtext mt-6 max-w-2xl text-[15px] leading-relaxed text-white/[0.58] md:text-base md:leading-relaxed">I work with founders and teams who care about how their product looks and feels. Design, development, and identity — done with intention, not templates.</p>
+<p class="ob-marker mt-4 text-xl text-cocoa -rotate-1">— this is what I do at Onurik.</p>
+<p class="mt-6 max-w-2xl text-base leading-relaxed text-butter/90">I work with founders and teams who care about how their product looks and feels. Design, development, and identity — done with intention, not templates.</p>
 </div>
-<div class="flex w-full shrink-0 justify-center lg:w-[30%] lg:max-w-[30%] lg:flex-[3] lg:justify-end lg:self-center">
-<a href="/contact" class="bridge-cta group inline-flex items-center justify-center gap-2.5 rounded-full border border-[#c9c6c1]/35 bg-[#201f1f] px-8 py-4 font-montserrat text-xs font-semibold uppercase tracking-[0.22em] text-[#e8e2d6] shadow-sm transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-[#e5e2dd]/55 hover:bg-[#2a2a2a] hover:shadow-[0_8px_32px_rgba(229,226,221,0.1)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e5e2dd]/40">
-<span>Let’s work together</span>
-<span class="material-symbols-outlined text-[1.125rem] transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true">arrow_forward</span>
+<div class="flex shrink-0 justify-center lg:justify-end">
+<a href="/contact" class="bridge-cta ob-stamp ob-stamp--mustard scale-110" data-ob-magnet="0.25">
+<span class="ob-stamp__disc"><span class="material-symbols-outlined" aria-hidden="true">play_arrow</span></span>
+<span class="ob-stamp__shout">Click<br/>here!</span>
+<span class="ob-stamp__caption">Let’s work together</span>
 </a>
 </div>
 </div>
@@ -408,41 +278,36 @@
 </section>
 <script>
 (function () {
-  var section = document.getElementById("conversion-bridge");
-  var slides = section ? section.querySelectorAll(".conversion-bridge-slide") : [];
-  if (!slides.length) return;
-  var i = 0;
-  var period = 3600;
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  function go(n) {
-    slides.forEach(function (el, j) {
-      el.classList.toggle("is-active", j === n);
-    });
-    i = n;
+  var period = 3600;
+
+  function initRotatingSlides(sectionId, slideSelector) {
+    var section = document.getElementById(sectionId);
+    var slides = section ? section.querySelectorAll(slideSelector) : [];
+    if (!slides.length) return;
+    var i = 0;
+    function go(n) {
+      slides.forEach(function (el, j) {
+        el.classList.toggle("is-active", j === n);
+      });
+      i = n;
+    }
+    if (sectionId === "conversion-bridge" && section) {
+      requestAnimationFrame(function () {
+        section.classList.add("is-visible");
+      });
+    }
+    if (!reduceMotion) {
+      setInterval(function () {
+        go((i + 1) % slides.length);
+      }, period);
+    }
   }
-  function next() {
-    go((i + 1) % slides.length);
-  }
-  if (section) {
-    requestAnimationFrame(function () {
-      section.classList.add("is-visible");
-    });
-  }
-  if (!reduceMotion) {
-    setInterval(next, period);
-  }
+
+  initRotatingSlides("conversion-bridge", ".conversion-bridge-slide");
+  initRotatingSlides("services-positioning", ".services-heading-slide");
 })();
 </script>
-</main>
-
-<!-- Footer -->
-<footer class="w-full flex flex-col md:flex-row justify-between items-center px-8 md:px-16 bg-stone-950 full-width py-20 border-t border-stone-100/5">
-  <div class="text-stone-100 font-bold font-montserrat text-[10px] tracking-[0.2em] uppercase mb-8 md:mb-0">
-    © 2026 ONURIK. ALL RIGHTS RESERVED.
-  </div>
-  <nav data-onurik-social-footer class="flex flex-wrap gap-8 font-montserrat text-[10px] tracking-[0.2em] uppercase justify-center" aria-label="Social links" hidden></nav>
-</footer>
-
 <script>
 (function () {
   var buttons = document.querySelectorAll(".accordion-btn");
@@ -481,11 +346,29 @@
   });
 })();
 </script>
-<script type="module" src="scripts/animations.js"></script>
-<script type="module" src="scripts/works-page.js"></script>
-<script type="module" src="scripts/nav-close.js"></script>
-<script type="module" src="scripts/whatsapp-float.js"></script>
-<script type="module" src="scripts/site-social-links.js"></script>
-<script type="module" src="scripts/vercel-analytics.js"></script>
-</body>
-</html>
+</main>
+<!-- Footer -->
+<footer class="ob-bg-ink ob-grain relative w-full overflow-hidden">
+<div class="mx-auto max-w-[1440px] px-5 pt-16 sm:px-8 md:px-12">
+<div class="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
+<div>
+<p class="ob-letter text-3xl text-mustard md:text-4xl" data-ob-chars="jumble wobble">Got an idea?</p>
+<a href="/contact" class="ob-marker mt-2 inline-block text-xl text-cream/80 hover:text-tomato transition-colors">say hello → let’s build it</a>
+</div>
+<ul data-onurik-social-footer class="flex flex-wrap gap-6 ob-mono text-[11px] uppercase tracking-[0.18em] text-cream/70" aria-label="Social links" hidden></ul>
+</div>
+<p class="ob-footer__giant ob-outline mt-12 select-none text-center text-mustard" style="--ob-outline-color:#F2A516" data-ob-chars="jumble wave" data-ob-amp="0.6" aria-hidden="true">Onurik</p>
+<div class="flex flex-col items-center justify-between gap-3 border-t-2 border-cream/10 py-6 ob-mono text-[10px] uppercase tracking-[0.2em] text-cream/45 md:flex-row">
+<span>© 2026 Onurik. All rights reserved.</span>
+<span>Design ✶ Build ✶ Question everything</span>
+</div>
+</div>
+</footer>
+<script type="module" src="./scripts/animations.js"></script>
+<script type="module" src="./scripts/brand-fx.js"></script>
+<script type="module" src="./scripts/works-page.js"></script>
+<script type="module" src="./scripts/nav-close.js"></script>
+<script type="module" src="./scripts/whatsapp-float.js"></script>
+<script type="module" src="./scripts/site-social-links.js"></script>
+<script type="module" src="./scripts/vercel-analytics.js"></script>
+</body></html>

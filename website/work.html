@@ -28,35 +28,131 @@
   <meta name="twitter:description" content="Explore selected engineering and design work by Onurik — human-centered systems and product experiences."/>
   <meta name="twitter:image" content="https://placehold.co/1200x630/131313/e5e2e1/png?text=Onurik"/>
   <meta name="twitter:image:alt" content="Onurik"/>
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Serif:wght@400;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-  <script>
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: { background: "#131313", "on-background": "#e5e2e1" },
-          fontFamily: {
-            montserrat: ["Montserrat", "sans-serif"],
-            inter: ["Inter", "sans-serif"],
-            "noto-serif": ["Noto Serif", "serif"]
-          }
-        }
-      }
-    };
-  </script>
+<meta name="theme-color" content="#D8202A"/>
+<meta name="theme-color" content="#D8202A"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="/brand/tailwind-brand.js"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="styles/animations.css"/>
+<link rel="stylesheet" href="styles/brand.css"/>
+<style>
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24; }
+  #site-nav-drawer { transform: translateX(100%); transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  #site-nav-drawer.open { transform: translateX(0); }
+  .site-nav-overlay.open { opacity: 1 !important; pointer-events: auto !important; }
+  .ob-drawer a.ob-drawer__link[aria-current="page"] { color: #D8202A; }
+
+  /* Conversion bridge (shared with home) */
+  .conversion-bridge-slide {
+    position: absolute; left: 0; top: 0; right: 0;
+    opacity: 0; transform: translateY(0.8rem) rotate(-1.5deg);
+    transition: opacity 0.55s ease-in-out, transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+  }
+  .conversion-bridge-slide.is-active { opacity: 1; transform: none; pointer-events: auto; }
+  #conversion-bridge .bridge-shell { opacity: 0; transform: translateY(1.25rem); }
+  #conversion-bridge.is-visible .bridge-shell { opacity: 1; transform: none; transition: opacity 0.85s ease-out, transform 0.85s ease-out; }
+  @media (prefers-reduced-motion: reduce) {
+    .conversion-bridge-slide { transition: none; }
+    .conversion-bridge-slide:not(.is-active) { visibility: hidden; }
+    #conversion-bridge .bridge-shell { opacity: 1; transform: none; }
+  }
+
+  .work-title { font-size: clamp(3rem, 9vw, 8rem); }
+  .work-related-card { transition: transform .45s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .work-related-card:nth-child(1) { transform: rotate(-2deg); }
+  .work-related-card:nth-child(2) { transform: rotate(1.5deg); }
+  .work-related-card:nth-child(3) { transform: rotate(-1deg); }
+  .work-related-card:hover { transform: rotate(0deg) translateY(-6px) scale(1.02); }
+  @media (prefers-reduced-motion: reduce) { .work-related-card, .work-related-card:hover { transform: none !important; } }
+</style>
 </head>
-<body class="bg-background text-on-background font-inter min-h-screen">
-  <nav class="fixed top-0 z-50 flex h-[4.25rem] w-full items-center justify-between border-b border-white/10 bg-stone-950/75 px-8 backdrop-blur-xl md:px-16">
-    <a href="/" class="font-montserrat text-2xl font-bold tracking-tight text-white">Onurik</a>
-    <a href="/works" class="font-montserrat text-xs uppercase tracking-[0.24em] text-white/70 hover:text-white">Works</a>
-  </nav>
-  <main id="work-detail-root"></main>
-  <script type="module" src="scripts/animations.js"></script>
-  <script type="module" src="scripts/work-detail-page.js"></script>
-  <script type="module" src="scripts/nav-close.js"></script>
-  <script type="module" src="scripts/whatsapp-float.js"></script>
-  <script type="module" src="scripts/vercel-analytics.js"></script>
-</body>
-</html>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="ob-nav fixed top-0 w-full z-50 flex items-center gap-6 px-5 sm:px-8 md:px-12 h-[4.5rem]">
+<a href="/" class="ob-nav__logo" data-ob-chars="jumble" aria-label="Onurik home">Onurik</a>
+<button type="button" class="md:hidden ml-auto inline-flex items-center justify-center rounded-full w-11 h-11 bg-mustard text-cocoa border-2 border-ink shadow-sticker" aria-expanded="false" aria-controls="site-nav-drawer" id="site-mobile-menu-btn">
+<span class="material-symbols-outlined text-2xl" aria-hidden="true">menu</span>
+<span class="sr-only">Open menu</span>
+</button>
+<div class="ml-auto hidden md:flex items-center gap-9">
+<a href="/works" class="ob-nav__link" aria-current="page">Works</a>
+<a href="/about" class="ob-nav__link">Info</a>
+<a href="/shop" class="ob-nav__link">Shop</a>
+<a href="/contact" class="ob-nav__cta" data-ob-magnet="0.3">Contact <span class="material-symbols-outlined text-base" aria-hidden="true">north_east</span></a>
+</div>
+</nav>
+<div class="site-nav-overlay fixed inset-0 z-40 md:hidden opacity-0 pointer-events-none bg-ink/70 backdrop-blur-sm transition-opacity duration-300" aria-hidden="true"></div>
+<nav id="site-nav-drawer" class="ob-drawer ob-grain fixed top-0 right-0 z-50 h-full w-[min(100vw,20rem)] md:hidden pt-24 px-8 flex flex-col gap-5 shadow-2xl" aria-hidden="true" aria-label="Mobile">
+<a href="/works" class="ob-drawer__link" aria-current="page">Works</a>
+<a href="/about" class="ob-drawer__link">Info</a>
+<a href="/shop" class="ob-drawer__link">Shop</a>
+<a href="/contact" class="ob-drawer__link">Contact</a>
+<a href="/contact" class="ob-btn ob-btn--red mt-6 self-start">Enquire <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></a>
+<p class="ob-marker mt-auto mb-10 text-2xl text-cocoa/80 -rotate-3">think outside the box ✕</p>
+</nav>
+<script>
+(function () {
+  var btn = document.getElementById("site-mobile-menu-btn");
+  var drawer = document.getElementById("site-nav-drawer");
+  var overlay = document.querySelector(".site-nav-overlay");
+  if (!btn || !drawer || !overlay) return;
+  function setOpen(open) {
+    drawer.classList.toggle("open", open);
+    drawer.setAttribute("aria-hidden", open ? "false" : "true");
+    overlay.classList.toggle("open", open);
+    overlay.setAttribute("aria-hidden", open ? "false" : "true");
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    document.documentElement.style.overflow = open ? "hidden" : "";
+  }
+  btn.addEventListener("click", function () {
+    setOpen(!drawer.classList.contains("open"));
+  });
+  overlay.addEventListener("click", function () {
+    setOpen(false);
+  });
+  drawer.querySelectorAll("a").forEach(function (link) {
+    link.addEventListener("click", function () {
+      setOpen(false);
+    });
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") setOpen(false);
+  });
+})();
+</script>
+<main id="work-detail-root" class="flex-grow pt-[4.5rem]">
+<div class="ob-bg-tomato ob-grain relative min-h-[60vh] overflow-hidden">
+<div class="absolute inset-0 ob-lines" aria-hidden="true"></div>
+<div class="relative mx-auto flex max-w-[1440px] flex-col items-start px-5 py-28 sm:px-8 md:px-12">
+<p class="ob-eyebrow text-mustard" data-ob-scramble>Loading project…</p>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="ob-bg-ink ob-grain relative w-full overflow-hidden">
+<div class="mx-auto max-w-[1440px] px-5 pt-16 sm:px-8 md:px-12">
+<div class="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
+<div>
+<p class="ob-letter text-3xl text-mustard md:text-4xl" data-ob-chars="jumble wobble">Got an idea?</p>
+<a href="/contact" class="ob-marker mt-2 inline-block text-xl text-cream/80 hover:text-tomato transition-colors">say hello → let’s build it</a>
+</div>
+<ul data-onurik-social-footer class="flex flex-wrap gap-6 ob-mono text-[11px] uppercase tracking-[0.18em] text-cream/70" aria-label="Social links" hidden></ul>
+</div>
+<p class="ob-footer__giant ob-outline mt-12 select-none text-center text-mustard" style="--ob-outline-color:#F2A516" data-ob-chars="jumble wave" data-ob-amp="0.6" aria-hidden="true">Onurik</p>
+<div class="flex flex-col items-center justify-between gap-3 border-t-2 border-cream/10 py-6 ob-mono text-[10px] uppercase tracking-[0.2em] text-cream/45 md:flex-row">
+<span>© 2026 Onurik. All rights reserved.</span>
+<span>Design ✶ Build ✶ Question everything</span>
+</div>
+</div>
+</footer>
+<script type="module" src="./scripts/animations.js"></script>
+<script type="module" src="./scripts/brand-fx.js"></script>
+<script type="module" src="./scripts/work-detail-page.js"></script>
+<script type="module" src="./scripts/nav-close.js"></script>
+<script type="module" src="./scripts/whatsapp-float.js"></script>
+<script type="module" src="./scripts/site-social-links.js"></script>
+<script type="module" src="./scripts/vercel-analytics.js"></script>
+</body></html>

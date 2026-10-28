@@ -40,7 +40,7 @@ function scopeBadges(project) {
       .slice(0, 3)
       .map(function (tag) {
         return (
-          '<span class="rounded-full border border-white/15 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.14em] text-white/55">' +
+          '<span class="rounded-md border-2 border-ink bg-mustard px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-cocoa">' +
           escapeHtml(tag) +
           "</span>"
         );
@@ -55,27 +55,35 @@ function projectCard(project) {
   return (
     '<a href="/work?id=' +
     encodeURIComponent(project.id) +
-    '" class="anim-project-card group flex flex-col overflow-hidden rounded-xl border border-white/[0.06] bg-surface-container-low transition duration-200 ease-out hover:-translate-y-0.5 hover:border-white/10 hover:shadow-[0_18px_40px_rgba(0,0,0,0.35)]" data-scope-tags="' +
+    '" class="works-card anim-project-card group relative flex flex-col rounded-2xl border-[2.5px] border-ink bg-cream text-cocoa shadow-[6px_6px_0_#160E07]" data-scope-tags="' +
     escapeHtml((project.scopeTags || []).join("|")) +
     '">' +
-    '<div class="p-3 pb-0 md:p-4 md:pb-0">' +
-    '<div class="relative aspect-[16/10] overflow-hidden rounded-lg bg-[#111111]">' +
+    '<div class="flex items-center justify-between border-b-[2.5px] border-ink px-3 py-1.5" aria-hidden="true">' +
+    '<span class="ob-chrome scale-75 origin-left"><span>×</span><span>−</span><span>↻</span></span>' +
+    '<span class="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-cocoa/70">' +
+    escapeHtml(project.category || "Project") +
+    "</span></div>" +
+    '<div class="p-3 pb-0">' +
+    '<div class="relative aspect-[16/10] overflow-hidden rounded-lg border-2 border-ink bg-cocoa">' +
     '<img src="' +
-    escapeHtml(getProjectCoverImage(project) || "https://placehold.co/1200x750/111111/e5e2e1?text=Project") +
+    escapeHtml(getProjectCoverImage(project) || "https://placehold.co/1200x750/2A1B0E/F2A516?text=Project") +
     '" alt="' +
     escapeHtml(project.title) +
-    '" class="anim-project-card__media h-full w-full object-cover transition duration-200 ease-out group-hover:scale-[1.025]" style="object-position: ' +
+    '" loading="lazy" class="anim-project-card__media h-full w-full object-cover transition duration-500 ease-out group-hover:scale-[1.04]" style="object-position: ' +
     escapeAttr(position) +
     '"/>' +
-    '<div class="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/35 to-transparent" aria-hidden="true"></div>' +
     "</div>" +
     "</div>" +
-    '<div class="anim-project-card__meta flex min-h-[5.25rem] flex-col justify-center px-4 py-4 md:min-h-[5.75rem] md:px-5 md:py-5">' +
-    '<h3 class="anim-project-card__title font-montserrat text-lg font-medium leading-snug tracking-[-0.01em] text-white md:text-xl">' +
+    '<div class="anim-project-card__meta flex min-h-[5.75rem] flex-col justify-center px-4 py-4 md:px-5 md:py-5">' +
+    '<h3 class="anim-project-card__title font-display text-[1.9rem] uppercase leading-[0.95] text-cocoa md:text-[2.3rem]">' +
     escapeHtml(project.title) +
     "</h3>" +
     scopeBadges(project) +
     "</div>" +
+    '<span class="works-card__stamp ob-stamp ob-stamp--red pointer-events-none absolute -bottom-5 right-4 !gap-2 !py-1.5 !pl-1.5 !pr-3" aria-hidden="true">' +
+    '<span class="ob-stamp__disc !h-8 !w-8"><span class="material-symbols-outlined text-lg">play_arrow</span></span>' +
+    '<span class="ob-stamp__shout !border-0 !pr-0 !text-xl">View</span>' +
+    "</span>" +
     "</a>"
   );
 }
@@ -109,12 +117,12 @@ function renderScopeFilterBar(projects) {
   }
   root.classList.remove("hidden");
   root.innerHTML =
-    '<p class="mb-3 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Filter by scope</p>' +
-    '<div class="flex flex-wrap gap-2" role="toolbar" aria-label="Filter projects by scope tag">' +
-    '<button type="button" data-scope-filter="" class="works-scope-chip rounded-full border px-3 py-1.5 text-[11px] uppercase tracking-[0.14em] transition ' +
+    '<p class="ob-eyebrow mb-4 text-mustard">Filter by scope</p>' +
+    '<div class="flex flex-wrap gap-2.5" role="toolbar" aria-label="Filter projects by scope tag">' +
+    '<button type="button" data-scope-filter="" class="works-scope-chip rounded-lg border-2 px-3.5 py-1.5 text-[12px] font-bold transition duration-300 hover:-rotate-2 ' +
     (!activeScopeFilter
-      ? "border-white bg-white text-black"
-      : "border-white/25 text-white/70 hover:border-white/50 hover:text-white") +
+      ? "border-ink bg-mustard text-cocoa shadow-[3px_3px_0_#160E07] -rotate-2"
+      : "border-mustard/50 text-cream/80 hover:border-mustard hover:text-mustard") +
     '">All</button>' +
     options
       .map(function (tag) {
@@ -122,10 +130,10 @@ function renderScopeFilterBar(projects) {
         return (
           '<button type="button" data-scope-filter="' +
           escapeHtml(tag) +
-          '" class="works-scope-chip rounded-full border px-3 py-1.5 text-[11px] uppercase tracking-[0.14em] transition ' +
+          '" class="works-scope-chip rounded-lg border-2 px-3.5 py-1.5 text-[12px] font-bold transition duration-300 hover:-rotate-2 ' +
           (active
-            ? "border-white bg-white text-black"
-            : "border-white/25 text-white/70 hover:border-white/50 hover:text-white") +
+            ? "border-ink bg-mustard text-cocoa shadow-[3px_3px_0_#160E07] -rotate-2"
+            : "border-mustard/50 text-cream/80 hover:border-mustard hover:text-mustard") +
           '">' +
           escapeHtml(tag) +
           "</button>"
@@ -150,7 +158,7 @@ function renderCategoryGrids() {
     const items = byCategory.get(category) || [];
     if (!items.length) {
       container.innerHTML =
-        '<p class="col-span-full text-on-surface-variant">' +
+        '<p class="col-span-full font-mono text-sm text-cream/60"><span class="ob-marker mr-2 text-lg text-mustard">psst —</span>' +
         (activeScopeFilter
           ? "No projects match this scope tag in this category."
           : "No published projects yet in this category.") +
@@ -181,6 +189,6 @@ document.addEventListener("click", function (event) {
 renderWorks().catch(function () {
   document.querySelectorAll("[data-project-category]").forEach(function (container) {
     container.innerHTML =
-      '<p class="col-span-full text-on-surface-variant">Could not load projects. Try refreshing the page.</p>';
+      '<p class="col-span-full font-mono text-sm text-cream/60"><span class="ob-marker mr-2 text-lg text-tomato">oops —</span>Could not load projects. Try refreshing the page.</p>';
   });
 });
