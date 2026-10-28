@@ -1,9 +1,10 @@
 /**
  * Onurik brand motion — character-level lettering animation and poster effects.
  *
- *   [data-ob-chars="jumble pop wave|wobble"]  split into characters; jumble = hand-lettered
- *                                              baseline, pop = spring in on view, wave/wobble = idle loop.
- *                                              Every split char rubber-bands on hover.
+ *   [data-ob-chars="pop wave|wobble"]          split into characters; pop = letters rise out of a blur on
+ *                                              view, wave = an orange glint travels across, wobble = slow
+ *                                              float. Every split char lifts and lights up on hover.
+ *                                              ("jumble" from the poster theme is accepted and ignored.)
  *   [data-ob-scramble]                         mono text decodes through random glyphs on view.
  *   [data-ob-float]                            bobbing tags; with [data-ob-depth] they also drift with the cursor.
  *   [data-ob-reveal] / [data-ob-draw]          scroll reveals and SVG stroke drawing.
@@ -67,10 +68,6 @@ function splitChars(el) {
   if (el.dataset.obSplit === "1") return;
   const text = el.textContent.replace(/\s+/g, " ").trim();
   if (!text) return;
-  const modes = (el.getAttribute("data-ob-chars") || "").split(/\s+/);
-  const jumble = modes.includes("jumble");
-  const amp = parseFloat(el.getAttribute("data-ob-amp") || "1");
-  const rand = seeded(hashString(text));
 
   el.setAttribute("aria-label", text);
   el.textContent = "";
@@ -84,10 +81,6 @@ function splitChars(el) {
       c.className = "ob-char";
       c.textContent = ch;
       c.style.setProperty("--i", String(index++));
-      if (jumble) {
-        c.style.setProperty("--r", ((rand() - 0.5) * 12 * amp).toFixed(2) + "deg");
-        c.style.setProperty("--y", ((rand() - 0.5) * 0.12 * amp).toFixed(3) + "em");
-      }
       w.appendChild(c);
     });
     el.appendChild(w);
@@ -438,6 +431,98 @@ function initCarousels(root) {
   root.querySelectorAll("[data-ob-carousel]").forEach(initCarousel);
 }
 
+/* ---------------- Step flow connectors ---------------- */
+/*
+ * <div class="ob-flow" data-ob-flow> <div class="ob-flow__step">…</div> ×n </div>
+ * Draws glowing elbow lines from each step's bottom edge to the next step's top edge,
+ * with a dot at both ends. Redrawn when the layout changes size.
+ */
+
+function drawFlow(flow) {
+  const steps = Array.from(flow.querySelectorAll(":scope > .ob-flow__step"));
+  let svg = flow.querySelector(":scope > .ob-flow__svg");
+  if (!svg) {
+    svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("class", "ob-flow__svg");
+    svg.setAttribute("aria-hidden", "true");
+    flow.prepend(svg);
+  }
+  const box = flow.getBoundingClientRect();
+  svg.setAttribute("viewBox", `0 0 ${box.width.toFixed(1)} ${box.height.toFixed(1)}`);
+  const r = 18;
+  let out = "";
+  for (let i = 0; i < steps.length - 1; i++) {
+    const a = steps[i].getBoundingClientRect();
+    const b = steps[i + 1].getBoundingClientRect();
+    const x1 = a.left - box.left + Math.min(a.width * 0.32, 160);
+    const y1 = a.bottom - box.top;
+    const x2 = b.left - box.left + Math.min(b.width * 0.32, 160);
+    const y2 = b.top - box.top;
+    const midY = (y1 + y2) / 2;
+    let d;
+    if (Math.abs(x2 - x1) < 4) {
+      d = `M${x1} ${y1} V${y2}`;
+    } else {
+      const dir = x2 > x1 ? 1 : -1;
+      const rr = Math.min(r, Math.abs(x2 - x1) / 2, Math.abs(midY - y1));
+      d =
+        `M${x1} ${y1} V${midY - rr} Q${x1} ${midY} ${x1 + dir * rr} ${midY}` +
+        ` H${x2 - dir * rr} Q${x2} ${midY} ${x2} ${midY + rr} V${y2}`;
+    }
+    out +=
+      `<path d="${d}"/>` +
+      `<circle cx="${x1}" cy="${y1}" r="4.5"/><circle cx="${x2}" cy="${y2}" r="4.5"/>`;
+  }
+  svg.innerHTML = out;
+  // Re-arm stroke drawing for the new paths.
+  if (!reduceMotion) {
+    svg.querySelectorAll("path").forEach((p) => {
+      const len = Math.ceil(p.getTotalLength()) + 2;
+      p.style.strokeDasharray = String(len);
+      p.style.strokeDashoffset = flow.classList.contains("is-in") ? "0" : String(len);
+      p.style.transition = "stroke-dashoffset 1.6s cubic-bezier(0.22, 1, 0.36, 1)";
+    });
+  }
+}
+
+function initFlows(root) {
+  root.querySelectorAll("[data-ob-flow]").forEach((flow) => {
+    if (flow.dataset.obFlowReady) return;
+    flow.dataset.obFlowReady = "1";
+    let raf = 0;
+    const redraw = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        drawFlow(flow);
+      });
+    };
+    if ("ResizeObserver" in window) new ResizeObserver(redraw).observe(flow);
+    window.addEventListener("load", redraw, { once: true });
+    drawFlow(flow);
+    const reveal = () => {
+      flow.classList.add("is-in");
+      flow.querySelectorAll(".ob-flow__svg path").forEach((p) => {
+        p.style.strokeDashoffset = "0";
+      });
+    };
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      reveal();
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          reveal();
+          io.disconnect();
+        }
+      },
+      { threshold: 0.2 },
+    );
+    io.observe(flow);
+  });
+}
+
 /* ---------------- Public ---------------- */
 
 function refresh(root = document) {
@@ -457,6 +542,7 @@ function refresh(root = document) {
   initMarquee(root);
   initDraw(root);
   initCarousels(root);
+  initFlows(root);
 }
 
 function boot() {

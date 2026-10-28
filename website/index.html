@@ -12,7 +12,7 @@
   gtag('config', 'G-JBH7KPGDZ2');
 </script>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta name="theme-color" content="#D8202A"/>
+<meta name="theme-color" content="#0A0A0B"/>
 <title>Onurik | Engineering Human-Centered Systems</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script src="/brand/tailwind-brand.js"></script>
@@ -21,59 +21,70 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="styles/animations.css"/>
 <link rel="stylesheet" href="styles/brand.css"/>
-<link rel="stylesheet" href="styles/services-orbit.css"/>
 <style>
-  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24; }
-  #site-nav-drawer { transform: translateX(100%); transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  #site-nav-drawer { transform: translateX(100%); transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
   #site-nav-drawer.open { transform: translateX(0); }
   .site-nav-overlay.open { opacity: 1 !important; pointer-events: auto !important; }
-
-  /* Hero */
-  .home-hero__blobs path { transform-origin: center; animation: home-blob 22s ease-in-out infinite; }
-  .home-hero__blobs path:nth-child(2) { animation-duration: 28s; animation-direction: reverse; }
-  .home-hero__blobs path:nth-child(3) { animation-duration: 34s; }
-  @keyframes home-blob {
-    0%, 100% { transform: rotate(0deg) scale(1); }
-    50% { transform: rotate(8deg) scale(1.06); }
-  }
-  .home-hero__title { font-size: clamp(2.4rem, 10.8vw, 9.5rem); }
-  .home-hero__tags > * { position: absolute; }
 
   /* Rotating headings */
   .services-heading-slide,
   .conversion-bridge-slide {
     position: absolute; left: 0; top: 0; right: 0;
-    opacity: 0; transform: translateY(0.8rem) rotate(-1.5deg);
-    transition: opacity 0.55s ease-in-out, transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+    opacity: 0; filter: blur(6px); transform: translateY(0.6rem);
+    transition: opacity 0.6s ease, filter 0.6s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
     pointer-events: none;
   }
   .services-heading-slide.is-active,
-  .conversion-bridge-slide.is-active { opacity: 1; transform: none; pointer-events: auto; }
-
+  .conversion-bridge-slide.is-active { opacity: 1; filter: none; transform: none; pointer-events: auto; }
   #conversion-bridge .bridge-shell { opacity: 0; transform: translateY(1.25rem); }
   #conversion-bridge.is-visible .bridge-shell { opacity: 1; transform: none; transition: opacity 0.85s ease-out, transform 0.85s ease-out; }
+
+  /* Step cards: window chrome, copy left, options right; alternate sides on wide screens */
+  .home-step { padding: 0; overflow: hidden; }
+  .home-step__chrome { display: flex; align-items: center; gap: 1rem; padding: 0.85rem 1.1rem; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .home-step__bar { flex: 1; height: 0.6rem; max-width: 18rem; border-radius: 999px; background: rgba(255,255,255,0.06); }
+  .home-step__body { display: grid; gap: 1.75rem; padding: 1.6rem 1.5rem 1.75rem; }
+  .home-step__options { display: grid; gap: 0.55rem; align-content: start; }
+  @media (min-width: 900px) {
+    .ob-flow { gap: 3.5rem; }
+    .home-step { width: 66%; }
+    .home-step:nth-child(even of .home-step) { margin-left: auto; }
+    .home-step__body { grid-template-columns: 1.1fr 1fr; padding: 2rem 2rem 2.1rem; }
+  }
+
+  /* Portfolio folder section: registration frame and pills */
+  .home-frame { border: 1px solid rgba(255, 90, 31, 0.28); }
+  .home-frame span { position: absolute; left: -5px; bottom: -5px; width: 10px; height: 10px; border-radius: 999px; background: #ff5a1f; }
+  .home-pill { display: inline-flex; align-items: center; gap: 0.75rem; padding: 0.55rem 1.2rem 0.55rem 0.55rem; border-radius: 999px; background: linear-gradient(180deg, #ff7a3d, #e8461e); color: #fff; text-align: left; font: 600 0.78rem/1.25 "Urbanist", sans-serif; letter-spacing: 0.02em; text-transform: uppercase; box-shadow: 0 0 0 6px rgba(255, 90, 31, 0.14), 0 18px 40px -16px rgba(232, 70, 30, 0.8); }
+  .home-pill__mark, .home-pill__avatar { display: grid; width: 2.3rem; height: 2.3rem; flex-shrink: 0; place-items: center; overflow: hidden; border-radius: 999px; background: #fff; color: #e8461e; font-size: 1.2rem; }
+  .home-pill__avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; }
+  .home-folder__ph { display: block; }
 
   /* Brands */
   .brands-trust__bg, .brands-trust__bg video, .brands-trust__shade { position: absolute; inset: 0; }
   .brands-trust__bg { z-index: 0; overflow: hidden; }
-  .brands-trust__bg video { width: 100%; height: 100%; object-fit: cover; filter: sepia(0.85) saturate(1.4) brightness(0.38) contrast(1.1); }
-  .brands-trust__shade { background: linear-gradient(to bottom, rgba(42,27,14,0.75), rgba(42,27,14,0.55) 45%, rgba(42,27,14,0.85)); pointer-events: none; }
+  .brands-trust__bg video { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) brightness(0.3) contrast(1.1); }
+  .brands-trust__shade { background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(255, 90, 31, 0.18), transparent 70%), linear-gradient(to bottom, rgba(7,7,8,0.85), rgba(7,7,8,0.55) 45%, rgba(7,7,8,0.92)); pointer-events: none; }
   .brand-tile-track { list-style: none; margin-top: 0; margin-bottom: 0; }
-  .brand-tile-track li { transform: rotate(var(--t, -2deg)); }
-  .brand-tile-track li:nth-child(3n+1) { --t: -3deg; }
-  .brand-tile-track li:nth-child(3n+2) { --t: 2deg; }
-  .brand-tile-track li:nth-child(3n) { --t: -1deg; }
-  .brand-tile { position: relative; aspect-ratio: 1 / 1; margin: 0; overflow: hidden; background: #FBF3E4; border: 2.5px solid #160E07; border-radius: 1rem; box-shadow: 5px 5px 0 #F2A516; transition: transform .4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .4s cubic-bezier(0.34, 1.56, 0.64, 1); }
-  .brand-tile:hover { transform: translate(-3px, -3px) rotate(3deg) scale(1.05); box-shadow: 9px 9px 0 #D8202A; }
-  .brand-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .brands-trust__empty { text-align: center; color: rgba(247, 227, 200, 0.7); font-family: "Space Mono", monospace; font-size: 0.85rem; }
+  .brand-tile { position: relative; aspect-ratio: 1 / 1; margin: 0; overflow: hidden; border: 1px solid rgba(255,255,255,0.12); border-radius: 1.25rem; background: rgba(255,255,255,0.04); transition: transform .4s cubic-bezier(0.22, 1, 0.36, 1), border-color .3s ease, box-shadow .4s ease; }
+  .brand-tile img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(1) contrast(1.05); opacity: 0.85; transition: filter .4s ease, opacity .4s ease; }
+  .brand-tile:hover { transform: translateY(-4px); border-color: rgba(255, 90, 31, 0.55); box-shadow: 0 0 0 4px rgba(255, 90, 31, 0.12); }
+  .brand-tile:hover img { filter: none; opacity: 1; }
+  .brands-trust__empty { text-align: center; color: rgba(242, 239, 235, 0.6); font-family: "Geist Mono", monospace; font-size: 0.85rem; }
+
+  @media (max-width: 639px) {
+    .home-collage .ob-widget { padding: 0.8rem; gap: 0.6rem; }
+    .home-collage .ob-widget__head { font-size: 0.85rem; }
+    .home-collage .ob-dot { font-size: 2.4rem; }
+    .home-collage .ob-bars { height: 2.4rem; }
+  }
 
   @media (prefers-reduced-motion: reduce) {
-    .home-hero__blobs path { animation: none; }
-    .services-heading-slide, .conversion-bridge-slide { transition: none; }
+    .services-heading-slide, .conversion-bridge-slide { transition: none; filter: none; }
     .services-heading-slide:not(.is-active), .conversion-bridge-slide:not(.is-active) { visibility: hidden; }
     #conversion-bridge .bridge-shell { opacity: 1; transform: none; }
-    .brands-trust__bg video, .home-hero__video video { display: none; }
+    .brands-trust__bg video, .home-collage video { display: none; }
   }
 </style>
 </head>
@@ -99,7 +110,7 @@
 <a href="/shop" class="ob-drawer__link">Shop</a>
 <a href="/contact" class="ob-drawer__link">Contact</a>
 <a href="/contact" class="ob-btn ob-btn--red mt-6 self-start">Enquire <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></a>
-<p class="ob-marker mt-auto mb-10 text-2xl text-cocoa/80 -rotate-3">think outside the box ✕</p>
+<p class="ob-marker mt-auto mb-10 text-xl">design · build · question</p>
 </nav>
 <script>
 (function () {
@@ -134,132 +145,184 @@
 <!-- Main Content Canvas -->
 <main class="flex-grow">
 
-<!-- Hero: red poster, swirling blobs, hand-jumbled headline, floating tags -->
+<!-- Hero: headline + floating widget collage -->
 <section class="ob-bg-tomato ob-grain relative min-h-[100svh] w-full overflow-hidden pt-[4.5rem]">
 <div class="absolute inset-0 ob-lines" aria-hidden="true"></div>
-<svg class="home-hero__blobs absolute inset-0 h-full w-full" viewBox="0 0 1200 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-<path d="M-80 180 C 160 40, 360 260, 560 160 S 940 -20, 1280 120 L 1280 -40 L -80 -40 Z" fill="#A8121A" opacity="0.55"/>
-<path d="M-60 760 C 180 600, 420 820, 640 700 S 1040 560, 1260 700 L 1260 960 L -60 960 Z" fill="#A8121A" opacity="0.5"/>
-<path d="M880 260 C 1020 200, 1180 320, 1140 460 S 940 620, 860 520 S 760 320, 880 260 Z" fill="#B3121B" opacity="0.45"/>
-</svg>
-
-<div class="relative z-[2] mx-auto flex min-h-[calc(100svh-4.5rem)] max-w-[1440px] flex-col px-5 pb-28 pt-8 sm:px-8 md:px-12">
-<div class="flex items-center justify-between text-mustard">
-<div class="ob-chrome" aria-hidden="true"><span>×</span><span>−</span><span>↻</span></div>
-<span class="ob-search-pill text-mustard"><span class="material-symbols-outlined text-lg" aria-hidden="true">search</span>what do we do?</span>
-<span class="ob-eyebrow hidden sm:inline text-cream/80">Studio — Systems × Design</span>
-</div>
-
-<div class="relative flex flex-1 flex-col items-center justify-center py-14 text-center">
-<!-- floating tags (decorative) -->
-<div class="home-hero__tags pointer-events-none absolute inset-0 z-[3] hidden md:block" aria-hidden="true">
-<span class="ob-tag" data-ob-float data-ob-depth="18" style="left:12%; top:14%; --ob-float-rot:-8deg">branding</span>
-<span class="ob-coin" data-ob-float data-ob-depth="26" style="left:6%; top:34%"><span class="material-symbols-outlined">videocam</span></span>
-<span class="ob-tag" data-ob-float data-ob-depth="14" style="right:16%; top:10%; --ob-float-rot:6deg">web apps</span>
-<span class="ob-coin" data-ob-float data-ob-depth="22" style="right:8%; top:32%"><span class="material-symbols-outlined">lightbulb</span></span>
-<span class="ob-tag" data-ob-float data-ob-depth="20" style="left:4%; bottom:30%; --ob-float-rot:10deg">strategy</span>
-<span class="ob-coin" data-ob-float data-ob-depth="30" style="left:18%; bottom:14%"><span class="material-symbols-outlined">edit</span></span>
-<span class="ob-tag" data-ob-float data-ob-depth="16" style="right:5%; bottom:34%; --ob-float-rot:-6deg">campaigns</span>
-<span class="ob-coin" data-ob-float data-ob-depth="24" style="right:20%; bottom:12%"><span class="material-symbols-outlined">movie</span></span>
-<span class="ob-tag" data-ob-float data-ob-depth="12" style="left:30%; top:4%; --ob-float-rot:4deg">systems</span>
-</div>
-
-<h1 class="home-hero__title ob-display ob-shadow-text relative max-w-[12ch] text-cream" style="--ob-shadow-color:#A8121A" data-ob-chars="jumble pop wave" data-ob-amp="0.9">Engineering Human-Centered Systems</h1>
-<p class="ob-letter relative mt-6 text-[clamp(1.6rem,3.6vw,2.8rem)] text-butter" data-ob-chars="jumble pop wobble" data-ob-amp="1.4">design. build. question everything!</p>
-
-<div class="relative mt-10 flex flex-wrap items-center justify-center gap-5">
+<div class="relative z-[2] mx-auto grid min-h-[calc(100svh-4.5rem)] max-w-[1440px] items-center gap-14 px-5 pb-24 pt-10 sm:px-8 md:px-12 lg:grid-cols-12 lg:gap-8">
+<div class="lg:col-span-6">
+<span class="ob-search-pill text-cream/80"><span class="ob-pulse" aria-hidden="true"></span>Studio — Systems × Design</span>
+<h1 class="ob-display mt-7 text-[clamp(3rem,7.2vw,6.6rem)] text-cream" data-ob-chars="pop wave">Engineering human&#8209;centered systems.</h1>
+<p class="mt-7 max-w-xl text-lg leading-relaxed text-cream/65 md:text-xl">Design. Build. <span class="text-mustard">Question everything.</span> Brand, product and the stack underneath — built to work as one.</p>
+<div class="mt-10 flex flex-wrap items-center gap-4">
 <a href="/works" class="ob-stamp" data-ob-magnet="0.2">
 <span class="ob-stamp__disc"><span class="material-symbols-outlined" aria-hidden="true">play_arrow</span></span>
-<span class="ob-stamp__shout">Click<br/>here!</span>
-<span class="ob-stamp__caption">See the full works</span>
+<span class="ob-stamp__shout">See the works</span>
+<span class="ob-stamp__caption">Portfolio</span>
 </a>
-<a href="/contact" class="ob-btn ob-btn--cream" data-ob-magnet="0.2">Let’s work together <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></a>
+<a href="/contact" class="ob-btn" data-ob-magnet="0.2">Let’s work together <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></a>
 </div>
 </div>
 
-<!-- now-playing window -->
-<figure class="home-hero__video ob-sticker relative mx-auto w-full max-w-[20rem] overflow-hidden bg-cocoa md:absolute md:bottom-28 md:right-12 md:mx-0 md:w-[17rem] md:rotate-[4deg] lg:w-[19rem]" style="--ob-hover-tilt:1deg">
-<div class="flex items-center justify-between border-b-2 border-ink bg-mustard px-3 py-1.5 text-cocoa">
-<div class="ob-chrome scale-75 origin-left" aria-hidden="true"><span>×</span><span>−</span><span>↻</span></div>
-<span class="ob-eyebrow text-[0.6rem]">now playing</span>
-</div>
-<video class="block aspect-video w-full object-cover" autoplay="" loop="" muted="" playsinline="" preload="metadata" aria-hidden="true">
+<!-- widget collage -->
+<div class="home-collage relative mx-auto h-[30rem] w-full max-w-[36rem] sm:h-[36rem] lg:col-span-6" aria-hidden="true">
+<div class="home-collage__main absolute left-[16%] top-[8%] h-[76%] w-[66%] overflow-hidden rounded-[1.75rem] border border-white/10 bg-cocoa shadow-sticker-lg" data-ob-depth="8">
+<video class="h-full w-full object-cover grayscale-[0.4] contrast-[1.05]" autoplay="" loop="" muted="" playsinline="" preload="metadata">
 <source src="/videos/hero.mp4" type="video/mp4"/>
 </video>
-</figure>
+<div class="absolute inset-0 bg-gradient-to-t from-[#b8330f]/85 via-[#b8330f]/10 to-transparent"></div>
+</div>
+<div class="absolute left-[6%] top-[2%] h-16 w-16 overflow-hidden rounded-full border-2 border-white/80 bg-cocoa shadow-sticker" data-ob-float data-ob-depth="22">
+<img src="/images/jason.png" alt="" class="h-full w-full object-cover object-[center_15%]"/>
+</div>
+<div class="ob-widget absolute left-0 top-[42%] w-[42%] max-w-[13rem]" data-ob-float data-ob-depth="18">
+<div class="ob-widget__head">Services <span class="material-symbols-outlined">arrow_forward</span></div>
+<p class="ob-dot text-center text-[3.4rem] leading-none text-cream">04</p>
+<div class="ob-widget__foot"><span class="ob-widget__avatar"><img src="/images/jason.png" alt=""/></span><span>Jason Maina<small>Lead Engineer</small></span></div>
+</div>
+<div class="ob-widget ob-widget--light absolute right-0 top-0 w-[40%] max-w-[12.5rem]" data-ob-float data-ob-depth="14">
+<div class="ob-widget__head">Enquiries <span class="ob-badge-count">open</span></div>
+<p class="text-sm leading-snug opacity-70">Tell us what you’re building.</p>
+</div>
+<div class="ob-widget ob-widget--accent absolute bottom-0 right-[4%] w-[44%] max-w-[13.5rem]" data-ob-float data-ob-depth="26">
+<div class="ob-widget__head">Craft <span class="material-symbols-outlined">arrow_forward</span></div>
+<div class="ob-bars"><span style="--h:20%;--b:0"></span><span style="--h:35%;--b:1"></span><span style="--h:55%;--b:2"></span><span style="--h:80%;--b:3"></span><span style="--h:100%;--b:4"></span><span style="--h:80%;--b:5"></span><span style="--h:55%;--b:6"></span><span style="--h:35%;--b:7"></span><span style="--h:20%;--b:8"></span></div>
+<div class="ob-widget__foot"><span class="ob-widget__avatar"><img src="/images/jason.png" alt=""/></span><span>Systems × Design<small>Onurik studio</small></span></div>
+</div>
+</div>
 </div>
 
 <!-- marquee strip -->
-<div class="ob-marquee absolute bottom-0 left-0 right-0 z-[3] border-y-[3px] border-ink bg-mustard py-3 text-cocoa" style="--ob-marquee-speed:32s" aria-hidden="true">
-<div class="ob-marquee__track ob-display text-[1.7rem] md:text-[2.1rem]">
-<span>Branding</span><span class="text-tomato">✶</span><span class="ob-outline-thick">Systems</span><span class="text-tomato">✶</span><span>Campaigns</span><span class="text-tomato">✶</span><span class="ob-outline-thick">Product</span><span class="text-tomato">✶</span><span>Experience</span><span class="text-tomato">✶</span><span class="ob-outline-thick">Onurik</span><span class="text-tomato">✶</span>
+<div class="ob-marquee absolute bottom-0 left-0 right-0 z-[3] border-t border-white/10 bg-ink/70 py-3.5 text-cream/55 backdrop-blur" style="--ob-marquee-speed:36s" aria-hidden="true">
+<div class="ob-marquee__track ob-eyebrow !text-[0.78rem]">
+<span>Branding</span><span class="text-mustard">✦</span><span>Systems</span><span class="text-mustard">✦</span><span>Campaigns</span><span class="text-mustard">✦</span><span>Product</span><span class="text-mustard">✦</span><span>Experience</span><span class="text-mustard">✦</span><span>Onurik</span><span class="text-mustard">✦</span>
 </div>
 </div>
 </section>
 
-<!-- What We Do / services orbit -->
-<section id="services-positioning" class="anim-no-reveal ob-bg-mustard ob-grain relative z-10 w-full overflow-x-clip" aria-labelledby="services-positioning-heading">
-<div class="relative z-20 mx-auto grid max-w-[1440px] gap-12 px-5 py-20 sm:px-8 md:px-12 md:py-28 lg:grid-cols-12 lg:items-center">
-<div class="lg:col-span-6">
-<div class="flex items-center gap-4">
-<span class="h-[3px] flex-1 max-w-[8rem] bg-cocoa" aria-hidden="true"></span>
-<p class="ob-eyebrow text-cocoa" data-ob-scramble>What we do ✶✶✶</p>
+<!-- What we do: step cards joined by glowing lines -->
+<section id="services-positioning" class="anim-no-reveal ob-bg-cocoa ob-grain relative z-10 w-full overflow-x-clip" aria-labelledby="services-positioning-heading">
+<div class="pointer-events-none absolute right-0 top-1/3 h-[32rem] w-[32rem] rounded-full bg-mustard/10 blur-[120px]" aria-hidden="true"></div>
+<div class="relative z-20 mx-auto max-w-[1240px] px-5 py-24 sm:px-8 md:px-12 md:py-32">
+<div class="grid gap-10 lg:grid-cols-12 lg:items-end">
+<div class="lg:col-span-7">
+<p class="ob-eyebrow text-mustard" data-ob-scramble>What we do</p>
+<h2 id="services-positioning-heading" class="ob-display mt-5 text-[clamp(2.6rem,6vw,5rem)] text-cream" data-ob-chars="pop">A little bit of everything, <span class="text-mustard">because we can.</span></h2>
 </div>
-<h2 id="services-positioning-heading" class="ob-display mt-6 text-[clamp(3rem,8vw,6.5rem)] text-cocoa" data-ob-chars="jumble pop" data-ob-amp="0.7">A little bit of everything,</h2>
-<p class="ob-letter mt-2 text-[clamp(1.5rem,3vw,2.3rem)] text-tomato -rotate-2">because we can!</p>
-
-<div class="relative mt-10 min-h-[8.5rem] max-w-xl sm:min-h-[7.5rem]" aria-live="polite">
+<div class="lg:col-span-5">
+<div class="relative min-h-[6.5rem]" aria-live="polite">
 <div id="services-heading-slides" class="absolute inset-0">
 <div class="services-heading-slide is-active" data-slide="0">
-<p class="ob-mono mb-2 text-sm text-cocoa/75">Because brands need ecosystems, not isolated solutions.</p>
-<p class="ob-display text-3xl md:text-4xl text-cocoa">We build beyond the product.</p>
+<p class="ob-mono mb-2 text-xs uppercase tracking-[0.14em] text-cream/45">Because brands need ecosystems, not isolated solutions.</p>
+<p class="text-2xl font-semibold tracking-tight text-cream">We build beyond the product.</p>
 </div>
 <div class="services-heading-slide" data-slide="1">
-<p class="ob-mono mb-2 text-sm text-cocoa/75">Brand, product, and systems — built to work as one.</p>
-<p class="ob-display text-3xl md:text-4xl text-cocoa">Not a deliverable. A living system.</p>
+<p class="ob-mono mb-2 text-xs uppercase tracking-[0.14em] text-cream/45">Brand, product, and systems — built to work as one.</p>
+<p class="text-2xl font-semibold tracking-tight text-cream">Not a deliverable. A living system.</p>
 </div>
 <div class="services-heading-slide" data-slide="2">
-<p class="ob-mono mb-2 text-sm text-cocoa/75">From identity to experience to the stack underneath.</p>
-<p class="ob-display text-3xl md:text-4xl text-cocoa">Everything connected. Nothing leftover.</p>
+<p class="ob-mono mb-2 text-xs uppercase tracking-[0.14em] text-cream/45">From identity to experience to the stack underneath.</p>
+<p class="text-2xl font-semibold tracking-tight text-cream">Everything connected. Nothing leftover.</p>
 </div>
 <div class="services-heading-slide" data-slide="3">
-<p class="ob-mono mb-2 text-sm text-cocoa/75">Strategy that shapes what people feel.</p>
-<p class="ob-display text-3xl md:text-4xl text-cocoa">Then craft that makes it stick.</p>
+<p class="ob-mono mb-2 text-xs uppercase tracking-[0.14em] text-cream/45">Strategy that shapes what people feel.</p>
+<p class="text-2xl font-semibold tracking-tight text-cream">Then craft that makes it stick.</p>
 </div>
 </div>
 </div>
-
-<div class="mt-8 flex flex-wrap items-center gap-4">
-<a href="/works" class="ob-btn ob-btn--red">Here are some of the works <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></a>
-<a href="/contact" class="ob-btn ob-btn--cream">Let’s work together <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></a>
 </div>
 </div>
 
-<div class="lg:col-span-6">
-<!-- Reduced-motion fallback: stacked cards (filled only when prefers-reduced-motion) -->
-<div id="services-orbit-mobile" class="hidden space-y-5"></div>
-<!-- Radial orbit (mobile + desktop) -->
-<div id="services-orbit-desktop" class="relative z-0 overflow-visible pb-10" aria-label="Onurik services orbit"></div>
+<div class="ob-flow mt-16 md:mt-20" data-ob-flow>
+<article class="ob-flow__step home-step ob-sticker" data-ob-reveal>
+<div class="home-step__chrome"><span class="ob-chrome" aria-hidden="true"><span></span><span></span><span></span></span><span class="home-step__bar" aria-hidden="true"></span></div>
+<div class="home-step__body">
+<div>
+<p class="ob-step-label">Step 01</p>
+<h3 class="mt-3 text-3xl font-semibold tracking-tight text-cream">Branding</h3>
+<p class="mt-4 text-[15px] leading-relaxed text-cream/60">Identity that's unmistakably you — visual and verbal systems built to scale, stand out, and stick.</p>
+</div>
+<ul class="home-step__options"><li class="ob-option is-on">Identity Design</li><li class="ob-option">Brand Systems</li><li class="ob-option">Visual Identity</li><li class="ob-option">Motion Identity</li></ul>
+</div>
+</article>
+<article class="ob-flow__step home-step ob-sticker" data-ob-reveal>
+<div class="home-step__chrome"><span class="ob-chrome" aria-hidden="true"><span></span><span></span><span></span></span><span class="home-step__bar" aria-hidden="true"></span></div>
+<div class="home-step__body">
+<div>
+<p class="ob-step-label">Step 02</p>
+<h3 class="mt-3 text-3xl font-semibold tracking-tight text-cream">Strategy &amp; Campaigns</h3>
+<p class="mt-4 text-[15px] leading-relaxed text-cream/60">Sharpen the narrative, then move markets — strategy and campaigns that turn audiences into believers.</p>
+</div>
+<ul class="home-step__options"><li class="ob-option is-on">Brand Strategy</li><li class="ob-option">Campaign Ideation</li><li class="ob-option">Content Strategy</li><li class="ob-option">Communications Planning</li></ul>
+</div>
+</article>
+<article class="ob-flow__step home-step ob-sticker" data-ob-reveal>
+<div class="home-step__chrome"><span class="ob-chrome" aria-hidden="true"><span></span><span></span><span></span></span><span class="home-step__bar" aria-hidden="true"></span></div>
+<div class="home-step__body">
+<div>
+<p class="ob-step-label">Step 03</p>
+<h3 class="mt-3 text-3xl font-semibold tracking-tight text-cream">Systems Development</h3>
+<p class="mt-4 text-[15px] leading-relaxed text-cream/60">Beyond a website — dashboards, product systems, and digital experiences engineered to perform.</p>
+</div>
+<ul class="home-step__options"><li class="ob-option is-on">Web Design</li><li class="ob-option">Front-End Development</li><li class="ob-option">Dashboard &amp; Product Systems</li><li class="ob-option">Digital Experience</li></ul>
+</div>
+</article>
+<article class="ob-flow__step home-step ob-sticker" data-ob-reveal>
+<div class="home-step__chrome"><span class="ob-chrome" aria-hidden="true"><span></span><span></span><span></span></span><span class="home-step__bar" aria-hidden="true"></span></div>
+<div class="home-step__body">
+<div>
+<p class="ob-step-label">Step 04</p>
+<h3 class="mt-3 text-3xl font-semibold tracking-tight text-cream">Product &amp; Experience</h3>
+<p class="mt-4 text-[15px] leading-relaxed text-cream/60">Where usability meets intent — products and experiences designed around how people actually behave.</p>
+</div>
+<ul class="home-step__options"><li class="ob-option is-on">UX Research &amp; Flows</li><li class="ob-option">Product Design</li><li class="ob-option">Interaction Design</li><li class="ob-option">Prototyping</li></ul>
+</div>
+</article>
+</div>
+
+<div class="mt-16 flex flex-wrap items-center gap-4">
+<a href="/works" class="ob-btn">Here are some of the works <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></a>
+<a href="/contact" class="ob-btn ob-btn--ghost text-cream">Let’s work together</a>
 </div>
 </div>
 </section>
 
-<!-- Bio: cream paper, taped polaroid, scribbled doodle -->
-<section class="ob-bg-cream ob-grain relative overflow-hidden">
+<!-- Portfolio folder -->
+<section class="ob-bg-mustard relative overflow-hidden" aria-labelledby="home-folder-heading">
+<div class="home-frame pointer-events-none absolute inset-6 md:inset-10" aria-hidden="true"><span></span></div>
+<div class="relative mx-auto flex max-w-[1440px] flex-col items-center px-5 py-24 text-center sm:px-8 md:px-12 md:py-28">
+<span class="home-pill"><span class="home-pill__mark ob-dot">O</span>Studio portfolio<br/>systems &amp; design</span>
+<h2 id="home-folder-heading" class="sr-only">Open the portfolio</h2>
+<a href="/works" class="ob-folder mt-16 max-w-[26rem]" data-ob-folder="*" aria-label="Open the portfolio">
+<span class="ob-folder__back" aria-hidden="true"></span>
+<span class="ob-folder__cards" data-ob-folder-cards aria-hidden="true">
+<span class="ob-folder__card home-folder__ph" style="background:linear-gradient(160deg,#2a2a2c,#141415)"></span>
+<span class="ob-folder__card home-folder__ph" style="background:linear-gradient(160deg,#ff8a4c,#b8330f)"></span>
+<span class="ob-folder__card home-folder__ph" style="background:linear-gradient(160deg,#3a3836,#0f0f10)"></span>
+</span>
+<span class="ob-folder__front">
+<span class="ob-folder__pill">Open folder</span>
+<span class="ob-folder__arrow material-symbols-outlined" aria-hidden="true">north_east</span>
+<span class="ob-folder__label">Portfolio</span>
+<span class="ob-folder__meta" data-ob-folder-count>Selected work</span>
+</span>
+</a>
+<span class="home-pill mt-16"><span class="home-pill__avatar"><img src="/images/jason.png" alt=""/></span>Jason Maina<br/>Lead Engineer — Systems / Design</span>
+</div>
+</section>
+
+<!-- Bio -->
+<section class="ob-bg-cream relative overflow-hidden">
 <div class="mx-auto grid max-w-[1440px] items-center gap-16 px-5 py-[clamp(5rem,12vw,8rem)] sm:px-8 md:grid-cols-12 md:px-12">
 <div class="md:col-span-7 lg:col-span-6" data-anim-stagger>
-<p class="ob-eyebrow text-tomato">○○○ The person behind it</p>
-<h2 class="ob-display mt-5 text-[clamp(2.8rem,6.5vw,5.6rem)] text-cocoa">
-<span class="block" data-ob-chars="jumble pop">I design.</span>
-<span class="block" data-ob-chars="jumble pop">I build.</span>
-<span class="relative inline-block">
-<span class="ob-marker block -rotate-2 text-[0.82em] normal-case text-tomato" data-ob-chars="jumble wobble" data-ob-amp="1.3">I question everything..</span>
-<svg class="absolute -bottom-3 left-0 h-4 w-full text-tomato" viewBox="0 0 300 16" preserveAspectRatio="none" fill="none" aria-hidden="true" data-ob-draw><path d="M3 11 C 60 3, 120 15, 180 7 S 270 4, 297 9" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg>
-</span>
+<p class="ob-eyebrow text-tomato">The person behind it</p>
+<h2 class="ob-display mt-5 text-[clamp(2.8rem,6vw,5.2rem)] text-cocoa">
+<span class="block" data-ob-chars="pop">I design.</span>
+<span class="block" data-ob-chars="pop">I build.</span>
+<span class="ob-marker block text-tomato" data-ob-chars="wobble">I question everything.</span>
 </h2>
-<div class="mt-10 max-w-xl space-y-5 text-cocoa/85">
+<div class="mt-10 max-w-xl space-y-5 text-cocoa/75">
 <p class="text-lg leading-relaxed">Marking a decade of experience, a clear perspective has emerged: the true craft lies not in choosing between systems and design, but in aligning them — quietly, intentionally, and with purpose.</p>
-<p class="ob-mono text-sm leading-relaxed text-cocoa/70">Focused on creating products that are simple, thoughtful, and actually useful. Somewhere along the way, ideas turn into things people rely on; that’s the part I enjoy the most.</p>
+<p class="text-[15px] leading-relaxed text-cocoa/60">Focused on creating products that are simple, thoughtful, and actually useful. Somewhere along the way, ideas turn into things people rely on; that’s the part I enjoy the most.</p>
 </div>
 <div class="mt-10 flex flex-wrap items-center gap-4">
 <a href="/works" class="ob-btn">Explore works <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></a>
@@ -268,88 +331,75 @@
 </div>
 
 <div class="relative md:col-span-5 lg:col-span-6">
-<!-- think outside the box doodle -->
-<svg class="absolute -left-6 -top-14 z-10 hidden w-36 text-cocoa lg:block" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" aria-hidden="true" data-ob-draw>
-<path d="M42 10 L38 112"/><path d="M80 8 L78 110"/><path d="M8 42 L114 38"/><path d="M10 80 L112 78"/>
-<path d="M16 16 L30 30 M30 16 L16 30"/><circle cx="60" cy="60" r="9"/><path d="M90 88 L104 102 M104 88 L90 102"/><circle cx="96" cy="22" r="8"/><path d="M52 90 L66 104 M66 90 L52 104"/>
-<path d="M60 -6 L58 126" stroke="#D8202A" stroke-width="4"/>
-</svg>
-<div class="ob-polaroid mx-auto max-w-md" style="--ob-tilt:3deg">
-<span class="ob-tape -top-3 left-1/2 -translate-x-1/2 -rotate-3" aria-hidden="true"></span>
-<div class="relative aspect-[4/5] overflow-hidden bg-cocoa">
-<img alt="Editorial studio portrait of Jason Maina" class="absolute inset-0 h-full w-full object-cover object-[center_15%] sepia-[0.35] contrast-[1.05]" src="/images/jason.png" width="900" height="1100"/>
-<div class="absolute inset-0 bg-mustard/15 mix-blend-multiply" aria-hidden="true"></div>
+<div class="relative mx-auto max-w-md overflow-hidden rounded-[2rem] border border-black/5 bg-[#e7e5e2] p-3 shadow-[0_40px_80px_-30px_rgba(0,0,0,0.35)]">
+<div class="relative aspect-[4/5] overflow-hidden rounded-[1.5rem] bg-cocoa">
+<img alt="Editorial studio portrait of Jason Maina" class="absolute inset-0 h-full w-full object-cover object-[center_15%]" src="/images/jason.png" width="900" height="1100"/>
+<div class="absolute inset-0 bg-gradient-to-t from-[#b8330f]/45 via-transparent to-transparent" aria-hidden="true"></div>
 </div>
-<p class="ob-marker absolute bottom-2.5 left-4 text-xl text-cocoa">Jason Maina</p>
-<span class="ob-hex absolute -right-4 -bottom-6 text-base" aria-hidden="true">Lead Eng.</span>
 </div>
-<div class="ob-sticker ob-bg-tomato absolute -left-2 bottom-16 hidden -rotate-6 px-4 py-3 sm:block" style="--ob-hover-tilt:-8deg">
-<p class="ob-display text-xl leading-none">Systems / Design</p>
-<p class="ob-mono mt-1 text-[0.65rem] uppercase tracking-widest text-cream/85">A decade in the craft</p>
+<div class="ob-widget absolute -left-2 bottom-12 hidden w-56 sm:flex" data-ob-float>
+<div class="ob-widget__head">Systems / Design <span class="material-symbols-outlined">north_east</span></div>
+<div class="ob-widget__foot"><span class="ob-widget__avatar"><img src="/images/jason.png" alt=""/></span><span>Jason Maina<small>A decade in the craft</small></span></div>
 </div>
+<span class="ob-hex absolute right-2 top-6">Lead Engineer</span>
 </div>
 </div>
 </section>
 
 <!-- Selected Clients — logos from Supabase onurik_brands (Admin → Brands); see scripts/brands-carousel-home.js -->
-<section class="brands-trust ob-bg-cocoa ob-torn-top ob-grain relative isolate" aria-labelledby="selected-clients-heading">
+<section class="brands-trust ob-bg-ink ob-grain relative isolate" aria-labelledby="selected-clients-heading">
 <div class="brands-trust__bg" aria-hidden="true">
 <video autoplay="" loop="" muted="" playsinline="" preload="metadata">
 <source src="/videos/work.mp4" type="video/mp4"/>
 </video>
 <div class="brands-trust__shade"></div>
 </div>
-<div class="relative z-10 mx-auto w-full max-w-[1180px] px-5 py-20 sm:px-8 md:px-12 md:py-28">
-<div class="flex items-center justify-center gap-4 text-mustard">
-<span class="ob-eyebrow">○○○ Selected clients</span>
-</div>
-<h2 id="selected-clients-heading" class="ob-display mt-5 text-center text-[clamp(2.6rem,7vw,6rem)] text-cream">
-<span class="block" data-ob-chars="jumble pop">Forward-looking brands</span>
-<span class="block text-mustard" data-ob-chars="jumble pop wave">that trust us</span>
+<div class="relative z-10 mx-auto w-full max-w-[1180px] px-5 py-24 sm:px-8 md:px-12 md:py-28">
+<p class="ob-eyebrow text-center text-mustard">Selected clients</p>
+<h2 id="selected-clients-heading" class="ob-display mt-5 text-center text-[clamp(2.4rem,6vw,5rem)] text-cream">
+<span class="block" data-ob-chars="pop">Forward-looking brands</span>
+<span class="block text-mustard" data-ob-chars="pop wave" style="--ob-glint:#fff">that trust us</span>
 </h2>
 <div id="trusted-brands-grid-root" class="mt-14 md:mt-16"></div>
 </div>
 </section>
 
-<!-- Conversion bridge: flame poster -->
-<section id="conversion-bridge" class="ob-bg-flame ob-grain relative w-full overflow-hidden" aria-labelledby="conversion-bridge-heading">
-<div class="ob-melt pointer-events-none absolute -right-10 top-10 hidden h-44 w-36 border-[10px] border-butter md:block" aria-hidden="true">
-<span class="absolute left-1/2 top-1/2 h-12 w-[3px] -translate-x-1/2 -translate-y-full bg-cocoa origin-bottom"></span>
-<span class="absolute left-1/2 top-1/2 h-9 w-[3px] -translate-x-1/2 -translate-y-full rotate-[120deg] bg-cocoa origin-bottom"></span>
-</div>
-<div class="bridge-shell mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:px-12 md:py-28">
+<!-- Conversion bridge: orange band -->
+<section id="conversion-bridge" class="ob-bg-flame relative w-full overflow-hidden" aria-labelledby="conversion-bridge-heading">
+<div class="pointer-events-none absolute inset-0 ob-dotgrid opacity-40" aria-hidden="true"></div>
+<div class="bridge-shell relative mx-auto max-w-[1440px] px-5 py-24 sm:px-8 md:px-12 md:py-28">
 <h2 id="conversion-bridge-heading" class="sr-only">Partner with Onurik</h2>
 <div class="flex flex-col gap-12 lg:flex-row lg:items-center lg:justify-between">
-<div class="w-full lg:max-w-[68%]">
-<p class="ob-eyebrow text-butter/90">#100 / let’s talk</p>
-<div class="relative mt-6 min-h-[15rem] sm:min-h-[13rem] md:min-h-[14rem]" aria-live="polite">
+<div class="w-full lg:max-w-[66%]">
+<p class="ob-eyebrow text-white/80">Let’s talk</p>
+<div class="relative mt-6 min-h-[14rem] sm:min-h-[12rem] md:min-h-[13rem]" aria-live="polite">
 <div id="conversion-bridge-slides" class="absolute inset-0">
 <div class="conversion-bridge-slide is-active" data-slide="0">
-<p class="ob-mono mb-4 text-base text-butter/85">Let’s talk about what you’re building —</p>
-<p class="ob-letter text-[clamp(2rem,5vw,4.2rem)] text-butter ob-shadow-text" style="--ob-shadow-color:#A8121A">and make it something people actually remember.</p>
+<p class="mb-4 text-lg text-white/75">Let’s talk about what you’re building —</p>
+<p class="ob-display text-[clamp(2.2rem,5vw,4.4rem)] text-white">and make it something people actually remember.</p>
 </div>
 <div class="conversion-bridge-slide" data-slide="1">
-<p class="ob-mono mb-4 text-base text-butter/85">Every great idea deserves a moment.</p>
-<p class="ob-letter text-[clamp(2rem,5vw,4.2rem)] text-butter ob-shadow-text" style="--ob-shadow-color:#A8121A">Let’s make yours impossible to miss.</p>
+<p class="mb-4 text-lg text-white/75">Every great idea deserves a moment.</p>
+<p class="ob-display text-[clamp(2.2rem,5vw,4.4rem)] text-white">Let’s make yours impossible to miss.</p>
 </div>
 <div class="conversion-bridge-slide" data-slide="2">
-<p class="ob-mono mb-4 text-base text-butter/85">This could be something big —</p>
-<p class="ob-letter text-[clamp(2rem,5vw,4.2rem)] text-butter ob-shadow-text" style="--ob-shadow-color:#A8121A">Let’s make sure it feels like it.</p>
+<p class="mb-4 text-lg text-white/75">This could be something big —</p>
+<p class="ob-display text-[clamp(2.2rem,5vw,4.4rem)] text-white">Let’s make sure it feels like it.</p>
 </div>
 <div class="conversion-bridge-slide" data-slide="3">
-<p class="ob-mono mb-4 text-base text-butter/85">Most products get ignored.</p>
-<p class="ob-letter text-[clamp(2rem,5vw,4.2rem)] text-butter ob-shadow-text" style="--ob-shadow-color:#A8121A">Let’s make sure yours isn’t one of them.</p>
+<p class="mb-4 text-lg text-white/75">Most products get ignored.</p>
+<p class="ob-display text-[clamp(2.2rem,5vw,4.4rem)] text-white">Let’s make sure yours isn’t one of them.</p>
 </div>
 </div>
 </div>
-<p class="ob-marker mt-4 text-xl text-cocoa -rotate-1">— this is what I do at Onurik.</p>
-<p class="mt-6 max-w-2xl text-base leading-relaxed text-butter/90">I work with founders and teams who care about how their product looks and feels. Design, development, and identity — done with intention, not templates.</p>
+<p class="ob-marker mt-4 text-xl text-white/85">— this is what I do at Onurik.</p>
+<p class="mt-6 max-w-2xl text-base leading-relaxed text-white/80">I work with founders and teams who care about how their product looks and feels. Design, development, and identity — done with intention, not templates.</p>
 </div>
 <div class="flex shrink-0 justify-center lg:justify-end">
-<a href="/contact" class="bridge-cta ob-stamp ob-stamp--mustard scale-110" data-ob-magnet="0.25">
+<a href="/contact" class="bridge-cta ob-stamp" data-ob-magnet="0.25">
 <span class="ob-stamp__disc"><span class="material-symbols-outlined" aria-hidden="true">play_arrow</span></span>
-<span class="ob-stamp__shout">Click<br/>here!</span>
-<span class="ob-stamp__caption">Let’s work together</span>
+<span class="ob-stamp__shout">Let’s work together</span>
+<span class="ob-stamp__caption">Contact</span>
 </a>
 </div>
 </div>
@@ -408,7 +458,7 @@
 </footer>
 <script type="module" src="./scripts/animations.js"></script>
 <script type="module" src="./scripts/brand-fx.js"></script>
-<script type="module" src="./scripts/services-orbit.js"></script>
+<script type="module" src="./scripts/home.js"></script>
 <script type="module" src="./scripts/nav-close.js"></script>
 <script type="module" src="./scripts/whatsapp-float.js"></script>
 <script type="module" src="./scripts/site-social-links.js"></script>
