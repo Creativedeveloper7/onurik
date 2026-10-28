@@ -1207,21 +1207,20 @@ a:focus-visible > .ob-logo {
   color: rgba(242, 239, 235, 0.5) !important;
 }
 
-/* Footer: the logo, large, gently breathing */
-.ob-logo--giant {
-  width: min(82vw, 44rem);
-  height: auto;
-  animation: ob-logo-breathe 7s ease-in-out infinite;
-  filter: drop-shadow(0 30px 60px rgba(255, 90, 31, 0.25));
+/* Footer: dot-matrix wordmark */
+.ob-footer__giant {
+  font-family: var(--ob-font-dot);
+  font-weight: 900;
+  font-size: clamp(4.5rem, 19vw, 17rem);
+  line-height: 0.85;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
-@keyframes ob-logo-breathe {
-  0%,
-  100% {
-    transform: rotate(0deg) scale(1);
-  }
-  50% {
-    transform: rotate(-1.5deg) scale(1.02);
-  }
+.ob-footer__giant.ob-outline {
+  -webkit-text-fill-color: currentColor;
+  -webkit-text-stroke: 0;
+  color: rgba(242, 239, 235, 0.1);
+  --ob-glint: #ff5a1f;
 }
 
 /* ------------------------------------------------------------------ */
@@ -1468,8 +1467,7 @@ a:focus-visible > .ob-logo {
   .ob-tab {
     transition: none !important;
   }
-  .ob-logo,
-  .ob-logo--giant {
+  .ob-logo {
     animation: none !important;
   }
 }
