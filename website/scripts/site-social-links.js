@@ -21,8 +21,23 @@ const LABELS = {
   email: "Email",
 };
 
+/** Always-available profiles; any links saved in Admin → Settings are merged over these. */
+const DEFAULT_LINKS = {
+  instagram: "https://www.instagram.com/jason_maina_",
+  linkedin: "https://www.linkedin.com/in/jason-ndungu",
+};
+
+function withDefaults(links) {
+  const out = Object.assign({}, DEFAULT_LINKS);
+  for (const key of ORDER) {
+    const v = links && typeof links[key] === "string" ? links[key].trim() : "";
+    if (v) out[key] = v;
+  }
+  return out;
+}
+
 const FOOTER_LINK_CLASS =
-  "font-montserrat text-[10px] tracking-[0.2em] uppercase text-stone-100/40 hover:text-stone-100 hover:tracking-[0.3em] transition-all duration-700";
+  "font-mono text-[11px] tracking-[0.18em] uppercase text-cream/75 hover:text-mustard transition-colors duration-300";
 
 const CONTACT_LINK_CLASS =
   "font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors border-b border-transparent hover:border-primary/30 pb-0.5";
@@ -123,62 +138,45 @@ async function fetchLinks(sb) {
   return linksObject(v);
 }
 
+function render(links, footerEls, contactEls) {
+  footerEls.forEach((el) => {
+    const useLi = el.tagName === "UL";
+    const html = renderAnchors(links, FOOTER_LINK_CLASS, useLi);
+    el.innerHTML = html;
+    if (html) el.removeAttribute("hidden");
+    else el.setAttribute("hidden", "");
+  });
+  contactEls.forEach((el) => {
+    const html = renderAnchors(links, CONTACT_LINK_CLASS, false);
+    el.innerHTML = html;
+    const wrap = el.closest("[data-onurik-social-contact-wrap]");
+    if (html) {
+      el.removeAttribute("hidden");
+      wrap?.removeAttribute("hidden");
+    } else {
+      el.setAttribute("hidden", "");
+      wrap?.setAttribute("hidden", "");
+    }
+  });
+}
+
 function mount() {
   const footerEls = document.querySelectorAll("[data-onurik-social-footer]");
   const contactEls = document.querySelectorAll("[data-onurik-social-contact]");
   if (!footerEls.length && !contactEls.length) return;
 
+  // Show the default profiles straight away; saved links refine them once loaded.
+  render(withDefaults({}), footerEls, contactEls);
+
   const sb = getSupabaseBrowser();
-  if (!sb || !supabaseConfigured()) {
-    console.warn(
-      "[onurik] Social links need Supabase: set VITE_SUPABASE_URL + VITE_SUPABASE_ANON_KEY when you run npm run build, or add <meta name=\"onurik-supabase-url\" content=\"…\"> and <meta name=\"onurik-supabase-anon-key\" content=\"…\"> to the page.",
-    );
-    footerEls.forEach((el) => {
-      el.innerHTML = "";
-      el.setAttribute("hidden", "");
-    });
-    contactEls.forEach((el) => {
-      el.innerHTML = "";
-      el.closest("[data-onurik-social-contact-wrap]")?.setAttribute("hidden", "");
-    });
-    return;
-  }
+  if (!sb || !supabaseConfigured()) return;
 
   fetchLinks(sb)
     .then((links) => {
-      footerEls.forEach((el) => {
-        const useLi = el.tagName === "UL";
-        const html = renderAnchors(links, FOOTER_LINK_CLASS, useLi);
-        el.innerHTML = html;
-        if (html) el.removeAttribute("hidden");
-        else el.setAttribute("hidden", "");
-      });
-      contactEls.forEach((el) => {
-        const html = renderAnchors(links, CONTACT_LINK_CLASS, false);
-        el.innerHTML = html;
-        const wrap = el.closest("[data-onurik-social-contact-wrap]");
-        if (html) {
-          el.removeAttribute("hidden");
-          wrap?.removeAttribute("hidden");
-        } else {
-          el.setAttribute("hidden", "");
-          wrap?.setAttribute("hidden", "");
-        }
-      });
+      render(withDefaults(links), footerEls, contactEls);
     })
     .catch((err) => {
-      console.warn(
-        "[onurik] Could not load social links:",
-        err?.message || err,
-      );
-      footerEls.forEach((el) => {
-        el.innerHTML = "";
-        el.setAttribute("hidden", "");
-      });
-      contactEls.forEach((el) => {
-        el.innerHTML = "";
-        el.closest("[data-onurik-social-contact-wrap]")?.setAttribute("hidden", "");
-      });
+      console.warn("[onurik] Could not load social links:", err?.message || err);
     });
 }
 
