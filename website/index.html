@@ -12,10 +12,9 @@
   gtag('config', 'G-JBH7KPGDZ2');
 </script>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Doto:wght@500;700;900&amp;family=Geist+Mono:wght@400;500;600&amp;family=Urbanist:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&amp;display=swap"/>
 <meta name="theme-color" content="#0A0A0B"/>
 <title>Onurik | Engineering Human-Centered Systems</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script src="/brand/tailwind-brand.js"></script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -113,6 +112,7 @@
     .brands-trust__bg video, .home-collage video { display: none; }
   }
 </style>
+<link rel="stylesheet" href="/styles/tailwind.css"/>
 </head>
 <body class="bg-background text-on-background min-h-screen flex flex-col font-body-md overflow-x-hidden">
 <!-- TopNavBar -->
@@ -192,18 +192,18 @@
 <!-- widget collage -->
 <div class="home-collage relative mx-auto h-[30rem] w-full max-w-[36rem] sm:h-[36rem] lg:col-span-6" aria-hidden="true">
 <div class="home-collage__main absolute left-[16%] top-[8%] h-[76%] w-[66%] overflow-hidden rounded-[1.75rem] border border-white/10 bg-cocoa shadow-sticker-lg" data-ob-depth="8">
-<video class="h-full w-full object-cover grayscale-[0.4] contrast-[1.05]" autoplay="" loop="" muted="" playsinline="" preload="metadata">
+<video class="h-full w-full object-cover grayscale-[0.4] contrast-[1.05]" autoplay="" loop="" muted="" playsinline="" preload="metadata" poster="/videos/hero-poster.webp">
 <source src="/videos/hero.mp4" type="video/mp4"/>
 </video>
 <div class="absolute inset-0 bg-gradient-to-t from-[#b8330f]/85 via-[#b8330f]/10 to-transparent"></div>
 </div>
 <div class="absolute left-[6%] top-[2%] h-16 w-16 overflow-hidden rounded-full border-2 border-white/80 bg-cocoa shadow-sticker" data-ob-float data-ob-depth="22">
-<img src="/images/jason.png" alt="" class="h-full w-full object-cover object-[center_15%]"/>
+<img src="/images/jason-avatar.webp" alt="" width="96" height="96" class="h-full w-full object-cover"/>
 </div>
 <div class="ob-widget absolute left-0 top-[42%] w-[42%] max-w-[13rem]" data-ob-float data-ob-depth="18">
 <div class="ob-widget__head">Services <span class="material-symbols-outlined">arrow_forward</span></div>
 <p class="ob-dot text-center text-[3.4rem] leading-none text-cream">04</p>
-<div class="ob-widget__foot"><span class="ob-widget__avatar"><img src="/images/jason.png" alt=""/></span><span>Jason Maina<small>Lead Engineer</small></span></div>
+<div class="ob-widget__foot"><span class="ob-widget__avatar"><img src="/images/jason-avatar.webp" width="96" height="96" loading="lazy" decoding="async" alt=""/></span><span>Jason Maina<small>Lead Engineer</small></span></div>
 </div>
 <div class="ob-widget ob-widget--light absolute right-0 top-0 w-[40%] max-w-[12.5rem]" data-ob-float data-ob-depth="14">
 <div class="ob-widget__head">Enquiries <span class="ob-badge-count">open</span></div>
@@ -212,7 +212,7 @@
 <div class="ob-widget ob-widget--accent absolute bottom-0 right-[4%] w-[44%] max-w-[13.5rem]" data-ob-float data-ob-depth="26">
 <div class="ob-widget__head">Craft <span class="material-symbols-outlined">arrow_forward</span></div>
 <div class="ob-bars"><span style="--h:20%;--b:0"></span><span style="--h:35%;--b:1"></span><span style="--h:55%;--b:2"></span><span style="--h:80%;--b:3"></span><span style="--h:100%;--b:4"></span><span style="--h:80%;--b:5"></span><span style="--h:55%;--b:6"></span><span style="--h:35%;--b:7"></span><span style="--h:20%;--b:8"></span></div>
-<div class="ob-widget__foot"><span class="ob-widget__avatar"><img src="/images/jason.png" alt=""/></span><span>Systems × Design<small>Onurik studio</small></span></div>
+<div class="ob-widget__foot"><span class="ob-widget__avatar"><img src="/images/jason-avatar.webp" width="96" height="96" loading="lazy" decoding="async" alt=""/></span><span>Systems × Design<small>Onurik studio</small></span></div>
 </div>
 </div>
 </div>
@@ -340,7 +340,7 @@
 <span class="ob-folder__meta" data-ob-folder-count>Selected work</span>
 </span>
 </a>
-<span class="home-pill mt-16"><span class="home-pill__avatar"><img src="/images/jason.png" alt=""/></span>Jason Maina<br/>Lead Engineer — Systems / Design</span>
+<span class="home-pill mt-16"><span class="home-pill__avatar"><img src="/images/jason-avatar.webp" width="96" height="96" loading="lazy" decoding="async" alt=""/></span>Jason Maina<br/>Lead Engineer — Systems / Design</span>
 </div>
 </section>
 
@@ -367,13 +367,13 @@
 <div class="relative md:col-span-5 lg:col-span-6">
 <div class="relative mx-auto max-w-md overflow-hidden rounded-[2rem] border border-black/5 bg-[#e7e5e2] p-3 shadow-[0_40px_80px_-30px_rgba(0,0,0,0.35)]">
 <div class="relative aspect-[4/5] overflow-hidden rounded-[1.5rem] bg-cocoa">
-<img alt="Editorial studio portrait of Jason Maina" class="absolute inset-0 h-full w-full object-cover object-[center_15%]" src="/images/jason.png" width="900" height="1100"/>
+<img alt="Editorial studio portrait of Jason Maina" class="absolute inset-0 h-full w-full object-cover object-[center_15%]" src="/images/jason.webp" width="900" height="1100"/>
 <div class="absolute inset-0 bg-gradient-to-t from-[#b8330f]/45 via-transparent to-transparent" aria-hidden="true"></div>
 </div>
 </div>
 <div class="ob-widget absolute -left-2 bottom-12 hidden w-56 sm:flex" data-ob-float>
 <div class="ob-widget__head">Systems / Design <span class="material-symbols-outlined">north_east</span></div>
-<div class="ob-widget__foot"><span class="ob-widget__avatar"><img src="/images/jason.png" alt=""/></span><span>Jason Maina<small>A decade in the craft</small></span></div>
+<div class="ob-widget__foot"><span class="ob-widget__avatar"><img src="/images/jason-avatar.webp" width="96" height="96" loading="lazy" decoding="async" alt=""/></span><span>Jason Maina<small>A decade in the craft</small></span></div>
 </div>
 <span class="ob-hex absolute right-2 top-6">Lead Engineer</span>
 </div>
@@ -383,7 +383,7 @@
 <!-- Selected Clients — logos from Supabase onurik_brands (Admin → Brands); see scripts/brands-carousel-home.js -->
 <section class="brands-trust ob-bg-ink ob-grain relative isolate" aria-labelledby="selected-clients-heading">
 <div class="brands-trust__bg" aria-hidden="true">
-<video autoplay="" loop="" muted="" playsinline="" preload="metadata">
+<video autoplay="" loop="" muted="" playsinline="" preload="none" poster="/videos/work-poster.webp">
 <source src="/videos/work.mp4" type="video/mp4"/>
 </video>
 <div class="brands-trust__shade"></div>

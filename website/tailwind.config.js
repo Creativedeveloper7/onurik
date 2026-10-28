@@ -1,11 +1,12 @@
 /**
- * Onurik brand theme for the Tailwind Play CDN.
- * Load right after cdn.tailwindcss.com on every page; it replaces per-page configs so
- * existing semantic tokens (background, primary, surface-*) and the stone/neutral scales
+ * Onurik brand theme, compiled at build time (styles/tailwind.css).
+ * Existing semantic tokens (background, primary, surface-*) and the stone/neutral scales
  * all resolve to the dark glass palette: near-black surfaces, light text, one orange accent.
  */
-(function () {
-  var brand = {
+import forms from "@tailwindcss/forms";
+import containerQueries from "@tailwindcss/container-queries";
+
+const brand = {
     mustard: "#FF5A1F", // accent orange (legacy token names kept so markup restyles)
     sun: "#FF7A3D",
     tomato: "#F04C1E",
@@ -20,7 +21,7 @@
     accent: "#FF5A1F",
   };
 
-  var warm = {
+const warm = {
     50: "#FAFAF9",
     100: "#F2EFEB",
     200: "#E2DFDA",
@@ -34,7 +35,7 @@
     950: "#0C0C0D",
   };
 
-  var semantic = {
+const semantic = {
     background: "#0A0A0B",
     "on-background": "#F2EFEB",
     surface: "#0F0F10",
@@ -84,7 +85,7 @@
     "inverse-on-surface": "#141415",
   };
 
-  var colors = Object.assign({}, semantic, brand, {
+const colors = Object.assign({}, semantic, brand, {
     stone: warm,
     neutral: warm,
     zinc: warm,
@@ -92,12 +93,15 @@
     black: brand.ink,
   });
 
-  var display = ["Urbanist", "system-ui", "sans-serif"];
-  var body = ["Urbanist", "system-ui", "sans-serif"];
-  var mono = ["Geist Mono", "ui-monospace", "monospace"];
+const display = ["Urbanist", "system-ui", "sans-serif"];
+const body = ["Urbanist", "system-ui", "sans-serif"];
+const mono = ["Geist Mono", "ui-monospace", "monospace"];
 
-  window.tailwind = window.tailwind || {};
-  window.tailwind.config = {
+export default {
+    content: {
+      relative: true,
+      files: ["./*.html", "./admin/**/*.html", "./shop/**/*.{html,js}", "./scripts/**/*.js"],
+    },
     darkMode: "class",
     theme: {
       extend: {
@@ -144,5 +148,5 @@
         },
       },
     },
-  };
-})();
+    plugins: [forms, containerQueries],
+};

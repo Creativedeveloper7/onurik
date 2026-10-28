@@ -13,8 +13,6 @@
  *   [data-ob-scramble], [data-ob-magnet], [data-ob-reveal], .ob-marquee, [data-ob-carousel].
  */
 
-@import url("https://fonts.googleapis.com/css2?family=Doto:wght@500;700;900&family=Geist+Mono:wght@400;500;600&family=Urbanist:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap");
-
 :root {
   /* Legacy token names, new values */
   --ob-mustard: #ff5a1f; /* accent orange */
