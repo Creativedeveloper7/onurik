@@ -21,15 +21,8 @@ body.ob-admin main.bg-background {
 /* ---------------- Navigation ---------------- */
 
 .ob-admin-logo {
-  display: inline-block;
-  font-family: var(--ob-font-dot);
-  font-weight: 800;
-  font-size: 1.7rem;
-  line-height: 1;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ob-cream);
-  --ob-boing-color: var(--ob-accent);
+  display: inline-flex;
+  align-items: center;
 }
 
 body.ob-admin nav.w-64,
@@ -127,9 +120,8 @@ body.ob-admin > header.fixed button {
   font-family: var(--ob-font-mono);
   font-weight: 500;
 }
-body.ob-admin > header.fixed .ob-admin-logo {
-  font-size: 1.35rem;
-  color: var(--ob-cream);
+body.ob-admin > header.fixed .ob-admin-logo .ob-logo {
+  height: 2.3rem;
 }
 
 /* ---------------- Headings ---------------- */

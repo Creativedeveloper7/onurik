@@ -1090,15 +1090,44 @@ body {
   backdrop-filter: blur(18px) saturate(140%);
   border-bottom: 1px solid var(--ob-line);
 }
+/* Logo: the hand-drawn Onurik lettering (public/brand/onurik-logo*.svg) */
 .ob-nav__logo {
-  font-family: var(--ob-font-dot);
-  font-weight: 800;
-  font-size: 1.55rem;
-  line-height: 1;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ob-cream);
-  --ob-boing-color: var(--ob-accent);
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.ob-logo {
+  display: block;
+  width: auto;
+  height: 3rem;
+  transform-origin: 18% 85%;
+  animation: ob-logo-in 0.9s var(--ob-spring) both;
+  transition:
+    transform 0.55s var(--ob-spring),
+    filter 0.4s ease;
+}
+a:hover > .ob-logo,
+a:focus-visible > .ob-logo {
+  transform: rotate(-4deg) scale(1.07);
+  filter: drop-shadow(0 6px 18px rgba(255, 90, 31, 0.5));
+}
+@keyframes ob-logo-in {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) rotate(-8deg) scale(0.85);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (min-width: 768px) {
+  .ob-nav__logo .ob-logo {
+    height: 3.5rem;
+  }
+}
+.ob-admin-logo .ob-logo {
+  height: 3.25rem;
 }
 .ob-nav__link {
   position: relative;
@@ -1178,20 +1207,21 @@ body {
   color: rgba(242, 239, 235, 0.5) !important;
 }
 
-/* Footer: dot-matrix wordmark */
-.ob-footer__giant {
-  font-family: var(--ob-font-dot);
-  font-weight: 900;
-  font-size: clamp(4.5rem, 19vw, 17rem);
-  line-height: 0.85;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+/* Footer: the logo, large, gently breathing */
+.ob-logo--giant {
+  width: min(82vw, 44rem);
+  height: auto;
+  animation: ob-logo-breathe 7s ease-in-out infinite;
+  filter: drop-shadow(0 30px 60px rgba(255, 90, 31, 0.25));
 }
-.ob-footer__giant.ob-outline {
-  -webkit-text-fill-color: currentColor;
-  -webkit-text-stroke: 0;
-  color: rgba(242, 239, 235, 0.1);
-  --ob-glint: #ff5a1f;
+@keyframes ob-logo-breathe {
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(-1.5deg) scale(1.02);
+  }
 }
 
 /* ------------------------------------------------------------------ */
@@ -1437,5 +1467,9 @@ body {
   .ob-carousel__progress span,
   .ob-tab {
     transition: none !important;
+  }
+  .ob-logo,
+  .ob-logo--giant {
+    animation: none !important;
   }
 }
