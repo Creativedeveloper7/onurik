@@ -7,7 +7,7 @@ import {
   loadCatalog,
   subscribeCatalog,
 } from "./products.js";
-import { renderProductCard } from "./ProductCard.js";
+import { bindRack, renderRack } from "./ClothingRack.js";
 import { toggleWishlist } from "./wishlist-store.js";
 
 function paramsFromLocation() {
@@ -63,6 +63,10 @@ function heading(state) {
 export async function mountShopGrid(root) {
   if (!root) return;
   let state = paramsFromLocation();
+  let current = [];
+  const rack = bindRack(root, function () {
+    return current;
+  });
 
   function render() {
     if (!catalogReady()) {
@@ -135,13 +139,8 @@ export async function mountShopGrid(root) {
         '<button type="button" data-reset class="ob-btn ob-btn--red mt-8">View all merch</button>' +
         "</div>";
 
-    const grid = products.length
-      ? products
-          .map(function (p) {
-            return renderProductCard(p);
-          })
-          .join("")
-      : empty;
+    current = products;
+    const rack = products.length ? renderRack(products) : empty;
 
     root.innerHTML =
       '<div class="flex flex-col gap-10">' +
@@ -183,9 +182,16 @@ export async function mountShopGrid(root) {
       '<div class="flex flex-wrap items-center gap-2" aria-label="Sort">' +
       sorts +
       "</div></div>" +
-      '<div class="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-7 lg:grid-cols-4">' +
-      grid +
-      "</div></div>";
+      '<div class="rack-wall">' +
+      rack +
+      "</div>" +
+      (products.length
+        ? '<p class="rack-hint">' +
+          '<span class="rack-hint--mouse">Hover a piece to turn it — click to try it on.</span>' +
+          '<span class="rack-hint--touch">Tap a piece to turn it — tap again to try it on.</span>' +
+          "</p>"
+        : "") +
+      "</div>";
   }
 
   function apply(patch) {
@@ -231,6 +237,8 @@ export async function mountShopGrid(root) {
   render();
   await loadCatalog();
   render();
+  const piece = new URLSearchParams(location.search).get("piece");
+  if (piece) rack.open(piece);
   subscribeCatalog(function () {
     render();
   });

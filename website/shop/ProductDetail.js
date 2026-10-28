@@ -1,24 +1,15 @@
-import { addToCart } from "./cart-store.js";
-import { categoryLabel, escapeAttr, escapeHtml, formatKes, genderLabel } from "./format.js";
+import { categoryLabel, escapeAttr, escapeHtml, genderLabel } from "./format.js";
+import {
+  addSelectionToCart,
+  applyOptionClick,
+  buyButtonsHtml,
+  initialSelection,
+  optionsHtml,
+  priceBlock,
+} from "./product-options.js";
 import { getProductById, loadCatalog, relatedProducts } from "./products.js";
 import { renderProductCard } from "./ProductCard.js";
-import { showShopToast } from "./shop-shell.js";
 import { isWishlisted, toggleWishlist } from "./wishlist-store.js";
-
-function priceBlock(product) {
-  const sale = product.originalPrice && product.originalPrice > product.price;
-  return (
-    '<div class="flex flex-wrap items-center gap-3">' +
-    '<span class="shop-price shop-price--lg">' +
-    formatKes(product.price) +
-    "</span>" +
-    (sale
-      ? '<span class="ob-mono text-cocoa/60 line-through text-base">' + formatKes(product.originalPrice) + "</span>" +
-        '<span class="shop-hex">Sale</span>'
-      : "") +
-    "</div>"
-  );
-}
 
 export async function mountProductDetail(root) {
   if (!root) return;
@@ -40,15 +31,7 @@ export async function mountProductDetail(root) {
   }
 
   let imageIndex = 0;
-  let size = product.sizes[0] || "";
-  let color = product.colors[0] ? product.colors[0].id : "";
-  let qty = 1;
-
-  function selectedColor() {
-    return product.colors.find(function (c) {
-      return c.id === color;
-    });
-  }
+  const selection = initialSelection(product);
 
   function render() {
     const wished = isWishlisted(product.id);
@@ -68,38 +51,6 @@ export async function mountProductDetail(root) {
           escapeAttr(src) +
           '" alt="" class="shop-img h-full w-full object-cover"/>' +
           "</button>"
-        );
-      })
-      .join("");
-
-    const sizes = product.sizes
-      .map(function (s) {
-        return (
-          '<button type="button" class="shop-option' +
-          (size === s ? " is-active" : "") +
-          '" data-size="' +
-          escapeAttr(s) +
-          '">' +
-          escapeHtml(s) +
-          "</button>"
-        );
-      })
-      .join("");
-
-    const colors = product.colors
-      .map(function (c) {
-        return (
-          '<button type="button" class="shop-swatch' +
-          (color === c.id ? " is-active" : "") +
-          '" data-color="' +
-          escapeAttr(c.id) +
-          '" style="background:' +
-          escapeAttr(c.hex) +
-          '" aria-label="' +
-          escapeAttr(c.label) +
-          '" title="' +
-          escapeAttr(c.label) +
-          '"></button>'
         );
       })
       .join("");
@@ -165,35 +116,9 @@ export async function mountProductDetail(root) {
       '<p class="mt-8 max-w-md text-[15px] leading-relaxed text-cocoa/80">' +
       escapeHtml(product.description) +
       "</p>" +
-      '<div class="mt-10 border-t border-cocoa/15 pt-8">' +
-      '<p class="shop-label mb-3">Size</p>' +
-      '<div class="flex flex-wrap gap-2">' +
-      sizes +
+      optionsHtml(product, selection) +
+      buyButtonsHtml(product) +
       "</div></div>" +
-      '<div class="mt-8">' +
-      '<p class="shop-label mb-3">Colour — ' +
-      escapeHtml((selectedColor() && selectedColor().label) || "") +
-      "</p>" +
-      '<div class="flex flex-wrap gap-3">' +
-      colors +
-      "</div></div>" +
-      '<div class="mt-8">' +
-      '<p class="shop-label mb-3">Quantity</p>' +
-      '<div class="shop-stepper">' +
-      '<button type="button" data-qty="-1" aria-label="Decrease quantity">−</button>' +
-      "<span>" +
-      qty +
-      "</span>" +
-      '<button type="button" data-qty="1" aria-label="Increase quantity">+</button>' +
-      "</div></div>" +
-      '<div class="mt-10 flex flex-col gap-3 sm:flex-row">' +
-      '<button type="button" data-add class="ob-btn flex-1 disabled:opacity-35 disabled:pointer-events-none" ' +
-      (product.inStock ? "" : "disabled") +
-      '><span class="material-symbols-outlined" aria-hidden="true">shopping_bag</span>Add to Cart</button>' +
-      '<button type="button" data-checkout class="ob-btn ob-btn--red flex-1 disabled:opacity-35 disabled:pointer-events-none" ' +
-      (product.inStock ? "" : "disabled") +
-      ">Checkout</button>" +
-      "</div></div></div>" +
       (related
         ? '<section class="mt-24 border-t border-cocoa/15 pt-14" aria-labelledby="related-heading">' +
           '<h2 id="related-heading" class="shop-title text-[clamp(2rem,4vw,3.25rem)] mb-8" data-ob-chars="jumble">You may also like</h2>' +
@@ -204,21 +129,7 @@ export async function mountProductDetail(root) {
   }
 
   function addCurrent() {
-    if (!product.inStock) return false;
-    const c = selectedColor();
-    addToCart({
-      productId: product.id,
-      name: product.name,
-      price: product.price,
-      originalPrice: product.originalPrice,
-      image: product.images[0],
-      size: size,
-      color: color,
-      colorLabel: c ? c.label : "",
-      qty: qty,
-    });
-    showShopToast("Added to cart");
-    return true;
+    return addSelectionToCart(product, selection);
   }
 
   root.addEventListener("click", function (event) {
@@ -234,21 +145,7 @@ export async function mountProductDetail(root) {
       render();
       return;
     }
-    const sizeBtn = event.target.closest("[data-size]");
-    if (sizeBtn) {
-      size = sizeBtn.getAttribute("data-size") || size;
-      render();
-      return;
-    }
-    const colorBtn = event.target.closest("[data-color]");
-    if (colorBtn) {
-      color = colorBtn.getAttribute("data-color") || color;
-      render();
-      return;
-    }
-    const qtyBtn = event.target.closest("[data-qty]");
-    if (qtyBtn) {
-      qty = Math.max(1, Math.min(12, qty + Number(qtyBtn.getAttribute("data-qty"))));
+    if (applyOptionClick(event, selection)) {
       render();
       return;
     }
