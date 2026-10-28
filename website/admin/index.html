@@ -5,52 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Admin · Overview · Onurik</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="/brand/tailwind-brand.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-  tailwind.config = {
-    darkMode: "class",
-    theme: {
-      extend: {
-        colors: {
-          "primary-container": "#e5e2dd", "primary": "#ffffff", "on-surface": "#e5e2e1",
-          "surface-dim": "#131313", "background": "#131313", "on-primary-container": "#656461",
-          "surface-container-lowest": "#0e0e0e", "outline-variant": "#474741",
-          "surface-container-high": "#2a2a2a", "error-container": "#93000a",
-          "inverse-on-surface": "#313030", "outline": "#929189", "on-error": "#690005",
-          "surface-variant": "#353534", "on-background": "#e5e2e1", "on-tertiary": "#313030",
-          "error": "#ffb4ab", "surface-container": "#201f1f", "surface": "#131313",
-          "on-secondary-container": "#bab5a9", "surface-bright": "#3a3939",
-          "on-surface-variant": "#c8c7be", "tertiary": "#ffffff",
-          "surface-container-low": "#1c1b1b", "surface-container-highest": "#353534"
-        },
-        borderRadius: { DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem" },
-        spacing: { gutter: "32px", "element-gap": "24px", margin: "64px", "container-max": "1440px", "section-gap": "160px" },
-        fontFamily: {
-          "headline-md": ["Montserrat", "sans-serif"], "display-xl": ["Montserrat", "sans-serif"],
-          "label-caps": ["Manrope", "sans-serif"], "body-md": ["Manrope", "sans-serif"],
-          "display-lg": ["Montserrat", "sans-serif"], "body-lg": ["Manrope", "sans-serif"],
-          montserrat: ["Montserrat", "sans-serif"]
-        },
-        fontSize: {
-          "headline-md": ["32px", { lineHeight: "40px", letterSpacing: "0em", fontWeight: "500" }],
-          "display-xl": ["80px", { lineHeight: "96px", letterSpacing: "-0.02em", fontWeight: "500" }],
-          "label-caps": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "600" }],
-          "body-md": ["16px", { lineHeight: "24px", letterSpacing: "0.01em", fontWeight: "400" }],
-          "display-lg": ["64px", { lineHeight: "72px", letterSpacing: "-0.02em", fontWeight: "500" }],
-          "body-lg": ["18px", { lineHeight: "28px", letterSpacing: "0.01em", fontWeight: "400" }]
-        }
-      }
-    }
-  };
-</script>
 <style>
-  body { background-color: theme('colors.background'); color: theme('colors.on-background'); }
-  ::-webkit-scrollbar { width: 6px; height: 6px; }
-  ::-webkit-scrollbar-track { background: theme('colors.surface-container-lowest'); }
-  ::-webkit-scrollbar-thumb { background: theme('colors.surface-variant'); }
   .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; }
   #admin-nav-drawer { transform: translateX(100%); transition: transform 0.3s ease-out; }
   #admin-nav-drawer.open { transform: translateX(0); }
@@ -59,12 +18,14 @@
   #admin-toast.is-visible { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
 </style>
 <link rel="stylesheet" href="/styles/animations.css"/>
+<link rel="stylesheet" href="/styles/brand.css"/>
+<link rel="stylesheet" href="/styles/admin.css"/>
 </head>
-<body class="font-body-md min-h-screen selection:bg-primary/20 selection:text-primary touch-manipulation">
+<body class="ob-admin font-body-md min-h-screen touch-manipulation">
 <!-- Mobile top bar -->
 <header class="lg:hidden fixed top-0 left-0 right-0 z-[60] flex h-16 items-center justify-between border-b border-stone-100/10 bg-stone-950/95 px-4 backdrop-blur-xl">
 <a href="/" class="text-xs font-semibold uppercase tracking-[0.2em] text-stone-400 transition-colors hover:text-stone-100">Site</a>
-<span class="font-montserrat text-sm font-semibold text-stone-100">Admin</span>
+<span class="ob-admin-logo" data-ob-chars="jumble">Onurik</span>
 <button type="button" id="admin-menu-btn" class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md text-stone-100 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40" aria-expanded="false" aria-controls="admin-nav-drawer" aria-label="Open menu">
 <span class="material-symbols-outlined text-2xl" aria-hidden="true">menu</span>
 </button>
@@ -110,8 +71,8 @@
 <!-- Desktop sidebar -->
 <nav class="fixed left-0 top-0 z-50 hidden h-full w-64 flex-col border-r border-stone-100/10 bg-stone-900 transition-all duration-300 lg:flex" aria-label="Admin navigation">
 <div class="border-b border-stone-100/10 px-8 py-10">
-<h2 class="font-display-lg text-lg font-bold text-stone-100">Admin Panel</h2>
-<p class="mt-1 font-display-lg text-sm font-normal text-stone-500">Onurik Systems</p>
+<a href="/admin" class="ob-admin-logo" data-ob-chars="jumble" aria-label="Onurik admin">Onurik</a>
+<p class="ob-marker mt-2 -rotate-2 text-base text-cocoa/80">admin panel ✶</p>
 </div>
 <div class="flex flex-1 flex-col gap-2 py-8">
 <a class="mx-8 mb-4 text-[10px] uppercase tracking-[0.2em] text-stone-500 transition-colors hover:text-stone-100" href="/">← Public site</a>
@@ -148,14 +109,15 @@
 </div>
 </nav>
 
-<main class="relative flex min-h-screen w-full flex-1 flex-col bg-background pt-16 lg:ml-64 lg:pt-0">
+<main class="relative flex min-h-screen w-full min-w-0 flex-1 flex-col bg-background pt-16 lg:ml-64 lg:w-auto lg:pt-0">
 <header class="flex w-full flex-col justify-between gap-6 border-b border-surface-variant/30 px-8 py-10 md:flex-row md:items-end md:px-16">
 <div>
-<p class="mb-4 flex items-center gap-2 font-label-caps text-label-caps uppercase tracking-[0.2em] text-primary">
+<p class="mb-4 inline-flex items-center gap-2 rounded-full border-2 border-ink bg-tomato px-3 py-1 font-label-caps text-label-caps uppercase tracking-[0.2em] text-cream">
 <span class="material-symbols-outlined text-[14px]" aria-hidden="true">lock</span>
 Restricted Access
 </p>
-<h1 class="font-display-lg text-display-lg text-on-background">System Overview</h1>
+<h1 class="font-display-lg text-display-lg text-on-background" data-ob-chars="jumble pop" data-ob-amp="0.5">System Overview</h1>
+<p class="ob-admin-aside">what's cooking today?</p>
 </div>
 <div class="flex flex-wrap items-center gap-4 font-label-caps text-label-caps uppercase text-on-surface-variant">
 <span id="admin-last-sync">Last sync: —</span>
@@ -165,65 +127,41 @@ Restricted Access
 </div>
 </header>
 
-<div class="flex flex-1 flex-col gap-section-gap px-8 py-10 md:px-16 md:py-12">
-<section class="grid grid-cols-1 gap-element-gap md:grid-cols-3" aria-label="Summary statistics">
-<div class="group relative overflow-hidden rounded-DEFAULT border border-outline-variant/20 bg-surface-container-low p-8">
-<div class="absolute left-0 top-0 h-1 w-full bg-surface-variant transition-colors group-hover:bg-primary/20"></div>
-<p class="mb-6 flex items-center justify-between font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">
-Total Enquiries
-<span class="material-symbols-outlined text-[18px] text-surface-variant" aria-hidden="true">stacked_inbox</span>
-</p>
-<p class="font-display-xl text-display-xl text-on-background">0</p>
-<p class="mt-2 font-body-md text-sm text-on-surface-variant">No submissions recorded yet.</p>
+<div class="flex flex-1 flex-col gap-16 px-5 py-10 sm:px-8 md:px-16 md:py-12">
+<section class="grid grid-cols-1 gap-7 md:grid-cols-3" aria-label="Summary statistics">
+<div class="ob-stat ob-stat--mustard" style="rotate:-0.6deg">
+<p class="ob-stat__label">Total Enquiries <span class="material-symbols-outlined text-[20px]" aria-hidden="true">stacked_inbox</span></p>
+<p class="ob-stat__value">0</p>
+<p class="ob-stat__note">No submissions recorded yet.</p>
 </div>
-<div class="group relative overflow-hidden rounded-DEFAULT border border-outline-variant/30 bg-surface-container p-8 shadow-[0_0_40px_rgba(255,255,255,0.02)]">
-<div class="absolute left-0 top-0 h-1 w-full bg-primary/40 transition-colors"></div>
-<p class="mb-6 flex items-center justify-between font-label-caps text-label-caps uppercase tracking-widest text-on-background">
-Open Bookings
-<span class="material-symbols-outlined text-[18px] text-primary/50" aria-hidden="true">book_online</span>
-</p>
-<p class="font-display-xl text-display-xl text-primary">0</p>
-<p class="mt-2 font-body-md text-sm text-primary/60">No active bookings.</p>
+<div class="ob-stat ob-stat--red" style="rotate:0.5deg">
+<p class="ob-stat__label">Open Bookings <span class="material-symbols-outlined text-[20px]" aria-hidden="true">book_online</span></p>
+<p class="ob-stat__value">0</p>
+<p class="ob-stat__note">No active bookings.</p>
 </div>
-<div class="group relative overflow-hidden rounded-DEFAULT border border-outline-variant/20 bg-surface-container-low p-8">
-<div class="absolute left-0 top-0 h-1 w-full bg-surface-variant transition-colors group-hover:bg-primary/20"></div>
-<p class="mb-6 flex items-center justify-between font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">
-Monthly Traffic
-<span class="material-symbols-outlined text-[18px] text-surface-variant" aria-hidden="true">monitoring</span>
-</p>
-<p class="font-display-xl text-display-xl text-on-background">—</p>
-<p class="mt-2 font-body-md text-sm text-on-surface-variant">Connect analytics to display visits.</p>
+<div class="ob-stat ob-stat--cream" style="rotate:-0.3deg">
+<p class="ob-stat__label">Monthly Traffic <span class="material-symbols-outlined text-[20px]" aria-hidden="true">monitoring</span></p>
+<p class="ob-stat__value">—</p>
+<p class="ob-stat__note">Connect analytics to display visits.</p>
 </div>
 </section>
 
-<section class="grid grid-cols-1 gap-element-gap md:grid-cols-3" aria-label="Shop statistics">
-<div class="group relative overflow-hidden rounded-DEFAULT border border-outline-variant/20 bg-surface-container-low p-8">
-<div class="absolute left-0 top-0 h-1 w-full bg-surface-variant transition-colors group-hover:bg-primary/20"></div>
-<p class="mb-6 flex items-center justify-between font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">
-Live products
-<span class="material-symbols-outlined text-[18px] text-surface-variant" aria-hidden="true">checkroom</span>
-</p>
-<p id="admin-shop-products" class="font-display-xl text-display-xl text-on-background">0</p>
-<p id="admin-shop-products-note" class="mt-2 font-body-md text-sm text-on-surface-variant">Catalog not loaded yet.</p>
+<section class="grid grid-cols-1 gap-7 md:grid-cols-3" aria-label="Shop statistics">
+<div class="ob-stat ob-stat--cream" style="rotate:0.4deg">
+<p class="ob-stat__label">Live products <span class="material-symbols-outlined text-[20px]" aria-hidden="true">checkroom</span></p>
+<p id="admin-shop-products" class="ob-stat__value">0</p>
+<p id="admin-shop-products-note" class="ob-stat__note">Catalog not loaded yet.</p>
 </div>
-<div class="group relative overflow-hidden rounded-DEFAULT border border-outline-variant/20 bg-surface-container-low p-8">
-<div class="absolute left-0 top-0 h-1 w-full bg-surface-variant transition-colors group-hover:bg-primary/20"></div>
-<p class="mb-6 flex items-center justify-between font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">
-Open shop orders
-<span class="material-symbols-outlined text-[18px] text-surface-variant" aria-hidden="true">local_mall</span>
-</p>
-<p id="admin-shop-orders" class="font-display-xl text-display-xl text-on-background">0</p>
-<p id="admin-shop-orders-note" class="mt-2 font-body-md text-sm text-on-surface-variant">No orders yet.</p>
+<div class="ob-stat ob-stat--mustard" style="rotate:-0.5deg">
+<p class="ob-stat__label">Open shop orders <span class="material-symbols-outlined text-[20px]" aria-hidden="true">local_mall</span></p>
+<p id="admin-shop-orders" class="ob-stat__value">0</p>
+<p id="admin-shop-orders-note" class="ob-stat__note">No orders yet.</p>
 </div>
-<div class="group relative overflow-hidden rounded-DEFAULT border border-outline-variant/20 bg-surface-container-low p-8">
-<div class="absolute left-0 top-0 h-1 w-full bg-surface-variant transition-colors group-hover:bg-primary/20"></div>
-<p class="mb-6 flex items-center justify-between font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">
-Shop revenue
-<span class="material-symbols-outlined text-[18px] text-surface-variant" aria-hidden="true">payments</span>
-</p>
-<p id="admin-shop-revenue" class="font-display-xl text-display-xl text-on-background">—</p>
-<p id="admin-shop-revenue-note" class="mt-2 font-body-md text-sm text-on-surface-variant">From confirmed checkouts.</p>
-<p class="mt-4"><a class="font-label-caps text-label-caps uppercase tracking-widest text-primary underline-offset-4 hover:underline" href="/admin/shop">Open Shop Manager</a></p>
+<div class="ob-stat ob-stat--red" style="rotate:0.3deg">
+<p class="ob-stat__label">Shop revenue <span class="material-symbols-outlined text-[20px]" aria-hidden="true">payments</span></p>
+<p id="admin-shop-revenue" class="ob-stat__value">—</p>
+<p id="admin-shop-revenue-note" class="ob-stat__note">From confirmed checkouts.</p>
+<p class="mt-4"><a class="ob-mono text-xs font-bold uppercase tracking-widest" href="/admin/shop">Open Shop Manager</a></p>
 </div>
 </section>
 
@@ -338,6 +276,7 @@ Shop revenue
 })();
 </script>
 <script type="module" src="/scripts/animations.js"></script>
+<script type="module" src="/scripts/brand-fx.js"></script>
 <script type="module" src="/scripts/admin-overview-shop.js"></script>
 <script type="module">
   import { mountRevenueSection } from "/scripts/admin-revenue.js";

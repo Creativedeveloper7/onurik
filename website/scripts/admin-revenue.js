@@ -55,17 +55,17 @@ function flowNode(step, title, detail, metric, active) {
       ? "border-white/40 bg-surface-container"
       : "border-outline-variant/30 bg-surface-container-low") +
     '">' +
-    '<p class="font-montserrat text-[10px] uppercase tracking-[0.22em] text-white/35">' +
+    '<p class="font-montserrat text-[10px] uppercase tracking-[0.22em] text-cream/60">' +
     step +
     "</p>" +
-    '<p class="mt-2 font-montserrat text-sm text-white">' +
+    '<p class="mt-2 font-montserrat text-sm text-cream">' +
     escapeHtml(title) +
     "</p>" +
-    '<p class="mt-2 text-xs leading-relaxed text-white/40">' +
+    '<p class="mt-2 text-xs leading-relaxed text-cream/65">' +
     escapeHtml(detail) +
     "</p>" +
     (metric
-      ? '<p class="mt-3 font-montserrat text-xs uppercase tracking-[0.16em] text-white/70">' +
+      ? '<p class="mt-3 font-montserrat text-xs uppercase tracking-[0.16em] text-cream/85">' +
         escapeHtml(metric) +
         "</p>"
       : "") +
@@ -99,13 +99,13 @@ function renderStats(snap) {
       .map(function (card) {
         return (
           '<div class="rounded border border-outline-variant/30 bg-surface-container-low p-5">' +
-          '<p class="font-montserrat text-[11px] uppercase tracking-[0.18em] text-white/40">' +
+          '<p class="font-montserrat text-[11px] uppercase tracking-[0.18em] text-cream/65">' +
           escapeHtml(card.label) +
           "</p>" +
-          '<p class="mt-3 font-montserrat text-2xl tracking-[-0.03em] text-white">' +
+          '<p class="mt-3 font-anton text-4xl leading-none text-mustard">' +
           escapeHtml(card.value) +
           "</p>" +
-          '<p class="mt-2 text-xs text-white/40">' +
+          '<p class="mt-2 text-xs text-cream/65">' +
           escapeHtml(card.note) +
           "</p></div>"
         );
@@ -121,23 +121,23 @@ function renderForm(snap) {
   return (
     '<form id="revenue-payout-form" class="rounded border border-outline-variant/30 bg-surface-container-low p-5 md:p-6">' +
     '<p class="font-montserrat text-[11px] uppercase tracking-[0.2em] text-on-surface-variant">Withdraw available balance</p>' +
-    '<p class="mt-2 text-sm text-white/45">Available ' +
+    '<p class="mt-2 text-sm text-cream/70">Available ' +
     escapeHtml(formatKes(snap.available)) +
     ". Minimum " +
     escapeHtml(formatKes(MIN_PAYOUT)) +
     ". Pending payouts reserve funds until you mark them sent or failed.</p>" +
     '<div class="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2">' +
-    '<label class="block text-xs uppercase tracking-[0.16em] text-white/40">Amount (KSh)' +
+    '<label class="block text-xs uppercase tracking-[0.16em] text-cream/65">Amount (KSh)' +
     '<input id="payout-amount" name="amount" type="number" min="' +
     MIN_PAYOUT +
     '" step="1" max="' +
     snap.available +
-    '" class="mt-2 w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm text-white" placeholder="' +
+    '" class="mt-2 w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm text-cream" placeholder="' +
     snap.available +
     '" required/>' +
     "</label>" +
-    '<label class="block text-xs uppercase tracking-[0.16em] text-white/40">Rail' +
-    '<select id="payout-method" name="method" class="mt-2 w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm text-white">' +
+    '<label class="block text-xs uppercase tracking-[0.16em] text-cream/65">Rail' +
+    '<select id="payout-method" name="method" class="mt-2 w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm text-cream">' +
     PAYOUT_METHODS.map(function (item) {
       return (
         '<option value="' +
@@ -153,31 +153,31 @@ function renderForm(snap) {
     '<div id="payout-mpesa-fields" class="mt-4' +
     (method === "mpesa" ? "" : " hidden") +
     '">' +
-    '<label class="block text-xs uppercase tracking-[0.16em] text-white/40">M-Pesa number' +
-    '<input id="payout-phone" name="phone" type="tel" class="mt-2 w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm text-white" placeholder="07XXXXXXXX" value="' +
+    '<label class="block text-xs uppercase tracking-[0.16em] text-cream/65">M-Pesa number' +
+    '<input id="payout-phone" name="phone" type="tel" class="mt-2 w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm text-cream" placeholder="07XXXXXXXX" value="' +
     escapeHtml(dest.phone || "") +
     '"/>' +
     "</label></div>" +
     '<div id="payout-bank-fields" class="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3' +
     (method === "bank" ? "" : " hidden") +
     '">' +
-    '<label class="block text-xs uppercase tracking-[0.16em] text-white/40">Bank' +
-    '<input id="payout-bank" name="bankName" type="text" class="mt-2 w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm text-white" placeholder="Equity, KCB…" value="' +
+    '<label class="block text-xs uppercase tracking-[0.16em] text-cream/65">Bank' +
+    '<input id="payout-bank" name="bankName" type="text" class="mt-2 w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm text-cream" placeholder="Equity, KCB…" value="' +
     escapeHtml(dest.bankName || "") +
     '"/>' +
     "</label>" +
-    '<label class="block text-xs uppercase tracking-[0.16em] text-white/40">Account name' +
-    '<input id="payout-account-name" name="accountName" type="text" class="mt-2 w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm text-white" value="' +
+    '<label class="block text-xs uppercase tracking-[0.16em] text-cream/65">Account name' +
+    '<input id="payout-account-name" name="accountName" type="text" class="mt-2 w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm text-cream" value="' +
     escapeHtml(dest.accountName || "") +
     '"/>' +
     "</label>" +
-    '<label class="block text-xs uppercase tracking-[0.16em] text-white/40">Account number' +
-    '<input id="payout-account-number" name="accountNumber" type="text" class="mt-2 w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm text-white" value="' +
+    '<label class="block text-xs uppercase tracking-[0.16em] text-cream/65">Account number' +
+    '<input id="payout-account-number" name="accountNumber" type="text" class="mt-2 w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm text-cream" value="' +
     escapeHtml(dest.accountNumber || "") +
     '"/>' +
     "</label></div>" +
-    '<label class="mt-4 block text-xs uppercase tracking-[0.16em] text-white/40">Note (optional)' +
-    '<input id="payout-note" name="note" type="text" class="mt-2 w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm text-white" placeholder="Studio rent, fabric order…"/>' +
+    '<label class="mt-4 block text-xs uppercase tracking-[0.16em] text-cream/65">Note (optional)' +
+    '<input id="payout-note" name="note" type="text" class="mt-2 w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2 text-sm text-cream" placeholder="Studio rent, fabric order…"/>' +
     "</label>" +
     '<p id="payout-error" class="mt-3 min-h-5 text-sm text-red-300"></p>' +
     '<button type="submit" class="mt-2 min-h-[44px] w-full rounded border border-outline-variant px-4 py-2 text-xs uppercase tracking-[0.2em] hover:bg-surface-variant md:w-auto"' +
@@ -191,7 +191,7 @@ function renderHistory() {
   const payouts = listPayouts();
   if (!payouts.length) {
     return (
-      '<div class="rounded border border-outline-variant/30 bg-surface-container-low p-8 text-center text-sm text-white/40">No withdrawals yet. Request one when available balance is at least ' +
+      '<div class="rounded border border-outline-variant/30 bg-surface-container-low p-8 text-center text-sm text-cream/65">No withdrawals yet. Request one when available balance is at least ' +
       escapeHtml(formatKes(MIN_PAYOUT)) +
       ".</div>"
     );
@@ -215,21 +215,21 @@ function renderHistory() {
         const pending = payout.status === "pending";
         return (
           "<tr class=\"border-b border-outline-variant/20\">" +
-          '<td class="p-3 text-sm text-white/70">' +
+          '<td class="p-3 text-sm text-cream/85">' +
           escapeHtml(date) +
-          '<p class="mt-1 text-[10px] uppercase tracking-[0.14em] text-white/30">' +
+          '<p class="mt-1 text-[10px] uppercase tracking-[0.14em] text-cream/60">' +
           escapeHtml(payout.id) +
           "</p></td>" +
-          '<td class="p-3 text-sm text-white">' +
+          '<td class="p-3 text-sm text-cream">' +
           escapeHtml(formatKes(payout.amount)) +
           "</td>" +
-          '<td class="p-3 text-sm text-white/70">' +
+          '<td class="p-3 text-sm text-cream/85">' +
           escapeHtml(payoutLabel(payout.method)) +
           "</td>" +
-          '<td class="p-3 text-sm text-white/70">' +
+          '<td class="p-3 text-sm text-cream/85">' +
           escapeHtml(destSummary(payout)) +
           (payout.destination && payout.destination.note
-            ? '<p class="mt-1 text-xs text-white/35">' + escapeHtml(payout.destination.note) + "</p>"
+            ? '<p class="mt-1 text-xs text-cream/60">' + escapeHtml(payout.destination.note) + "</p>"
             : "") +
           "</td>" +
           '<td class="p-3 text-sm uppercase tracking-[0.14em] ' +
@@ -241,14 +241,14 @@ function renderHistory() {
           (pending
             ? '<button type="button" data-payout-sent="' +
               escapeHtml(payout.id) +
-              '" class="mr-3 text-white/80 hover:text-white">Mark sent</button>' +
+              '" class="mr-3 text-cream/90 hover:text-mustard">Mark sent</button>' +
               '<button type="button" data-payout-fail="' +
               escapeHtml(payout.id) +
-              '" class="mr-3 text-white/50 hover:text-white">Fail</button>'
+              '" class="mr-3 text-cream/75 hover:text-mustard">Fail</button>'
             : "") +
           '<button type="button" data-payout-delete="' +
           escapeHtml(payout.id) +
-          '" class="text-white/35 hover:text-white">Delete</button>' +
+          '" class="text-cream/60 hover:text-mustard">Delete</button>' +
           "</td></tr>"
         );
       })
@@ -259,8 +259,8 @@ function renderHistory() {
 
 function formula(snap) {
   return (
-    '<p class="text-sm leading-relaxed text-white/45">Available = recognized shop totals − pending payouts − sent payouts. Cancelled orders never enter the wallet. This ledger lives in this browser until the shop tables are wired to Supabase.</p>' +
-    '<p class="mt-3 font-montserrat text-[11px] uppercase tracking-[0.16em] text-white/55">' +
+    '<p class="text-sm leading-relaxed text-cream/70">Available = recognized shop totals − pending payouts − sent payouts. Cancelled orders never enter the wallet. This ledger lives in this browser until the shop tables are wired to Supabase.</p>' +
+    '<p class="mt-3 font-montserrat text-[11px] uppercase tracking-[0.16em] text-cream/75">' +
     escapeHtml(formatKes(snap.gross)) +
     " − " +
     escapeHtml(formatKes(snap.pending)) +
@@ -294,7 +294,7 @@ export function mountRevenueSection(root) {
     root.innerHTML =
       '<div class="flex flex-col gap-8">' +
       '<div>' +
-      '<p class="mb-3 font-montserrat text-[11px] uppercase tracking-[0.2em] text-white/40">Architecture</p>' +
+      '<p class="mb-3 font-montserrat text-[11px] uppercase tracking-[0.2em] text-cream/65">Architecture</p>' +
       renderFlow(snap) +
       '<div class="mt-5 rounded border border-outline-variant/20 bg-surface-container-lowest/40 px-4 py-4">' +
       formula(snap) +
@@ -305,7 +305,7 @@ export function mountRevenueSection(root) {
       renderForm(snap) +
       "</div>" +
       '<div class="xl:col-span-3">' +
-      '<p class="mb-3 font-montserrat text-[11px] uppercase tracking-[0.2em] text-white/40">Payout history</p>' +
+      '<p class="mb-3 font-montserrat text-[11px] uppercase tracking-[0.2em] text-cream/65">Payout history</p>' +
       renderHistory() +
       "</div></div></div>";
     bindMethodToggle(root);

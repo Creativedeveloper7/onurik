@@ -5,37 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Admin · Works Manager · Onurik</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="/brand/tailwind-brand.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Montserrat:wght@400;500;600;700&amp;family=Noto+Serif:wght@400;700&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-tailwind.config = {
-  darkMode: "class",
-  theme: {
-    extend: {
-      colors: {
-        primary: "#ffffff",
-        background: "#131313",
-        "on-background": "#e5e2e1",
-        "surface-container": "#201f1f",
-        "surface-container-low": "#1c1b1b",
-        "surface-container-lowest": "#0e0e0e",
-        "surface-variant": "#353534",
-        "outline-variant": "#474741",
-        "on-surface-variant": "#c8c7be"
-      },
-      fontFamily: {
-        montserrat: ["Montserrat", "sans-serif"],
-        inter: ["Inter", "sans-serif"],
-        "noto-serif": ["Noto Serif", "serif"]
-      }
-    }
-  }
-};
-</script>
 <style>
-  body { background-color: #131313; color: #e5e2e1; }
   .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; }
   #admin-nav-drawer { transform: translateX(100%); transition: transform 0.3s ease-out; }
   #admin-nav-drawer.open { transform: translateX(0); }
@@ -44,14 +18,16 @@ tailwind.config = {
   #admin-toast.is-visible { opacity: 1; transform: translate(-50%,0); pointer-events: auto; }
 </style>
 <link rel="stylesheet" href="/styles/animations.css"/>
+<link rel="stylesheet" href="/styles/brand.css"/>
+<link rel="stylesheet" href="/styles/admin.css"/>
 </head>
-<body class="font-inter min-h-screen selection:bg-white/20 selection:text-white">
+<body class="ob-admin font-inter min-h-screen">
 <header class="lg:hidden fixed top-0 left-0 right-0 z-[60] flex h-16 items-center justify-between border-b border-stone-100/10 bg-stone-950/95 px-4 backdrop-blur-xl">
   <a href="/admin" class="inline-flex min-h-[44px] items-center gap-1 text-xs font-semibold uppercase tracking-[0.2em] text-stone-400 hover:text-stone-100">
     <span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_back</span>
     Menu
   </a>
-  <span class="font-montserrat text-sm font-semibold text-stone-100">Admin</span>
+  <span class="ob-admin-logo" data-ob-chars="jumble">Onurik</span>
   <button type="button" id="admin-menu-btn" class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md text-stone-100 hover:bg-white/10" aria-expanded="false" aria-controls="admin-nav-drawer" aria-label="Open menu">
     <span class="material-symbols-outlined text-2xl" aria-hidden="true">menu</span>
   </button>
@@ -80,8 +56,8 @@ tailwind.config = {
 
 <nav class="fixed left-0 top-0 z-50 hidden h-full w-64 flex-col border-r border-stone-100/10 bg-stone-900 lg:flex">
   <div class="border-b border-stone-100/10 px-8 py-10">
-    <h2 class="font-montserrat text-lg font-bold text-stone-100">Admin Panel</h2>
-    <p class="mt-1 text-sm text-stone-500">Onurik Systems</p>
+    <a href="/admin" class="ob-admin-logo" data-ob-chars="jumble" aria-label="Onurik admin">Onurik</a>
+<p class="ob-marker mt-2 -rotate-2 text-base text-cocoa/80">admin panel ✶</p>
   </div>
   <div class="flex flex-1 flex-col gap-2 py-8">
     <a class="mx-8 mb-4 text-[10px] uppercase tracking-[0.2em] text-stone-500 hover:text-stone-100" href="/">← Public site</a>
@@ -96,9 +72,9 @@ tailwind.config = {
   </div>
 </nav>
 
-<main class="relative flex min-h-screen w-full flex-1 flex-col bg-background pt-16 lg:ml-64 lg:pt-0">
+<main class="relative flex min-h-screen w-full min-w-0 flex-1 flex-col bg-background pt-16 lg:ml-64 lg:w-auto lg:pt-0">
   <header class="border-b border-outline-variant/30 px-8 py-10 md:px-16">
-    <a href="/admin" class="mb-6 inline-flex min-h-[44px] items-center gap-2 border border-outline-variant/50 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/70 transition-colors hover:border-white/40 hover:bg-white/5 hover:text-white">
+    <a href="/admin" class="mb-6 inline-flex min-h-[44px] items-center gap-2 border border-outline-variant/50 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-cream/85 transition-colors hover:border-white/40 hover:bg-white/5 hover:text-mustard">
       <span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_back</span>
       Back to menu
     </a>
@@ -106,7 +82,8 @@ tailwind.config = {
       <span class="material-symbols-outlined text-[14px]" aria-hidden="true">work</span>
       Works Manager
     </p>
-    <h1 class="font-montserrat text-5xl text-on-background">Manage Projects</h1>
+    <h1 class="font-montserrat text-5xl text-on-background" data-ob-chars="jumble pop" data-ob-amp="0.5">Manage Projects</h1>
+<p class="ob-admin-aside">the good stuff</p>
   </header>
   <section class="px-8 py-8 md:px-16">
     <div class="grid grid-cols-1 gap-6 xl:grid-cols-5">
@@ -114,7 +91,7 @@ tailwind.config = {
         <div class="flex flex-wrap items-start justify-between gap-3 border-b border-outline-variant/30 pb-4">
           <div>
             <p id="project-form-mode" class="text-[11px] uppercase tracking-[0.2em] text-on-surface-variant">New project</p>
-            <p id="project-form-editing-title" class="mt-1 hidden font-montserrat text-sm text-white/85"></p>
+            <p id="project-form-editing-title" class="mt-1 hidden font-montserrat text-sm text-cream/90"></p>
           </div>
           <button id="project-cancel-edit" type="button" class="hidden rounded border border-outline-variant/40 px-3 py-1.5 text-[10px] uppercase tracking-[0.14em] hover:bg-white/10">Cancel edit</button>
         </div>
@@ -146,7 +123,7 @@ tailwind.config = {
         <input id="project-client" class="w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2" type="text" placeholder="Client name (optional)"/>
         <select id="project-category" class="w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2"></select>
         <div>
-          <p class="mb-2 text-xs uppercase tracking-[0.2em] text-on-surface-variant">Scope tags <span class="normal-case tracking-normal text-white/40">(required to publish)</span></p>
+          <p class="mb-2 text-xs uppercase tracking-[0.2em] text-on-surface-variant">Scope tags <span class="normal-case tracking-normal text-cream/65">(required to publish)</span></p>
           <div id="project-scope-tags" class="flex flex-wrap gap-2"></div>
         </div>
         <input id="project-tags" class="w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2" type="text" placeholder="Tech/tools tags: React, Figma, Rust"/>
@@ -209,11 +186,11 @@ tailwind.config = {
 <div id="admin-auth-gate" class="fixed inset-0 z-[90] flex items-center justify-center bg-black/80 px-4">
   <form id="admin-auth-form" class="w-full max-w-md rounded border border-outline-variant/40 bg-surface-container p-6">
     <p class="mb-3 text-xs uppercase tracking-[0.2em] text-primary">Protected Access</p>
-    <h3 class="mb-4 font-montserrat text-2xl">Admin Password</h3>
+    <h3 class="mb-4 font-anton text-4xl uppercase leading-none" data-ob-chars="jumble">Admin Password</h3>
     <input id="admin-password" type="password" class="mb-3 w-full rounded border border-outline-variant/40 bg-surface-container-low px-3 py-2" placeholder="Enter password"/>
     <p id="admin-auth-error" class="min-h-5 text-sm text-red-300"></p>
     <button type="submit" class="min-h-[44px] w-full rounded border border-outline-variant px-4 py-2 text-xs uppercase tracking-[0.2em] hover:bg-surface-variant">Unlock Dashboard</button>
-    <a href="/admin" class="mt-4 inline-flex min-h-[44px] w-full items-center justify-center gap-2 text-[11px] uppercase tracking-[0.2em] text-white/40 hover:text-white">
+    <a href="/admin" class="mt-4 inline-flex min-h-[44px] w-full items-center justify-center gap-2 text-[11px] uppercase tracking-[0.2em] text-cream/65 hover:text-mustard">
       <span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_back</span>
       Back to menu
     </a>
@@ -248,6 +225,7 @@ tailwind.config = {
 })();
 </script>
 <script type="module" src="/scripts/animations.js"></script>
+<script type="module" src="/scripts/brand-fx.js"></script>
 <script type="module" src="/scripts/admin-works-manager.js"></script>
 </body>
 </html>

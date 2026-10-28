@@ -5,36 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Admin · Revenue · Onurik</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="/brand/tailwind-brand.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<script>
-tailwind.config = {
-  darkMode: "class",
-  theme: {
-    extend: {
-      colors: {
-        primary: "#ffffff",
-        background: "#131313",
-        "on-background": "#e5e2e1",
-        "surface-container": "#201f1f",
-        "surface-container-low": "#1c1b1b",
-        "surface-container-lowest": "#0e0e0e",
-        "surface-variant": "#353534",
-        "outline-variant": "#474741",
-        "on-surface-variant": "#c8c7be"
-      },
-      fontFamily: {
-        montserrat: ["Montserrat", "sans-serif"],
-        manrope: ["Manrope", "sans-serif"]
-      }
-    }
-  }
-};
-</script>
 <style>
-  body { background-color: #131313; color: #e5e2e1; }
   .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; }
   #admin-nav-drawer { transform: translateX(100%); transition: transform 0.3s ease-out; }
   #admin-nav-drawer.open { transform: translateX(0); }
@@ -43,14 +18,16 @@ tailwind.config = {
   #admin-toast.is-visible { opacity: 1; transform: translate(-50%,0); pointer-events: auto; }
 </style>
 <link rel="stylesheet" href="/styles/animations.css"/>
+<link rel="stylesheet" href="/styles/brand.css"/>
+<link rel="stylesheet" href="/styles/admin.css"/>
 </head>
-<body class="font-manrope min-h-screen selection:bg-white/20 selection:text-white">
+<body class="ob-admin font-manrope min-h-screen">
 <header class="lg:hidden fixed top-0 left-0 right-0 z-[60] flex h-16 items-center justify-between border-b border-stone-100/10 bg-stone-950/95 px-4 backdrop-blur-xl">
   <a href="/admin" class="inline-flex min-h-[44px] items-center gap-1 text-xs font-semibold uppercase tracking-[0.2em] text-stone-400 hover:text-stone-100">
     <span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_back</span>
     Menu
   </a>
-  <span class="font-montserrat text-sm font-semibold text-stone-100">Admin</span>
+  <span class="ob-admin-logo" data-ob-chars="jumble">Onurik</span>
   <button type="button" id="admin-menu-btn" class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md text-stone-100 hover:bg-white/10" aria-expanded="false" aria-controls="admin-nav-drawer" aria-label="Open menu">
     <span class="material-symbols-outlined text-2xl" aria-hidden="true">menu</span>
   </button>
@@ -79,8 +56,8 @@ tailwind.config = {
 
 <nav class="fixed left-0 top-0 z-50 hidden h-full w-64 flex-col border-r border-stone-100/10 bg-stone-900 lg:flex">
   <div class="border-b border-stone-100/10 px-8 py-10">
-    <h2 class="font-montserrat text-lg font-bold text-stone-100">Admin Panel</h2>
-    <p class="mt-1 text-sm text-stone-500">Onurik Systems</p>
+    <a href="/admin" class="ob-admin-logo" data-ob-chars="jumble" aria-label="Onurik admin">Onurik</a>
+<p class="ob-marker mt-2 -rotate-2 text-base text-cocoa/80">admin panel ✶</p>
   </div>
   <div class="flex flex-1 flex-col gap-2 py-8">
     <a class="mx-8 mb-4 text-[10px] uppercase tracking-[0.2em] text-stone-500 hover:text-stone-100" href="/">← Public site</a>
@@ -95,9 +72,9 @@ tailwind.config = {
   </div>
 </nav>
 
-<main class="relative flex min-h-screen w-full flex-1 flex-col bg-background pt-16 lg:ml-64 lg:pt-0">
+<main class="relative flex min-h-screen w-full min-w-0 flex-1 flex-col bg-background pt-16 lg:ml-64 lg:w-auto lg:pt-0">
   <header class="border-b border-outline-variant/30 px-8 py-10 md:px-16">
-    <a href="/admin" class="mb-6 inline-flex min-h-[44px] items-center gap-2 border border-outline-variant/50 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/70 transition-colors hover:border-white/40 hover:bg-white/5 hover:text-white">
+    <a href="/admin" class="mb-6 inline-flex min-h-[44px] items-center gap-2 border border-outline-variant/50 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-cream/85 transition-colors hover:border-white/40 hover:bg-white/5 hover:text-mustard">
       <span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_back</span>
       Back to menu
     </a>
@@ -105,8 +82,9 @@ tailwind.config = {
       <span class="material-symbols-outlined text-[14px]" aria-hidden="true">account_balance_wallet</span>
       Revenue
     </p>
-    <h1 class="font-montserrat text-5xl text-on-background">Monitor &amp; withdraw</h1>
-    <p class="mt-4 max-w-2xl text-sm text-white/45">Shop checkouts feed this wallet. Available funds can be withdrawn to M-Pesa or a bank account. Mark a payout sent after the transfer leaves the studio.</p>
+    <h1 class="font-montserrat text-5xl text-on-background" data-ob-chars="jumble pop" data-ob-amp="0.5">Monitor &amp; withdraw</h1>
+<p class="ob-admin-aside">show me the money</p>
+    <p class="mt-4 max-w-2xl text-sm text-cream/70">Shop checkouts feed this wallet. Available funds can be withdrawn to M-Pesa or a bank account. Mark a payout sent after the transfer leaves the studio.</p>
   </header>
   <section class="px-8 py-8 md:px-16" aria-label="Revenue architecture">
     <div id="admin-revenue-root"></div>
@@ -141,6 +119,7 @@ tailwind.config = {
 })();
 </script>
 <script type="module" src="/scripts/animations.js"></script>
+<script type="module" src="/scripts/brand-fx.js"></script>
 <script type="module">
   import { mountRevenueSection } from "/scripts/admin-revenue.js";
   mountRevenueSection(document.getElementById("admin-revenue-root"));

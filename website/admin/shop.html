@@ -5,54 +5,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Admin · Shop · Onurik</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="/brand/tailwind-brand.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<script>
-tailwind.config = {
-  darkMode: "class",
-  theme: {
-    extend: {
-      colors: {
-        primary: "#ffffff",
-        background: "#131313",
-        "on-background": "#e5e2e1",
-        "surface-container": "#201f1f",
-        "surface-container-low": "#1c1b1b",
-        "surface-container-lowest": "#0e0e0e",
-        "surface-variant": "#353534",
-        "outline-variant": "#474741",
-        "on-surface-variant": "#c8c7be"
-      },
-      fontFamily: {
-        montserrat: ["Montserrat", "sans-serif"],
-        manrope: ["Manrope", "sans-serif"]
-      }
-    }
-  }
-};
-</script>
 <style>
-  body { background-color: #131313; color: #e5e2e1; }
   .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; }
   #admin-nav-drawer { transform: translateX(100%); transition: transform 0.3s ease-out; }
   #admin-nav-drawer.open { transform: translateX(0); }
   .admin-nav-overlay { opacity: 0; pointer-events: none; transition: opacity 0.3s ease-out; }
   .admin-nav-overlay.open { opacity: 1; pointer-events: auto; }
   #admin-toast.is-visible { opacity: 1; transform: translate(-50%,0); pointer-events: auto; }
-  .shop-admin-tab { border-bottom: 1px solid transparent; color: rgba(255,255,255,0.38); letter-spacing: 0.2em; }
-  .shop-admin-tab.is-active { color: #f5f5f5; border-bottom-color: rgba(245,245,245,0.85); }
+  .shop-admin-tab { border-bottom: 3px solid transparent; color: rgba(247,227,200,0.6); letter-spacing: 0.2em; font-family: 'Space Mono', monospace; font-weight: 700; }
+  .shop-admin-tab.is-active { color: #F2A516; border-bottom-color: #F2A516; }
 </style>
 <link rel="stylesheet" href="/styles/animations.css"/>
+<link rel="stylesheet" href="/styles/brand.css"/>
+<link rel="stylesheet" href="/styles/admin.css"/>
 </head>
-<body class="font-manrope min-h-screen selection:bg-white/20 selection:text-white">
+<body class="ob-admin font-manrope min-h-screen">
 <header class="lg:hidden fixed top-0 left-0 right-0 z-[60] flex h-16 items-center justify-between border-b border-stone-100/10 bg-stone-950/95 px-4 backdrop-blur-xl">
   <a href="/admin" class="inline-flex min-h-[44px] items-center gap-1 text-xs font-semibold uppercase tracking-[0.2em] text-stone-400 hover:text-stone-100">
     <span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_back</span>
     Menu
   </a>
-  <span class="font-montserrat text-sm font-semibold text-stone-100">Admin</span>
+  <span class="ob-admin-logo" data-ob-chars="jumble">Onurik</span>
   <button type="button" id="admin-menu-btn" class="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md text-stone-100 hover:bg-white/10" aria-expanded="false" aria-controls="admin-nav-drawer" aria-label="Open menu">
     <span class="material-symbols-outlined text-2xl" aria-hidden="true">menu</span>
   </button>
@@ -81,8 +58,8 @@ tailwind.config = {
 
 <nav class="fixed left-0 top-0 z-50 hidden h-full w-64 flex-col border-r border-stone-100/10 bg-stone-900 lg:flex">
   <div class="border-b border-stone-100/10 px-8 py-10">
-    <h2 class="font-montserrat text-lg font-bold text-stone-100">Admin Panel</h2>
-    <p class="mt-1 text-sm text-stone-500">Onurik Systems</p>
+    <a href="/admin" class="ob-admin-logo" data-ob-chars="jumble" aria-label="Onurik admin">Onurik</a>
+<p class="ob-marker mt-2 -rotate-2 text-base text-cocoa/80">admin panel ✶</p>
   </div>
   <div class="flex flex-1 flex-col gap-2 py-8">
     <a class="mx-8 mb-4 text-[10px] uppercase tracking-[0.2em] text-stone-500 hover:text-stone-100" href="/">← Public site</a>
@@ -97,9 +74,9 @@ tailwind.config = {
   </div>
 </nav>
 
-<main class="relative flex min-h-screen w-full flex-1 flex-col bg-background pt-16 lg:ml-64 lg:pt-0">
+<main class="relative flex min-h-screen w-full min-w-0 flex-1 flex-col bg-background pt-16 lg:ml-64 lg:w-auto lg:pt-0">
   <header class="border-b border-outline-variant/30 px-8 py-10 md:px-16">
-    <a href="/admin" class="mb-6 inline-flex min-h-[44px] items-center gap-2 border border-outline-variant/50 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/70 transition-colors hover:border-white/40 hover:bg-white/5 hover:text-white">
+    <a href="/admin" class="mb-6 inline-flex min-h-[44px] items-center gap-2 border border-outline-variant/50 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-cream/85 transition-colors hover:border-white/40 hover:bg-white/5 hover:text-mustard">
       <span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_back</span>
       Back to menu
     </a>
@@ -107,8 +84,9 @@ tailwind.config = {
       <span class="material-symbols-outlined text-[14px]" aria-hidden="true">storefront</span>
       Shop Manager
     </p>
-    <h1 class="font-montserrat text-5xl text-on-background">Merch &amp; orders</h1>
-    <p class="mt-4 max-w-2xl text-sm text-white/45">Catalog edits save to the shared database and show on the public shop from any browser or device. Delivery rules, video ads, and confirmed checkouts live in the tabs below.</p>
+    <h1 class="font-montserrat text-5xl text-on-background" data-ob-chars="jumble pop" data-ob-amp="0.5">Merch &amp; orders</h1>
+<p class="ob-admin-aside">fresh drops only</p>
+    <p class="mt-4 max-w-2xl text-sm text-cream/70">Catalog edits save to the shared database and show on the public shop from any browser or device. Delivery rules, video ads, and confirmed checkouts live in the tabs below.</p>
     <div class="mt-8 flex flex-wrap gap-8">
       <button type="button" data-shop-tab="products" class="shop-admin-tab is-active pb-1 font-montserrat text-[11px] font-semibold uppercase">Products</button>
       <button type="button" data-shop-tab="delivery" class="shop-admin-tab pb-1 font-montserrat text-[11px] font-semibold uppercase">Delivery</button>
@@ -148,7 +126,7 @@ tailwind.config = {
         <div>
           <div class="mb-2 flex items-center justify-between">
             <p class="text-[11px] uppercase tracking-[0.2em] text-on-surface-variant">Colours</p>
-            <button id="product-color-add" type="button" class="text-[10px] uppercase tracking-[0.14em] text-white/50 hover:text-white">Add colour</button>
+            <button id="product-color-add" type="button" class="text-[10px] uppercase tracking-[0.14em] text-cream/75 hover:text-mustard">Add colour</button>
           </div>
           <div id="product-colors-list" class="space-y-2"></div>
         </div>
@@ -164,13 +142,13 @@ tailwind.config = {
           </label>
         </div>
         <button id="product-submit-btn" class="min-h-[44px] w-full rounded border border-outline-variant px-4 py-2 text-xs uppercase tracking-[0.2em] hover:bg-surface-container" type="submit">Save product</button>
-        <button id="product-cancel-btn" type="button" hidden class="min-h-[44px] w-full text-xs uppercase tracking-[0.2em] text-white/40 hover:text-white">Cancel edit</button>
+        <button id="product-cancel-btn" type="button" hidden class="min-h-[44px] w-full text-xs uppercase tracking-[0.2em] text-cream/65 hover:text-mustard">Cancel edit</button>
       </form>
 
       <div class="xl:col-span-3">
         <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
-          <p id="products-count" class="font-montserrat text-[11px] uppercase tracking-[0.18em] text-white/40">0 pieces</p>
-          <button id="catalog-reset-btn" type="button" class="text-[11px] uppercase tracking-[0.16em] text-white/35 hover:text-white">Clear catalog</button>
+          <p id="products-count" class="font-montserrat text-[11px] uppercase tracking-[0.18em] text-cream/65">0 pieces</p>
+          <button id="catalog-reset-btn" type="button" class="text-[11px] uppercase tracking-[0.16em] text-cream/60 hover:text-mustard">Clear catalog</button>
         </div>
         <div class="overflow-x-auto rounded border border-outline-variant/30 bg-surface-container-low">
           <table class="w-full min-w-[820px] border-collapse text-left">
@@ -197,7 +175,7 @@ tailwind.config = {
       <p id="delivery-status" class="text-sm text-on-surface-variant">Loading delivery rules…</p>
       <section class="rounded border border-outline-variant/30 bg-surface-container-low p-5 space-y-4">
         <p class="text-[11px] uppercase tracking-[0.2em] text-on-surface-variant">Booking rules</p>
-        <p class="text-sm text-white/45">These prices and times appear on checkout. Save here so every shop visitor sees the same promise.</p>
+        <p class="text-sm text-cream/70">These prices and times appear on checkout. Save here so every shop visitor sees the same promise.</p>
         <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
           <label class="flex flex-col gap-1">
             <span class="text-[11px] uppercase tracking-[0.18em] text-on-surface-variant">Free delivery over (KSh)</span>
@@ -233,7 +211,7 @@ tailwind.config = {
       <section class="rounded border border-outline-variant/30 bg-surface-container-low p-5">
         <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
           <p class="text-[11px] uppercase tracking-[0.2em] text-on-surface-variant">Delivery zones</p>
-          <button id="delivery-zone-add" type="button" class="text-[10px] uppercase tracking-[0.14em] text-white/50 hover:text-white">Add zone</button>
+          <button id="delivery-zone-add" type="button" class="text-[10px] uppercase tracking-[0.14em] text-cream/75 hover:text-mustard">Add zone</button>
         </div>
         <div id="delivery-zones-list" class="space-y-3"></div>
       </section>
@@ -241,14 +219,14 @@ tailwind.config = {
       <section class="rounded border border-outline-variant/30 bg-surface-container-low p-5">
         <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
           <p class="text-[11px] uppercase tracking-[0.2em] text-on-surface-variant">Turnaround times</p>
-          <button id="delivery-turn-add" type="button" class="text-[10px] uppercase tracking-[0.14em] text-white/50 hover:text-white">Add turnaround</button>
+          <button id="delivery-turn-add" type="button" class="text-[10px] uppercase tracking-[0.14em] text-cream/75 hover:text-mustard">Add turnaround</button>
         </div>
         <div id="delivery-turns-list" class="space-y-3"></div>
       </section>
 
       <div class="flex flex-wrap gap-3">
         <button id="delivery-save-btn" class="min-h-[44px] rounded border border-outline-variant px-6 py-2 text-xs uppercase tracking-[0.2em] hover:bg-surface-container" type="submit">Save delivery rules</button>
-        <button id="delivery-reset-btn" type="button" class="min-h-[44px] px-4 py-2 text-xs uppercase tracking-[0.2em] text-white/40 hover:text-white">Restore defaults</button>
+        <button id="delivery-reset-btn" type="button" class="min-h-[44px] px-4 py-2 text-xs uppercase tracking-[0.2em] text-cream/65 hover:text-mustard">Restore defaults</button>
       </div>
     </form>
   </section>
@@ -257,7 +235,7 @@ tailwind.config = {
     <div class="grid grid-cols-1 gap-6 xl:grid-cols-5">
       <form id="ad-form" class="xl:col-span-2 space-y-4 rounded border border-outline-variant/30 bg-surface-container-low p-5">
         <p class="text-[11px] uppercase tracking-[0.2em] text-on-surface-variant">Add a shop film</p>
-        <p class="text-sm text-white/45">Clips play on a loop under the shop header. Upload an MP4/WebM (under 40 MB) or paste a direct video URL.</p>
+        <p class="text-sm text-cream/70">Clips play on a loop under the shop header. Upload an MP4/WebM (under 40 MB) or paste a direct video URL.</p>
         <input id="ad-title" class="w-full rounded border border-outline-variant/40 bg-surface-container px-3 py-2" type="text" placeholder="Title (optional)"/>
         <label id="ad-dropzone" class="flex min-h-[110px] cursor-pointer flex-col items-center justify-center rounded border border-dashed border-outline-variant/50 bg-surface-container px-3 py-3 text-center text-sm text-on-surface-variant hover:border-white/40">
           <input id="ad-file" type="file" accept="video/mp4,video/webm,video/ogg,.mp4,.webm,.mov,.m4v" class="hidden"/>
@@ -272,7 +250,7 @@ tailwind.config = {
         <button id="ad-submit-btn" class="min-h-[44px] w-full rounded border border-outline-variant px-4 py-2 text-xs uppercase tracking-[0.2em] hover:bg-surface-container" type="submit">Add to header</button>
       </form>
       <div class="xl:col-span-3">
-        <p id="ads-count" class="mb-4 font-montserrat text-[11px] uppercase tracking-[0.18em] text-white/40">0 ads</p>
+        <p id="ads-count" class="mb-4 font-montserrat text-[11px] uppercase tracking-[0.18em] text-cream/65">0 ads</p>
         <div id="ads-list" class="space-y-3"></div>
       </div>
     </div>
@@ -280,8 +258,8 @@ tailwind.config = {
 
   <section id="shop-panel-orders" hidden class="px-8 py-8 md:px-16">
     <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
-      <p id="orders-count" class="font-montserrat text-[11px] uppercase tracking-[0.18em] text-white/40">0 orders</p>
-      <a href="/admin/revenue" class="text-[11px] uppercase tracking-[0.16em] text-white/35 hover:text-white">Monitor revenue</a>
+      <p id="orders-count" class="font-montserrat text-[11px] uppercase tracking-[0.18em] text-cream/65">0 orders</p>
+      <a href="/admin/revenue" class="text-[11px] uppercase tracking-[0.16em] text-cream/60 hover:text-mustard">Monitor revenue</a>
     </div>
     <div class="overflow-x-auto rounded border border-outline-variant/30 bg-surface-container-low">
       <table class="w-full min-w-[980px] border-collapse text-left">
@@ -305,11 +283,11 @@ tailwind.config = {
 <div id="admin-auth-gate" class="fixed inset-0 z-[90] flex items-center justify-center bg-black/80 px-4">
   <form id="admin-auth-form" class="w-full max-w-md rounded border border-outline-variant/40 bg-surface-container p-6">
     <p class="mb-3 text-xs uppercase tracking-[0.2em] text-primary">Protected Access</p>
-    <h3 class="mb-4 font-montserrat text-2xl">Admin Password</h3>
+    <h3 class="mb-4 font-anton text-4xl uppercase leading-none" data-ob-chars="jumble">Admin Password</h3>
     <input id="admin-password" type="password" class="mb-3 w-full rounded border border-outline-variant/40 bg-surface-container-low px-3 py-2" placeholder="Enter password"/>
-    <p id="admin-auth-error" class="min-h-5 text-sm text-white/50"></p>
+    <p id="admin-auth-error" class="min-h-5 text-sm text-cream/75"></p>
     <button type="submit" class="min-h-[44px] w-full rounded border border-outline-variant px-4 py-2 text-xs uppercase tracking-[0.2em] hover:bg-surface-variant">Unlock Dashboard</button>
-    <a href="/admin" class="mt-4 inline-flex min-h-[44px] w-full items-center justify-center gap-2 text-[11px] uppercase tracking-[0.2em] text-white/40 hover:text-white">
+    <a href="/admin" class="mt-4 inline-flex min-h-[44px] w-full items-center justify-center gap-2 text-[11px] uppercase tracking-[0.2em] text-cream/65 hover:text-mustard">
       <span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_back</span>
       Back to menu
     </a>
@@ -344,6 +322,7 @@ tailwind.config = {
 })();
 </script>
 <script type="module" src="/scripts/animations.js"></script>
+<script type="module" src="/scripts/brand-fx.js"></script>
 <script type="module" src="/scripts/admin-shop-manager.js"></script>
 </body>
 </html>

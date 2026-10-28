@@ -1,0 +1,413 @@
+/**
+ * Onurik admin skin — the poster brand as a working tool.
+ * Applies on body.ob-admin over the existing Tailwind markup: mustard navigation,
+ * Anton headings, paper fields, sticker panels and buttons, mustard table heads.
+ * Character motion stays on the logo and page titles only.
+ */
+
+body.ob-admin {
+  background-color: var(--ob-cocoa);
+  color: var(--ob-cream);
+  font-family: var(--ob-font-body);
+}
+
+/* ---------------- Navigation ---------------- */
+
+.ob-admin-logo {
+  display: inline-block;
+  font-family: var(--ob-font-letter);
+  font-size: 2.1rem;
+  line-height: 1;
+  color: var(--ob-cocoa);
+  --ob-boing-color: var(--ob-tomato);
+}
+
+body.ob-admin nav.w-64,
+body.ob-admin #admin-nav-drawer {
+  background-color: var(--ob-mustard);
+  color: var(--ob-cocoa);
+  border-color: var(--ob-ink);
+  border-right-width: 3px;
+}
+body.ob-admin #admin-nav-drawer {
+  border-right-width: 0;
+  border-left: 3px solid var(--ob-ink);
+}
+body.ob-admin nav.w-64 > div,
+body.ob-admin #admin-nav-drawer > div {
+  border-color: rgba(22, 14, 7, 0.18);
+}
+body.ob-admin nav.w-64 a,
+body.ob-admin #admin-nav-drawer a,
+body.ob-admin #admin-nav-drawer span,
+body.ob-admin #admin-nav-drawer button {
+  color: var(--ob-cocoa);
+}
+body.ob-admin nav.w-64 a[class*="border-l-2"],
+body.ob-admin #admin-nav-drawer a[class*="border-l-2"] {
+  margin: 0 0.9rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border: 2px solid transparent;
+  border-radius: 0.7rem;
+  font-family: var(--ob-font-body);
+  font-weight: 600;
+  transition:
+    transform 0.25s var(--ob-spring),
+    background-color 0.2s ease,
+    box-shadow 0.25s var(--ob-spring);
+}
+body.ob-admin nav.w-64 a[class*="border-l-2"]:hover,
+body.ob-admin #admin-nav-drawer a[class*="border-l-2"]:hover {
+  background-color: rgba(251, 243, 228, 0.45);
+  transform: translateX(3px) rotate(-0.6deg);
+}
+/* Active item (markup marks it with bg-stone-800) */
+body.ob-admin nav.w-64 a.bg-stone-800,
+body.ob-admin #admin-nav-drawer a.bg-stone-800 {
+  background-color: var(--ob-cocoa);
+  color: var(--ob-mustard);
+  border-color: var(--ob-ink);
+  box-shadow: 3px 3px 0 var(--ob-tomato);
+  transform: rotate(-1deg);
+}
+body.ob-admin nav.w-64 a.bg-stone-800 span,
+body.ob-admin #admin-nav-drawer a.bg-stone-800 span {
+  color: var(--ob-mustard);
+}
+/* "← Public site" and footer status */
+body.ob-admin nav.w-64 a[href="/"],
+body.ob-admin #admin-nav-drawer a[href="/"] {
+  font-family: var(--ob-font-mono);
+  font-weight: 700;
+  color: rgba(42, 27, 14, 0.75);
+}
+body.ob-admin nav.w-64 .text-stone-500 {
+  color: rgba(42, 27, 14, 0.75);
+}
+
+/* Mobile top bar */
+body.ob-admin > header.fixed {
+  background-color: var(--ob-mustard);
+  color: var(--ob-cocoa);
+  border-bottom: 3px solid var(--ob-ink);
+  backdrop-filter: none;
+}
+body.ob-admin > header.fixed a,
+body.ob-admin > header.fixed button {
+  color: var(--ob-cocoa);
+  font-family: var(--ob-font-mono);
+  font-weight: 700;
+}
+body.ob-admin > header.fixed .ob-admin-logo {
+  font-size: 1.6rem;
+}
+
+/* ---------------- Headings ---------------- */
+
+body.ob-admin main h1 {
+  font-family: var(--ob-font-display);
+  font-weight: 400;
+  font-size: clamp(2.6rem, 6vw, 4.6rem);
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--ob-cream);
+  text-shadow: 0.05em 0.05em 0 var(--ob-tomato);
+}
+body.ob-admin main h2 {
+  font-family: var(--ob-font-display);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+body.ob-admin main h3 {
+  font-family: var(--ob-font-body);
+  font-weight: 700;
+}
+.ob-admin-aside {
+  margin-top: 0.55rem;
+  font-family: var(--ob-font-marker);
+  font-size: 1.15rem;
+  color: var(--ob-mustard);
+  transform: rotate(-2deg);
+  transform-origin: left center;
+}
+
+/* Header strip under the page title */
+body.ob-admin main > header {
+  border-bottom: 2px dashed rgba(242, 165, 22, 0.35);
+}
+
+/* Mono labels */
+body.ob-admin .font-label-caps,
+body.ob-admin th,
+body.ob-admin label {
+  font-family: var(--ob-font-mono);
+}
+
+/* ---------------- Panels ---------------- */
+
+body.ob-admin main [class*="bg-surface-container-low"][class*="border"],
+body.ob-admin main [class*="bg-surface-container"][class*="rounded"][class*="border"]:not(input):not(select):not(textarea):not(button) {
+  border: 2px solid var(--ob-ink);
+  border-radius: 1rem;
+  background-color: #2b1d10;
+  box-shadow: 5px 5px 0 rgba(242, 165, 22, 0.55);
+}
+
+/* Stat stickers on the overview */
+.ob-stat {
+  position: relative;
+  border: 2.5px solid var(--ob-ink);
+  border-radius: 1.1rem;
+  padding: 1.6rem 1.6rem 1.5rem;
+  box-shadow: 6px 6px 0 var(--ob-ink);
+  transition:
+    transform 0.35s var(--ob-spring),
+    box-shadow 0.35s var(--ob-spring);
+}
+.ob-stat:hover {
+  transform: translate(-2px, -3px) rotate(-0.8deg);
+  box-shadow: 9px 9px 0 var(--ob-ink);
+}
+.ob-stat__label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font: 700 0.72rem/1.2 var(--ob-font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.ob-stat__value {
+  margin-top: 1.1rem;
+  font: 400 clamp(3.2rem, 5vw, 4.4rem) / 0.9 var(--ob-font-display);
+}
+.ob-stat__note {
+  margin-top: 0.6rem;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  opacity: 0.82;
+}
+.ob-stat--mustard {
+  background: var(--ob-mustard);
+  color: var(--ob-cocoa);
+}
+.ob-stat--red {
+  background: var(--ob-tomato);
+  color: var(--ob-cream);
+}
+.ob-stat--cream {
+  background: var(--ob-cream);
+  color: var(--ob-cocoa);
+}
+.ob-stat a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ---------------- Fields ---------------- */
+
+body.ob-admin input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]):not([type="range"]):not([type="color"]),
+body.ob-admin select,
+body.ob-admin textarea {
+  border: 2px solid var(--ob-ink);
+  border-radius: 0.65rem;
+  background-color: var(--ob-paper);
+  color: var(--ob-cocoa);
+  font-family: var(--ob-font-body);
+  box-shadow: none;
+  transition:
+    box-shadow 0.25s var(--ob-spring),
+    transform 0.25s var(--ob-spring);
+}
+body.ob-admin input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]):focus,
+body.ob-admin select:focus,
+body.ob-admin textarea:focus {
+  outline: none;
+  border-color: var(--ob-ink);
+  box-shadow: 4px 4px 0 var(--ob-mustard);
+  --tw-ring-shadow: 0 0 #0000;
+}
+body.ob-admin input::placeholder,
+body.ob-admin textarea::placeholder {
+  color: #957a57;
+}
+body.ob-admin input[type="checkbox"],
+body.ob-admin input[type="radio"] {
+  accent-color: var(--ob-mustard);
+}
+
+/* ---------------- Buttons ---------------- */
+
+/* Outline action buttons/links used across the admin markup */
+body.ob-admin main :is(button, a)[class*="border-outline-variant"],
+body.ob-admin #admin-auth-form button,
+body.ob-admin [id$="auth-gate"] button {
+  border: 2px solid var(--ob-mustard);
+  border-radius: 0.65rem;
+  color: var(--ob-cream);
+  font-family: var(--ob-font-body);
+  font-weight: 700;
+  transition:
+    transform 0.25s var(--ob-spring),
+    box-shadow 0.25s var(--ob-spring),
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+body.ob-admin main :is(button, a)[class*="border-outline-variant"]:hover {
+  background-color: var(--ob-mustard);
+  color: var(--ob-cocoa);
+  transform: translate(-1px, -2px);
+  box-shadow: 3px 3px 0 var(--ob-ink);
+}
+
+/* Primary submits: filled mustard sticker */
+body.ob-admin button[type="submit"] {
+  border: 2.5px solid var(--ob-ink) !important;
+  border-radius: 0.75rem;
+  background-color: var(--ob-mustard) !important;
+  color: var(--ob-cocoa) !important;
+  font-family: var(--ob-font-body);
+  font-weight: 700;
+  box-shadow: 4px 4px 0 var(--ob-ink);
+  transition:
+    transform 0.25s var(--ob-spring),
+    box-shadow 0.25s var(--ob-spring);
+}
+body.ob-admin button[type="submit"]:hover:not(:disabled) {
+  transform: translate(-2px, -2px) rotate(-0.6deg);
+  box-shadow: 6px 6px 0 var(--ob-ink);
+}
+body.ob-admin button[type="submit"]:active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ob-ink);
+}
+body.ob-admin button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Refresh / icon buttons */
+body.ob-admin #admin-refresh-btn {
+  background: var(--ob-mustard);
+  color: var(--ob-cocoa);
+  border: 2px solid var(--ob-ink);
+  box-shadow: 3px 3px 0 var(--ob-ink);
+}
+body.ob-admin #admin-refresh-btn:hover {
+  transform: rotate(-90deg);
+}
+
+/* ---------------- Tables ---------------- */
+
+body.ob-admin table {
+  font-family: var(--ob-font-body);
+}
+body.ob-admin thead tr {
+  background-color: var(--ob-mustard) !important;
+  border-bottom: 2px solid var(--ob-ink) !important;
+}
+body.ob-admin thead th {
+  color: var(--ob-cocoa) !important;
+  font-family: var(--ob-font-mono);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+body.ob-admin tbody tr {
+  border-color: rgba(242, 165, 22, 0.16);
+  transition: background-color 0.15s ease;
+}
+body.ob-admin tbody tr:hover {
+  background-color: rgba(242, 165, 22, 0.07);
+}
+
+/* ---------------- Status pills ---------------- */
+
+body.ob-admin .status-pill,
+body.ob-admin [data-status-pill] {
+  border: 2px solid var(--ob-mustard);
+  font-family: var(--ob-font-mono);
+  font-weight: 700;
+}
+.ob-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.22rem 0.65rem;
+  border-radius: 999px;
+  border: 2px solid var(--ob-ink);
+  font: 700 0.66rem/1.2 var(--ob-font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.ob-pill--mustard {
+  background: var(--ob-mustard);
+  color: var(--ob-cocoa);
+}
+.ob-pill--red {
+  background: var(--ob-tomato);
+  color: var(--ob-cream);
+}
+.ob-pill--cream {
+  background: var(--ob-cream);
+  color: var(--ob-cocoa);
+}
+.ob-pill--green {
+  background: #3f8f4e;
+  color: var(--ob-cream);
+}
+.ob-pill--muted {
+  background: transparent;
+  color: var(--ob-butter);
+  border-color: rgba(246, 213, 138, 0.5);
+}
+
+/* ---------------- Toast ---------------- */
+
+body.ob-admin #admin-toast {
+  border: 2px solid var(--ob-ink);
+  border-radius: 0.8rem;
+  background: var(--ob-mustard);
+  color: var(--ob-cocoa);
+  font-weight: 600;
+  box-shadow: 4px 4px 0 var(--ob-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ob-stat,
+  body.ob-admin nav.w-64 a,
+  body.ob-admin #admin-nav-drawer a,
+  body.ob-admin button {
+    transition: none !important;
+  }
+  .ob-stat:hover,
+  body.ob-admin #admin-refresh-btn:hover {
+    transform: none;
+  }
+}
+
+/* Password gate */
+body.ob-admin #admin-auth-gate {
+  background-color: rgba(22, 14, 7, 0.82);
+  backdrop-filter: blur(6px);
+}
+body.ob-admin #admin-auth-form {
+  border: 2.5px solid var(--ob-ink);
+  border-radius: 1.1rem;
+  background-color: var(--ob-mustard);
+  color: var(--ob-cocoa);
+  box-shadow: 8px 8px 0 var(--ob-tomato);
+  transform: rotate(-1deg);
+}
+body.ob-admin #admin-auth-form p,
+body.ob-admin #admin-auth-form a,
+body.ob-admin #admin-auth-form h3 {
+  color: var(--ob-cocoa);
+}
+body.ob-admin #admin-auth-form button[type="submit"] {
+  background-color: var(--ob-cocoa) !important;
+  color: var(--ob-mustard) !important;
+}
