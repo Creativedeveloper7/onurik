@@ -102,7 +102,7 @@ function renderStats(snap) {
           '<p class="font-montserrat text-[11px] uppercase tracking-[0.18em] text-cream/65">' +
           escapeHtml(card.label) +
           "</p>" +
-          '<p class="mt-3 font-anton text-4xl leading-none text-mustard">' +
+          '<p class="mt-3 font-dot font-extrabold text-4xl leading-none text-mustard">' +
           escapeHtml(card.value) +
           "</p>" +
           '<p class="mt-2 text-xs text-cream/65">' +

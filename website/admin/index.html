@@ -72,7 +72,7 @@
 <nav class="fixed left-0 top-0 z-50 hidden h-full w-64 flex-col border-r border-stone-100/10 bg-stone-900 transition-all duration-300 lg:flex" aria-label="Admin navigation">
 <div class="border-b border-stone-100/10 px-8 py-10">
 <a href="/admin" class="ob-admin-logo" data-ob-chars="jumble" aria-label="Onurik admin">Onurik</a>
-<p class="ob-marker mt-2 -rotate-2 text-base text-cocoa/80">admin panel ✶</p>
+<p class="ob-marker mt-3 text-sm text-cream/45">admin panel</p>
 </div>
 <div class="flex flex-1 flex-col gap-2 py-8">
 <a class="mx-8 mb-4 text-[10px] uppercase tracking-[0.2em] text-stone-500 transition-colors hover:text-stone-100" href="/">← Public site</a>
@@ -112,7 +112,7 @@
 <main class="relative flex min-h-screen w-full min-w-0 flex-1 flex-col bg-background pt-16 lg:ml-64 lg:w-auto lg:pt-0">
 <header class="flex w-full flex-col justify-between gap-6 border-b border-surface-variant/30 px-8 py-10 md:flex-row md:items-end md:px-16">
 <div>
-<p class="mb-4 inline-flex items-center gap-2 rounded-full border-2 border-ink bg-tomato px-3 py-1 font-label-caps text-label-caps uppercase tracking-[0.2em] text-cream">
+<p class="mb-4 inline-flex items-center gap-2 rounded-full border border-mustard/35 bg-mustard/10 px-3 py-1 font-label-caps text-label-caps uppercase tracking-[0.2em] text-[#ffb08a]">
 <span class="material-symbols-outlined text-[14px]" aria-hidden="true">lock</span>
 Restricted Access
 </p>
@@ -129,17 +129,17 @@ Restricted Access
 
 <div class="flex flex-1 flex-col gap-16 px-5 py-10 sm:px-8 md:px-16 md:py-12">
 <section class="grid grid-cols-1 gap-7 md:grid-cols-3" aria-label="Summary statistics">
-<div class="ob-stat ob-stat--mustard" style="rotate:-0.6deg">
+<div class="ob-stat ob-stat--mustard">
 <p class="ob-stat__label">Total Enquiries <span class="material-symbols-outlined text-[20px]" aria-hidden="true">stacked_inbox</span></p>
 <p class="ob-stat__value">0</p>
 <p class="ob-stat__note">No submissions recorded yet.</p>
 </div>
-<div class="ob-stat ob-stat--red" style="rotate:0.5deg">
+<div class="ob-stat ob-stat--red">
 <p class="ob-stat__label">Open Bookings <span class="material-symbols-outlined text-[20px]" aria-hidden="true">book_online</span></p>
 <p class="ob-stat__value">0</p>
 <p class="ob-stat__note">No active bookings.</p>
 </div>
-<div class="ob-stat ob-stat--cream" style="rotate:-0.3deg">
+<div class="ob-stat ob-stat--cream">
 <p class="ob-stat__label">Monthly Traffic <span class="material-symbols-outlined text-[20px]" aria-hidden="true">monitoring</span></p>
 <p class="ob-stat__value">—</p>
 <p class="ob-stat__note">Connect analytics to display visits.</p>
@@ -147,17 +147,17 @@ Restricted Access
 </section>
 
 <section class="grid grid-cols-1 gap-7 md:grid-cols-3" aria-label="Shop statistics">
-<div class="ob-stat ob-stat--cream" style="rotate:0.4deg">
+<div class="ob-stat ob-stat--cream">
 <p class="ob-stat__label">Live products <span class="material-symbols-outlined text-[20px]" aria-hidden="true">checkroom</span></p>
 <p id="admin-shop-products" class="ob-stat__value">0</p>
 <p id="admin-shop-products-note" class="ob-stat__note">Catalog not loaded yet.</p>
 </div>
-<div class="ob-stat ob-stat--mustard" style="rotate:-0.5deg">
+<div class="ob-stat ob-stat--mustard">
 <p class="ob-stat__label">Open shop orders <span class="material-symbols-outlined text-[20px]" aria-hidden="true">local_mall</span></p>
 <p id="admin-shop-orders" class="ob-stat__value">0</p>
 <p id="admin-shop-orders-note" class="ob-stat__note">No orders yet.</p>
 </div>
-<div class="ob-stat ob-stat--red" style="rotate:0.3deg">
+<div class="ob-stat ob-stat--red">
 <p class="ob-stat__label">Shop revenue <span class="material-symbols-outlined text-[20px]" aria-hidden="true">payments</span></p>
 <p id="admin-shop-revenue" class="ob-stat__value">—</p>
 <p id="admin-shop-revenue-note" class="ob-stat__note">From confirmed checkouts.</p>

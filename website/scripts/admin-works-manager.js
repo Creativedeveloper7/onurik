@@ -117,7 +117,7 @@ function setStatusUi(value, isEditing) {
   document.querySelectorAll(".status-pill").forEach(function (pill) {
     const active = pill.getAttribute("data-status-pill") === value;
     pill.classList.toggle("bg-mustard", active);
-    pill.classList.toggle("text-cocoa", active);
+    pill.classList.toggle("text-white", active);
     pill.classList.toggle("text-cream/85", !active);
   });
   if (submit) {
@@ -153,7 +153,7 @@ function renderScopeTagPicker() {
         escapeHtml(tag) +
         '" class="rounded-full border px-3 py-1.5 text-[11px] tracking-wide transition ' +
         (active
-          ? "border-ink bg-mustard text-cocoa"
+          ? "border-transparent bg-mustard text-white"
           : "border-white/25 text-cream/90 hover:border-white/50 hover:text-mustard") +
         '">' +
         escapeHtml(tag) +
