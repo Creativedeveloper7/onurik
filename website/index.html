@@ -40,22 +40,38 @@
   #conversion-bridge .bridge-shell { opacity: 0; transform: translateY(1.25rem); }
   #conversion-bridge.is-visible .bridge-shell { opacity: 1; transform: none; transition: opacity 0.85s ease-out, transform 0.85s ease-out; }
 
-  /* Service step cards in a carousel; a glowing line runs along the track behind them */
-  .home-steps .ob-carousel__track {
-    background-image:
-      linear-gradient(90deg, rgba(255, 90, 31, 0.9), rgba(255, 90, 31, 0.9)),
-      linear-gradient(90deg, rgba(255, 90, 31, 0.28), rgba(255, 90, 31, 0.28));
-    background-repeat: no-repeat;
-    background-size: 100% 2px, 100% 8px;
-    background-position: 0 var(--home-line-y, 2.05rem), 0 calc(var(--home-line-y, 2.05rem) - 3px);
-    background-attachment: local, local;
+  /* Service step cards as a fanned deck: front card, neighbours tilted out behind it */
+  .home-deck { max-width: 54rem; margin-inline: auto; outline: none; }
+  .home-deck:focus-visible .home-deck__stage { outline: 2px solid #ff5a1f; outline-offset: 12px; border-radius: 1.75rem; }
+  .home-deck__stage { position: relative; display: grid; justify-items: center; padding: 1rem 0 2.5rem; touch-action: pan-y; user-select: none; }
+  .home-deck .home-step {
+    --deck-x: 0%; --deck-r: 0deg; --deck-s: 1; --deck-y: 0px;
+    grid-area: 1 / 1;
+    width: min(36rem, 84vw);
+    cursor: pointer;
+    background: linear-gradient(160deg, #1d1d1f, #141415) !important;
+    transform: translate(var(--deck-x), var(--deck-y)) rotate(var(--deck-r)) scale(var(--deck-s)) !important;
+    transform-origin: 50% 90%;
+    transition: transform 0.75s cubic-bezier(0.34, 1.3, 0.64, 1), opacity 0.45s ease, filter 0.45s ease, box-shadow 0.45s ease, border-color 0.3s ease !important;
+  }
+  .home-deck .home-step[data-pos="0"] { z-index: 4; }
+  .home-deck .home-step[data-pos="0"]:hover { --deck-y: -6px; border-color: rgba(255, 90, 31, 0.45); }
+  .home-deck .home-step[data-pos="1"] { --deck-x: 22%; --deck-r: 9deg; --deck-s: 0.9; --deck-y: 2rem; z-index: 3; filter: brightness(0.62); }
+  .home-deck .home-step[data-pos="-1"] { --deck-x: -22%; --deck-r: -9deg; --deck-s: 0.9; --deck-y: 2rem; z-index: 3; filter: brightness(0.62); }
+  .home-deck .home-step[data-pos="2"] { --deck-s: 0.82; --deck-y: 3rem; z-index: 1; opacity: 0; pointer-events: none; }
+  .home-deck .home-step[data-pos="1"]:hover,
+  .home-deck .home-step[data-pos="-1"]:hover { filter: brightness(0.85); }
+  .home-deck.is-dragging .home-step[data-pos="0"] { transition: none !important; }
+  .home-deck__bar { max-width: 36rem; margin: 1.5rem auto 0; }
+  @media (max-width: 639px) {
+    .home-deck .home-step[data-pos="1"] { --deck-x: 9%; --deck-r: 6deg; --deck-y: 1.4rem; }
+    .home-deck .home-step[data-pos="-1"] { --deck-x: -9%; --deck-r: -6deg; --deck-y: 1.4rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .home-deck .home-step { transition: opacity 0.2s ease !important; }
   }
   .home-step { display: flex; flex-direction: column; padding: 0; overflow: hidden; }
   .home-step__chrome { position: relative; display: flex; align-items: center; gap: 1rem; padding: 0.85rem 1.1rem; border-bottom: 1px solid rgba(255,255,255,0.07); }
-  .home-step__chrome::before,
-  .home-step__chrome::after { content: ""; position: absolute; top: 50%; width: 10px; height: 10px; margin-top: -5px; border-radius: 999px; background: #ff5a1f; box-shadow: 0 0 12px #ff5a1f; }
-  .home-step__chrome::before { left: -5px; }
-  .home-step__chrome::after { right: -5px; }
   .home-step__bar { flex: 1; height: 0.6rem; max-width: 18rem; border-radius: 999px; background: rgba(255,255,255,0.06); }
   .home-step__body { display: grid; flex: 1; gap: 1.6rem; align-content: start; padding: 1.6rem 1.5rem 1.75rem; }
   .home-step__options { display: grid; gap: 0.55rem; align-content: start; }
@@ -242,9 +258,9 @@
 </div>
 </div>
 
-<div class="ob-carousel home-steps mt-16 text-cream md:mt-20" data-ob-carousel aria-label="What we do" style="--ob-slide:88%; --ob-slide-md:58%; --ob-slide-lg:40%; --ob-gap:2.75rem">
-<div class="ob-carousel__track">
-<article class="home-step ob-sticker" data-ob-reveal>
+<div class="home-deck mt-16 text-cream md:mt-20" data-home-deck data-ob-reveal role="region" aria-roledescription="carousel" aria-label="What we do" tabindex="0">
+<div class="home-deck__stage">
+<article class="home-step ob-sticker" aria-roledescription="slide">
 <div class="home-step__chrome"><span class="ob-chrome" aria-hidden="true"><span></span><span></span><span></span></span><span class="home-step__bar" aria-hidden="true"></span></div>
 <div class="home-step__body">
 <div>
@@ -255,7 +271,7 @@
 <ul class="home-step__options"><li class="ob-option is-on">Identity Design</li><li class="ob-option">Brand Systems</li><li class="ob-option">Visual Identity</li><li class="ob-option">Motion Identity</li></ul>
 </div>
 </article>
-<article class="home-step ob-sticker" data-ob-reveal>
+<article class="home-step ob-sticker" aria-roledescription="slide">
 <div class="home-step__chrome"><span class="ob-chrome" aria-hidden="true"><span></span><span></span><span></span></span><span class="home-step__bar" aria-hidden="true"></span></div>
 <div class="home-step__body">
 <div>
@@ -266,7 +282,7 @@
 <ul class="home-step__options"><li class="ob-option is-on">Brand Strategy</li><li class="ob-option">Campaign Ideation</li><li class="ob-option">Content Strategy</li><li class="ob-option">Communications Planning</li></ul>
 </div>
 </article>
-<article class="home-step ob-sticker" data-ob-reveal>
+<article class="home-step ob-sticker" aria-roledescription="slide">
 <div class="home-step__chrome"><span class="ob-chrome" aria-hidden="true"><span></span><span></span><span></span></span><span class="home-step__bar" aria-hidden="true"></span></div>
 <div class="home-step__body">
 <div>
@@ -277,7 +293,7 @@
 <ul class="home-step__options"><li class="ob-option is-on">Web Design</li><li class="ob-option">Front-End Development</li><li class="ob-option">Dashboard &amp; Product Systems</li><li class="ob-option">Digital Experience</li></ul>
 </div>
 </article>
-<article class="home-step ob-sticker" data-ob-reveal>
+<article class="home-step ob-sticker" aria-roledescription="slide">
 <div class="home-step__chrome"><span class="ob-chrome" aria-hidden="true"><span></span><span></span><span></span></span><span class="home-step__bar" aria-hidden="true"></span></div>
 <div class="home-step__body">
 <div>
@@ -288,6 +304,12 @@
 <ul class="home-step__options"><li class="ob-option is-on">UX Research &amp; Flows</li><li class="ob-option">Product Design</li><li class="ob-option">Interaction Design</li><li class="ob-option">Prototyping</li></ul>
 </div>
 </article>
+</div>
+<div class="ob-carousel__bar home-deck__bar">
+<button type="button" class="ob-carousel__arrow" data-deck-step="-1" aria-label="Previous service"><span class="material-symbols-outlined" aria-hidden="true">arrow_back</span></button>
+<button type="button" class="ob-carousel__arrow" data-deck-step="1" aria-label="Next service"><span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></button>
+<span class="ob-carousel__count" data-deck-count aria-live="polite">01 / 04</span>
+<span class="ob-carousel__progress" aria-hidden="true"><span data-deck-progress></span></span>
 </div>
 </div>
 
