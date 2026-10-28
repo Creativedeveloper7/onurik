@@ -122,9 +122,10 @@ export async function mountProductDetail(root) {
       (related
         ? '<section class="mt-24 border-t border-cocoa/15 pt-14" aria-labelledby="related-heading">' +
           '<h2 id="related-heading" class="shop-title text-[clamp(2rem,4vw,3.25rem)] mb-8" data-ob-chars="jumble">You may also like</h2>' +
-          '<div class="shop-related">' +
+          '<div class="ob-carousel text-cocoa" data-ob-carousel aria-label="You may also like" style="--ob-slide:72%; --ob-slide-md:34%; --ob-slide-lg:24%">' +
+          '<div class="ob-carousel__track shop-related">' +
           related +
-          "</div></section>"
+          "</div></div></section>"
         : "");
   }
 

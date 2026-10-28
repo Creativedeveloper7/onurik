@@ -243,7 +243,7 @@ async function runWorkDetail() {
       return item.id !== current.id && item.category === current.category;
     })
     .sort(compareProjectsByDisplayOrder)
-    .slice(0, 3);
+    .slice(0, 8);
 
   const scopeTags = Array.isArray(current.scopeTags) ? current.scopeTags.filter(Boolean) : [];
   const approach = Array.isArray(current.approach) ? current.approach.filter(Boolean) : [];
@@ -350,11 +350,10 @@ async function runWorkDetail() {
     renderProjectGallery(current) +
     "</div>" +
     (caseCards.length
-      ? '<div class="mt-16 grid grid-cols-1 gap-8 md:grid-cols-' +
-        Math.min(caseCards.length, 3) +
-        '">' +
+      ? '<div class="mt-16 ob-carousel text-cream" data-ob-carousel aria-label="Case study" style="--ob-slide:88%; --ob-slide-md:58%; --ob-slide-lg:40%">' +
+        '<div class="ob-carousel__track">' +
         caseCards.join("") +
-        "</div>"
+        "</div></div>"
       : "") +
     (techTags.length
       ? '<div class="mt-12 flex flex-wrap gap-2">' +
@@ -382,7 +381,10 @@ async function runWorkDetail() {
     '<section class="ob-bg-mustard ob-grain ob-torn-top relative">' +
     '<div class="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 md:px-12">' +
     '<h2 class="font-display text-[clamp(2.6rem,6vw,4.5rem)] uppercase leading-none text-cocoa" data-ob-chars="jumble pop">Related Works</h2>' +
-    '<div class="mt-12 grid grid-cols-1 gap-10 md:grid-cols-3">' +
+    (related.length
+      ? '<div class="mt-12 ob-carousel text-cocoa" data-ob-carousel aria-label="Related works" style="--ob-car-accent:#D8202A; --ob-slide:80%; --ob-slide-md:45%; --ob-slide-lg:30%">' +
+        '<div class="ob-carousel__track">'
+      : '<div class="mt-12">') +
     (related.length
       ? related
           .map(function (item) {
@@ -410,7 +412,8 @@ async function runWorkDetail() {
           })
           .join("")
       : '<p class="ob-marker text-2xl text-cocoa/75 -rotate-1">No related works yet.</p>') +
-    "</div></div></section>";
+    (related.length ? "</div></div>" : "</div>") +
+    "</div></section>";
 
   bindImageLightbox(document.getElementById("work-detail-root"));
   bindProjectSlider(document.getElementById("work-detail-root"));

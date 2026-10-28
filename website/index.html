@@ -58,13 +58,11 @@
   .brands-trust__bg { z-index: 0; overflow: hidden; }
   .brands-trust__bg video { width: 100%; height: 100%; object-fit: cover; filter: sepia(0.85) saturate(1.4) brightness(0.38) contrast(1.1); }
   .brands-trust__shade { background: linear-gradient(to bottom, rgba(42,27,14,0.75), rgba(42,27,14,0.55) 45%, rgba(42,27,14,0.85)); pointer-events: none; }
-  .brand-tile-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; width: 100%; max-width: 64rem; margin: 0 auto; list-style: none; padding: 0; }
-  @media (min-width: 640px) { .brand-tile-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25rem; } }
-  @media (min-width: 900px) { .brand-tile-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 1.4rem; } }
-  .brand-tile-grid li { transform: rotate(var(--t, -2deg)); }
-  .brand-tile-grid li:nth-child(3n+1) { --t: -3deg; }
-  .brand-tile-grid li:nth-child(3n+2) { --t: 2deg; }
-  .brand-tile-grid li:nth-child(3n) { --t: -1deg; }
+  .brand-tile-track { list-style: none; margin-top: 0; margin-bottom: 0; }
+  .brand-tile-track li { transform: rotate(var(--t, -2deg)); }
+  .brand-tile-track li:nth-child(3n+1) { --t: -3deg; }
+  .brand-tile-track li:nth-child(3n+2) { --t: 2deg; }
+  .brand-tile-track li:nth-child(3n) { --t: -1deg; }
   .brand-tile { position: relative; aspect-ratio: 1 / 1; margin: 0; overflow: hidden; background: #FBF3E4; border: 2.5px solid #160E07; border-radius: 1rem; box-shadow: 5px 5px 0 #F2A516; transition: transform .4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .4s cubic-bezier(0.34, 1.56, 0.64, 1); }
   .brand-tile:hover { transform: translate(-3px, -3px) rotate(3deg) scale(1.05); box-shadow: 9px 9px 0 #D8202A; }
   .brand-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }

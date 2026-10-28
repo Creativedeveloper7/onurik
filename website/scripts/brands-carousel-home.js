@@ -38,7 +38,12 @@ function renderGrid(brands) {
     return;
   }
 
-  root.innerHTML = '<ul class="brand-tile-grid">' + items + "</ul>";
+  root.innerHTML =
+    '<div class="ob-carousel text-cream" data-ob-carousel data-ob-carousel-auto="3200" aria-label="Client logos"' +
+    ' style="--ob-slide:42%; --ob-slide-md:23%; --ob-slide-lg:15.5%; --ob-gap:1.25rem">' +
+    '<ul class="ob-carousel__track brand-tile-track">' +
+    items +
+    "</ul></div>";
 }
 
 (async function init() {

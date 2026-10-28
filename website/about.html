@@ -47,7 +47,7 @@
 
   .about-hero__title { font-size: clamp(3.6rem, 13vw, 11rem); }
   .about-dots span { position: absolute; display: grid; place-items: center; width: 1.6rem; height: 1.6rem; border-radius: 999px; background: #F24C00; box-shadow: inset -5px -3px 0 0 #26307A; }
-  .about-story p + p { margin-top: 1.4rem; }
+  .about-card { transform: rotate(var(--about-tilt, 0deg)); }
 </style>
 </head>
 <body class="bg-background text-on-background min-h-screen flex flex-col font-body-md overflow-x-hidden">
@@ -156,9 +156,9 @@
 
 <!-- Story: cream paper -->
 <section class="ob-bg-cream ob-grain relative">
-<div class="mx-auto grid max-w-[1440px] gap-14 px-5 py-[clamp(5rem,11vw,8rem)] sm:px-8 md:px-12 lg:grid-cols-12">
+<div class="mx-auto grid max-w-[1440px] gap-14 px-5 py-[clamp(5rem,11vw,8rem)] sm:px-8 md:px-12 lg:grid-cols-12 lg:items-center">
 <div class="lg:col-span-5">
-<div class="lg:sticky lg:top-28">
+<div>
 <p class="ob-eyebrow text-tomato">○○○ The story</p>
 <h2 class="ob-display mt-5 text-[clamp(3rem,7vw,6rem)] text-cocoa">
 <span class="block" data-ob-chars="jumble pop">Structure</span>
@@ -168,12 +168,31 @@
 <span class="ob-hex mt-10" aria-hidden="true">10+ yrs</span>
 </div>
 </div>
-<div class="about-story lg:col-span-7 text-lg leading-relaxed text-cocoa/85" data-anim-stagger>
-<p>With over a decade shaping brands and engineering systems, I’ve built a way of working that understands both structure and story—how things look, how they function, and how they hold over time.</p>
-<p>My focus is rooted in the Sub-Saharan market, particularly East and Central Africa, where I’ve worked closely with businesses building for real impact. This is where I’ve learned what it means to design with context. Not borrowed ideas, but systems and brands that feel ours—built to hold, sustain, and grow within the environments they serve.</p>
-<p>At Onurik, we approach every project as both builders and learners. We take on complex challenges, stay through the uncertainty, and refine until the system works the way it should.</p>
-<p class="ob-display !mt-10 text-[clamp(2rem,4vw,3.2rem)] text-cocoa">No shortcuts. No surface-level solutions. <span class="ob-marker normal-case text-tomato">Just work that stands.</span></p>
-<p class="!mt-10">We design, we engineer, and we see it through—because the goal isn’t just to launch, but to last.</p>
+<div class="min-w-0 lg:col-span-7">
+<div class="ob-carousel text-cocoa" data-ob-carousel aria-label="The Onurik story" style="--ob-slide:88%; --ob-slide-md:62%; --ob-slide-lg:64%">
+<div class="ob-carousel__track">
+<article class="about-card ob-sticker ob-bg-paper flex min-h-[19rem] flex-col p-7 md:p-8" style="--ob-hover-tilt:-1deg; --about-tilt:-1deg">
+<span class="ob-eyebrow opacity-70">01 / 05</span>
+<div class="mt-6 flex-1 text-lg leading-relaxed"><p>With over a decade shaping brands and engineering systems, I’ve built a way of working that understands both structure and story—how things look, how they function, and how they hold over time.</p></div>
+</article>
+<article class="about-card ob-sticker ob-bg-mustard flex min-h-[19rem] flex-col p-7 md:p-8" style="--ob-hover-tilt:1deg; --about-tilt:1deg">
+<span class="ob-eyebrow opacity-70">02 / 05</span>
+<div class="mt-6 flex-1 text-lg leading-relaxed"><p>My focus is rooted in the Sub-Saharan market, particularly East and Central Africa, where I’ve worked closely with businesses building for real impact. This is where I’ve learned what it means to design with context. Not borrowed ideas, but systems and brands that feel ours—built to hold, sustain, and grow within the environments they serve.</p></div>
+</article>
+<article class="about-card ob-sticker ob-bg-paper flex min-h-[19rem] flex-col p-7 md:p-8" style="--ob-hover-tilt:-0.6deg; --about-tilt:-0.6deg">
+<span class="ob-eyebrow opacity-70">03 / 05</span>
+<div class="mt-6 flex-1 text-lg leading-relaxed"><p>At Onurik, we approach every project as both builders and learners. We take on complex challenges, stay through the uncertainty, and refine until the system works the way it should.</p></div>
+</article>
+<article class="about-card ob-sticker ob-bg-tomato flex min-h-[19rem] flex-col p-7 md:p-8" style="--ob-hover-tilt:0.8deg; --about-tilt:0.8deg">
+<span class="ob-eyebrow opacity-70">04 / 05</span>
+<div class="mt-6 flex-1 text-lg leading-relaxed"><p class="ob-display text-[clamp(2rem,3.4vw,2.8rem)] leading-[0.95]">No shortcuts. No surface-level solutions.</p><p class="ob-marker mt-4 text-2xl normal-case text-butter">Just work that stands.</p></div>
+</article>
+<article class="about-card ob-sticker ob-bg-cocoa flex min-h-[19rem] flex-col p-7 md:p-8" style="--ob-hover-tilt:-1deg; --about-tilt:-1deg">
+<span class="ob-eyebrow opacity-70">05 / 05</span>
+<div class="mt-6 flex-1 text-lg leading-relaxed"><p>We design, we engineer, and we see it through—because the goal isn’t just to launch, but to last.</p></div>
+</article>
+</div>
+</div>
 </div>
 </div>
 </section>

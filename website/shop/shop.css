@@ -372,28 +372,6 @@ body.shop-page > footer {
   font-variant-numeric: tabular-nums;
 }
 
-.shop-related {
-  display: flex;
-  gap: 1.5rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  padding: 0.5rem 0.6rem 1.25rem 0.2rem;
-}
-
-.shop-related::-webkit-scrollbar {
-  height: 6px;
-}
-
-.shop-related::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.shop-related > * {
-  scroll-snap-align: start;
-  flex: 0 0 min(72vw, 260px);
-}
-
 /* ---------- Cart + summary ---------- */
 
 .shop-summary {
@@ -899,6 +877,10 @@ input.shop-field:focus,
   border-radius: 1rem;
   background: var(--ob-paper);
   box-shadow: 5px 5px 0 var(--ob-ink);
+}
+
+.shop-policy__deck > section {
+  margin-top: 0;
 }
 
 .shop-policy section:nth-of-type(even) {

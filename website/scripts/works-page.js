@@ -153,12 +153,17 @@ function renderCategoryGrids() {
     byCategory.get(project.category).push(project);
   });
 
+  document.querySelectorAll("[data-works-count]").forEach(function (badge) {
+    const items = byCategory.get(badge.getAttribute("data-works-count")) || [];
+    badge.textContent = "(" + items.length + ")";
+  });
+
   document.querySelectorAll("[data-project-category]").forEach(function (container) {
     const category = container.getAttribute("data-project-category");
     const items = byCategory.get(category) || [];
     if (!items.length) {
       container.innerHTML =
-        '<p class="col-span-full font-mono text-sm text-cream/60"><span class="ob-marker mr-2 text-lg text-mustard">psst —</span>' +
+        '<p class="!flex-[0_0_100%] font-mono text-sm text-cream/60"><span class="ob-marker mr-2 text-lg text-mustard">psst —</span>' +
         (activeScopeFilter
           ? "No projects match this scope tag in this category."
           : "No published projects yet in this category.") +
@@ -189,6 +194,6 @@ document.addEventListener("click", function (event) {
 renderWorks().catch(function () {
   document.querySelectorAll("[data-project-category]").forEach(function (container) {
     container.innerHTML =
-      '<p class="col-span-full font-mono text-sm text-cream/60"><span class="ob-marker mr-2 text-lg text-tomato">oops —</span>Could not load projects. Try refreshing the page.</p>';
+      '<p class="!flex-[0_0_100%] font-mono text-sm text-cream/60"><span class="ob-marker mr-2 text-lg text-tomato">oops —</span>Could not load projects. Try refreshing the page.</p>';
   });
 });

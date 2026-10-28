@@ -253,6 +253,191 @@ function initDraw(root) {
   });
 }
 
+/* ---------------- Carousel ---------------- */
+/*
+ * <div class="ob-carousel" data-ob-carousel aria-label="…" [data-ob-carousel-auto="5000"]>
+ *   <div class="ob-carousel__track"> …slides (direct children)… </div>
+ * </div>
+ * Native scroll-snap does the swiping; this adds arrows, a counter, a progress bar,
+ * mouse drag, arrow keys and optional autoplay. Slides may be re-rendered at any time.
+ */
+
+function carouselSlides(track) {
+  return Array.from(track.children).filter((el) => el.offsetParent !== null || el.getClientRects().length);
+}
+
+function initCarousel(root) {
+  if (root.dataset.obCarouselReady) return;
+  const track = root.querySelector(".ob-carousel__track");
+  if (!track) return;
+  root.dataset.obCarouselReady = "1";
+  root.setAttribute("role", "region");
+  root.setAttribute("aria-roledescription", "carousel");
+  track.setAttribute("tabindex", "0");
+
+  const bar = document.createElement("div");
+  bar.className = "ob-carousel__bar";
+  bar.innerHTML =
+    '<button type="button" class="ob-carousel__arrow" data-dir="-1" aria-label="Previous">' +
+    '<span class="material-symbols-outlined" aria-hidden="true">arrow_back</span></button>' +
+    '<button type="button" class="ob-carousel__arrow" data-dir="1" aria-label="Next">' +
+    '<span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></button>' +
+    '<span class="ob-carousel__count" aria-live="polite"></span>' +
+    '<span class="ob-carousel__progress" aria-hidden="true"><span></span></span>';
+  root.appendChild(bar);
+
+  const prevBtn = bar.querySelector('[data-dir="-1"]');
+  const nextBtn = bar.querySelector('[data-dir="1"]');
+  const count = bar.querySelector(".ob-carousel__count");
+  const fill = bar.querySelector(".ob-carousel__progress span");
+  const pad = (n) => String(n).padStart(2, "0");
+
+  function maxScroll() {
+    return Math.max(0, track.scrollWidth - track.clientWidth);
+  }
+
+  function currentIndex(slides) {
+    const start = track.getBoundingClientRect().left + parseFloat(getComputedStyle(track).paddingLeft || "0");
+    let best = 0;
+    let bestDist = Infinity;
+    slides.forEach((s, i) => {
+      const d = Math.abs(s.getBoundingClientRect().left - start);
+      if (d < bestDist) {
+        bestDist = d;
+        best = i;
+      }
+    });
+    return best;
+  }
+
+  function update() {
+    const slides = carouselSlides(track);
+    const max = maxScroll();
+    const scrollable = max > 2 && slides.length > 1;
+    root.classList.toggle("is-static", !scrollable);
+    if (!scrollable) return;
+    const atEnd = track.scrollLeft >= max - 2;
+    const idx = atEnd ? slides.length - 1 : currentIndex(slides);
+    count.textContent = pad(idx + 1) + " / " + pad(slides.length);
+    fill.style.transform = "scaleX(" + Math.max(0.04, Math.min(1, track.scrollLeft / max)).toFixed(3) + ")";
+    const loop = root.hasAttribute("data-ob-carousel-auto");
+    prevBtn.disabled = !loop && track.scrollLeft <= 2;
+    nextBtn.disabled = !loop && atEnd;
+  }
+
+  function go(dir) {
+    const slides = carouselSlides(track);
+    if (!slides.length) return;
+    const max = maxScroll();
+    if (dir > 0 && track.scrollLeft >= max - 2) {
+      track.scrollTo({ left: 0, behavior: reduceMotion ? "auto" : "smooth" });
+      return;
+    }
+    if (dir < 0 && track.scrollLeft <= 2) {
+      track.scrollTo({ left: max, behavior: reduceMotion ? "auto" : "smooth" });
+      return;
+    }
+    const target = slides[Math.max(0, Math.min(slides.length - 1, currentIndex(slides) + dir))];
+    const offset =
+      target.getBoundingClientRect().left -
+      track.getBoundingClientRect().left -
+      parseFloat(getComputedStyle(track).paddingLeft || "0");
+    track.scrollBy({ left: offset, behavior: reduceMotion ? "auto" : "smooth" });
+  }
+
+  bar.addEventListener("click", (e) => {
+    const btn = e.target.closest(".ob-carousel__arrow");
+    if (btn) go(Number(btn.dataset.dir));
+  });
+
+  track.addEventListener("keydown", (e) => {
+    if (e.target !== track) return;
+    if (e.key === "ArrowRight") {
+      e.preventDefault();
+      go(1);
+    } else if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      go(-1);
+    }
+  });
+
+  let raf = 0;
+  track.addEventListener(
+    "scroll",
+    () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        update();
+      });
+    },
+    { passive: true },
+  );
+
+  // Mouse drag (touch already swipes natively).
+  let drag = null;
+  track.addEventListener("pointerdown", (e) => {
+    if (e.pointerType !== "mouse" || e.button !== 0 || maxScroll() <= 2) return;
+    drag = { x: e.clientX, left: track.scrollLeft, moved: false };
+  });
+  window.addEventListener("pointermove", (e) => {
+    if (!drag) return;
+    const dx = e.clientX - drag.x;
+    if (!drag.moved && Math.abs(dx) > 6) {
+      drag.moved = true;
+      root.classList.add("is-dragging");
+    }
+    if (drag.moved) track.scrollLeft = drag.left - dx;
+  });
+  window.addEventListener("pointerup", () => {
+    if (!drag) return;
+    const moved = drag.moved;
+    drag = null;
+    root.classList.remove("is-dragging");
+    if (moved) {
+      // Swallow the click that ends a drag so cards don't open by accident.
+      const swallow = (ev) => ev.preventDefault();
+      track.addEventListener("click", swallow, { capture: true, once: true });
+      setTimeout(() => {
+        track.removeEventListener("click", swallow, { capture: true });
+        go(0);
+      }, 0);
+    }
+  });
+  track.addEventListener("dragstart", (e) => e.preventDefault());
+
+  // Optional autoplay, paused while the visitor is engaging with it.
+  const autoMs = parseInt(root.getAttribute("data-ob-carousel-auto") || "0", 10);
+  if (autoMs > 0 && !reduceMotion) {
+    let paused = false;
+    const pause = () => {
+      paused = true;
+    };
+    const resume = () => {
+      paused = false;
+    };
+    root.addEventListener("pointerenter", pause);
+    root.addEventListener("pointerleave", resume);
+    root.addEventListener("focusin", pause);
+    root.addEventListener("focusout", resume);
+    track.addEventListener("touchstart", pause, { passive: true });
+    setInterval(() => {
+      if (!paused && !document.hidden && maxScroll() > 2) go(1);
+    }, autoMs);
+  }
+
+  if ("ResizeObserver" in window) new ResizeObserver(update).observe(track);
+  new MutationObserver(() => {
+    requestAnimationFrame(update);
+  }).observe(track, { childList: true });
+  window.addEventListener("load", update, { once: true });
+  update();
+}
+
+function initCarousels(root) {
+  root.querySelectorAll("[data-ob-carousel]").forEach(initCarousel);
+}
+
 /* ---------------- Public ---------------- */
 
 function refresh(root = document) {
@@ -271,6 +456,7 @@ function refresh(root = document) {
   initMagnet(root);
   initMarquee(root);
   initDraw(root);
+  initCarousels(root);
 }
 
 function boot() {

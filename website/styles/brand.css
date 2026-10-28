@@ -799,3 +799,206 @@ body {
   background: repeating-linear-gradient(90deg, var(--ob-mustard) 0 18px, var(--ob-tomato) 18px 36px);
   opacity: 1;
 }
+
+/* ------------------------------------------------------------------ */
+/* Carousel (scripts/brand-fx.js → [data-ob-carousel])                 */
+/* ------------------------------------------------------------------ */
+
+.ob-carousel {
+  --ob-slide: 86%;
+  --ob-slide-md: 46%;
+  --ob-slide-lg: 31%;
+  --ob-gap: 1.5rem;
+  --ob-car-accent: var(--ob-mustard);
+  --ob-car-ink: currentColor;
+  position: relative;
+  min-width: 0;
+}
+
+.ob-carousel__track {
+  --ob-slide-now: var(--ob-slide);
+  display: flex;
+  gap: var(--ob-gap);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 0.25rem;
+  /* room for hard shadows and tilts so nothing is clipped */
+  padding: 0.75rem 0.25rem 1.5rem;
+  margin: -0.75rem -0.25rem 0;
+  scrollbar-width: none;
+  cursor: grab;
+}
+.ob-carousel__track::-webkit-scrollbar {
+  display: none;
+}
+.ob-carousel__track:focus-visible {
+  outline: 3px solid var(--ob-sun);
+  outline-offset: 2px;
+  border-radius: 0.75rem;
+}
+.ob-carousel__track > * {
+  flex: 0 0 var(--ob-slide-now);
+  min-width: 0;
+  scroll-snap-align: start;
+}
+@media (min-width: 768px) {
+  .ob-carousel__track {
+    --ob-slide-now: var(--ob-slide-md);
+  }
+}
+@media (min-width: 1100px) {
+  .ob-carousel__track {
+    --ob-slide-now: var(--ob-slide-lg);
+  }
+}
+
+.ob-carousel.is-dragging .ob-carousel__track {
+  cursor: grabbing;
+  scroll-snap-type: none;
+  user-select: none;
+}
+.ob-carousel.is-dragging .ob-carousel__track * {
+  pointer-events: none;
+}
+
+.ob-carousel__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-top: 0.75rem;
+  color: var(--ob-car-ink);
+}
+.ob-carousel.is-static .ob-carousel__bar {
+  display: none;
+}
+.ob-carousel.is-static .ob-carousel__track {
+  cursor: auto;
+}
+
+.ob-carousel__arrow {
+  display: grid;
+  flex-shrink: 0;
+  width: 2.9rem;
+  height: 2.9rem;
+  place-items: center;
+  border: 2.5px solid var(--ob-ink);
+  border-radius: 999px;
+  background: var(--ob-car-accent);
+  color: var(--ob-cocoa);
+  box-shadow: 3px 3px 0 var(--ob-ink);
+  cursor: pointer;
+  transition:
+    transform 0.3s var(--ob-spring),
+    box-shadow 0.3s var(--ob-spring),
+    opacity 0.2s ease;
+}
+.ob-carousel__arrow:hover:not(:disabled) {
+  transform: translate(-1px, -2px) rotate(-8deg);
+  box-shadow: 5px 5px 0 var(--ob-ink);
+}
+.ob-carousel__arrow:active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ob-ink);
+}
+.ob-carousel__arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.ob-carousel__arrow .material-symbols-outlined {
+  font-size: 1.3rem;
+}
+
+.ob-carousel__count {
+  min-width: 4.8rem;
+  font: 700 0.8rem/1 var(--ob-font-mono);
+  letter-spacing: 0.1em;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.ob-carousel__progress {
+  position: relative;
+  flex: 1;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in srgb, currentColor 18%, transparent);
+}
+.ob-carousel__progress span {
+  position: absolute;
+  inset: 0;
+  background: var(--ob-car-accent);
+  transform-origin: left center;
+  transform: scaleX(0.04);
+  transition: transform 0.25s ease-out;
+}
+
+/* Tab pills that switch between carousels (Works categories) */
+.ob-tabs {
+  display: flex;
+  gap: 0.6rem;
+  overflow-x: auto;
+  padding: 0.3rem 0.3rem 0.7rem;
+  margin: -0.3rem -0.3rem 0;
+  scrollbar-width: none;
+}
+.ob-tabs::-webkit-scrollbar {
+  display: none;
+}
+.ob-tab {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 1rem 0.55rem 0.55rem;
+  border: 2.5px solid currentColor;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font: 400 1.15rem/1 var(--ob-font-display);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    transform 0.3s var(--ob-spring),
+    background-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.3s var(--ob-spring);
+}
+.ob-tab__num {
+  display: grid;
+  width: 1.9rem;
+  height: 1.9rem;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--ob-mustard);
+  color: var(--ob-cocoa);
+  font-size: 0.85rem;
+}
+.ob-tab__count {
+  font: 700 0.68rem/1 var(--ob-font-mono);
+  opacity: 0.65;
+}
+.ob-tab:hover {
+  transform: rotate(-2deg);
+}
+.ob-tab[aria-selected="true"] {
+  border-color: var(--ob-ink);
+  background: var(--ob-mustard);
+  color: var(--ob-cocoa);
+  box-shadow: 4px 4px 0 var(--ob-ink);
+  transform: rotate(-1.5deg);
+}
+.ob-tab[aria-selected="true"] .ob-tab__num {
+  background: var(--ob-cocoa);
+  color: var(--ob-mustard);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ob-carousel__arrow,
+  .ob-carousel__progress span,
+  .ob-tab {
+    transition: none !important;
+  }
+}

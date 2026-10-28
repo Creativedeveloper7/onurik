@@ -47,27 +47,15 @@
 
   .works-hero__title { font-size: clamp(5rem, 20vw, 16rem); line-height: .82; }
 
-  /* Accordion rows: big condensed index cards */
-  @keyframes wobble-open {
-    0% { transform: scaleY(0.94) rotate(-.6deg); opacity: 0; }
-    60% { transform: scaleY(1.01) rotate(.3deg); opacity: 1; }
+  /* Category tabs → one project carousel per category */
+  .works-panel[hidden] { display: none; }
+  .works-panel:not([hidden]) { animation: works-panel-in .55s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+  @keyframes works-panel-in {
+    0% { transform: translateY(14px) rotate(-.4deg); opacity: 0; }
     100% { transform: none; opacity: 1; }
   }
-  @keyframes wobble-item {
-    0% { transform: translateY(14px); opacity: 0; }
-    60% { transform: translateY(-4px); opacity: 1; }
-    100% { transform: none; opacity: 1; }
-  }
-  .accordion-content { display: none; transform-origin: top center; }
-  .accordion-content.open { display: block; animation: wobble-open 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
-  .accordion-content.open > * { animation: wobble-item 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) .08s forwards; opacity: 0; }
-  .accordion-btn { transition: transform .35s cubic-bezier(0.34, 1.56, 0.64, 1), background-color .25s ease; }
-  .accordion-btn:hover { transform: translateX(6px) rotate(-.4deg); }
-  .accordion-btn .accordion-num { transition: transform .4s cubic-bezier(0.34, 1.56, 0.64, 1); }
-  .accordion-btn:hover .accordion-num, .accordion-btn.active .accordion-num { transform: rotate(-8deg) scale(1.08); }
-  .accordion-arrow { transition: transform .45s cubic-bezier(0.34, 1.56, 0.64, 1), background-color .2s ease; }
-  .accordion-btn.active .accordion-arrow { transform: rotate(135deg); background: #D8202A; color: #F7E3C8; }
-  .accordion-btn.active .accordion-title { color: #F2A516; }
+  .works-panel .ob-carousel { --ob-slide: 86%; --ob-slide-md: 47%; --ob-slide-lg: 31.5%; --ob-gap: 1.75rem; --ob-car-ink: #F7E3C8; }
+  .works-panel .ob-carousel__track { padding-bottom: 2.25rem; }
 
   /* Collage cards (markup from scripts/works-page.js) */
   [data-project-category] > .works-card:nth-child(4n+1) { --card-tilt: -1.2deg; }
@@ -81,8 +69,8 @@
   @media (hover: none) { .works-card__stamp { opacity: 1; transform: rotate(-4deg); } }
 
   @media (prefers-reduced-motion: reduce) {
-    .accordion-content.open, .accordion-content.open > * { animation: none; opacity: 1; }
-    .accordion-btn:hover, .works-card, .works-card:hover { transform: none; }
+    .works-panel:not([hidden]) { animation: none; }
+    .works-card, .works-card:hover { transform: none; }
   }
 </style>
 </head>
@@ -175,58 +163,44 @@
 <span class="h-[3px] w-24 bg-mustard" aria-hidden="true"></span>
 <p class="ob-eyebrow text-mustard" data-ob-scramble>Browse by category</p>
 </div>
-<div class="accordion-group border-t-[3px] border-mustard/25">
-
-<div class="accordion-item border-b-[3px] border-mustard/25">
-<button type="button" class="accordion-btn group flex w-full items-center justify-between gap-4 py-6 text-left md:py-8" data-target="section-standard" aria-expanded="false" aria-controls="acc-standard" id="acc-btn-standard">
-<div class="flex min-w-0 flex-wrap items-center gap-x-5 gap-y-2">
-<span class="accordion-num ob-coin !h-12 !w-12 shrink-0 ob-display text-xl tabular-nums" aria-hidden="true">01</span>
-<span class="accordion-title ob-display text-[clamp(2rem,5vw,3.8rem)] text-cream transition-colors duration-300">Standard Projects</span>
-<span class="ob-mono hidden text-xs uppercase tracking-[0.14em] text-cream/55 md:inline">— Lab experiments &amp; core products</span>
-</div>
-<span class="accordion-arrow material-symbols-outlined grid h-12 w-12 shrink-0 select-none place-items-center rounded-full border-[2.5px] border-mustard text-2xl text-mustard" aria-hidden="true">add</span>
+<div class="ob-tabs text-cream" role="tablist" aria-label="Project categories">
+<button type="button" class="ob-tab" role="tab" id="works-tab-standard" aria-controls="works-panel-standard" aria-selected="true" tabindex="0" data-works-tab="standard">
+<span class="ob-tab__num" aria-hidden="true">01</span>Standard Projects<span class="ob-tab__count" data-works-count="Standard Projects"></span>
 </button>
-<div class="accordion-content" id="acc-standard" role="region" aria-labelledby="acc-btn-standard">
-<div class="grid grid-cols-1 gap-10 pb-16 pt-2 md:grid-cols-2 md:gap-12 lg:gap-14" data-project-category="Standard Projects"></div>
-</div>
-</div>
-<div class="accordion-item border-b-[3px] border-mustard/25">
-<button type="button" class="accordion-btn group flex w-full items-center justify-between gap-4 py-6 text-left md:py-8" data-target="section-branding" aria-expanded="false" aria-controls="acc-branding" id="acc-btn-branding">
-<div class="flex min-w-0 flex-wrap items-center gap-x-5 gap-y-2">
-<span class="accordion-num ob-coin !h-12 !w-12 shrink-0 ob-display text-xl tabular-nums" aria-hidden="true">02</span>
-<span class="accordion-title ob-display text-[clamp(2rem,5vw,3.8rem)] text-cream transition-colors duration-300">Branding &amp; Identity</span>
-<span class="ob-mono hidden text-xs uppercase tracking-[0.14em] text-cream/55 md:inline">— Onurik Designs &amp; brand ecosystems</span>
-</div>
-<span class="accordion-arrow material-symbols-outlined grid h-12 w-12 shrink-0 select-none place-items-center rounded-full border-[2.5px] border-mustard text-2xl text-mustard" aria-hidden="true">add</span>
+<button type="button" class="ob-tab" role="tab" id="works-tab-branding" aria-controls="works-panel-branding" aria-selected="false" tabindex="-1" data-works-tab="branding">
+<span class="ob-tab__num" aria-hidden="true">02</span>Branding &amp; Identity<span class="ob-tab__count" data-works-count="Branding &amp; Identity"></span>
 </button>
-<div class="accordion-content" id="acc-branding" role="region" aria-labelledby="acc-btn-branding">
-<div class="grid grid-cols-1 gap-10 pb-16 pt-2 md:grid-cols-2 md:gap-12 lg:gap-14" data-project-category="Branding &amp; Identity"></div>
-</div>
-</div>
-<div class="accordion-item border-b-[3px] border-mustard/25">
-<button type="button" class="accordion-btn group flex w-full items-center justify-between gap-4 py-6 text-left md:py-8" data-target="section-design" aria-expanded="false" aria-controls="acc-design" id="acc-btn-design">
-<div class="flex min-w-0 flex-wrap items-center gap-x-5 gap-y-2">
-<span class="accordion-num ob-coin !h-12 !w-12 shrink-0 ob-display text-xl tabular-nums" aria-hidden="true">03</span>
-<span class="accordion-title ob-display text-[clamp(2rem,5vw,3.8rem)] text-cream transition-colors duration-300">Design &amp; Art Direction</span>
-<span class="ob-mono hidden text-xs uppercase tracking-[0.14em] text-cream/55 md:inline">— Editorial, photography &amp; spatial</span>
-</div>
-<span class="accordion-arrow material-symbols-outlined grid h-12 w-12 shrink-0 select-none place-items-center rounded-full border-[2.5px] border-mustard text-2xl text-mustard" aria-hidden="true">add</span>
+<button type="button" class="ob-tab" role="tab" id="works-tab-design" aria-controls="works-panel-design" aria-selected="false" tabindex="-1" data-works-tab="design">
+<span class="ob-tab__num" aria-hidden="true">03</span>Design &amp; Art Direction<span class="ob-tab__count" data-works-count="Design &amp; Art Direction"></span>
 </button>
-<div class="accordion-content" id="acc-design" role="region" aria-labelledby="acc-btn-design">
-<div class="grid grid-cols-1 gap-10 pb-16 pt-2 md:grid-cols-2 md:gap-12 lg:gap-14" data-project-category="Design &amp; Art Direction"></div>
-</div>
-</div>
-<div class="accordion-item border-b-[3px] border-mustard/25">
-<button type="button" class="accordion-btn group flex w-full items-center justify-between gap-4 py-6 text-left md:py-8" data-target="section-dev" aria-expanded="false" aria-controls="acc-dev" id="acc-btn-dev">
-<div class="flex min-w-0 flex-wrap items-center gap-x-5 gap-y-2">
-<span class="accordion-num ob-coin !h-12 !w-12 shrink-0 ob-display text-xl tabular-nums" aria-hidden="true">04</span>
-<span class="accordion-title ob-display text-[clamp(2rem,5vw,3.8rem)] text-cream transition-colors duration-300">Development</span>
-<span class="ob-mono hidden text-xs uppercase tracking-[0.14em] text-cream/55 md:inline">— Open source contributions</span>
-</div>
-<span class="accordion-arrow material-symbols-outlined grid h-12 w-12 shrink-0 select-none place-items-center rounded-full border-[2.5px] border-mustard text-2xl text-mustard" aria-hidden="true">add</span>
+<button type="button" class="ob-tab" role="tab" id="works-tab-dev" aria-controls="works-panel-dev" aria-selected="false" tabindex="-1" data-works-tab="dev">
+<span class="ob-tab__num" aria-hidden="true">04</span>Development<span class="ob-tab__count" data-works-count="Development"></span>
 </button>
-<div class="accordion-content" id="acc-dev" role="region" aria-labelledby="acc-btn-dev">
-<div class="grid grid-cols-1 gap-10 pb-16 pt-2 md:grid-cols-2 md:gap-12 lg:gap-14" data-project-category="Development"></div>
+</div>
+<div class="mt-8">
+<div class="works-panel" role="tabpanel" id="works-panel-standard" aria-labelledby="works-tab-standard">
+<p class="ob-mono mb-6 text-xs uppercase tracking-[0.14em] text-cream/60">— Lab experiments &amp; core products</p>
+<div class="ob-carousel" data-ob-carousel aria-label="Standard Projects projects">
+<div class="ob-carousel__track" data-project-category="Standard Projects"></div>
+</div>
+</div>
+<div class="works-panel" role="tabpanel" id="works-panel-branding" aria-labelledby="works-tab-branding" hidden>
+<p class="ob-mono mb-6 text-xs uppercase tracking-[0.14em] text-cream/60">— Onurik Designs &amp; brand ecosystems</p>
+<div class="ob-carousel" data-ob-carousel aria-label="Branding &amp; Identity projects">
+<div class="ob-carousel__track" data-project-category="Branding &amp; Identity"></div>
+</div>
+</div>
+<div class="works-panel" role="tabpanel" id="works-panel-design" aria-labelledby="works-tab-design" hidden>
+<p class="ob-mono mb-6 text-xs uppercase tracking-[0.14em] text-cream/60">— Editorial, photography &amp; spatial</p>
+<div class="ob-carousel" data-ob-carousel aria-label="Design &amp; Art Direction projects">
+<div class="ob-carousel__track" data-project-category="Design &amp; Art Direction"></div>
+</div>
+</div>
+<div class="works-panel" role="tabpanel" id="works-panel-dev" aria-labelledby="works-tab-dev" hidden>
+<p class="ob-mono mb-6 text-xs uppercase tracking-[0.14em] text-cream/60">— Open source contributions</p>
+<div class="ob-carousel" data-ob-carousel aria-label="Development projects">
+<div class="ob-carousel__track" data-project-category="Development"></div>
+</div>
 </div>
 </div>
 </div>
@@ -310,37 +284,32 @@
 </script>
 <script>
 (function () {
-  var buttons = document.querySelectorAll(".accordion-btn");
-  var contentMap = {
-    "section-standard": "acc-standard",
-    "section-branding": "acc-branding",
-    "section-design": "acc-design",
-    "section-dev": "acc-dev"
-  };
-
-  buttons.forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      var target = btn.getAttribute("data-target");
-      var contentId = contentMap[target];
-      var content = document.getElementById(contentId);
-      var isOpen = btn.classList.contains("active");
-
-      buttons.forEach(function (b) {
-        b.classList.remove("active");
-        b.setAttribute("aria-expanded", "false");
-        var cId = contentMap[b.getAttribute("data-target")];
-        var c = document.getElementById(cId);
-        c.classList.remove("open");
-        c.style.display = "";
-      });
-
-      if (!isOpen && content) {
-        btn.classList.add("active");
-        btn.setAttribute("aria-expanded", "true");
-        content.classList.add("open");
-        setTimeout(function () {
-          btn.scrollIntoView({ behavior: "smooth", block: "start" });
-        }, 80);
+  var tabs = Array.prototype.slice.call(document.querySelectorAll("[data-works-tab]"));
+  if (!tabs.length) return;
+  function select(tab, focus) {
+    tabs.forEach(function (t) {
+      var on = t === tab;
+      t.setAttribute("aria-selected", on ? "true" : "false");
+      t.tabIndex = on ? 0 : -1;
+      var panel = document.getElementById(t.getAttribute("aria-controls"));
+      if (panel) panel.hidden = !on;
+    });
+    if (focus) tab.focus();
+    tab.scrollIntoView({ block: "nearest", inline: "nearest" });
+  }
+  tabs.forEach(function (tab, i) {
+    tab.addEventListener("click", function () {
+      select(tab, false);
+    });
+    tab.addEventListener("keydown", function (e) {
+      var next = null;
+      if (e.key === "ArrowRight") next = tabs[(i + 1) % tabs.length];
+      if (e.key === "ArrowLeft") next = tabs[(i - 1 + tabs.length) % tabs.length];
+      if (e.key === "Home") next = tabs[0];
+      if (e.key === "End") next = tabs[tabs.length - 1];
+      if (next) {
+        e.preventDefault();
+        select(next, true);
       }
     });
   });
