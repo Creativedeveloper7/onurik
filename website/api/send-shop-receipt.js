@@ -35,7 +35,7 @@ export async function dispatchShopReceipt(rawOrder, env) {
     return { ok: false, error: "Receipt email is not configured." };
   }
 
-  const from = envValue(env, "SHOP_RECEIPT_FROM") || "Onurik Shop <jason@onurik.space>";
+  const from = envValue(env, "SHOP_RECEIPT_FROM") || "Onurik Shop <hello@onurik.space>";
   const fromEmail = parseFromAddress(from);
   if (!fromEmail) {
     return { ok: false, error: "SHOP_RECEIPT_FROM must be a valid email on your verified Resend domain." };

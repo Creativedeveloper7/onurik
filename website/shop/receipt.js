@@ -202,7 +202,7 @@ export function buildReceiptHtml(raw) {
     escapeHtml(order.paymentLabel) +
     (order.paymentRef ? " · " + escapeHtml(order.paymentRef) : "") +
     ".</p>" +
-    '<p style="margin:12px 0 0;font-size:13px;line-height:1.6;color:#6E6A65;">This is your official receipt for this purchase. Keep it for your records. Questions — reply to this email or write jason@onurik.space.</p>' +
+    '<p style="margin:12px 0 0;font-size:13px;line-height:1.6;color:#6E6A65;">This is your official receipt for this purchase. Keep it for your records. Questions — reply to this email or write hello@onurik.space.</p>' +
     "</td></tr></table></td></tr></table></body></html>"
   );
 }
