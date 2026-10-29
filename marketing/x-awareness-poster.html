@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<!--
+  Onurik — X (Twitter) awareness poster, 1600×900 (16:9, shown uncropped in the X feed).
+  Render: node marketing/render-poster.cjs  →  x-awareness-poster-1600x900.png / @2x.jpg
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Doto:wght@700;900&amp;family=Geist+Mono:wght@500&amp;family=Urbanist:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,500,0,0&amp;display=block"/>
+<style>
+  :root {
+    --ink: #0a0a0b; --cream: #f2efeb; --accent: #ff5a1f; --accent-2: #e8461e;
+    --line: rgba(255,255,255,.12); --muted: rgba(242,239,235,.62);
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1600px; height: 900px; }
+  body { position: relative; overflow: hidden; background: var(--ink); color: var(--cream); font-family: "Urbanist", sans-serif; -webkit-font-smoothing: antialiased; }
+  .ms { font-family: "Material Symbols Outlined"; font-weight: 500; font-size: 20px; line-height: 1; font-feature-settings: "liga"; }
+
+  /* Background: orange glows, dot grid, construction grid, giant dot-matrix wordmark */
+  .bg-glow { position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 45% 60% at 82% 38%, rgba(255,90,31,.34), transparent 70%),
+      radial-gradient(ellipse 40% 50% at 0% 100%, rgba(255,90,31,.16), transparent 70%),
+      radial-gradient(ellipse 30% 30% at 50% 0%, rgba(255,140,80,.08), transparent 70%); }
+  .bg-dots { position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(255,255,255,.13) 1px, transparent 1.5px); background-size: 28px 28px; }
+  .bg-grid { position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+    background-size: 112px 112px; -webkit-mask-image: radial-gradient(ellipse 70% 70% at 70% 45%, #000 30%, transparent 85%); }
+  .wordmark { position: absolute; left: 50%; bottom: -92px; transform: translateX(-50%); font-family: "Doto", monospace; font-weight: 900; font-size: 300px; letter-spacing: .02em; color: rgba(242,239,235,.03); white-space: nowrap; }
+  .frame { position: absolute; inset: 28px; border: 1px solid rgba(255,90,31,.22); border-radius: 26px; pointer-events: none; }
+  .frame::before, .frame::after { content: ""; position: absolute; width: 10px; height: 10px; border-radius: 99px; background: var(--accent); box-shadow: 0 0 14px var(--accent); }
+  .frame::before { left: -5px; bottom: -5px; } .frame::after { right: -5px; top: -5px; }
+
+  /* Left column */
+  .left { position: absolute; left: 84px; top: 74px; width: 760px; }
+  .logo { height: 86px; display: block; }
+  .pill { display: inline-flex; align-items: center; gap: 10px; margin-top: 34px; padding: 9px 16px; border: 1px solid var(--line); border-radius: 99px; background: rgba(255,255,255,.04); font-size: 17px; font-weight: 500; color: rgba(242,239,235,.86); }
+  .dot { width: 9px; height: 9px; border-radius: 99px; background: var(--accent); box-shadow: 0 0 0 4px rgba(255,90,31,.2), 0 0 14px var(--accent); }
+  h1 { margin-top: 22px; font-weight: 600; font-size: 92px; line-height: .98; letter-spacing: -.04em; }
+  h1 .o { color: var(--accent); text-shadow: 0 0 40px rgba(255,90,31,.45); }
+  .lede { margin-top: 24px; max-width: 640px; font-size: 25px; line-height: 1.38; color: var(--muted); }
+  .lede b { color: var(--cream); font-weight: 600; }
+  .cta { display: flex; align-items: center; gap: 18px; margin-top: 36px; }
+  .btn { display: inline-flex; align-items: center; gap: 12px; padding: 18px 28px; border-radius: 99px; background: linear-gradient(180deg, #ff6a2b, #e8461e); color: #fff; font-weight: 600; font-size: 24px; box-shadow: 0 18px 44px -14px rgba(255,90,31,.9), inset 0 1px 0 rgba(255,255,255,.3); }
+  .btn .ms { font-size: 24px; }
+  .meta { font-family: "Geist Mono", monospace; font-weight: 500; font-size: 16px; letter-spacing: .14em; text-transform: uppercase; color: rgba(242,239,235,.55); line-height: 1.7; }
+  .meta b { color: var(--accent); font-weight: 500; }
+
+  /* Right: fanned deck of service step cards */
+  .deck { position: absolute; left: 905px; top: 120px; width: 600px; height: 640px; }
+  .card { position: absolute; left: 70px; top: 40px; width: 460px; border-radius: 24px; border: 1px solid rgba(255,255,255,.14); background: linear-gradient(160deg, #1f1f21, #141415); box-shadow: inset 0 1px 0 rgba(255,255,255,.07), 0 40px 80px -30px rgba(0,0,0,.9); overflow: hidden; transform-origin: 50% 90%; }
+  .card.back-l { transform: translate(-150px, 46px) rotate(-11deg) scale(.88); filter: brightness(.55); }
+  .card.back-r { transform: translate(150px, 46px) rotate(11deg) scale(.88); filter: brightness(.55); }
+  .card.front { box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 50px 100px -30px rgba(0,0,0,.95), 0 0 0 1px rgba(255,90,31,.35), 0 0 60px -10px rgba(255,90,31,.35); }
+  .chrome { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,.07); }
+  .lights { display: flex; gap: 7px; } .lights i { width: 11px; height: 11px; border-radius: 99px; background: #ff5f57; } .lights i:nth-child(2) { background: #febc2e; } .lights i:nth-child(3) { background: #28c840; }
+  .bar { flex: 1; height: 9px; border-radius: 99px; background: rgba(255,255,255,.06); max-width: 220px; }
+  .body { padding: 24px 26px 26px; }
+  .step { font-family: "Geist Mono", monospace; font-weight: 500; font-size: 13px; letter-spacing: .16em; color: var(--accent); }
+  .card h3 { margin-top: 10px; font-size: 34px; font-weight: 600; letter-spacing: -.02em; }
+  .card p { margin-top: 10px; font-size: 16px; line-height: 1.45; color: rgba(242,239,235,.6); }
+  .opts { margin-top: 18px; display: grid; gap: 9px; }
+  .opt { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid rgba(255,255,255,.12); border-radius: 12px; font-size: 17px; font-weight: 500; }
+  .opt::before { content: ""; width: 16px; height: 16px; border-radius: 99px; border: 1.5px solid rgba(242,239,235,.5); flex-shrink: 0; }
+  .opt.on { border-color: var(--accent); background: rgba(255,90,31,.1); }
+  .opt.on::before { border-color: var(--accent); background: radial-gradient(circle, var(--accent) 0 38%, transparent 42%); }
+
+  /* Floating widgets */
+  .widget { position: absolute; border-radius: 22px; padding: 16px 18px; box-shadow: 0 30px 60px -24px rgba(0,0,0,.85); }
+  .w-light { right: 70px; top: 86px; width: 236px; background: #e7e5e2; color: #141415; }
+  .w-light .head { display: flex; align-items: center; justify-content: space-between; font-weight: 600; font-size: 19px; }
+  .badge { padding: 4px 10px; border-radius: 99px; background: var(--accent); color: #fff; font-size: 13px; font-weight: 600; }
+  .w-light p { margin-top: 8px; font-size: 15px; line-height: 1.35; color: rgba(20,20,21,.65); }
+  .w-accent { right: 92px; bottom: 96px; width: 248px; background: linear-gradient(150deg, #ff6a2b, #e8461e); color: #fff; box-shadow: 0 36px 70px -24px rgba(255,90,31,.75); }
+  .w-accent .head { display: flex; align-items: center; justify-content: space-between; font-weight: 600; font-size: 19px; }
+  .bars { display: flex; align-items: flex-end; justify-content: center; gap: 6px; height: 64px; margin: 12px 0 6px; }
+  .bars i { width: 6px; border-radius: 2px; background: #fff; }
+  .w-accent small { font-family: "Geist Mono", monospace; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; opacity: .85; }
+
+  /* Glowing connector into the deck */
+  .glow-line { position: absolute; left: 0; top: 0; width: 1600px; height: 900px; pointer-events: none; }
+  .glow-line path { fill: none; stroke: var(--accent); stroke-width: 2.5; filter: drop-shadow(0 0 6px rgba(255,90,31,.9)); }
+  .glow-line circle { fill: var(--accent); filter: drop-shadow(0 0 8px rgba(255,90,31,1)); }
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+<div class="bg-dots"></div>
+<div class="bg-grid"></div>
+<div class="wordmark">ONURIK</div>
+<div class="frame"></div>
+
+<!-- connector from the CTA to the deck -->
+<svg class="glow-line" viewBox="0 0 1600 900" aria-hidden="true">
+  <path d="M 770 727 H 1176 Q 1196 727 1196 707 V 624"/>
+  <circle cx="770" cy="727" r="5"/><circle cx="1196" cy="622" r="5.5"/>
+</svg>
+
+<div class="left">
+  <img class="logo" src="../website/public/brand/onurik-logo.svg" alt="Onurik"/>
+  <div class="pill"><span class="dot"></span>Branding &amp; web design studio — Nairobi</div>
+  <h1>Most brands get ignored.<br/><span class="o">Yours won’t be.</span></h1>
+  <p class="lede">Onurik designs <b>brand identities</b>, <b>websites</b> and <b>digital products</b> — built to work as one system, for businesses across East Africa.</p>
+  <div class="cta">
+    <span class="btn">Start your project <span class="ms">arrow_forward</span> onurik.space</span>
+  </div>
+  <p class="meta" style="margin-top:22px">Now taking new projects <b>✦</b> Nairobi, Kenya</p>
+</div>
+
+<div class="deck">
+  <div class="card back-l">
+    <div class="chrome"><span class="lights"><i></i><i></i><i></i></span><span class="bar"></span></div>
+    <div class="body"><p class="step">STEP 04</p><h3>Product &amp; UX</h3>
+      <div class="opts"><span class="opt on">UX Research &amp; Flows</span><span class="opt">Product Design</span><span class="opt">Prototyping</span></div></div>
+  </div>
+  <div class="card back-r">
+    <div class="chrome"><span class="lights"><i></i><i></i><i></i></span><span class="bar"></span></div>
+    <div class="body"><p class="step">STEP 02</p><h3>Strategy &amp; Campaigns</h3>
+      <div class="opts"><span class="opt on">Brand Strategy</span><span class="opt">Campaign Ideation</span><span class="opt">Content Strategy</span></div></div>
+  </div>
+  <div class="card front">
+    <div class="chrome"><span class="lights"><i></i><i></i><i></i></span><span class="bar"></span></div>
+    <div class="body">
+      <p class="step">WHAT WE DO</p>
+      <h3>One studio. Every layer.</h3>
+      <p>From the first sketch of your identity to the stack underneath it.</p>
+      <div class="opts">
+        <span class="opt on">Branding &amp; Identity</span>
+        <span class="opt on">Strategy &amp; Campaigns</span>
+        <span class="opt on">Web &amp; Systems Development</span>
+        <span class="opt on">Product Design &amp; UX</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="widget w-light">
+  <div class="head">Enquiries <span class="badge">open</span></div>
+  <p>Tell us what you’re building — we’ll make it impossible to miss.</p>
+</div>
+<div class="widget w-accent">
+  <div class="head">Design. Build. <span class="ms">north_east</span></div>
+  <div class="bars"><i style="height:22%"></i><i style="height:38%"></i><i style="height:58%"></i><i style="height:82%"></i><i style="height:100%"></i><i style="height:82%"></i><i style="height:58%"></i><i style="height:38%"></i><i style="height:22%"></i></div>
+  <small>Question everything</small>
+</div>
+</body>
+</html>
